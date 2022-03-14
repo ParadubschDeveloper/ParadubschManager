@@ -1,0 +1,31 @@
+main: js.devmsg.DevMsg
+name: DevMsgPlugin
+version: 1
+description: Verbessert den in Minecraft eingebauten Chatbefehl.
+api-version: 1.17
+load: POSTWORLD
+author: JeremyStarTM
+prefix: DevMsg
+website: https://staropensource.ddns.net/gitea/jeremystartm/DevelopmentMsgPlugin/
+
+commands:
+ msg:
+  description: Schreibe einem anderen Spieler eine Nachricht.
+  aliases: [tell]
+  permission: devmsg.msg
+  permission-message: 'Du benötigst die Berechtigung devmsg.msg um zu chatten!'
+  usage: '/msg <Spieler> <Nachricht>'
+ #msgoptions:
+ # description: Ändere experimentelle Optionen temporär um.
+ # aliases: [telloptions]
+ # permission: devmsg.msgoptions
+ # permission-message: 'Du benötigst die Berechtigung devmsg.msgoptions um die Chateinstellungen zu ändern!'
+ # usage: '/msgoptions <enable|disable|list> <Einstellung>'
+
+permissions:
+ devmsg.msg:
+  description: 'Erlaubt Zugriff auf den /msg Befehl.'
+  default: true
+ #devmsg.msgoptions:
+ # description: 'Erlaubt Zugriff auf den /msgoptions Befehl.'
+ # default: op
