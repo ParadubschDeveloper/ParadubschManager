@@ -1,0 +1,30 @@
+name: ParadubschManager
+version: '${project.version}'
+main: de.paradubsch.paradubschmanager.ParadubschManager
+api-version: 1.18
+authors: [ JeremyStarTM, Crafter_Y ]
+load: POSTWORLD
+prefix: ParadubschManager
+website: https://gitlab.com/paradubsch-developer/paradubschmanager
+
+commands:
+  msg:
+    description: Schreibe einem anderen Spieler eine private Nachricht.
+    aliases: [tell]
+    permission: paradubschmanager.msg
+    permission-message: 'Du benötigst die Berechtigung devmsg.msg um zu chatten!'
+    usage: '/msg <Spieler> <Nachricht>'
+  #msgoptions:
+  # description: Ändere experimentelle Optionen temporär um.
+  # aliases: [telloptions]
+  # permission: devmsg.msgoptions
+  # permission-message: 'Du benötigst die Berechtigung devmsg.msgoptions um die Chateinstellungen zu ändern!'
+  # usage: '/msgoptions <enable|disable|list> <Einstellung>'
+
+permissions:
+  paradubschmanager.msg:
+    description: 'Erlaubt Zugriff auf den /msg Befehl.'
+    default: true
+  #devmsg.msgoptions:
+  # description: 'Erlaubt Zugriff auf den /msgoptions Befehl.'
+  # default: op
