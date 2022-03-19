@@ -22,31 +22,17 @@ public class Msg implements CommandExecutor {
             } else {
                 senderPlayer = "§4§lServer Konsole";
             }
-            if(args[0] == "MinecraftServerKonsole") {
-                if(ParadubschManager.allowMessageConsole) {
-                    recieverPlayer = "§4§lServer Konsole";
-                    recieverPlayerObject = null;
-                } else {
-                    s.sendMessage("§4§lFehler: Dieser Spieler ist nicht online.");
-                    return true;
-                }
-            } else {
-                recieverPlayer = args[0];
-                recieverPlayerObject = Bukkit.getPlayer(recieverPlayer);
-                if(recieverPlayerObject == null) {
-                    s.sendMessage("§4§lFehler: Dieser Spieler ist nicht online.");
-                    return true;
-                }
+            recieverPlayer = args[0];
+            recieverPlayerObject = Bukkit.getPlayer(recieverPlayer);
+            if(recieverPlayerObject == null) {
+                s.sendMessage("§4§lFehler: Dieser Spieler ist nicht online.");
+                return true;
             }
             for(int i = 1; i < args.length; i++) {
                 message = message + args[i] + " ";
             }
             s.sendMessage(ParadubschManager.messageFormat.replaceAll("%sender%", ParadubschManager.messageSendMe).replaceAll("%reciever%", recieverPlayer).replaceAll("%message%", message));
-            if(recieverPlayerObject == null) {
-                Bukkit.getConsoleSender().sendMessage(ParadubschManager.messageFormat.replaceAll("%sender%", senderPlayer).replaceAll("%reciever%", ParadubschManager.messageRecieveMe).replaceAll("%message%", message));
-            } else {
-                recieverPlayerObject.sendMessage(ParadubschManager.messageFormat.replaceAll("%sender%", senderPlayer).replaceAll("%reciever%", ParadubschManager.messageRecieveMe).replaceAll("%message%", message));
-            }
+            recieverPlayerObject.sendMessage(ParadubschManager.messageFormat.replaceAll("%sender%", senderPlayer).replaceAll("%reciever%", ParadubschManager.messageRecieveMe).replaceAll("%message%", message));
         } else {
             s.sendMessage(ParadubschManager.prefixColor + "§4§lFehler: Du musst einen Spielernamen und eine Nachricht eingeben.\n" + ParadubschManager.prefixSpaces + "§4§l        Syntax: " + cmd.getUsage());
         }
