@@ -9,8 +9,8 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "player_cache", indexes = @Index(name = "player_cache_index", columnList = "name"))
-public class PlayerCache {
+@Table(name = "player_data", indexes = @Index(name = "player_data_index", columnList = "name"))
+public class PlayerData {
 
     @Getter
     @Setter
@@ -23,7 +23,14 @@ public class PlayerCache {
     @Column(name = "name", length = 16)
     private String name;
 
-    public PlayerCache(Player player) {
+    @Getter
+    @Setter
+    @Column(name = "language_preference", length = 16)
+    private String language = "de";
+
+    public PlayerData () {}
+
+    public PlayerData(Player player) {
         this.uuid = player.getUniqueId().toString();
         this.name = player.getName();
     }
