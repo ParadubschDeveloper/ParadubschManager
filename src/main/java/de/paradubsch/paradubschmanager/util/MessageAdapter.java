@@ -9,6 +9,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class MessageAdapter {
@@ -31,25 +32,55 @@ public class MessageAdapter {
         ParadubschManager.getInstance().getLogger().warning(ex.getMessage());
     }
 
-    public static void sendPlayerError (Player player, Message.Error error, String... args) {
+    public static void sendPlayerError (CommandSender cs, Message.Error error, String... args) {
         new Thread(() -> {
-            PlayerData playerData = Hibernate.getPlayerData(player);
-            Language playerLang = Language.getLanguageByShortName(playerData.getLanguage());
+            Language playerLang;
+            if (cs instanceof Player) {
+                Player player = (Player) cs;
+                PlayerData playerData = Hibernate.getPlayerData(player);
+                playerLang = Language.getLanguageByShortName(playerData.getLanguage());
+            } else {
+                playerLang = Language.getDefaultLanguage();
+            }
+
             Component errorText = ParadubschManager.getInstance().getLanguageManager().get(error, playerLang, args);
             Component message = Component.text(ChatColor.translateAlternateColorCodes('&', ConfigurationManager.getString("chatPrefix")))
                     .append(errorText);
-            player.sendMessage(message);
+            cs.sendMessage(message);
         }).start();
     }
 
-    public static void sendPlayerInfo (Player player, Message.Info info, String... args) {
+    public static void sendPlayerInfo (CommandSender cs, Message.Info info, String... args) {
         new Thread(() -> {
-            PlayerData playerData = Hibernate.getPlayerData(player);
-            Language playerLang = Language.getLanguageByShortName(playerData.getLanguage());
+            Language playerLang;
+            if (cs instanceof Player) {
+                Player player = (Player) cs;
+                PlayerData playerData = Hibernate.getPlayerData(player);
+                playerLang = Language.getLanguageByShortName(playerData.getLanguage());
+            } else {
+                playerLang = Language.getDefaultLanguage();
+            }
+
             Component infoText = ParadubschManager.getInstance().getLanguageManager().get(info, playerLang, args);
             Component message = Component.text(ChatColor.translateAlternateColorCodes('&', ConfigurationManager.getString("chatPrefix")))
                     .append(infoText);
-            player.sendMessage(message);
+            cs.sendMessage(message);
+        }).start();
+    }
+
+    public static void sendPlayerConstant (CommandSender cs, Message.Constant constant, String... args) {
+        new Thread(() -> {
+            Language playerLang;
+            if (cs instanceof Player) {
+                Player player = (Player) cs;
+                PlayerData playerData = Hibernate.getPlayerData(player);
+                playerLang = Language.getLanguageByShortName(playerData.getLanguage());
+            } else {
+                playerLang = Language.getDefaultLanguage();
+            }
+
+            Component constantText = ParadubschManager.getInstance().getLanguageManager().get(constant, playerLang, args);
+            cs.sendMessage(constantText);
         }).start();
     }
 }

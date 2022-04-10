@@ -14,6 +14,10 @@ public class Expect {
         return args.length == len;
     }
 
+    public static Boolean minArgs(Integer len, String[] args) {
+        return args.length >= len;
+    }
+
     public static Boolean playerSender (CommandSender sender) {
         if (!(sender instanceof Player)) {
             // #TODO customizable message

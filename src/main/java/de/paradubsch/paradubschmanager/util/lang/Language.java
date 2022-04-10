@@ -40,4 +40,8 @@ public enum Language {
     public static Language getLanguageByName (String language) {
         return Arrays.stream(Language.values()).filter(l -> l.getName().equals(language)).findFirst().orElse(Language.GERMAN);
     }
+
+    public static Language getDefaultLanguage() {
+        return Language.GERMAN;
+    }
 }

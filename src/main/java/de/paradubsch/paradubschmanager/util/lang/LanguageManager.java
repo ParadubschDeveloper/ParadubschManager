@@ -23,6 +23,10 @@ public class LanguageManager {
                 conf.addDefault("info." + info.getKey(), info.getDefault());
             }
 
+            for (Message.Constant info : Message.Constant.values()){
+                conf.addDefault("constant." + info.getKey(), info.getDefault());
+            }
+
             conf.options().copyDefaults(true);
             ConfigurationManager.saveCustomConfig(conf, shortName + ".lang.yml");
             languageFiles.put(shortName, conf);
@@ -53,5 +57,31 @@ public class LanguageManager {
             translation = translation.replace("%" + i, args[i-1]);
         }
         return Component.text(ChatColor.GRAY + ChatColor.translateAlternateColorCodes('&', translation));
+    }
+
+    public Component get (Message.Constant constant, Language lang, String... args) {
+        FileConfiguration langConf = languageFiles.get(lang.getShortName());
+        String translation = langConf.getString("constant." + constant.getKey());
+        if (translation == null) {
+            translation = constant.getDefault();
+        }
+        for (int i = 1; i <= args.length; i++) {
+            System.out.println("%" + i);
+            translation = translation.replace("%" + i, args[i-1]);
+        }
+        return Component.text(ChatColor.GRAY + ChatColor.translateAlternateColorCodes('&', translation));
+    }
+
+    public String getString (Message.Constant constant, Language lang, String... args) {
+        FileConfiguration langConf = languageFiles.get(lang.getShortName());
+        String translation = langConf.getString("constant." + constant.getKey());
+        if (translation == null) {
+            translation = constant.getDefault();
+        }
+        for (int i = 1; i <= args.length; i++) {
+            System.out.println("%" + i);
+            translation = translation.replace("%" + i, args[i-1]);
+        }
+        return translation;
     }
 }
