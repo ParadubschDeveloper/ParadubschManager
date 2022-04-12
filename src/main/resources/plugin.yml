@@ -15,17 +15,27 @@ commands:
     permission: paradubschmanager.msg
     permission-message: 'Du benötigst die Berechtigung paradubsch.msg um zu chatten!'
     usage: '/msg <Spieler> <Nachricht>'
-  #msgoptions:
-  # description: Ändere experimentelle Optionen temporär um.
-  # aliases: [telloptions]
-  # permission: devmsg.msgoptions
-  # permission-message: 'Du benötigst die Berechtigung devmsg.msgoptions um die Chateinstellungen zu ändern!'
-  # usage: '/msgoptions <enable|disable|list> <Einstellung>'
+  prefix:
+    description: Setze den Prefix vo dir oder von einem Spieler.
+    aliases: [setprefix]
+    permission: paradubschmanager.prefix
+    permission-message: 'Du benötigst die Berechtigung paradubsch.prefix um einen Prefix zu setzen!'
+    usage: '/prefix <Player> <Prefix>'
+  lang:
+    description: Stelle deine Sprache ein.
+    aliases: [ language, sprache ]
+    permission: paradubschmanager.lang
+    permission-message: 'Du benötigst die Berechtigung paradubsch.lang um deine Sprache zu setzen!'
+    usage: '/lang <Sprache>'
+
 
 permissions:
   paradubsch.msg:
     description: 'Erlaubt Zugriff auf den /msg Befehl.'
     default: true
-  #devmsg.msgoptions:
-  # description: 'Erlaubt Zugriff auf den /msgoptions Befehl.'
-  # default: op
+  paradubsch.prefix:
+    description: 'Erlaubt Zugriff auf den /prefix Befehl.'
+    default: false
+  paradubsch.lang:
+    description: 'Erlaubt Zugriff auf den /lang Befehl.'
+    default: true
