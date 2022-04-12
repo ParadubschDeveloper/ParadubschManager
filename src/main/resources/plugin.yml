@@ -24,6 +24,8 @@ commands:
   lang:
     description: Stelle deine Sprache ein.
     aliases: [ language, sprache ]
+    permission: paradubschmanager.lang
+    permission-message: 'Du benötigst die Berechtigung paradubsch.lang um deine Sprache zu setzen!'
     usage: '/lang <Sprache>'
 
 
@@ -34,3 +36,6 @@ permissions:
   paradubsch.prefix:
     description: 'Erlaubt Zugriff auf den /prefix Befehl.'
     default: false
+  paradubsch.lang:
+    description: 'Erlaubt Zugriff auf den /lang Befehl.'
+    default: true

@@ -1,7 +1,9 @@
 package de.paradubsch.paradubschmanager.util.prefix;
 
 import de.paradubsch.paradubschmanager.ParadubschManager;
+import de.paradubsch.paradubschmanager.util.MessageAdapter;
 import io.papermc.paper.event.player.AsyncChatEvent;
+import net.kyori.adventure.text.TextComponent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
@@ -16,6 +18,9 @@ public class ChatMessageListener implements Listener {
 
         e.setCancelled(true);
 
+        String message = ((TextComponent) e.message()).content();
+
+        MessageAdapter.sendChatMessage(e.getPlayer(), message);
 
     }
 }

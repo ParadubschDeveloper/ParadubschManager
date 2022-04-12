@@ -40,7 +40,6 @@ public class LanguageManager {
             translation = msg.getDefault();
         }
         for (int i = 1; i <= args.length; i++) {
-            System.out.println("%" + i);
             translation = translation.replace("%" + i, args[i-1]);
         }
         return Component.text(ChatColor.GRAY + ChatColor.translateAlternateColorCodes('&', translation));
@@ -53,7 +52,6 @@ public class LanguageManager {
             translation = msg.getDefault();
         }
         for (int i = 1; i <= args.length; i++) {
-            System.out.println("%" + i);
             translation = translation.replace("%" + i, args[i-1]);
         }
         return Component.text(ChatColor.GRAY + ChatColor.translateAlternateColorCodes('&', translation));
@@ -66,7 +64,6 @@ public class LanguageManager {
             translation = constant.getDefault();
         }
         for (int i = 1; i <= args.length; i++) {
-            System.out.println("%" + i);
             translation = translation.replace("%" + i, args[i-1]);
         }
         return Component.text(ChatColor.GRAY + ChatColor.translateAlternateColorCodes('&', translation));
@@ -79,7 +76,6 @@ public class LanguageManager {
             translation = constant.getDefault();
         }
         for (int i = 1; i <= args.length; i++) {
-            System.out.println("%" + i);
             translation = translation.replace("%" + i, args[i-1]);
         }
         return translation;

@@ -116,3 +116,8 @@ buildNumber.properties
 # Common working directory
 run/
 /bin/
+
+.apt_generated/
+.apt_generated_tests/
+
+

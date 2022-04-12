@@ -1,7 +1,9 @@
 package de.paradubsch.paradubschmanager.util;
 
+import de.paradubsch.paradubschmanager.util.lang.Message;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class Expect {
@@ -20,10 +22,13 @@ public class Expect {
 
     public static Boolean playerSender (CommandSender sender) {
         if (!(sender instanceof Player)) {
-            // #TODO customizable message
-            sender.sendMessage("§cDieser Befehl kann nur ingame ausgeführt werden!");
+            MessageAdapter.sendPlayerError(sender, Message.Error.CMD_ONLY_FOR_PLAYERS);
         }
 
         return sender instanceof Player;
+    }
+
+    public static Boolean cachedPlayer (@NotNull String player) {
+        return Hibernate.getPlayerData(player) != null;
     }
 }

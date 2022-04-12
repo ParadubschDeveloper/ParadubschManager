@@ -3,7 +3,8 @@ package de.paradubsch.paradubschmanager.util.lang;
 import java.util.Arrays;
 
 public enum Language {
-    GERMAN("Deutsch", "de");
+    GERMAN("Deutsch", "de"),
+    ENGLISH("English", "en");
 
     private final String name;
     private final String shortName;

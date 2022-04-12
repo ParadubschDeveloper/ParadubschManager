@@ -14,12 +14,7 @@ public class ConfigurationManager {
         ParadubschManager instance = ParadubschManager.getInstance();
         FileConfiguration config = instance.getConfig();
 
-        config.addDefault("consolePrefix", "[ParadubschManager] ");
         config.addDefault("chatPrefix", "&8&l[&6&lParadubsch&8&l] &r");
-        config.addDefault("msg.errorPrefix", "&8&l[&6&lParadubsch&8&l] &r&c ");
-        config.addDefault("msg.messageFormat", "§6§l%sender% §9§l» §6§l%reciever% §9§l» §r%message%");
-        config.addDefault("msg.messageSendMe", "Ich");
-        config.addDefault("msg.messageRecieveMe", "Mir");
 
         config.addDefault("hibernate.driver", "com.mysql.cj.jdbc.Driver");
         config.addDefault("hibernate.url", "jdbc:mysql://localhost:3306/paradubschtest?useSSL=false");

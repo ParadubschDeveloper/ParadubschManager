@@ -28,6 +28,11 @@ public class PlayerData {
     @Column(name = "language_preference", length = 16)
     private String language = "de";
 
+    @Getter
+    @Setter
+    @Column(name = "chat_prefix", length = 256)
+    private String chatPrefix = "&7Player";
+
     public PlayerData () {}
 
     public PlayerData(Player player) {

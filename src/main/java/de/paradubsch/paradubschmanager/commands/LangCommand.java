@@ -40,9 +40,8 @@ public class LangCommand implements CommandExecutor, TabCompleter {
             PlayerData playerData = Hibernate.getPlayerData(player);
             playerData.setLanguage(Language.getLanguageByName(args[0]).getShortName());
             Hibernate.save(playerData);
+            MessageAdapter.sendPlayerInfo(player, Message.Info.CMD_LANGUAGE_SET, args[0]);
         }).start();
-
-        MessageAdapter.sendPlayerInfo(player, Message.Info.CMD_LANGUAGE_SET, args[0]);
 
         return true;
     }

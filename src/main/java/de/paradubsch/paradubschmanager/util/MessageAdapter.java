@@ -13,15 +13,13 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class MessageAdapter {
-    public void sendChatMessage(Player player, String msg) {
-        Component message = getPlayerPrefix(player)
-                .append(Component.text(" " + ChatColor.DARK_GRAY + "|"))
-                .append(Component.text(" " + ChatColor.GRAY + msg));
-        Bukkit.getServer().sendMessage(message);
+    public static void sendChatMessage(Player player, String msg) {
+        sendChatConstant(Message.Constant.CHAT_MESSAGE_TEMPLATE, getPlayerPrefix(player), player.getName(), msg);
     }
 
-    public TextComponent getPlayerPrefix(Player player) {
-        return Component.text(ChatColor.GRAY + "Player");
+    public static String getPlayerPrefix(Player player) {
+        PlayerData p = Hibernate.getPlayerData(player);
+        return p.getChatPrefix();
     }
 
     public static void sendConsoleError (String msg) {
@@ -82,5 +80,19 @@ public class MessageAdapter {
             Component constantText = ParadubschManager.getInstance().getLanguageManager().get(constant, playerLang, args);
             cs.sendMessage(constantText);
         }).start();
+    }
+
+    public static void sendChatConstant (Message.Constant constant, String... args) {
+        new Thread(() -> {
+            Language lang = Language.getDefaultLanguage();
+
+            Component constantText = ParadubschManager.getInstance().getLanguageManager().get(constant, lang, args);
+            Bukkit.getServer().sendMessage(constantText);
+        }).start();
+    }
+
+    public static void setPlayerPrefix(PlayerData p, String prefix) {
+        p.setChatPrefix(prefix);
+        Hibernate.save(p);
     }
 }
