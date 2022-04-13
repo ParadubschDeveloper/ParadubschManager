@@ -37,6 +37,16 @@ public class PlayerData {
     @Column(name = "chat_prefix", length = 256)
     private String chatPrefix = "&7Spieler";
 
+    @Getter
+    @Setter
+    @Column(name = "name_color", length = 24)
+    private String nameColor = "&7";
+
+    @Getter
+    @Setter
+    @Column(name = "default_chat_color", length = 24)
+    private String defaultChatColor = "&7";
+
     public PlayerData () {}
 
     public PlayerData(Player player) {

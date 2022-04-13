@@ -27,6 +27,18 @@ commands:
     permission: paradubschmanager.lang
     permission-message: 'Du benötigst die Berechtigung paradubsch.lang um deine Sprache zu setzen!'
     usage: '/lang <Sprache>'
+  namecolor:
+    description: Setze deine Namensfarbe.
+    aliases: [setnamecolor, namesfarbe]
+    permission: paradubschmanager.namecolor
+    permission-message: 'Du benötigst die Berechtigung paradubsch.namecolor um deine Namensfarbe zu setzen!'
+    usage: '/namecolor <Spieler> <Farbe>'
+  defaultchatcolor:
+    description: Setze deine Standard Chatfarbe.
+    aliases: [setdefaultchatcolor, chatcolor, chatfarbe]
+    permission: paradubschmanager.defaultchatcolor
+    permission-message: 'Du benötigst die Berechtigung paradubsch.defaultchatcolor um deine Standard Chatfarbe zu setzen!'
+    usage: '/defaultchatcolor <Name> <Farbe>'
 
 
 permissions:
@@ -39,3 +51,9 @@ permissions:
   paradubsch.lang:
     description: 'Erlaubt Zugriff auf den /lang Befehl.'
     default: true
+  paradubsch.namecolor:
+    description: 'Erlaubt Zugriff auf den /namecolor Befehl.'
+    default: false
+  paradubsch.defaultchatcolor:
+    description: 'Erlaubt Zugriff auf den /defaultchatcolor Befehl.'
+    default: false

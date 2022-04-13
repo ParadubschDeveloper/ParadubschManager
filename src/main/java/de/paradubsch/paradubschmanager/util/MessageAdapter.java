@@ -6,7 +6,6 @@ import de.paradubsch.paradubschmanager.models.PlayerData;
 import de.paradubsch.paradubschmanager.util.lang.Language;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -14,12 +13,29 @@ import org.bukkit.entity.Player;
 
 public class MessageAdapter {
     public static void sendChatMessage(Player player, String msg) {
-        sendChatConstant(Message.Constant.CHAT_MESSAGE_TEMPLATE, getPlayerPrefix(player), player.getName(), msg);
+        sendChatConstant(
+                Message.Constant.CHAT_MESSAGE_TEMPLATE,
+                getPlayerPrefix(player),
+                getPlayerNameColor(player),
+                player.getName(),
+                getPlayerDefaultChatColor(player),
+                msg
+        );
     }
 
     public static String getPlayerPrefix(Player player) {
         PlayerData p = Hibernate.getPlayerData(player);
         return p.getChatPrefix();
+    }
+
+    public static String getPlayerNameColor(Player player) {
+        PlayerData p = Hibernate.getPlayerData(player);
+        return p.getNameColor();
+    }
+
+    public static String getPlayerDefaultChatColor(Player player) {
+        PlayerData p = Hibernate.getPlayerData(player);
+        return p.getDefaultChatColor();
     }
 
     public static void sendConsoleError (String msg) {
@@ -91,8 +107,4 @@ public class MessageAdapter {
         }).start();
     }
 
-    public static void setPlayerPrefix(PlayerData p, String prefix) {
-        p.setChatPrefix(prefix);
-        Hibernate.save(p);
-    }
 }
