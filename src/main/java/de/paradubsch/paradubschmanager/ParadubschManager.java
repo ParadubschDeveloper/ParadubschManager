@@ -2,7 +2,10 @@ package de.paradubsch.paradubschmanager;
 
 import de.paradubsch.paradubschmanager.commands.*;
 import de.paradubsch.paradubschmanager.config.ConfigurationManager;
+import de.paradubsch.paradubschmanager.config.HibernateConfigurator;
+import de.paradubsch.paradubschmanager.lifecycle.TestDatabaseConnection;
 import de.paradubsch.paradubschmanager.lifecycle.PlayerCacher;
+import de.paradubsch.paradubschmanager.lifecycle.QuitListener;
 import de.paradubsch.paradubschmanager.util.lang.LanguageManager;
 import de.paradubsch.paradubschmanager.util.prefix.ChatMessageListener;
 import org.bukkit.Bukkit;
@@ -28,7 +31,10 @@ public final class ParadubschManager extends JavaPlugin {
         Bukkit.getConsoleSender().sendMessage("[Paradubsch] !> Initializing");
         Bukkit.getConsoleSender().sendMessage("[Paradubsch] !>> Registering commands");
         this.registerCommands();
+        Bukkit.getConsoleSender().sendMessage("[Paradubsch] !>> Testing Database Connection");
+        new TestDatabaseConnection();
         Bukkit.getConsoleSender().sendMessage("[Paradubsch] !> Initialization done");
+
     }
 
     @Override
@@ -39,6 +45,7 @@ public final class ParadubschManager extends JavaPlugin {
     private void registerEvents() {
         new ChatMessageListener();
         new PlayerCacher();
+        new QuitListener();
     }
 
     private void registerCommands() {
