@@ -1,10 +1,11 @@
 package de.paradubsch.paradubschmanager;
 
-import de.paradubsch.paradubschmanager.commands.LangCommand;
-import de.paradubsch.paradubschmanager.commands.MsgCommand;
-import de.paradubsch.paradubschmanager.commands.PrefixCommand;
+import de.paradubsch.paradubschmanager.commands.*;
 import de.paradubsch.paradubschmanager.config.ConfigurationManager;
+import de.paradubsch.paradubschmanager.config.HibernateConfigurator;
+import de.paradubsch.paradubschmanager.lifecycle.TestDatabaseConnection;
 import de.paradubsch.paradubschmanager.lifecycle.PlayerCacher;
+import de.paradubsch.paradubschmanager.lifecycle.QuitListener;
 import de.paradubsch.paradubschmanager.util.lang.LanguageManager;
 import de.paradubsch.paradubschmanager.util.prefix.ChatMessageListener;
 import org.bukkit.Bukkit;
@@ -28,33 +29,36 @@ public final class ParadubschManager extends JavaPlugin {
         Bukkit.getConsoleSender().sendMessage("==== Paradubsch ====");
         Bukkit.getConsoleSender().sendMessage("");
         Bukkit.getConsoleSender().sendMessage("[Paradubsch] !> Initializing");
-        Bukkit.getConsoleSender().sendMessage(getConfig().getString("consolePrefix") + "!>> Registering commands");
+        Bukkit.getConsoleSender().sendMessage("[Paradubsch] !>> Registering commands");
+        this.registerCommands();
+        Bukkit.getConsoleSender().sendMessage("[Paradubsch] !>> Testing Database Connection");
+        new TestDatabaseConnection();
+        Bukkit.getConsoleSender().sendMessage("[Paradubsch] !> Initialization done");
+
+    }
+
+    @Override
+    public void onDisable() {
+        Bukkit.getConsoleSender().sendMessage("[Paradubsch] !> Disabled");
+    }
+
+    private void registerEvents() {
+        new ChatMessageListener();
+        new PlayerCacher();
+        new QuitListener();
+    }
+
+    private void registerCommands() {
         Bukkit.getPluginCommand("msg").setExecutor(new MsgCommand());
         Bukkit.getPluginCommand("msg").setTabCompleter(new MsgCommand());
         Bukkit.getPluginCommand("prefix").setExecutor(new PrefixCommand());
         Bukkit.getPluginCommand("prefix").setTabCompleter(new PrefixCommand());
         Bukkit.getPluginCommand("lang").setExecutor(new LangCommand());
         Bukkit.getPluginCommand("lang").setTabCompleter(new LangCommand());
-        Bukkit.getConsoleSender().sendMessage(getConfig().getString("consolePrefix") + "!> Initialization done");
-    }
-
-    @Override
-    public void onDisable() {
-    	// Disable server plugin
-        Bukkit.getConsoleSender().sendMessage(getConfig().getString("consolePrefix") + "!> Disabling");
-        Bukkit.getConsoleSender().sendMessage(getConfig().getString("consolePrefix") + "!>> Unregistering commands");
-
-        Bukkit.getPluginCommand("msg").setExecutor(null);
-        Bukkit.getPluginCommand("msg").setTabCompleter(null);
-        Bukkit.getPluginCommand("prefix").setExecutor(null);
-        Bukkit.getPluginCommand("prefix").setTabCompleter(null);
-
-        Bukkit.getConsoleSender().sendMessage("[Paradubsch] !> Disabled");
-    }
-
-    private static void registerEvents() {
-        new ChatMessageListener();
-        new PlayerCacher();
+        Bukkit.getPluginCommand("namecolor").setExecutor(new NameColorCommand());
+        Bukkit.getPluginCommand("namecolor").setTabCompleter(new NameColorCommand());
+        Bukkit.getPluginCommand("defaultchatcolor").setExecutor(new DefaultChatColorCommand());
+        Bukkit.getPluginCommand("defaultchatcolor").setTabCompleter(new DefaultChatColorCommand());
     }
 
     public static ParadubschManager getInstance() {

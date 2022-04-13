@@ -31,4 +31,8 @@ public class Expect {
     public static Boolean cachedPlayer (@NotNull String player) {
         return Hibernate.getPlayerData(player) != null;
     }
+
+    public static Boolean colorCode(String code) {
+        return code.matches("^(&[0-9a-fk-or])+$");
+    }
 }

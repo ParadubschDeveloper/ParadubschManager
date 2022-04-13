@@ -2,8 +2,8 @@ package de.paradubsch.paradubschmanager.util;
 
 import de.paradubsch.paradubschmanager.config.HibernateConfigurator;
 import de.paradubsch.paradubschmanager.models.PlayerData;
+import lombok.Cleanup;
 import org.bukkit.entity.Player;
-import org.hibernate.Filter;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -16,7 +16,8 @@ public class Hibernate {
     public static void cachePlayerName(Player p) {
         new Thread(() -> {
             Transaction transaction = null;
-            try (Session session = HibernateConfigurator.getSessionFactory().openSession()) {
+            try {
+                @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
 
                 transaction = session.beginTransaction();
 
@@ -39,7 +40,8 @@ public class Hibernate {
 
     public static PlayerData getPlayerData(Player p) {
         Transaction transaction = null;
-        try (Session session = HibernateConfigurator.getSessionFactory().openSession()) {
+        try {
+            @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
 
             transaction = session.beginTransaction();
 
@@ -62,7 +64,8 @@ public class Hibernate {
 
     public static void save (Object o) {
         Transaction transaction = null;
-        try (Session session = HibernateConfigurator.getSessionFactory().openSession()) {
+        try {
+            @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
 
             transaction = session.beginTransaction();
 
@@ -77,7 +80,8 @@ public class Hibernate {
     }
 
     public static PlayerData getPlayerData(String playerName) {
-        try (Session session = HibernateConfigurator.getSessionFactory().openSession()) {
+        try {
+            @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
 
             CriteriaBuilder cb = session.getCriteriaBuilder();
             CriteriaQuery<PlayerData> cq = cb.createQuery(PlayerData.class);

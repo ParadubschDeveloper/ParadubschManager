@@ -25,6 +25,8 @@ public class ConfigurationManager {
         config.addDefault("hibernate.currentSessionContextClass", "thread");
         config.addDefault("hibernate.hmb2ddlAuto", "update");
 
+        config.addDefault("hibernate.cachingEnabled", "false");
+
         config.options().copyDefaults(true);
         instance.saveConfig();
     }
