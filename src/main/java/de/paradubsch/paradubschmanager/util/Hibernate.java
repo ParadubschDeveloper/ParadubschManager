@@ -3,7 +3,6 @@ package de.paradubsch.paradubschmanager.util;
 import de.paradubsch.paradubschmanager.config.HibernateConfigurator;
 import de.paradubsch.paradubschmanager.models.PlayerData;
 import org.bukkit.entity.Player;
-import org.hibernate.Filter;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 

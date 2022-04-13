@@ -29,6 +29,9 @@ public class HibernateConfigurator {
 
                 settings.put(Environment.HBM2DDL_AUTO, ConfigurationManager.getString("hibernate.hmb2ddlAuto"));
 
+                settings.put(Environment.USE_SECOND_LEVEL_CACHE, true);
+                settings.put(Environment.CACHE_REGION_FACTORY, "org.hibernate.cache.ehcache.EhCacheRegionFactory");
+
                 configuration.setProperties(settings);
 
                 // Register Database Models

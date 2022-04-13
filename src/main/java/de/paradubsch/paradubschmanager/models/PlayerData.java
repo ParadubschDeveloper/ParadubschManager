@@ -4,11 +4,15 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.entity.Player;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 
 @Data
 @Entity
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Table(name = "player_data", indexes = @Index(name = "player_data_index", columnList = "name"))
 public class PlayerData {
 
@@ -31,7 +35,7 @@ public class PlayerData {
     @Getter
     @Setter
     @Column(name = "chat_prefix", length = 256)
-    private String chatPrefix = "&7Player";
+    private String chatPrefix = "&7Spieler";
 
     public PlayerData () {}
 
