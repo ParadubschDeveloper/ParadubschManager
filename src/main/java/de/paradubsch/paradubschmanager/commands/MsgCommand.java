@@ -25,24 +25,24 @@ public class MsgCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(@NotNull CommandSender s, @NotNull Command cmd, @NotNull String arg, String[] args) {
         if (!Expect.minArgs(1, args)) {
-            MessageAdapter.sendPlayerError(s, Message.Error.CMD_RECEIVER_NOT_PROVIDED);
+            MessageAdapter.sendMessage(s, Message.Error.CMD_RECEIVER_NOT_PROVIDED);
             return true;
         }
 
         if (!Expect.playerString(args[0])) {
-            MessageAdapter.sendPlayerError(s, Message.Error.CMD_RECEIVER_NOT_PLAYER, args[0]);
+            MessageAdapter.sendMessage(s, Message.Error.CMD_RECEIVER_NOT_PLAYER, args[0]);
             return true;
         }
 
         if (!Expect.minArgs(2, args)) {
-            MessageAdapter.sendPlayerError(s, Message.Error.CMD_MESSAGE_NOT_PROVIDED);
+            MessageAdapter.sendMessage(s, Message.Error.CMD_MESSAGE_NOT_PROVIDED);
             return true;
         }
 
         Player receiver = Bukkit.getPlayer(args[0]);
 
         if (receiver == null) {
-            MessageAdapter.sendPlayerError(s, Message.Error.CMD_RECEIVER_NOT_ONLINE, args[0]);
+            MessageAdapter.sendMessage(s, Message.Error.CMD_RECEIVER_NOT_ONLINE, args[0]);
             return true;
         }
 
@@ -61,7 +61,7 @@ public class MsgCommand implements CommandExecutor, TabCompleter {
                 playerLang = Language.getDefaultLanguage();
             }
 
-            MessageAdapter.sendPlayerConstant(
+            MessageAdapter.sendUnprefixedMessage(
                     s,
                     Message.Constant.MSG_TEMPLATE,
                     ParadubschManager.getInstance().getLanguageManager().getString(Message.Constant.FROM_YOU, playerLang),
@@ -80,7 +80,7 @@ public class MsgCommand implements CommandExecutor, TabCompleter {
                 sender = ParadubschManager.getInstance().getLanguageManager().getString(Message.Constant.SERVER_CONSOLE, playerLang);
             }
 
-            MessageAdapter.sendPlayerConstant(
+            MessageAdapter.sendUnprefixedMessage(
                     receiver,
                     Message.Constant.MSG_TEMPLATE,
                     sender,

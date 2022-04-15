@@ -27,12 +27,12 @@ public class LangCommand implements CommandExecutor, TabCompleter {
         Player player = (Player) sender;
 
         if (Expect.argLen(0, args)) {
-            MessageAdapter.sendPlayerError(player, Message.Error.CMD_LANGUAGE_NOT_PROVIDED);
+            MessageAdapter.sendMessage(player, Message.Error.CMD_LANGUAGE_NOT_PROVIDED);
             return true;
         }
 
         if (!Language.isLanguage(args[0])) {
-            MessageAdapter.sendPlayerError(player, Message.Error.CMD_LANGUAGE_NOT_FOUND, args[0]);
+            MessageAdapter.sendMessage(player, Message.Error.CMD_LANGUAGE_NOT_FOUND, args[0]);
             return true;
         }
 
@@ -40,7 +40,7 @@ public class LangCommand implements CommandExecutor, TabCompleter {
             PlayerData playerData = Hibernate.getPlayerData(player);
             playerData.setLanguage(Language.getLanguageByName(args[0]).getShortName());
             Hibernate.save(playerData);
-            MessageAdapter.sendPlayerInfo(player, Message.Info.CMD_LANGUAGE_SET, args[0]);
+            MessageAdapter.sendMessage(player, Message.Info.CMD_LANGUAGE_SET, args[0]);
         }).start();
 
         return true;

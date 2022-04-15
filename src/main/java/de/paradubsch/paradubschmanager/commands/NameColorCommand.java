@@ -5,7 +5,6 @@ import de.paradubsch.paradubschmanager.util.Expect;
 import de.paradubsch.paradubschmanager.util.Hibernate;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.lang.Message;
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -20,36 +19,36 @@ public class NameColorCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (!Expect.minArgs(1, args)) {
-            MessageAdapter.sendPlayerError(sender, Message.Error.CMD_PLAYER_NOT_PROVIDED);
+            MessageAdapter.sendMessage(sender, Message.Error.CMD_PLAYER_NOT_PROVIDED);
             return true;
         }
 
         if (!Expect.playerString(args[0])) {
-            MessageAdapter.sendPlayerError(sender, Message.Error.CMD_RECEIVER_NOT_PLAYER, args[0]);
+            MessageAdapter.sendMessage(sender, Message.Error.CMD_RECEIVER_NOT_PLAYER, args[0]);
             return true;
         }
 
         if (!Expect.argLen(2, args)) {
-            MessageAdapter.sendPlayerError(sender, Message.Error.CMD_COLOR_NOT_PROVIDED);
+            MessageAdapter.sendMessage(sender, Message.Error.CMD_COLOR_NOT_PROVIDED);
             return true;
         }
 
         if (!Expect.colorCode(args[1])) {
-            MessageAdapter.sendPlayerError(sender, Message.Error.CMD_COLOR_NOT_PROVIDED);
+            MessageAdapter.sendMessage(sender, Message.Error.CMD_COLOR_NOT_PROVIDED);
             return true;
         }
 
         new Thread(() -> {
             PlayerData pd = Hibernate.getPlayerData(args[0]);
             if (pd == null) {
-                MessageAdapter.sendPlayerError(sender, Message.Error.CMD_PLAYER_NEVER_ONLINE, args[0]);
+                MessageAdapter.sendMessage(sender, Message.Error.CMD_PLAYER_NEVER_ONLINE, args[0]);
                 return;
             }
 
             pd.setNameColor(args[1]);
             Hibernate.save(pd);
 
-            MessageAdapter.sendPlayerInfo(sender, Message.Info.CMD_DEFAULT_CHAT_COLOR_SET, pd.getName(), args[1]);
+            MessageAdapter.sendMessage(sender, Message.Info.CMD_DEFAULT_CHAT_COLOR_SET, pd.getName(), args[1]);
         }).start();
 
         return true;
