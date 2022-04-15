@@ -1,7 +1,10 @@
 package de.paradubsch.paradubschmanager.util.prefix;
 
 import de.paradubsch.paradubschmanager.ParadubschManager;
+import de.paradubsch.paradubschmanager.models.PlayerData;
+import de.paradubsch.paradubschmanager.util.Hibernate;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
+import de.paradubsch.paradubschmanager.util.lang.Message;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import net.kyori.adventure.text.TextComponent;
 import org.bukkit.event.EventHandler;
@@ -20,7 +23,15 @@ public class ChatMessageListener implements Listener {
 
         String message = ((TextComponent) e.message()).content();
 
-        MessageAdapter.sendChatMessage(e.getPlayer(), message);
+        PlayerData pd = Hibernate.getPlayerData(e.getPlayer());
 
+        MessageAdapter.broadcastMessage(
+                Message.Constant.CHAT_MESSAGE_TEMPLATE,
+                pd.getChatPrefix(),
+                pd.getNameColor(),
+                e.getPlayer().getName(),
+                pd.getDefaultChatColor(),
+                message
+        );
     }
 }

@@ -22,7 +22,7 @@ public class Expect {
 
     public static Boolean playerSender (CommandSender sender) {
         if (!(sender instanceof Player)) {
-            MessageAdapter.sendPlayerError(sender, Message.Error.CMD_ONLY_FOR_PLAYERS);
+            MessageAdapter.sendMessage(sender, Message.Error.CMD_ONLY_FOR_PLAYERS);
         }
 
         return sender instanceof Player;

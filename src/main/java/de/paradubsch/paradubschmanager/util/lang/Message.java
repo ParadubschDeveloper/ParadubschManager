@@ -1,7 +1,7 @@
 package de.paradubsch.paradubschmanager.util.lang;
 
 public class Message {
-    public enum Error {
+    public enum Error implements BaseMessageType {
         CMD_LANGUAGE_NOT_PROVIDED("cmdLanguageNotProvided", "&cDu musst eine Sprache angeben!"),
         CMD_LANGUAGE_NOT_FOUND("cmdLanguageNotFound", "Die Sprache &d%1 &7konnte &cnicht &7gefunden werden!"),
         CMD_RECEIVER_NOT_PROVIDED("cmdReceiverNotProvided", "&cDu musst einen Empfänger angeben!"),
@@ -22,15 +22,22 @@ public class Message {
             this.def = def;
         }
 
+        @Override
         public String getKey() {
-            return key;
+            return this.key;
         }
 
+        @Override
         public String getDefault() {
-            return def;
+            return this.def;
+        }
+
+        @Override
+        public String getConfigPrefix() {
+            return "error";
         }
     }
-    public enum Info {
+    public enum Info implements BaseMessageType {
         CMD_LANGUAGE_SET("cmdLanguageSet", "Du hast deine Sprache &aerfolgreich &7zu &d%1 &7geändert."),
         CMD_PREFIX_SET("cmdPrefixSet", "Du hast den Prefix von &e%1 &aerfolgreich &7zu &d%2 &7geändert."),
         CMD_NAME_COLOR_SET("cmdNameColorSet", "Du hast die Namensfarbe von &e%1 &aerfolgreich &7zu %2%3 &7geändert."),
@@ -44,16 +51,23 @@ public class Message {
             this.def = def;
         }
 
+        @Override
         public String getKey() {
-            return key;
+            return this.key;
         }
 
+        @Override
         public String getDefault() {
-            return def;
+            return this.def;
+        }
+
+        @Override
+        public String getConfigPrefix() {
+            return "info";
         }
     }
 
-    public enum Constant {
+    public enum Constant implements BaseMessageType {
         SERVER_CONSOLE("constantServerConsole", "&4&lServer Konsole"),
         MSG_TEMPLATE("constantMsgTemplate", "&8[&a%1 &7» &a%2&8] &d%3"),
         FROM_YOU("constantFromYou", "Du"),
@@ -68,12 +82,19 @@ public class Message {
             this.def = def;
         }
 
+        @Override
         public String getKey() {
-            return key;
+            return this.key;
         }
 
+        @Override
         public String getDefault() {
-            return def;
+            return this.def;
+        }
+
+        @Override
+        public String getConfigPrefix() {
+            return "constant";
         }
     }
 }
