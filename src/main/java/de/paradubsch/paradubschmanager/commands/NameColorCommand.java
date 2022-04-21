@@ -14,6 +14,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 public class NameColorCommand implements CommandExecutor, TabCompleter {
     @Override
@@ -38,18 +39,15 @@ public class NameColorCommand implements CommandExecutor, TabCompleter {
             return true;
         }
 
-        new Thread(() -> {
-            PlayerData pd = Hibernate.getPlayerData(args[0]);
+        CompletableFuture.supplyAsync(() -> Hibernate.getPlayerData(args[0])).thenAccept(pd -> {
             if (pd == null) {
                 MessageAdapter.sendMessage(sender, Message.Error.CMD_PLAYER_NEVER_ONLINE, args[0]);
                 return;
             }
-
             pd.setNameColor(args[1]);
-            Hibernate.save(pd);
-
-            MessageAdapter.sendMessage(sender, Message.Info.CMD_DEFAULT_CHAT_COLOR_SET, pd.getName(), args[1]);
-        }).start();
+            CompletableFuture.runAsync(() -> Hibernate.save(pd))
+                    .thenAccept(v -> MessageAdapter.sendMessage(sender, Message.Info.CMD_DEFAULT_CHAT_COLOR_SET, pd.getName(), args[1]));
+        });
 
         return true;
     }

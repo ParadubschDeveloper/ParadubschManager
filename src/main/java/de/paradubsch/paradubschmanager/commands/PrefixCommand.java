@@ -14,6 +14,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 public class PrefixCommand implements CommandExecutor, TabCompleter {
     @Override
@@ -33,23 +34,22 @@ public class PrefixCommand implements CommandExecutor, TabCompleter {
             return true;
         }
 
-        new Thread(() -> {
-            PlayerData pd = Hibernate.getPlayerData(args[0]);
-            if (pd == null) {
-                MessageAdapter.sendMessage(sender, Message.Error.CMD_PLAYER_NEVER_ONLINE, args[0]);
-                return;
-            }
+        StringBuilder prefix = new StringBuilder();
+        for (int i = 1; i < args.length; i++) {
+            prefix.append(args[i]).append(" ");
+        }
 
-            StringBuilder prefix = new StringBuilder();
-            for (int i = 1; i < args.length; i++) {
-                prefix.append(args[i]).append(" ");
-            }
+        CompletableFuture.supplyAsync(() -> Hibernate.getPlayerData(args[0]))
+                .thenAccept(pd -> {
+                    if (pd == null) {
+                        MessageAdapter.sendMessage(sender, Message.Error.CMD_PLAYER_NEVER_ONLINE, args[0]);
+                        return;
+                    }
 
-            pd.setChatPrefix(prefix.toString().trim());
-            Hibernate.save(pd);
+                    pd.setChatPrefix(prefix.toString().trim());
+                    CompletableFuture.runAsync(() -> Hibernate.save(pd)).thenAccept(v -> MessageAdapter.sendMessage(sender, Message.Info.CMD_PREFIX_SET, pd.getName(), prefix.toString().trim()));
+                });
 
-            MessageAdapter.sendMessage(sender, Message.Info.CMD_PREFIX_SET, pd.getName(), prefix.toString().trim());
-        }).start();
         return true;
     }
 

@@ -17,6 +17,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 public class LangCommand implements CommandExecutor, TabCompleter {
     @Override
@@ -36,12 +37,13 @@ public class LangCommand implements CommandExecutor, TabCompleter {
             return true;
         }
 
-        new Thread(() -> {
-            PlayerData playerData = Hibernate.getPlayerData(player);
-            playerData.setLanguage(Language.getLanguageByName(args[0]).getShortName());
-            Hibernate.save(playerData);
-            MessageAdapter.sendMessage(player, Message.Info.CMD_LANGUAGE_SET, args[0]);
-        }).start();
+        CompletableFuture.supplyAsync(() -> {
+            PlayerData pd = Hibernate.getPlayerData(player);
+            pd.setLanguage(Language.getLanguageByName(args[0]).getShortName());
+            return pd;
+        })
+                .thenAcceptAsync(Hibernate::save)
+                .thenAccept(v -> MessageAdapter.sendMessage(player, Message.Info.CMD_LANGUAGE_SET, args[0]));
 
         return true;
     }
