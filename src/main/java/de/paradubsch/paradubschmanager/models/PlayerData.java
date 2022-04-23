@@ -16,36 +16,27 @@ import javax.persistence.*;
 @Table(name = "player_data", indexes = @Index(name = "player_data_index", columnList = "name"))
 public class PlayerData {
 
-    @Getter
-    @Setter
     @Id
     @Column(name = "uuid", length = 36)
     private String uuid;
 
-    @Getter
-    @Setter
     @Column(name = "name", length = 16)
     private String name;
 
-    @Getter
-    @Setter
     @Column(name = "language_preference", length = 16)
     private String language = "de";
 
-    @Getter
-    @Setter
     @Column(name = "chat_prefix", length = 256)
     private String chatPrefix = "&7Spieler";
 
-    @Getter
-    @Setter
     @Column(name = "name_color", length = 24)
     private String nameColor = "&7";
 
-    @Getter
-    @Setter
     @Column(name = "default_chat_color", length = 24)
     private String defaultChatColor = "&7";
+
+    @Column(name = "playtime", columnDefinition = "BIGINT DEFAULT 0")
+    private long playtime = 0L;
 
     public PlayerData () {}
 

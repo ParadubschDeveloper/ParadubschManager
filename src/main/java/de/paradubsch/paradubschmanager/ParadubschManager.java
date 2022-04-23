@@ -2,18 +2,24 @@ package de.paradubsch.paradubschmanager;
 
 import de.paradubsch.paradubschmanager.commands.*;
 import de.paradubsch.paradubschmanager.config.ConfigurationManager;
-import de.paradubsch.paradubschmanager.config.HibernateConfigurator;
+import de.paradubsch.paradubschmanager.lifecycle.playtime.PlaytimeManager;
 import de.paradubsch.paradubschmanager.lifecycle.TestDatabaseConnection;
 import de.paradubsch.paradubschmanager.lifecycle.PlayerCacher;
 import de.paradubsch.paradubschmanager.lifecycle.QuitListener;
 import de.paradubsch.paradubschmanager.util.lang.LanguageManager;
 import de.paradubsch.paradubschmanager.util.prefix.ChatMessageListener;
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class ParadubschManager extends JavaPlugin {
     private static ParadubschManager instance;
+
+    @Getter
     private LanguageManager languageManager;
+
+    @Getter
+    private PlaytimeManager playtimeManager;
 
     @Override
     public void onEnable() {
@@ -21,6 +27,7 @@ public final class ParadubschManager extends JavaPlugin {
         ConfigurationManager.copyDefaultConfiguration();
         registerEvents();
         languageManager = new LanguageManager();
+        playtimeManager = new PlaytimeManager();
 
         Bukkit.getConsoleSender().sendMessage("");
         Bukkit.getConsoleSender().sendMessage("==== Paradubsch ====");
@@ -59,13 +66,10 @@ public final class ParadubschManager extends JavaPlugin {
         Bukkit.getPluginCommand("namecolor").setTabCompleter(new NameColorCommand());
         Bukkit.getPluginCommand("defaultchatcolor").setExecutor(new DefaultChatColorCommand());
         Bukkit.getPluginCommand("defaultchatcolor").setTabCompleter(new DefaultChatColorCommand());
+        Bukkit.getPluginCommand("playtime").setExecutor(new PlaytimeCommand());
     }
 
     public static ParadubschManager getInstance() {
         return instance;
-    }
-
-    public LanguageManager getLanguageManager() {
-        return languageManager;
     }
 }

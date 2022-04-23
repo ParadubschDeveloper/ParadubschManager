@@ -39,6 +39,12 @@ commands:
     permission: paradubschmanager.defaultchatcolor
     permission-message: 'Du benötigst die Berechtigung paradubsch.defaultchatcolor um deine Standard Chatfarbe zu setzen!'
     usage: '/defaultchatcolor <Name> <Farbe>'
+  playtime:
+    description: Schaue deine Spielzeit an.
+    aliases: [ spielzeit ]
+    permission: paradubschmanager.playtime
+    permission-message: 'Du benötigst die Berechtigung paradubsch.playtime um deine Spielzeit zu sehen!'
+    usage: '/playtime <Name>'
 
 
 permissions:
@@ -57,3 +63,6 @@ permissions:
   paradubsch.defaultchatcolor:
     description: 'Erlaubt Zugriff auf den /defaultchatcolor Befehl.'
     default: false
+  paradubschmanager.playtime:
+    description: 'Erlaubt Zugriff auf den /playtime Befehl.'
+    default: true
