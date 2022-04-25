@@ -17,22 +17,22 @@ import javax.persistence.*;
 public class PlayerData {
 
     @Id
-    @Column(name = "uuid", length = 36)
+    @Column(name = "uuid", columnDefinition = "VARCHAR(36)")
     private String uuid;
 
-    @Column(name = "name", length = 16)
+    @Column(name = "name", columnDefinition = "VARCHAR(16)", nullable = false)
     private String name;
 
-    @Column(name = "language_preference", length = 16)
+    @Column(name = "language_preference", columnDefinition = "VARCHAR(16) DEFAULT 'de'")
     private String language = "de";
 
-    @Column(name = "chat_prefix", length = 256)
+    @Column(name = "chat_prefix", columnDefinition = "VARCHAR(256) DEFAULT '&7Spieler'")
     private String chatPrefix = "&7Spieler";
 
-    @Column(name = "name_color", length = 24)
+    @Column(name = "name_color", columnDefinition = "VARCHAR(24) DEFAULT '&7'")
     private String nameColor = "&7";
 
-    @Column(name = "default_chat_color", length = 24)
+    @Column(name = "default_chat_color", columnDefinition = "VARCHAR(24) DEFAULT '&7'")
     private String defaultChatColor = "&7";
 
     @Column(name = "playtime", columnDefinition = "BIGINT DEFAULT 0")

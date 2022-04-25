@@ -18,6 +18,15 @@ public class PlaytimeManager implements Listener {
 
     public PlaytimeManager() {
         ParadubschManager.getInstance().getServer().getPluginManager().registerEvents(this, ParadubschManager.getInstance());
+        Bukkit.getOnlinePlayers().forEach(player -> {
+            CompletableFuture.supplyAsync(() -> Hibernate.getPlayerData(player))
+                    .thenAccept(pd -> {
+                        PlaytimeInstance pi = new PlaytimeInstance();
+                        pi.setPlaytime(pd.getPlaytime());
+                        pi.setLastRecordTime(System.currentTimeMillis());
+                        cachedData.put(player, pi);
+                    });
+        });
         enableScheduler();
     }
 
