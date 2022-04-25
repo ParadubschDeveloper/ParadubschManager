@@ -46,7 +46,7 @@ public class DefaultChatColorCommand implements CommandExecutor, TabCompleter {
             }
             pd.setDefaultChatColor(args[1]);
             CompletableFuture.runAsync(() -> Hibernate.save(pd))
-                    .thenAccept(v -> MessageAdapter.sendMessage(sender, Message.Info.CMD_NAME_COLOR_SET, pd.getName(), args[1], pd.getName()));
+                    .thenAccept(v -> MessageAdapter.sendMessage(sender, Message.Info.CMD_DEFAULT_CHAT_COLOR_SET, pd.getName(), args[1], pd.getName()));
         });
 
         return true;

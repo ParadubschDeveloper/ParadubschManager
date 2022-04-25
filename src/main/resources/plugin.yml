@@ -12,33 +12,39 @@ commands:
   msg:
     description: Schreibe einem anderen Spieler eine private Nachricht.
     aliases: [tell]
-    permission: paradubschmanager.msg
+    permission: paradubsch.msg
     permission-message: 'Du benötigst die Berechtigung paradubsch.msg um zu chatten!'
     usage: '/msg <Spieler> <Nachricht>'
   prefix:
     description: Setze den Prefix vo dir oder von einem Spieler.
     aliases: [setprefix]
-    permission: paradubschmanager.prefix
+    permission: paradubsch.prefix
     permission-message: 'Du benötigst die Berechtigung paradubsch.prefix um einen Prefix zu setzen!'
     usage: '/prefix <Player> <Prefix>'
   lang:
     description: Stelle deine Sprache ein.
     aliases: [ language, sprache ]
-    permission: paradubschmanager.lang
+    permission: paradubsch.lang
     permission-message: 'Du benötigst die Berechtigung paradubsch.lang um deine Sprache zu setzen!'
     usage: '/lang <Sprache>'
   namecolor:
     description: Setze deine Namensfarbe.
     aliases: [setnamecolor, namesfarbe]
-    permission: paradubschmanager.namecolor
+    permission: paradubsch.namecolor
     permission-message: 'Du benötigst die Berechtigung paradubsch.namecolor um deine Namensfarbe zu setzen!'
     usage: '/namecolor <Spieler> <Farbe>'
   defaultchatcolor:
     description: Setze deine Standard Chatfarbe.
     aliases: [setdefaultchatcolor, chatcolor, chatfarbe]
-    permission: paradubschmanager.defaultchatcolor
+    permission: paradubsch.defaultchatcolor
     permission-message: 'Du benötigst die Berechtigung paradubsch.defaultchatcolor um deine Standard Chatfarbe zu setzen!'
     usage: '/defaultchatcolor <Name> <Farbe>'
+  playtime:
+    description: Schaue deine Spielzeit an.
+    aliases: [ spielzeit ]
+    permission: paradubsch.playtime.self
+    permission-message: 'Du benötigst die Berechtigung paradubsch.playtime um deine Spielzeit zu sehen!'
+    usage: '/playtime <Name>'
 
 
 permissions:
@@ -56,4 +62,10 @@ permissions:
     default: false
   paradubsch.defaultchatcolor:
     description: 'Erlaubt Zugriff auf den /defaultchatcolor Befehl.'
+    default: false
+  paradubsch.playtime.self:
+    description: 'Erlaubt Zugriff auf den /playtime Befehl.'
+    default: true
+  paradubsch.playtime.other:
+    description: 'Erlaubt Zugriff auf den /playtime <Name> Befehl.'
     default: false
