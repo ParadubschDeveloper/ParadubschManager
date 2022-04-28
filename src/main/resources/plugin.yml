@@ -45,6 +45,12 @@ commands:
     permission: paradubsch.playtime.self
     permission-message: 'Du benötigst die Berechtigung paradubsch.playtime um deine Spielzeit zu sehen!'
     usage: '/playtime <Name>'
+  money:
+    description: Schaue deine Geldmenge an.
+    aliases: [ geld, gelth, bal, balance ]
+    permission: paradubsch.money.self
+    permission-message: 'Du benötigst die Berechtigung paradubsch.money.self um deine Geldmenge zu sehen!'
+    usage: '/money'
 
 
 permissions:
@@ -69,3 +75,21 @@ permissions:
   paradubsch.playtime.other:
     description: 'Erlaubt Zugriff auf den /playtime <Name> Befehl.'
     default: false
+  paradubsch.money.self:
+    description: 'Erlaubt Zugriff auf den /money Befehl.'
+    default: true
+  paradubsch.money.pay:
+    description: 'Erlaubt Zugriff auf den /money pay Befehl.'
+    default: true
+  paradubsch.money.from:
+    description: 'Erlaubt Zugriff auf den /money from Befehl.'
+    default: false
+  paradubsch.money.set:
+    description: 'Erlaubt Zugriff auf den /money set Befehl.'
+    default: false
+  paradubsch.money.add:
+    description: 'Erlaubt Zugriff auf den /money add Befehl.'
+    default: false
+  paradubsch.money.top:
+    description: 'Erlaubt Zugriff auf den /money top Befehl.'
+    default: true

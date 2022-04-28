@@ -38,6 +38,9 @@ public class PlayerData {
     @Column(name = "playtime", columnDefinition = "BIGINT DEFAULT 0")
     private long playtime = 0L;
 
+    @Column(name ="money", columnDefinition = "BIGINT DEFAULT 150")
+    private long money = 150L;
+
     public PlayerData () {}
 
     public PlayerData(Player player) {

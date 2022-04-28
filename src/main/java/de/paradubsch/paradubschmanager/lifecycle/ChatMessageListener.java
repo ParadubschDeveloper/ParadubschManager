@@ -1,4 +1,4 @@
-package de.paradubsch.paradubschmanager.util.prefix;
+package de.paradubsch.paradubschmanager.lifecycle;
 
 import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.models.PlayerData;

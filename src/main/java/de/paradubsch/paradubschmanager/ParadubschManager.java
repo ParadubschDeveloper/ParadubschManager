@@ -7,7 +7,7 @@ import de.paradubsch.paradubschmanager.lifecycle.TestDatabaseConnection;
 import de.paradubsch.paradubschmanager.lifecycle.PlayerCacher;
 import de.paradubsch.paradubschmanager.lifecycle.QuitListener;
 import de.paradubsch.paradubschmanager.util.lang.LanguageManager;
-import de.paradubsch.paradubschmanager.util.prefix.ChatMessageListener;
+import de.paradubsch.paradubschmanager.lifecycle.ChatMessageListener;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -67,6 +67,9 @@ public final class ParadubschManager extends JavaPlugin {
         Bukkit.getPluginCommand("defaultchatcolor").setExecutor(new DefaultChatColorCommand());
         Bukkit.getPluginCommand("defaultchatcolor").setTabCompleter(new DefaultChatColorCommand());
         Bukkit.getPluginCommand("playtime").setExecutor(new PlaytimeCommand());
+        Bukkit.getPluginCommand("playtime").setTabCompleter(new PlaytimeCommand());
+        Bukkit.getPluginCommand("money").setExecutor(new MoneyCommand());
+        Bukkit.getPluginCommand("money").setTabCompleter(new MoneyCommand());
     }
 
     public static ParadubschManager getInstance() {
