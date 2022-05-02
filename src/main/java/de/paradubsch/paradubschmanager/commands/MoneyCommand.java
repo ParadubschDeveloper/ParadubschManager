@@ -1,5 +1,7 @@
 package de.paradubsch.paradubschmanager.commands;
 
+import de.paradubsch.paradubschmanager.ParadubschManager;
+import de.paradubsch.paradubschmanager.models.PlayerData;
 import de.paradubsch.paradubschmanager.util.Expect;
 import de.paradubsch.paradubschmanager.util.Hibernate;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
@@ -80,12 +82,17 @@ public class MoneyCommand implements CommandExecutor, TabCompleter {
             }
 
             Long transferAmount = Expect.parseLong(args[2]);
-            String transferAmountString = String.format(Locale.GERMAN, "%,d", transferAmount);
 
             if (transferAmount == null) {
                 MessageAdapter.sendMessage(sender, Message.Error.CMD_MONEY_AMOUNT_NOT_VALID, args[2]);
                 return;
             }
+
+            if (transferAmount <= 0) {
+                MessageAdapter.sendMessage(sender, Message.Error.CMD_MONEY_AMOUNT_NOT_VALID, args[2]);
+                return;
+            }
+            String transferAmountString = String.format(Locale.GERMAN, "%,d", transferAmount);
 
             CompletableFuture.supplyAsync(() -> Hibernate.getPlayerData(player)).thenAccept(playerData -> {
                 if (playerData.getMoney() < transferAmount) {
@@ -114,19 +121,139 @@ public class MoneyCommand implements CommandExecutor, TabCompleter {
     }
 
     private static void moneyFrom (CommandSender sender, String[] args) {
-        // TODO: Implement
+        if (!sender.hasPermission("paradubsch.money.from")) {
+            MessageAdapter.sendMessage(sender, Message.Error.NO_PERMISSION);
+            return;
+        }
+
+        if (!Expect.minArgs(2, args)) {
+            MessageAdapter.sendMessage(sender, Message.Error.CMD_PLAYER_NOT_PROVIDED);
+            return;
+        }
+
+        CompletableFuture.supplyAsync(() -> Expect.cachedPlayer(args[1])).thenAccept(isCachedPlayer -> {
+            if (!isCachedPlayer) {
+                MessageAdapter.sendMessage(sender, Message.Error.CMD_PLAYER_NEVER_ONLINE, args[1]);
+                return;
+            }
+
+            CompletableFuture.supplyAsync(() -> Hibernate.getPlayerData(args[1])).thenAccept(targetPlayerData -> {
+                String money = String.format(Locale.GERMAN, "%,d", targetPlayerData.getMoney());
+                MessageAdapter.sendMessage(sender, Message.Info.CMD_MONEY_DISPLAY_OTHER, targetPlayerData.getName(), money);
+            });
+
+        });
     }
 
     private static void moneySet (CommandSender sender, String[] args) {
-        // TODO: Implement
+        if (!sender.hasPermission("paradubsch.money.set")) {
+            MessageAdapter.sendMessage(sender, Message.Error.NO_PERMISSION);
+            return;
+        }
+
+        if (!Expect.minArgs(2, args)) {
+            MessageAdapter.sendMessage(sender, Message.Error.CMD_PLAYER_NOT_PROVIDED);
+            return;
+        }
+
+        CompletableFuture.supplyAsync(() -> Expect.cachedPlayer(args[1])).thenAccept(isCachedPlayer -> {
+            if (!isCachedPlayer) {
+                MessageAdapter.sendMessage(sender, Message.Error.CMD_PLAYER_NEVER_ONLINE, args[1]);
+                return;
+            }
+
+            if (!Expect.argLen(3, args)) {
+                MessageAdapter.sendMessage(sender, Message.Error.CMD_MONEY_AMOUNT_NOT_PROVIDED);
+                return;
+            }
+
+            Long transferAmount = Expect.parseLong(args[2]);
+
+            if (transferAmount == null) {
+                MessageAdapter.sendMessage(sender, Message.Error.CMD_MONEY_AMOUNT_NOT_VALID, args[2]);
+                return;
+            }
+
+            if (transferAmount < 0) {
+                MessageAdapter.sendMessage(sender, Message.Error.CMD_MONEY_AMOUNT_NOT_VALID, args[2]);
+                return;
+            }
+            String transferAmountString = String.format(Locale.GERMAN, "%,d", transferAmount);
+
+            CompletableFuture.supplyAsync(() -> Hibernate.getPlayerData(args[1]))
+                    .thenApply(targetPlayerData -> {
+                        targetPlayerData.setMoney(transferAmount);
+                        MessageAdapter.sendMessage(sender, Message.Info.CMD_MONEY_SET, targetPlayerData.getName(), transferAmountString);
+
+                        return targetPlayerData;
+                    })
+                    .thenAccept(Hibernate::save);
+        });
     }
 
     private static void moneyAdd (CommandSender sender, String[] args) {
-        // TODO: Implement
+        if (!sender.hasPermission("paradubsch.money.add")) {
+            MessageAdapter.sendMessage(sender, Message.Error.NO_PERMISSION);
+            return;
+        }
+
+        if (!Expect.minArgs(2, args)) {
+            MessageAdapter.sendMessage(sender, Message.Error.CMD_PLAYER_NOT_PROVIDED);
+            return;
+        }
+
+        CompletableFuture.supplyAsync(() -> Expect.cachedPlayer(args[1])).thenAccept(isCachedPlayer -> {
+            if (!isCachedPlayer) {
+                MessageAdapter.sendMessage(sender, Message.Error.CMD_PLAYER_NEVER_ONLINE, args[1]);
+                return;
+            }
+
+            if (!Expect.argLen(3, args)) {
+                MessageAdapter.sendMessage(sender, Message.Error.CMD_MONEY_AMOUNT_NOT_PROVIDED);
+                return;
+            }
+
+            Long transferAmount = Expect.parseLong(args[2]);
+
+            if (transferAmount == null) {
+                MessageAdapter.sendMessage(sender, Message.Error.CMD_MONEY_AMOUNT_NOT_VALID, args[2]);
+                return;
+            }
+
+            String transferAmountString = String.format(Locale.GERMAN, "%,d", transferAmount);
+
+            CompletableFuture.supplyAsync(() -> Hibernate.getPlayerData(args[1]))
+                    .thenApply(targetPlayerData -> {
+                        targetPlayerData.setMoney(targetPlayerData.getMoney() + transferAmount);
+                        MessageAdapter.sendMessage(sender, Message.Info.CMD_MONEY_SET, targetPlayerData.getName(), transferAmountString);
+
+                        return targetPlayerData;
+                    })
+                    .thenAccept(Hibernate::save);
+        });
     }
 
     private static void moneyTop (CommandSender sender) {
-        // TODO: Implement
+        if (!sender.hasPermission("paradubsch.money.top")) {
+            MessageAdapter.sendMessage(sender, Message.Error.NO_PERMISSION);
+            return;
+        }
+
+        CompletableFuture.supplyAsync(Hibernate::getMoneyTop).thenAccept(playerDataList -> {
+            if (playerDataList.isEmpty()) {
+                MessageAdapter.sendMessage(sender, Message.Error.CMD_MONEY_TOP_EMPTY);
+                return;
+            }
+
+            MessageAdapter.sendMessage(sender, Message.Info.CMD_MONEY_TOP_HEADER);
+            Bukkit.getScheduler().runTaskLater(ParadubschManager.getInstance(), () -> {
+                for (int i = 0; i < playerDataList.size(); i++) {
+                    PlayerData playerData = playerDataList.get(i);
+                    MessageAdapter.sendMessage(sender, Message.Info.CMD_MONEY_TOP_PLAYER, (i+1) + "", playerData.getName(), String.format(Locale.GERMAN, "%,d", playerData.getMoney()));
+                }
+            }, 1L);
+
+        });
     }
 
     private static void unknownSubcommand (CommandSender sender, String subCommand) {

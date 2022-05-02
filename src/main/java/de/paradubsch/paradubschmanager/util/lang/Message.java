@@ -15,10 +15,11 @@ public class Message {
         CMD_COLOR_NOT_PROVIDED("cmdColorNotProvided", "&cDu musst eine Farbe angeben!"),
         NO_PERMISSION("noPermission", "&cDu hast keine Berechtigung!"),
         CMD_MONEY_UNKNOWN_SUBCOMMAND("cmdMoneyUnknownSubcommand", "Der Unterbefehl &d%1 &7konnte &cnicht &7gefunden werden!"),
-        CMD_MONEY_AMOUNT_NOT_PROVIDED("cmdMoneyAmountNotProvided", "&cDu musst einen Betrag angeben, den du überweisen willst!"),
+        CMD_MONEY_AMOUNT_NOT_PROVIDED("cmdMoneyAmountNotProvided", "&cDu musst einen Geldbetrag angeben!"),
         CMD_MONEY_AMOUNT_NOT_VALID("cmdMoneyAmountNotValid", "&7Der Betrag &d%1 &7ist nicht gültig. Bitte wähle eine ganze Zahl!"),
         CMD_MONEY_PAY_NOT_ENOUGH_MONEY("cmdMoneyPayNotEnoughMoney", "&cDu hast nicht genug Geld um &a%1 &e€ &czu überweisen!"),
-        CMD_MONEY_PAY_SELF("cmdMoneyPaySelf", "&cDu kannst dir nicht selbst Geld überweisen!");
+        CMD_MONEY_PAY_SELF("cmdMoneyPaySelf", "&cDu kannst dir nicht selbst Geld überweisen!"),
+        CMD_MONEY_TOP_EMPTY("cmdMoneyTopEmpty", "&cDer Topliste ist leer!");
 
         private final String key;
         private final String def;
@@ -52,7 +53,11 @@ public class Message {
         CMD_OTHER_PLAYTIME("cmdOtherPlaytime", "Die Spielzeit von &e%1 &7beträgt &a%2 &7Tage, &a%3 &7Stunden, &a%4 &7Minuten, &a%5 &7Sekunden."),
         CMD_MONEY_DISPLAY_SELF("cmdMoneyDisplaySelf", "Dein Geld: &a%1 &e€"),
         CMD_MONEY_PAYED("cmdMoneyPayed", "Du hast &a%1 &e€ &7an &d%2 &7überwiesen."),
-        CMD_MONEY_RECEIVED("cmdMoneyReceived", "Du hast &a%1 &e€ &7von &e%2 &7erhalten.");
+        CMD_MONEY_RECEIVED("cmdMoneyReceived", "Du hast &a%1 &e€ &7von &e%2 &7erhalten."),
+        CMD_MONEY_DISPLAY_OTHER("cmdMoneyDisplayOther", "&e%1 &7hat &a%2 &e€"),
+        CMD_MONEY_SET("cmdMoneySet", "Du hast das Geld von &e%1 &aerfolgreich &7zu &a%2 &e€ &7geändert."),
+        CMD_MONEY_TOP_HEADER("cmdMoneyTopHeader", "Top 10 Spieler mit den meisten Geld"),
+        CMD_MONEY_TOP_PLAYER("cmdMoneyTopPlayer", "&a#%1 &7- &e%2 &7- &a%3 &e€");
 
         private final String key;
         private final String def;

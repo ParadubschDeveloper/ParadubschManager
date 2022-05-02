@@ -10,6 +10,7 @@ import org.hibernate.Transaction;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.util.List;
 
 
 public class Hibernate {
@@ -92,6 +93,22 @@ public class Hibernate {
             ));
 
             return session.createQuery(cq).uniqueResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static List<PlayerData> getMoneyTop () {
+        try {
+            @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
+
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<PlayerData> cq = cb.createQuery(PlayerData.class);
+            Root<PlayerData> root = cq.from(PlayerData.class);
+            cq.select(root).orderBy(cb.desc(root.get("money")));
+
+            return session.createQuery(cq).setMaxResults(10).list();
         } catch (Exception e) {
             e.printStackTrace();
             return null;
