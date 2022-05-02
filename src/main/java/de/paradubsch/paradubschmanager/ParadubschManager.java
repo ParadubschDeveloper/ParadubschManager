@@ -26,8 +26,6 @@ public final class ParadubschManager extends JavaPlugin {
         instance = this;
         ConfigurationManager.copyDefaultConfiguration();
         registerEvents();
-        languageManager = new LanguageManager();
-        playtimeManager = new PlaytimeManager();
 
         Bukkit.getConsoleSender().sendMessage("");
         Bukkit.getConsoleSender().sendMessage("==== Paradubsch ====");
@@ -40,6 +38,8 @@ public final class ParadubschManager extends JavaPlugin {
         this.registerCommands();
         Bukkit.getConsoleSender().sendMessage("[Paradubsch] !>> Testing Database Connection");
         new TestDatabaseConnection();
+        languageManager = new LanguageManager();
+        playtimeManager = new PlaytimeManager();
         Bukkit.getConsoleSender().sendMessage("[Paradubsch] !> Initialization done");
 
     }
@@ -70,6 +70,11 @@ public final class ParadubschManager extends JavaPlugin {
         Bukkit.getPluginCommand("playtime").setTabCompleter(new PlaytimeCommand());
         Bukkit.getPluginCommand("money").setExecutor(new MoneyCommand());
         Bukkit.getPluginCommand("money").setTabCompleter(new MoneyCommand());
+        Bukkit.getPluginCommand("sethome").setExecutor(new SethomeCommand());
+        Bukkit.getPluginCommand("sethome").setTabCompleter(new SethomeCommand());
+        Bukkit.getPluginCommand("home").setExecutor(new HomeCommand());
+        Bukkit.getPluginCommand("home").setTabCompleter(new HomeCommand());
+
     }
 
     public static ParadubschManager getInstance() {

@@ -29,9 +29,13 @@ public class MoneyCommand implements CommandExecutor, TabCompleter {
         } else {
             switch (args[0]) {
                 case "pay": moneyPay(sender, args);
+                break;
                 case "from": moneyFrom(sender, args);
+                break;
                 case "set": moneySet(sender, args);
+                break;
                 case "add": moneyAdd(sender, args);
+                break;
                 case "top": moneyTop(sender);
                 break;
                 default: unknownSubcommand(sender, args[0]);
@@ -225,7 +229,7 @@ public class MoneyCommand implements CommandExecutor, TabCompleter {
             CompletableFuture.supplyAsync(() -> Hibernate.getPlayerData(args[1]))
                     .thenApply(targetPlayerData -> {
                         targetPlayerData.setMoney(targetPlayerData.getMoney() + transferAmount);
-                        MessageAdapter.sendMessage(sender, Message.Info.CMD_MONEY_SET, targetPlayerData.getName(), transferAmountString);
+                        MessageAdapter.sendMessage(sender, Message.Info.CMD_MONEY_ADD, targetPlayerData.getName(), transferAmountString);
 
                         return targetPlayerData;
                     })

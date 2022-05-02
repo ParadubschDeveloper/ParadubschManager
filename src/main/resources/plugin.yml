@@ -51,6 +51,18 @@ commands:
     permission: paradubsch.money.self
     permission-message: 'Du benötigst die Berechtigung paradubsch.money.self um deine Geldmenge zu sehen!'
     usage: '/money'
+  sethome:
+    description: Setze dein Home.
+    aliases: [zuhausesetzen]
+    permission: paradubsch.sethome
+    permission-message: 'Du benötigst die Berechtigung paradubsch.sethome um dein Home zu setzen!'
+    usage: '/sethome <Home-Name>'
+  home:
+    description: Gehe zu deinem Home.
+    aliases: [ zuhause, heim ]
+    permission: paradubsch.home
+    permission-message: 'Du benötigst die Berechtigung paradubsch.home um zu deinem Home zu gehen!'
+    usage: '/home <Home-Name>'
 
 
 permissions:
@@ -92,4 +104,10 @@ permissions:
     default: false
   paradubsch.money.top:
     description: 'Erlaubt Zugriff auf den /money top Befehl.'
+    default: true
+  paradubsch.sethome:
+    description: 'Erlaubt Zugriff auf den /sethome Befehl.'
+    default: true
+  paradubsch.home:
+    description: 'Erlaubt Zugriff auf den /home Befehl.'
     default: true

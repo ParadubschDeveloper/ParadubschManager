@@ -43,6 +43,30 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <id>server</id>
+                        <configuration>
+                            <target>
+                                <exec dir="${project.basedir}/target/" executable="cmd.exe">
+                                    <arg value="/c" />
+                                    <arg value="@RD" />
+                                    <arg value="/S" />
+                                    <arg value="/Q" />
+                                    <arg value='"./classes"' />
+                                </exec>
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
         <resources>
             <resource>
@@ -94,6 +118,13 @@
             <artifactId>hibernate-ehcache</artifactId>
             <version>5.4.27.Final</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-c3p0 -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-c3p0</artifactId>
+            <version>5.4.27.Final</version>
+        </dependency>
+
 
     </dependencies>
 </project>

@@ -1,0 +1,59 @@
+package de.paradubsch.paradubschmanager.commands;
+
+import de.paradubsch.paradubschmanager.ParadubschManager;
+import de.paradubsch.paradubschmanager.models.Home;
+import de.paradubsch.paradubschmanager.util.Expect;
+import de.paradubsch.paradubschmanager.util.Hibernate;
+import de.paradubsch.paradubschmanager.util.MessageAdapter;
+import de.paradubsch.paradubschmanager.util.lang.Message;
+import org.bukkit.Location;
+import org.bukkit.World;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
+import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+
+public class HomeCommand implements CommandExecutor, TabCompleter {
+    @Override
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+        if (!Expect.playerSender(sender)) {
+            MessageAdapter.sendMessage(sender, Message.Error.CMD_ONLY_FOR_PLAYERS);
+            return true;
+        }
+        Player player = (Player) sender;
+
+        String homeName;
+        if (args.length == 0) {
+            homeName = "default";
+        } else {
+            homeName = args[0];
+        }
+
+        CompletableFuture.supplyAsync(() -> Hibernate.getHomes(player)).thenAccept(homes -> {
+            if (homes.stream().anyMatch(home -> home.getName().equals(homeName))) {
+                Home home = homes.stream().filter(home1 -> home1.getName().equals(homeName)).findFirst().get();
+
+                World world = ParadubschManager.getInstance().getServer().getWorld(home.getWorld());
+                Location loc = new Location(world, home.getX(), home.getY(), home.getZ());
+                player.teleport(loc);
+                MessageAdapter.sendMessage(player, Message.Info.CMD_HOME_TELEPORT, homeName);
+            } else {
+                MessageAdapter.sendMessage(player,Message.Error.CMD_HOME_NOT_FOUND, homeName);
+            }
+        });
+
+        return true;
+    }
+
+    @Override
+    public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+        return new ArrayList<>();
+    }
+}
