@@ -5,13 +5,8 @@ import de.paradubsch.paradubschmanager.models.Home;
 import de.paradubsch.paradubschmanager.util.Expect;
 import de.paradubsch.paradubschmanager.util.Hibernate;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
-import de.paradubsch.paradubschmanager.util.lang.Language;
 import de.paradubsch.paradubschmanager.util.lang.Message;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.TextComponent;
-import net.kyori.adventure.text.event.ClickEvent;
-import net.kyori.adventure.text.event.HoverEvent;
-import org.bukkit.ChatColor;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -44,7 +39,6 @@ public class SethomeCommand implements CommandExecutor, TabCompleter {
         if (args.length > 1 && args[1].equalsIgnoreCase("confirm")) {
             CompletableFuture.supplyAsync(() -> Hibernate.getPlayerData(player)).thenApplyAsync(playerData -> {
                 List<Home> homes = Hibernate.getHomes(player);
-                Language lang = Language.getLanguageByShortName(playerData.getLanguage());
 
                 if (homes.stream().anyMatch(home -> home.getName().equals(homeName))) {
                     Home home = homes.stream().filter(home1 -> home1.getName().equals(homeName)).findFirst().get();
@@ -64,12 +58,8 @@ public class SethomeCommand implements CommandExecutor, TabCompleter {
 
                 if (homes.size() >= playerData.getMaxHomes()) {
                     MessageAdapter.sendMessage(sender, Message.Error.CMD_SETHOME_NOT_ENOUGH_HOMES);
-                    String translation = ParadubschManager.getInstance().getLanguageManager().getString(Message.Constant.BUY_BUTTON, lang);
-                    String buyTranslation = ParadubschManager.getInstance().getLanguageManager().getString(Message.Constant.BUY, lang);
-                    Component buyButton = Component.text(ChatColor.translateAlternateColorCodes('&', translation));
-                    buyButton = buyButton.clickEvent(ClickEvent.clickEvent(ClickEvent.Action.RUN_COMMAND, "/buyhome"));
-                    buyButton = buyButton.hoverEvent(HoverEvent.hoverEvent(HoverEvent.Action.SHOW_TEXT, Component.text(buyTranslation)));
-                    MessageAdapter.sendWidgetMessage(sender, Message.Info.CMD_SETHOME_BUYHOME, (TextComponent) buyButton);
+                    Bukkit.getScheduler().runTaskLater(ParadubschManager.getInstance(), () ->
+                            MessageAdapter.sendMessage(sender, Message.Info.CMD_SETHOME_BUYHOME), 1L);
                     return playerData;
                 }
 
@@ -95,27 +85,18 @@ public class SethomeCommand implements CommandExecutor, TabCompleter {
 
         CompletableFuture.supplyAsync(() -> Hibernate.getPlayerData(player)).thenApplyAsync(playerData -> {
             List<Home> homes = Hibernate.getHomes(player);
-            Language lang = Language.getLanguageByShortName(playerData.getLanguage());
 
             if (homes.stream().anyMatch(home -> home.getName().equals(homeName))) {
                 MessageAdapter.sendMessage(sender, Message.Error.CMD_SETHOME_ALREADY_EXISTING, homeName);
-                String translation = ParadubschManager.getInstance().getLanguageManager().getString(Message.Constant.OVERRIDE_BUTTON, lang);
-                String overrideTranslation = ParadubschManager.getInstance().getLanguageManager().getString(Message.Constant.OVERRIDE, lang);
-                Component overrideButton = Component.text(ChatColor.translateAlternateColorCodes('&', translation));
-                overrideButton = overrideButton.clickEvent(ClickEvent.clickEvent(ClickEvent.Action.RUN_COMMAND, "/sethome " + homeName + " confirm"));
-                overrideButton = overrideButton.hoverEvent(HoverEvent.hoverEvent(HoverEvent.Action.SHOW_TEXT, Component.text(overrideTranslation)));
-                MessageAdapter.sendWidgetMessage(sender, Message.Info.CMD_SETHOME_OVERRIDE_EXISTING_HOME, (TextComponent) overrideButton);
+                Bukkit.getScheduler().runTaskLater(ParadubschManager.getInstance(), () ->
+                        MessageAdapter.sendMessage(sender, Message.Info.CMD_SETHOME_OVERRIDE_EXISTING_HOME, homeName), 1L);
                 return playerData;
             }
 
             if (homes.size() >= playerData.getMaxHomes()) {
                 MessageAdapter.sendMessage(sender, Message.Error.CMD_SETHOME_NOT_ENOUGH_HOMES);
-                String translation = ParadubschManager.getInstance().getLanguageManager().getString(Message.Constant.BUY_BUTTON, lang);
-                String buyTranslation = ParadubschManager.getInstance().getLanguageManager().getString(Message.Constant.BUY, lang);
-                Component buyButton = Component.text(ChatColor.translateAlternateColorCodes('&', translation));
-                buyButton = buyButton.clickEvent(ClickEvent.clickEvent(ClickEvent.Action.RUN_COMMAND, "/buyhome"));
-                buyButton = buyButton.hoverEvent(HoverEvent.hoverEvent(HoverEvent.Action.SHOW_TEXT, Component.text(buyTranslation)));
-                MessageAdapter.sendWidgetMessage(sender, Message.Info.CMD_SETHOME_BUYHOME, (TextComponent) buyButton);
+                Bukkit.getScheduler().runTaskLater(ParadubschManager.getInstance(), () ->
+                        MessageAdapter.sendMessage(sender, Message.Info.CMD_SETHOME_BUYHOME), 1L);
                 return playerData;
             }
 

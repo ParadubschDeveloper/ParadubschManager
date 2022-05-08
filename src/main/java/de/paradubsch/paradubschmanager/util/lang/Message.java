@@ -64,8 +64,8 @@ public class Message {
         CMD_MONEY_ADD("cmdMoneyAdd", "Dem Kontostand von &e%1 &7wurden &a%2 &e€ &7hinzugefügt."),
         CMD_HOME_SET("cmdHomeSet","Du hast ein neues Home &a%1 &7erstellt."),
         CMD_HOME_TELEPORT("cmdHomeTeleport","Du hast dich zu dem Home &a%1 &7teleportiert."),
-        CMD_SETHOME_BUYHOME("cmdSethomeBuyhome","Jetzt ein neues Home kaufen? %1"),
-        CMD_SETHOME_OVERRIDE_EXISTING_HOME("cmdSethomeOverrideExistingHome","Möchtest du das Home trotzdem überschreiben? %1");
+        CMD_SETHOME_BUYHOME("cmdSethomeBuyhome","Jetzt ein neues Home kaufen? @ClickableComponent<Text=&a[Kaufen]|ClickCommand=/buyhome|HoverText=Kaufen>"),
+        CMD_SETHOME_OVERRIDE_EXISTING_HOME("cmdSethomeOverrideExistingHome","Möchtest du das Home trotzdem überschreiben? @ClickableComponent<Text=&c[Überschreiben]|ClickCommand=/sethome %1 confirm|HoverText=Überschreiben>");
 
         private final String key;
         private final String def;
@@ -96,11 +96,7 @@ public class Message {
         MSG_TEMPLATE("constantMsgTemplate", "&8[&a%1 &7» &a%2&8] &d%3"),
         FROM_YOU("constantFromYou", "Du"),
         TO_YOU("constantToYou", "Dir"),
-        CHAT_MESSAGE_TEMPLATE("constantChatMessageTemplate", "%1 &8| %2%3&r &8» %4%5"),
-        BUY_BUTTON("constantBuyButton", "&a[Kaufen]"),
-        BUY("constantBuy", "Kaufen"),
-        OVERRIDE_BUTTON("constantOverrideButton", "&c[Überschreiben]"),
-        OVERRIDE("constantOverride", "Überschreiben");
+        CHAT_MESSAGE_TEMPLATE("constantChatMessageTemplate", "%1 &8| %2%3&r &8» %4%5");
 
         private final String key;
         private final String def;
