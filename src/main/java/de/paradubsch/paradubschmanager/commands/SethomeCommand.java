@@ -43,9 +43,9 @@ public class SethomeCommand implements CommandExecutor, TabCompleter {
                 if (homes.stream().anyMatch(home -> home.getName().equals(homeName))) {
                     Home home = homes.stream().filter(home1 -> home1.getName().equals(homeName)).findFirst().get();
                     homes.remove(home);
-                    home.setX(player.getLocation().getBlockX());
+                    home.setX((long) player.getLocation().getX());
                     home.setY(player.getLocation().getBlockY());
-                    home.setZ(player.getLocation().getBlockZ());
+                    home.setZ((long) player.getLocation().getZ());
                     home.setWorld(player.getLocation().getWorld().getName());
 
                     homes.add(home);

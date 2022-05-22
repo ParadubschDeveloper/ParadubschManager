@@ -63,6 +63,30 @@ commands:
     permission: paradubsch.home
     permission-message: 'Du benötigst die Berechtigung paradubsch.home um zu deinem Home zu gehen!'
     usage: '/home <Home-Name>'
+  buyhome:
+    description: Kaufe ein Home.
+    aliases: [ kaufehome, kaufhome, kaufheime ]
+    permission: paradubsch.buyhome
+    permission-message: 'Du benötigst die Berechtigung paradubsch.buyhome um ein Home zu kaufen!'
+    usage: '/buyhome'
+  homes:
+    description: Zeige deine Homes.
+    aliases: [ heimliste, homelist ]
+    permission: paradubsch.homes
+    permission-message: 'Du benötigst die Berechtigung paradubsch.homes um deine Homes zu sehen!'
+    usage: '/homes'
+  viewhome:
+    description: Gibt dir Informationen über ein Home.
+    aliases: [ zeigehome, zeigeheim, homeinfo, heiminfo ]
+    permission: paradubsch.viewhome
+    permission-message: 'Du benötigst die Berechtigung paradubsch.viewhome um ein Home zu sehen!'
+    usage: '/viewhome <Home-Name>'
+  delhome:
+    description: Lösche ein Home.
+    aliases: [ loeschehome, loescheheim, löschehome, löscheheim ]
+    permission: paradubsch.delhome
+    permission-message: 'Du benötigst die Berechtigung paradubsch.delhome um ein Home zu löschen!'
+    usage: '/delhome <Home-Name>'
 
 
 permissions:
@@ -110,4 +134,16 @@ permissions:
     default: true
   paradubsch.home:
     description: 'Erlaubt Zugriff auf den /home Befehl.'
+    default: true
+  paradubsch.buyhome:
+    description: 'Erlaubt Zugriff auf den /buyhome Befehl.'
+    default: true
+  paradubsch.homes:
+    description: 'Erlaubt Zugriff auf den /homes Befehl.'
+    default: true
+  paradubsch.viewhome:
+    description: 'Erlaubt Zugriff auf den /viewhome Befehl.'
+    default: true
+  paradubsch.delhome:
+    description: 'Erlaubt Zugriff auf den /delhome Befehl.'
     default: true

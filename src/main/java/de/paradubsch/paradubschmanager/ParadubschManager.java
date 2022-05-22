@@ -10,6 +10,7 @@ import de.paradubsch.paradubschmanager.util.lang.LanguageManager;
 import de.paradubsch.paradubschmanager.lifecycle.ChatMessageListener;
 import lombok.Getter;
 import org.bukkit.Bukkit;
+import org.bukkit.command.*;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class ParadubschManager extends JavaPlugin {
@@ -56,25 +57,29 @@ public final class ParadubschManager extends JavaPlugin {
     }
 
     private void registerCommands() {
-        Bukkit.getPluginCommand("msg").setExecutor(new MsgCommand());
-        Bukkit.getPluginCommand("msg").setTabCompleter(new MsgCommand());
-        Bukkit.getPluginCommand("prefix").setExecutor(new PrefixCommand());
-        Bukkit.getPluginCommand("prefix").setTabCompleter(new PrefixCommand());
-        Bukkit.getPluginCommand("lang").setExecutor(new LangCommand());
-        Bukkit.getPluginCommand("lang").setTabCompleter(new LangCommand());
-        Bukkit.getPluginCommand("namecolor").setExecutor(new NameColorCommand());
-        Bukkit.getPluginCommand("namecolor").setTabCompleter(new NameColorCommand());
-        Bukkit.getPluginCommand("defaultchatcolor").setExecutor(new DefaultChatColorCommand());
-        Bukkit.getPluginCommand("defaultchatcolor").setTabCompleter(new DefaultChatColorCommand());
-        Bukkit.getPluginCommand("playtime").setExecutor(new PlaytimeCommand());
-        Bukkit.getPluginCommand("playtime").setTabCompleter(new PlaytimeCommand());
-        Bukkit.getPluginCommand("money").setExecutor(new MoneyCommand());
-        Bukkit.getPluginCommand("money").setTabCompleter(new MoneyCommand());
-        Bukkit.getPluginCommand("sethome").setExecutor(new SethomeCommand());
-        Bukkit.getPluginCommand("sethome").setTabCompleter(new SethomeCommand());
-        Bukkit.getPluginCommand("home").setExecutor(new HomeCommand());
-        Bukkit.getPluginCommand("home").setTabCompleter(new HomeCommand());
+        register("msg", new MsgCommand());
+        register("prefix", new PrefixCommand());
+        register("lang", new LangCommand());
+        register("namecolor", new NameColorCommand());
+        register("defaultchatcolor", new DefaultChatColorCommand());
+        register("playtime", new PlaytimeCommand());
+        register("money", new MoneyCommand());
+        register("sethome", new SethomeCommand());
+        register("home", new HomeCommand());
+        register("buyhome", new BuyhomeCommand());
+        register("homes", new HomesCommand());
+        register("viewhome", new ViewhomeCommand());
+        register("delhome", new DelhomeCommand());
+    }
 
+    private void register(String command, CommandExecutor obj) {
+        PluginCommand pc = Bukkit.getPluginCommand(command);
+        if (pc == null) return;
+        pc.setExecutor(obj);
+
+        if (obj instanceof TabExecutor) {
+            pc.setTabCompleter((TabCompleter) obj);
+        }
     }
 
     public static ParadubschManager getInstance() {

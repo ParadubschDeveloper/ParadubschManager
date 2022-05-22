@@ -1,14 +1,10 @@
 package de.paradubsch.paradubschmanager.commands;
 
-import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.models.Home;
 import de.paradubsch.paradubschmanager.util.Expect;
 import de.paradubsch.paradubschmanager.util.Hibernate;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.lang.Message;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -21,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-public class HomeCommand implements CommandExecutor, TabCompleter {
+public class ViewhomeCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (!Expect.playerSender(sender)) {
@@ -30,26 +26,19 @@ public class HomeCommand implements CommandExecutor, TabCompleter {
         }
         Player player = (Player) sender;
 
-        String homeName;
-        if (args.length == 0) {
-            homeName = "default";
-        } else {
-            homeName = args[0];
+        if (!Expect.minArgs(1, args)) {
+            MessageAdapter.sendMessage(sender, Message.Error.CMD_HOMENAME_NOT_PROVIDED);
+            return true;
         }
 
         CompletableFuture.supplyAsync(() -> Hibernate.getHomes(player)).thenAccept(homes -> {
-            if (homes.stream().anyMatch(home -> home.getName().equals(homeName))) {
-                Home home = homes.stream().filter(home1 -> home1.getName().equals(homeName)).findFirst().get();
+            if (homes.stream().anyMatch(home -> home.getName().equals(args[0]))) {
+                Home home = homes.stream().filter(home1 -> home1.getName().equals(args[0])).findFirst().get();
 
-                double x = home.getX() >= 0 ? home.getX() + 0.5 : home.getX() - 0.5;
-                double z = home.getZ() >= 0 ? home.getZ() + 0.5 : home.getZ() - 0.5;
+                MessageAdapter.sendMessage(player, Message.Info.CMD_VIEWHOME, home.getName());
 
-                World world = ParadubschManager.getInstance().getServer().getWorld(home.getWorld());
-                Location loc = new Location(world, x, home.getY(), z);
-                Bukkit.getScheduler().runTask(ParadubschManager.getInstance(), () -> player.teleport(loc));
-                MessageAdapter.sendMessage(player, Message.Info.CMD_HOME_TELEPORT, homeName);
             } else {
-                MessageAdapter.sendMessage(player,Message.Error.CMD_HOME_NOT_FOUND, homeName);
+                MessageAdapter.sendMessage(player, Message.Error.CMD_VIEWHOME_HOME_NOT_FOUND, args[0]);
             }
         });
 

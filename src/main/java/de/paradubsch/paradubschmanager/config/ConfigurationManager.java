@@ -15,6 +15,7 @@ public class ConfigurationManager {
         FileConfiguration config = instance.getConfig();
 
         config.addDefault("chatPrefix", "&8&l[&6&lParadubsch&8&l] &r");
+        config.addDefault("homePrice", 150);
 
         config.addDefault("hibernate.driver", "com.mysql.cj.jdbc.Driver");
         config.addDefault("hibernate.url", "jdbc:mysql://localhost:3306/paradubschtest?useSSL=false");
@@ -38,6 +39,10 @@ public class ConfigurationManager {
             return "";
         }
         return value;
+    }
+
+    public static @NotNull int getInt(String path) {
+        return ParadubschManager.getInstance().getConfig().getInt(path);
     }
 
     public static FileConfiguration getCustomConfig(String filename) {

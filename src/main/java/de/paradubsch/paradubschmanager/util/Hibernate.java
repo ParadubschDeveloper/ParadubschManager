@@ -87,6 +87,22 @@ public class Hibernate {
         }
     }
 
+    public static void deleteHome(Home home) {
+        Transaction transaction = null;
+        try {
+            @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+
+            session.delete(home);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
+    }
+
     public static void save (Object o) {
         if (o == null) {
             return;

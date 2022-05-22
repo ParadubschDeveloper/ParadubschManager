@@ -5,10 +5,9 @@ import de.paradubsch.paradubschmanager.models.Home;
 import de.paradubsch.paradubschmanager.util.Expect;
 import de.paradubsch.paradubschmanager.util.Hibernate;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
+import de.paradubsch.paradubschmanager.util.lang.Language;
+import de.paradubsch.paradubschmanager.util.lang.LanguageManager;
 import de.paradubsch.paradubschmanager.util.lang.Message;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -21,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-public class HomeCommand implements CommandExecutor, TabCompleter {
+public class HomesCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (!Expect.playerSender(sender)) {
@@ -30,27 +29,30 @@ public class HomeCommand implements CommandExecutor, TabCompleter {
         }
         Player player = (Player) sender;
 
-        String homeName;
-        if (args.length == 0) {
-            homeName = "default";
-        } else {
-            homeName = args[0];
-        }
-
         CompletableFuture.supplyAsync(() -> Hibernate.getHomes(player)).thenAccept(homes -> {
-            if (homes.stream().anyMatch(home -> home.getName().equals(homeName))) {
-                Home home = homes.stream().filter(home1 -> home1.getName().equals(homeName)).findFirst().get();
+            CompletableFuture.supplyAsync(() -> Hibernate.getPlayerData(player)).thenAccept(playerData -> {
+                if (homes.size() == 0) {
+                    MessageAdapter.sendMessage(player, Message.Info.CMD_HOMES_NO_HOMES);
+                    return;
+                }
 
-                double x = home.getX() >= 0 ? home.getX() + 0.5 : home.getX() - 0.5;
-                double z = home.getZ() >= 0 ? home.getZ() + 0.5 : home.getZ() - 0.5;
+                StringBuilder homesString = new StringBuilder();
 
-                World world = ParadubschManager.getInstance().getServer().getWorld(home.getWorld());
-                Location loc = new Location(world, x, home.getY(), z);
-                Bukkit.getScheduler().runTask(ParadubschManager.getInstance(), () -> player.teleport(loc));
-                MessageAdapter.sendMessage(player, Message.Info.CMD_HOME_TELEPORT, homeName);
-            } else {
-                MessageAdapter.sendMessage(player,Message.Error.CMD_HOME_NOT_FOUND, homeName);
-            }
+                Language playerLang = Language.getLanguageByShortName(playerData.getLanguage());
+
+                for (int i = 0; i < homes.size(); i++) {
+                    Home home = homes.get(i);
+
+                    if (i != 0) homesString.append(", ");
+
+                    String homeN = ParadubschManager.getInstance().getLanguageManager().getString(Message.Constant.CMD_HOMES_TEMPLATE, playerLang, home.getName());
+
+                    homesString.append(homeN);
+                }
+
+                MessageAdapter.sendMessage(player, Message.Info.CMD_HOMES_HOMES, homesString.toString());
+
+            });
         });
 
         return true;

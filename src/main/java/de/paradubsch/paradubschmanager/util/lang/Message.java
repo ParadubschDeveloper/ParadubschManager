@@ -22,7 +22,10 @@ public class Message {
         CMD_MONEY_TOP_EMPTY("cmdMoneyTopEmpty", "&cDer Topliste ist leer!"),
         CMD_HOME_NOT_FOUND("cmdHomeNotFound", "&cDas Home &a%1 &cexistiert nicht!"),
         CMD_SETHOME_NOT_ENOUGH_HOMES("cmdSetHomeNotEnoughHomes", "&cDu hast nicht genug Homes um ein weiteres zu setzen!"),
-        CMD_SETHOME_ALREADY_EXISTING("cmdSetHomeAlreadyExisting", "&cDas Home &a%1 &cexistiert bereits!");
+        CMD_SETHOME_ALREADY_EXISTING("cmdSetHomeAlreadyExisting", "&cDas Home &a%1 &cexistiert bereits!"),
+        CMD_BUYHOME_NOT_ENOUGH_MONEY("cmdBuyHomeNotEnoughMoney", "&cDu hast nicht genug Geld um ein Home zu kaufen!"),
+        CMD_HOMENAME_NOT_PROVIDED("cmdHomeNameNotProvided", "&cDu musst einen Home Namen angeben!"),
+        CMD_VIEWHOME_HOME_NOT_FOUND("cmdViewHomeHomeNotFound", "&cDas Home &a%1 &ckonnte nicht gefunden werden!");
 
         private final String key;
         private final String def;
@@ -65,7 +68,14 @@ public class Message {
         CMD_HOME_SET("cmdHomeSet","Du hast ein neues Home &a%1 &7erstellt."),
         CMD_HOME_TELEPORT("cmdHomeTeleport","Du hast dich zu dem Home &a%1 &7teleportiert."),
         CMD_SETHOME_BUYHOME("cmdSethomeBuyhome","Jetzt ein neues Home kaufen? @ClickableComponent<Text=&a[Kaufen]|ClickCommand=/buyhome|HoverText=Kaufen>"),
-        CMD_SETHOME_OVERRIDE_EXISTING_HOME("cmdSethomeOverrideExistingHome","Möchtest du das Home trotzdem überschreiben? @ClickableComponent<Text=&c[Überschreiben]|ClickCommand=/sethome %1 confirm|HoverText=Überschreiben>");
+        CMD_SETHOME_OVERRIDE_EXISTING_HOME("cmdSethomeOverrideExistingHome","Möchtest du das Home trotzdem überschreiben? @ClickableComponent<Text=&c[Überschreiben]|ClickCommand=/sethome %1 confirm|HoverText=Überschreiben> @ClickableComponent<Text=&a[Neues Home kaufen]|ClickCommand=/buyhome|HoverText=Kaufen>"),
+        CMD_BUYHOME("cmdBuyhome","Möchtest du dir für &a%1 &e€ &7ein neues Home kaufen? @ClickableComponent<Text=&a[Kaufen]|ClickCommand=/buyhome confirm|HoverText=Kaufen>"),
+        CMD_BUYHOME_SUCCESS("cmdBuyhomeSuccess","Du hast dir für &a%1 &e€ &7ein neues Home gekauft. Du hast &a%2 &7freie Homes."),
+        CMD_HOMES_NO_HOMES("cmdHomesNoHomes","Du hast keine Homes."),
+        CMD_HOMES_HOMES("cmdHomesHomes","Deine Homes: %1"),
+        CMD_VIEWHOME("cmdViewhome","&7%1: @ClickableComponent<Text=&a[Teleportieren]|ClickCommand=/home %1|HoverText=Teleportieren> @ClickableComponent<Text=&c[Löschen]|ClickCommand=/delhome %1|HoverText=Löschen>"),
+        CMD_DELHOME_CONFIRM("cmdDelhomeConfirm","Möchtest du das Home &a%1 &7wirklich löschen? @ClickableComponent<Text=&c[Löschen]|ClickCommand=/delhome %1 confirm|HoverText=Löschen>"),
+        CMD_DELHOME_DONE("cmdDelhomeDone","Das Home &a%1 &7wurde erfolgreich gelöscht.");
 
         private final String key;
         private final String def;
@@ -96,7 +106,8 @@ public class Message {
         MSG_TEMPLATE("constantMsgTemplate", "&8[&a%1 &7» &a%2&8] &d%3"),
         FROM_YOU("constantFromYou", "Du"),
         TO_YOU("constantToYou", "Dir"),
-        CHAT_MESSAGE_TEMPLATE("constantChatMessageTemplate", "%1 &8| %2%3&r &8» %4%5");
+        CHAT_MESSAGE_TEMPLATE("constantChatMessageTemplate", "%1 &8| %2%3&r &8» %4%5"),
+        CMD_HOMES_TEMPLATE("constantCmdHomesTemplate", "@ClickableComponent<Text=&a%1|ClickCommand=/viewhome %1|HoverText=Anzeigen>");
 
         private final String key;
         private final String def;
