@@ -48,6 +48,9 @@ public class HomeCommand implements CommandExecutor, TabCompleter {
                 Location loc = new Location(world, x, home.getY(), z);
                 Bukkit.getScheduler().runTask(ParadubschManager.getInstance(), () -> player.teleport(loc));
                 MessageAdapter.sendMessage(player, Message.Info.CMD_HOME_TELEPORT, homeName);
+            } else if (homes.stream().anyMatch(home -> home.getName().equalsIgnoreCase(homeName))) {
+                Home home = homes.stream().filter(home1 -> home1.getName().equalsIgnoreCase(homeName)).findFirst().get();
+                MessageAdapter.sendMessage(player, Message.Info.CMD_HOME_MAYBE_WRONG_NAME, homeName, home.getName());
             } else {
                 MessageAdapter.sendMessage(player,Message.Error.CMD_HOME_NOT_FOUND, homeName);
             }

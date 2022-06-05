@@ -34,9 +34,10 @@ public class ViewhomeCommand implements CommandExecutor, TabCompleter {
         CompletableFuture.supplyAsync(() -> Hibernate.getHomes(player)).thenAccept(homes -> {
             if (homes.stream().anyMatch(home -> home.getName().equals(args[0]))) {
                 Home home = homes.stream().filter(home1 -> home1.getName().equals(args[0])).findFirst().get();
-
                 MessageAdapter.sendMessage(player, Message.Info.CMD_VIEWHOME, home.getName());
-
+            } else if (homes.stream().anyMatch(home -> home.getName().equalsIgnoreCase(args[0]))) {
+                Home home = homes.stream().filter(home1 -> home1.getName().equalsIgnoreCase(args[0])).findFirst().get();
+                MessageAdapter.sendMessage(player, Message.Info.CMD_VIEWHOME_MAYBE_WRONG_NAME, args[0], home.getName());
             } else {
                 MessageAdapter.sendMessage(player, Message.Error.CMD_VIEWHOME_HOME_NOT_FOUND, args[0]);
             }

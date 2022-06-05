@@ -45,9 +45,14 @@ public class DelhomeCommand implements CommandExecutor, TabCompleter {
 
                     playerData.setHomes(homes);
                     MessageAdapter.sendMessage(player, Message.Info.CMD_DELHOME_DONE, args[0]);
+                } else if (homes.stream().anyMatch(home -> home.getName().equalsIgnoreCase(args[0]))) {
+                    Home home = homes.stream().filter(home1 -> home1.getName().equalsIgnoreCase(args[0])).findFirst().get();
+                    MessageAdapter.sendMessage(player, Message.Info.CMD_DELHOME_MAYBE_WRONG_NAME, args[0], home.getName());
                 } else {
                     MessageAdapter.sendMessage(player, Message.Error.CMD_VIEWHOME_HOME_NOT_FOUND, args[0]);
                 }
+
+
                 return playerData;
             }).thenAccept(Hibernate::save);
         }

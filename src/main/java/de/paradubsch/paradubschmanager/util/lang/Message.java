@@ -75,7 +75,10 @@ public class Message {
         CMD_HOMES_HOMES("cmdHomesHomes","Deine Homes: %1"),
         CMD_VIEWHOME("cmdViewhome","&7%1: @ClickableComponent<Text=&a[Teleportieren]|ClickCommand=/home %1|HoverText=Teleportieren> @ClickableComponent<Text=&c[Löschen]|ClickCommand=/delhome %1|HoverText=Löschen>"),
         CMD_DELHOME_CONFIRM("cmdDelhomeConfirm","Möchtest du das Home &a%1 &7wirklich löschen? @ClickableComponent<Text=&c[Löschen]|ClickCommand=/delhome %1 confirm|HoverText=Löschen>"),
-        CMD_DELHOME_DONE("cmdDelhomeDone","Das Home &a%1 &7wurde erfolgreich gelöscht.");
+        CMD_DELHOME_DONE("cmdDelhomeDone","Das Home &a%1 &7wurde erfolgreich gelöscht."),
+        CMD_DELHOME_MAYBE_WRONG_NAME("cmdDelhomeMaybeWrongName","Das Home &a%1 &7wurde nicht gefunden. Meintest du vielleicht &a%2&7? @ClickableComponent<Text=&c[Löschen]|ClickCommand=/delhome %2|HoverText=%2 Löschen>"),
+        CMD_HOME_MAYBE_WRONG_NAME("cmdHomeMaybeWrongName","Das Home &a%1 &7konnte nicht gefunden werden. Meintest du vielleicht &a%2&7? @ClickableComponent<Text=&a[Teleportieren]|ClickCommand=/home %2|HoverText=Teleportieren>"),
+        CMD_VIEWHOME_MAYBE_WRONG_NAME("cmdViewhomeMaybeWrongName","Das Home &a%1 &7konnte nicht gefunden werden. Meintest du vielleicht &a%2&7? @ClickableComponent<Text=&a[Anzeigen]|ClickCommand=/viewhome %2|HoverText=Anzeigen>");
 
         private final String key;
         private final String def;
