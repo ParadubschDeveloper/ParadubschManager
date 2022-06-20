@@ -1,12 +1,12 @@
 package de.paradubsch.paradubschmanager.config;
 
+import de.paradubsch.paradubschmanager.models.Home;
 import de.paradubsch.paradubschmanager.models.PlayerData;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
 import org.hibernate.service.ServiceRegistry;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Properties;
 
@@ -23,6 +23,8 @@ public class HibernateConfigurator {
                 settings.put(Environment.USER, ConfigurationManager.getString("hibernate.user"));
                 settings.put(Environment.PASS, ConfigurationManager.getString("hibernate.pass"));
                 settings.put(Environment.DIALECT, ConfigurationManager.getString("hibernate.dialect"));
+
+                settings.put(Environment.CONNECTION_PROVIDER, "org.hibernate.c3p0.internal.C3P0ConnectionProvider");
 
                 settings.put(Environment.SHOW_SQL, ConfigurationManager.getString("hibernate.showSql"));
 
@@ -42,6 +44,7 @@ public class HibernateConfigurator {
 
                 // Register Database Models
                 configuration.addAnnotatedClass(PlayerData.class);
+                configuration.addAnnotatedClass(Home.class);
 
                 ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                         .applySettings(configuration.getProperties()).build();
@@ -61,8 +64,8 @@ public class HibernateConfigurator {
             sessionFactory.getCurrentSession().flush();
         }
 
-        sessionFactory.getCurrentSession().disconnect();
         sessionFactory.getCurrentSession().close();
+        sessionFactory.getCurrentSession().disconnect();
         sessionFactory.close();
 
         sessionFactory = null;

@@ -1,13 +1,17 @@
 package de.paradubsch.paradubschmanager.models;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 import org.bukkit.entity.Player;
+import org.hibernate.annotations.*;
 import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Index;
+import javax.persistence.Table;
+import java.util.List;
+
+import static org.hibernate.annotations.CascadeType.*;
 
 @Data
 @Entity
@@ -37,6 +41,16 @@ public class PlayerData {
 
     @Column(name = "playtime", columnDefinition = "BIGINT DEFAULT 0")
     private long playtime = 0L;
+
+    @Column(name ="money", columnDefinition = "BIGINT DEFAULT 150")
+    private long money = 150L;
+
+    @OneToMany(mappedBy = "playerRef", fetch = FetchType.LAZY)
+    @Cascade(value = SAVE_UPDATE)
+    private List<Home> homes;
+
+    @Column(name = "max_homes", columnDefinition = "INT DEFAULT 2")
+    private int maxHomes = 2;
 
     public PlayerData () {}
 

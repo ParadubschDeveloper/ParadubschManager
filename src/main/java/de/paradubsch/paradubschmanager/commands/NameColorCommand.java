@@ -1,6 +1,5 @@
 package de.paradubsch.paradubschmanager.commands;
 
-import de.paradubsch.paradubschmanager.models.PlayerData;
 import de.paradubsch.paradubschmanager.util.Expect;
 import de.paradubsch.paradubschmanager.util.Hibernate;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
@@ -46,7 +45,7 @@ public class NameColorCommand implements CommandExecutor, TabCompleter {
             }
             pd.setNameColor(args[1]);
             CompletableFuture.runAsync(() -> Hibernate.save(pd))
-                    .thenAccept(v -> MessageAdapter.sendMessage(sender, Message.Info.CMD_NAME_COLOR_SET, pd.getName(), args[1]));
+                    .thenAccept(v -> MessageAdapter.sendMessage(sender, Message.Info.CMD_NAME_COLOR_SET, pd.getName(), args[1], pd.getName()));
         });
 
         return true;

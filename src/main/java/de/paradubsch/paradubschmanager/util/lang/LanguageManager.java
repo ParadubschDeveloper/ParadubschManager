@@ -40,7 +40,19 @@ public class LanguageManager {
         for (int i = 1; i <= args.length; i++) {
             translation = translation.replace("%" + i, args[i-1]);
         }
-        return Component.text(ChatColor.GRAY + ChatColor.translateAlternateColorCodes('&', translation));
+        String translated = ChatColor.translateAlternateColorCodes('&', translation);
+        Component component = Component.text("");
+        String[] parts = translated.split("(?=@.+<.*>)|(?<=>)");
+
+        for (String s : parts) {
+            if (s.matches("^@.+<.*>$")) {
+                component = component.append(ClickableComponent.from(s));
+            } else {
+                component = component.append(Component.text(ChatColor.GRAY + s));
+            }
+
+        }
+        return component;
     }
 
     public String getString (BaseMessageType constant, Language lang, String... args) {

@@ -18,15 +18,13 @@ public class PlaytimeManager implements Listener {
 
     public PlaytimeManager() {
         ParadubschManager.getInstance().getServer().getPluginManager().registerEvents(this, ParadubschManager.getInstance());
-        Bukkit.getOnlinePlayers().forEach(player -> {
-            CompletableFuture.supplyAsync(() -> Hibernate.getPlayerData(player))
-                    .thenAccept(pd -> {
-                        PlaytimeInstance pi = new PlaytimeInstance();
-                        pi.setPlaytime(pd.getPlaytime());
-                        pi.setLastRecordTime(System.currentTimeMillis());
-                        cachedData.put(player, pi);
-                    });
-        });
+        Bukkit.getOnlinePlayers().forEach(player -> CompletableFuture.supplyAsync(() -> Hibernate.getPlayerData(player))
+                .thenAccept(pd -> {
+                    PlaytimeInstance pi = new PlaytimeInstance();
+                    pi.setPlaytime(pd.getPlaytime());
+                    pi.setLastRecordTime(System.currentTimeMillis());
+                    cachedData.put(player, pi);
+                }));
         enableScheduler();
     }
 
@@ -77,30 +75,25 @@ public class PlaytimeManager implements Listener {
     }
 
     private void enableScheduler () {
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(ParadubschManager.getInstance(), new Runnable() {
-            @Override
-            public void run() {
-                Bukkit.getOnlinePlayers().forEach(player -> {
-                    PlaytimeInstance pi = cachedData.get(player);
-                    if (pi == null) {
-                        return;
-                    }
-
-                    long newPlaytime = pi.getPlaytime() + System.currentTimeMillis() - pi.getLastRecordTime();
-
-                    pi.setPlaytime(newPlaytime);
-                    pi.setLastRecordTime(System.currentTimeMillis());
-                    cachedData.put(player, pi);
-
-                    CompletableFuture.supplyAsync(() -> Hibernate.getPlayerData(player))
-                            .thenApply(pd -> {
-                                pd.setPlaytime(newPlaytime);
-                                return pd;
-                            }).thenAcceptAsync(Hibernate::save);
-
-                });
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(ParadubschManager.getInstance(), () -> Bukkit.getOnlinePlayers().forEach(player -> {
+            PlaytimeInstance pi = cachedData.get(player);
+            if (pi == null) {
+                return;
             }
-        }, 20*60*5, 20*60*5);
+
+            long newPlaytime = pi.getPlaytime() + System.currentTimeMillis() - pi.getLastRecordTime();
+
+            pi.setPlaytime(newPlaytime);
+            pi.setLastRecordTime(System.currentTimeMillis());
+            cachedData.put(player, pi);
+
+            CompletableFuture.supplyAsync(() -> Hibernate.getPlayerData(player))
+                    .thenApply(pd -> {
+                        pd.setPlaytime(newPlaytime);
+                        return pd;
+                    }).thenAcceptAsync(Hibernate::save);
+
+        }), 20*60*5, 20*60*5);
 
     }
 

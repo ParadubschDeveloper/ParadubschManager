@@ -14,9 +14,7 @@ public class QuitListener implements Listener {
 
     @EventHandler
     public void onQuitEvent(PlayerQuitEvent e) {
-        new Thread(() -> {
-            HibernateConfigurator.getSessionFactory().getCache().evictEntityData(PlayerData.class, e.getPlayer().getUniqueId().toString());
-        }).start();
+        new Thread(() -> HibernateConfigurator.getSessionFactory().getCache().evictEntityData(PlayerData.class, e.getPlayer().getUniqueId().toString())).start();
     }
 
 }
