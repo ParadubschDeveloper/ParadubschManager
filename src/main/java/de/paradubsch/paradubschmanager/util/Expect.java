@@ -43,4 +43,11 @@ public class Expect {
             return null;
         }
     }
+    public static @Nullable Integer parseInt(String string) {
+        try {
+            return Integer.parseInt(string);
+        } catch (NumberFormatException e) {
+            return null;
+        }
+    }
 }

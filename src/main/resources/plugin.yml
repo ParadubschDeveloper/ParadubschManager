@@ -87,6 +87,18 @@ commands:
     permission: paradubsch.delhome
     permission-message: 'Du benötigst die Berechtigung paradubsch.delhome um ein Home zu löschen!'
     usage: '/delhome <Home-Name>'
+  gs:
+    description: Setze dein Grundstück.
+    aliases: [grundstück, plot]
+    permission: paradubsch.gs
+    permission-message: 'Du benötigst die Berechtigung paradubsch.gs um dein Grundstück zu setzen!'
+    usage: '/gs'
+  save:
+    description: Speichert das Zuhause eines Spielers.
+    aliases: [ sichern ]
+    permission: paradubsch.save
+    permission-message: 'Du benötigst die Berechtigung paradubsch.save um dein Zuhause zu sichern!'
+    usage: '/save'
 
 
 permissions:
@@ -147,3 +159,9 @@ permissions:
   paradubsch.delhome:
     description: 'Erlaubt Zugriff auf den /delhome Befehl.'
     default: true
+  paradubsch.gs:
+    description: 'Erlaubt Zugriff auf den /gs Befehl.'
+    default: true
+  paradubsch.save:
+    description: "Gibt zugriff Saveanfragen zu erhalten und auszuführen"
+    default: false

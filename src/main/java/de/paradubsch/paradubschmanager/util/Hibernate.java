@@ -3,6 +3,7 @@ package de.paradubsch.paradubschmanager.util;
 import de.paradubsch.paradubschmanager.config.HibernateConfigurator;
 import de.paradubsch.paradubschmanager.models.Home;
 import de.paradubsch.paradubschmanager.models.PlayerData;
+import de.paradubsch.paradubschmanager.models.SaveRequest;
 import lombok.Cleanup;
 import org.bukkit.entity.Player;
 import org.hibernate.Session;
@@ -155,6 +156,65 @@ public class Hibernate {
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    public static SaveRequest getSaveRequest(Player p) {
+        Transaction transaction = null;
+        try {
+            @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
+
+            transaction = session.beginTransaction();
+
+            PlayerData playerData = session.get(PlayerData.class, p.getUniqueId().toString());
+            SaveRequest saveRequest = playerData.getOpenSaveRequest();
+            org.hibernate.Hibernate.initialize(saveRequest);
+            transaction.commit();
+            return saveRequest;
+
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static SaveRequest getSaveRequest(int id) {
+        Transaction transaction = null;
+        try {
+            @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
+
+            transaction = session.beginTransaction();
+
+            SaveRequest saveRequest = session.get(SaveRequest.class, id);
+            org.hibernate.Hibernate.initialize(saveRequest);
+            transaction.commit();
+            return saveRequest;
+
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static void deleteSaveRequest(SaveRequest saveRequest) {
+        Transaction transaction = null;
+        try {
+            @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+
+            session.delete(saveRequest);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
         }
     }
 }

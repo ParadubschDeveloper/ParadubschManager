@@ -18,6 +18,7 @@ public abstract class GuiItem {
     @Getter
     private ItemStack itemStack;
 
+    @Getter
     public Language lang;
     public final List<Object> args = new ArrayList<>();
 

@@ -52,6 +52,10 @@ public class PlayerData {
     @Column(name = "max_homes", columnDefinition = "INT DEFAULT 2")
     private int maxHomes = 2;
 
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "playerRef")
+    @Cascade(value = SAVE_UPDATE)
+    private SaveRequest openSaveRequest;
+
     public PlayerData () {}
 
     public PlayerData(Player player) {

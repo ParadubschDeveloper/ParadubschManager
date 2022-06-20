@@ -97,7 +97,7 @@ public class GuiManager implements Listener {
         registerGui(title);
         Map<Component, List<GuiItem>> gui = GuiManager.instance.guis;
         List<GuiItem> items = gui.get(title);
-        if (!items.contains(item)) {
+        if (items.stream().noneMatch(i -> i.getClass().equals(item.getClass()) && i.getLang().equals(item.getLang()))) {
             items.add(item);
         }
         GuiManager.instance.guis.put(title, items);
