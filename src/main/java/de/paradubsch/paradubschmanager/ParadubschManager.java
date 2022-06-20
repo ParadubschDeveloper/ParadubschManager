@@ -1,5 +1,6 @@
 package de.paradubsch.paradubschmanager;
 
+import de.craftery.util.gui.GuiManager;
 import de.paradubsch.paradubschmanager.commands.*;
 import de.paradubsch.paradubschmanager.config.ConfigurationManager;
 import de.paradubsch.paradubschmanager.lifecycle.playtime.PlaytimeManager;
@@ -22,6 +23,9 @@ public final class ParadubschManager extends JavaPlugin {
     @Getter
     private PlaytimeManager playtimeManager;
 
+    @Getter
+    private GuiManager guiManager;
+
     @Override
     public void onEnable() {
         instance = this;
@@ -41,6 +45,7 @@ public final class ParadubschManager extends JavaPlugin {
         new TestDatabaseConnection();
         languageManager = new LanguageManager();
         playtimeManager = new PlaytimeManager();
+        this.guiManager = new GuiManager(this, languageManager);
         Bukkit.getConsoleSender().sendMessage("[Paradubsch] !> Initialization done");
 
     }
