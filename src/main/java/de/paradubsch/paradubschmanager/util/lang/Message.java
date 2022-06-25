@@ -30,7 +30,9 @@ public class Message {
         CMD_SAVE_TP_INVALID_ID("cmdSaveTpInvalidId", "&cDu musst eine gültige ID angeben!"),
         SAVE_AXE_NOT_VALID("saveAxeNotValid", "&cDu musst eine aktive Save-Axt nehmen!"),
         SAVE_REGION_NO_SELECTION("saveRegionNoSelection", "&cDu musst eine Region auswählen!"),
-        SAVE_REGION_COLLISION("saveRegionCollision", "&cIn diesem Bereich befindet sich bereits eine andere Region");
+        SAVE_REGION_COLLISION("saveRegionCollision", "&cIn diesem Bereich befindet sich bereits eine andere Region"),
+        GS_ADD_NAME_NOT_PROVIDED("gsAddNameNotProvided", "&cDu musst einen Spieler angeben, den du hinzufügen möchtest!"),
+        GS_ADD_PLAYER_ALREADY_MEMBER("&cgsAddPlayerAlreadyMember", "&cDer Spieler &a%1 &cist bereits Mitglied auf deinem Grundstück!");
 
         private final String key;
         private final String def;
@@ -86,7 +88,8 @@ public class Message {
         CMD_VIEWHOME_MAYBE_WRONG_NAME("cmdViewhomeMaybeWrongName","Das Home &a%1 &7konnte nicht gefunden werden. Meintest du vielleicht &a%2&7? @ClickableComponent<Text=&a[Anzeigen]|ClickCommand=/viewhome %2|HoverText=Anzeigen>"),
         GS_CLAIM_REQUEST("gsClaimRequest","&e%1 &7möchte ein Grundstück gesichert bekommen. @ClickableComponent<Text=&a[Teleportieren]|ClickCommand=/save tp %2|HoverText=Teleportieren>"),
         SAVE_REGION_SUCCESS("saveRegionSuccess","Du hast das Grundstück erfolgreich gesichert."),
-        REGION_SAVED_SUCCESSFUL("regionSavedSuccessful","Dein Grundstück wurde erfolgreich gesichert!");
+        REGION_SAVED_SUCCESSFUL("regionSavedSuccessful","Dein Grundstück wurde erfolgreich gesichert!"),
+        GS_ADD_ADDED_PLAYER_SUCCESSFUL("gsAddAddedPlayerSuccessful", "Du hast den Spieler &a%1 &7erfolgreich auf dein Grundstück hinzugefügt.");
 
         private final String key;
         private final String def;
