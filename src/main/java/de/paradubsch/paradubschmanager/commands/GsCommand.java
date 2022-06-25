@@ -51,6 +51,7 @@ public class GsCommand implements CommandExecutor, TabCompleter {
                 break;
             }
             case "remove": {
+                gsRemove(p, args);
                 break;
             }
             case "ban": {
@@ -117,6 +118,42 @@ public class GsCommand implements CommandExecutor, TabCompleter {
             region.setMembers(members);
 
             MessageAdapter.sendMessage(p, Message.Info.GS_ADD_ADDED_PLAYER_SUCCESSFUL, pd.getName());
+        }
+    }
+
+    private static void gsRemove(Player p, String[] args) {
+        if (!Expect.minArgs(2, args)) {
+            MessageAdapter.sendMessage(p, Message.Error.GS_REMOVE_NAME_NOT_PROVIDED);
+            return;
+        }
+
+        PlayerData pd = Hibernate.getPlayerData(args[1]);
+        if (pd == null) {
+            MessageAdapter.sendMessage(p, Message.Error.CMD_PLAYER_NEVER_ONLINE, args[1]);
+            return;
+        }
+
+        RegionContainer container = WorldGuard.getInstance().getPlatform().getRegionContainer();
+        if (container == null) return;
+        RegionManager manager = container.get(BukkitAdapter.adapt(p.getWorld()));
+        if (manager == null) return;
+        Location loc = p.getLocation();
+        BlockVector3 vec = BlockVector3.at(loc.getX(), loc.getY(), loc.getZ());
+        ApplicableRegionSet regions = manager.getApplicableRegions(vec);
+        for (ProtectedRegion region : regions) {
+            if (!region.getOwners().contains(p.getUniqueId())) {
+                return;
+            }
+            DefaultDomain members = region.getMembers();
+            if (!members.contains(UUID.fromString(pd.getUuid()))) {
+                MessageAdapter.sendMessage(p, Message.Error.GS_REMOVE_PLAYER_NOT_MEMBER, pd.getName());
+                return;
+            }
+
+            members.removePlayer(UUID.fromString(pd.getUuid()));
+            region.setMembers(members);
+
+            MessageAdapter.sendMessage(p, Message.Info.GS_REMOVE_REMOVED_PLAYER_SUCCESSFUL, pd.getName());
         }
     }
 

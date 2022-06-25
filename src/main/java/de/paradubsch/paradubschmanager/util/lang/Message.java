@@ -32,7 +32,9 @@ public class Message {
         SAVE_REGION_NO_SELECTION("saveRegionNoSelection", "&cDu musst eine Region auswählen!"),
         SAVE_REGION_COLLISION("saveRegionCollision", "&cIn diesem Bereich befindet sich bereits eine andere Region"),
         GS_ADD_NAME_NOT_PROVIDED("gsAddNameNotProvided", "&cDu musst einen Spieler angeben, den du hinzufügen möchtest!"),
-        GS_ADD_PLAYER_ALREADY_MEMBER("&cgsAddPlayerAlreadyMember", "&cDer Spieler &a%1 &cist bereits Mitglied auf deinem Grundstück!");
+        GS_ADD_PLAYER_ALREADY_MEMBER("gsAddPlayerAlreadyMember", "&cDer Spieler &a%1 &cist bereits Mitglied auf deinem Grundstück!"),
+        GS_REMOVE_NAME_NOT_PROVIDED("gsRemoveNameNotProvided", "&cDu musst einen Spieler angeben, den du entfernen möchtest!"),
+        GS_REMOVE_PLAYER_NOT_MEMBER("gsRemovePlayerNotMember", "&cDer Spieler &a%1 &cist kein Mitglied auf deinem Grundstück!");
 
         private final String key;
         private final String def;
@@ -89,7 +91,8 @@ public class Message {
         GS_CLAIM_REQUEST("gsClaimRequest","&e%1 &7möchte ein Grundstück gesichert bekommen. @ClickableComponent<Text=&a[Teleportieren]|ClickCommand=/save tp %2|HoverText=Teleportieren>"),
         SAVE_REGION_SUCCESS("saveRegionSuccess","Du hast das Grundstück erfolgreich gesichert."),
         REGION_SAVED_SUCCESSFUL("regionSavedSuccessful","Dein Grundstück wurde erfolgreich gesichert!"),
-        GS_ADD_ADDED_PLAYER_SUCCESSFUL("gsAddAddedPlayerSuccessful", "Du hast den Spieler &a%1 &7erfolgreich auf dein Grundstück hinzugefügt.");
+        GS_ADD_ADDED_PLAYER_SUCCESSFUL("gsAddAddedPlayerSuccessful", "Du hast den Spieler &a%1 &7erfolgreich auf dein Grundstück hinzugefügt."),
+        GS_REMOVE_REMOVED_PLAYER_SUCCESSFUL("gsRemoveRemovedPlayerSuccessful", "Du hast den Spieler &a%1 &7erfolgreich von deinem Grundstück entfernt.");
 
         private final String key;
         private final String def;
