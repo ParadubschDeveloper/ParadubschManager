@@ -32,9 +32,13 @@ public class Message {
         SAVE_REGION_NO_SELECTION("saveRegionNoSelection", "&cDu musst eine Region auswählen!"),
         SAVE_REGION_COLLISION("saveRegionCollision", "&cIn diesem Bereich befindet sich bereits eine andere Region"),
         GS_ADD_NAME_NOT_PROVIDED("gsAddNameNotProvided", "&cDu musst einen Spieler angeben, den du hinzufügen möchtest!"),
+        GS_IN_NO_REGION("gsInNoRegion", "&cDu befindest dich auf keinem Grundstück!"),
         GS_ADD_PLAYER_ALREADY_MEMBER("gsAddPlayerAlreadyMember", "&cDer Spieler &a%1 &cist bereits Mitglied auf deinem Grundstück!"),
         GS_REMOVE_NAME_NOT_PROVIDED("gsRemoveNameNotProvided", "&cDu musst einen Spieler angeben, den du entfernen möchtest!"),
-        GS_REMOVE_PLAYER_NOT_MEMBER("gsRemovePlayerNotMember", "&cDer Spieler &a%1 &cist kein Mitglied auf deinem Grundstück!");
+        GS_REMOVE_PLAYER_NOT_MEMBER("gsRemovePlayerNotMember", "&cDer Spieler &a%1 &cist kein Mitglied auf deinem Grundstück!"),
+        GS_TRANSFER_NAME_NOT_PROVIDED("gsTransferNameNotProvided", "&cDu musst einen Spieler angeben, an den du das Grundstück übergeben möchtest."),
+        GS_NO_PERMISSIONS_IN_REGION("gsNoPermissionsInRegion", "&cDu hast dafür hier nicht die Berechtigung!"),
+        GS_TRANSFER_PLAYER_IS_ALREADY_OWNER("gsTransferPlayerIsAlreadyOwner", "&cDer Spieler &a%1 &cist bereits Inhaber dieses Grundstücks!");
 
         private final String key;
         private final String def;
@@ -92,7 +96,8 @@ public class Message {
         SAVE_REGION_SUCCESS("saveRegionSuccess","Du hast das Grundstück erfolgreich gesichert."),
         REGION_SAVED_SUCCESSFUL("regionSavedSuccessful","Dein Grundstück wurde erfolgreich gesichert!"),
         GS_ADD_ADDED_PLAYER_SUCCESSFUL("gsAddAddedPlayerSuccessful", "Du hast den Spieler &a%1 &7erfolgreich auf dein Grundstück hinzugefügt."),
-        GS_REMOVE_REMOVED_PLAYER_SUCCESSFUL("gsRemoveRemovedPlayerSuccessful", "Du hast den Spieler &a%1 &7erfolgreich von deinem Grundstück entfernt.");
+        GS_REMOVE_REMOVED_PLAYER_SUCCESSFUL("gsRemoveRemovedPlayerSuccessful", "Du hast den Spieler &a%1 &7erfolgreich von deinem Grundstück entfernt."),
+        GS_TRANSFER_SUCCESSFUL("gsTransferSuccessful", "Das Grundstück wurde &aerfolgreich &7an &c%1 &7 übergeben.");
 
         private final String key;
         private final String def;
@@ -156,7 +161,10 @@ public class Message {
         GS_CLAIM_TITLE("guiGsClaimTitle", "&aSicherung des Grundstücks beantragen"),
         GS_CLAIM_LORE("guiGsClaimLore", "Unser Team wird über deine Anfrage informiert."),
         SAVE_CONFIRM_TITLE("guiSaveConfirmTitle", "&a&lGrundstück Daten überprüfen"),
-        SAVE_CONFIRM_BUTTON_TITLE("guiSaveConfirmButtonTitle", "&a&lGrundstück sichern");
+        SAVE_CONFIRM_BUTTON_TITLE("guiSaveConfirmButtonTitle", "&a&lGrundstück sichern"),
+        GS_TRANSFER_TITLE("guiGsTransferTitle", "&a&lGrundstück übertragen"),
+        GS_TRANSFER_BUTTON_TITLE("guiGsTransferButtonTitle", "&a&lGrundstück übertragen"),
+        GS_TRANSFER_BUTTON_LORE("guiGsTransferButtonLore", "&aHiermit überträgst du dein Grundstück an den Spieler &b%1");
 
         private final String key;
         private final String def;

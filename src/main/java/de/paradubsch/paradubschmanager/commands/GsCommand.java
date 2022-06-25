@@ -2,9 +2,7 @@ package de.paradubsch.paradubschmanager.commands;
 
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldedit.math.BlockVector3;
-import com.sk89q.worldguard.LocalPlayer;
 import com.sk89q.worldguard.WorldGuard;
-import com.sk89q.worldguard.bukkit.BukkitUtil;
 import com.sk89q.worldguard.domains.DefaultDomain;
 import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.managers.RegionManager;
@@ -13,6 +11,7 @@ import com.sk89q.worldguard.protection.regions.RegionContainer;
 import de.craftery.util.gui.GuiManager;
 import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.gui.window.ClaimGui;
+import de.paradubsch.paradubschmanager.gui.window.GsTransferGui;
 import de.paradubsch.paradubschmanager.models.PlayerData;
 import de.paradubsch.paradubschmanager.util.Expect;
 import de.paradubsch.paradubschmanager.util.Hibernate;
@@ -21,7 +20,6 @@ import de.paradubsch.paradubschmanager.util.lang.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -54,7 +52,7 @@ public class GsCommand implements CommandExecutor, TabCompleter {
                 gsRemove(p, args);
                 break;
             }
-            case "ban": {
+            /*case "ban": {
                 break;
             }
             case "unban": {
@@ -62,7 +60,7 @@ public class GsCommand implements CommandExecutor, TabCompleter {
             }
             case "whitelist": {
                 break;
-            }
+            }*/
             case "info": {
                 break;
             }
@@ -70,11 +68,12 @@ public class GsCommand implements CommandExecutor, TabCompleter {
                 break;
             }
             case "transfer": {
+                gsTransfer(p, args);
                 break;
             }
-            case "flags": {
+            /*case "flags": {
                 break;
-            }
+            }*/
         }
 
         return true;
@@ -103,9 +102,20 @@ public class GsCommand implements CommandExecutor, TabCompleter {
         Location loc = p.getLocation();
         BlockVector3 vec = BlockVector3.at(loc.getX(), loc.getY(), loc.getZ());
         ApplicableRegionSet regions = manager.getApplicableRegions(vec);
+        if (regions.size() == 0) {
+            MessageAdapter.sendMessage(p, Message.Error.GS_IN_NO_REGION);
+            return;
+        }
+        List<ProtectedRegion> regionList = new ArrayList<>();
+        regions.forEach(regionList::add);
+
+        if (regionList.stream().noneMatch(region -> region.getOwners().contains(p.getUniqueId()))) {
+            MessageAdapter.sendMessage(p, Message.Error.GS_NO_PERMISSIONS_IN_REGION);
+            return;
+        }
         for (ProtectedRegion region : regions) {
             if (!region.getOwners().contains(p.getUniqueId())) {
-                return;
+                continue;
             }
             DefaultDomain members = region.getMembers();
             if (members.contains(UUID.fromString(pd.getUuid()))) {
@@ -116,6 +126,7 @@ public class GsCommand implements CommandExecutor, TabCompleter {
             OfflinePlayer ofPl = Bukkit.getOfflinePlayer(UUID.fromString(pd.getUuid()));
             members.addPlayer(ParadubschManager.getInstance().getWorldGuardPlugin().wrapOfflinePlayer(ofPl));
             region.setMembers(members);
+
 
             MessageAdapter.sendMessage(p, Message.Info.GS_ADD_ADDED_PLAYER_SUCCESSFUL, pd.getName());
         }
@@ -140,9 +151,21 @@ public class GsCommand implements CommandExecutor, TabCompleter {
         Location loc = p.getLocation();
         BlockVector3 vec = BlockVector3.at(loc.getX(), loc.getY(), loc.getZ());
         ApplicableRegionSet regions = manager.getApplicableRegions(vec);
+        if (regions.size() == 0) {
+            MessageAdapter.sendMessage(p, Message.Error.GS_IN_NO_REGION);
+            return;
+        }
+        List<ProtectedRegion> regionList = new ArrayList<>();
+        regions.forEach(regionList::add);
+
+        if (regionList.stream().noneMatch(region -> region.getOwners().contains(p.getUniqueId()))) {
+            MessageAdapter.sendMessage(p, Message.Error.GS_NO_PERMISSIONS_IN_REGION);
+            return;
+        }
+
         for (ProtectedRegion region : regions) {
             if (!region.getOwners().contains(p.getUniqueId())) {
-                return;
+                continue;
             }
             DefaultDomain members = region.getMembers();
             if (!members.contains(UUID.fromString(pd.getUuid()))) {
@@ -157,6 +180,51 @@ public class GsCommand implements CommandExecutor, TabCompleter {
         }
     }
 
+    private static void gsTransfer(Player p, String[] args) {
+        if (!Expect.minArgs(2, args)) {
+            MessageAdapter.sendMessage(p, Message.Error.GS_TRANSFER_NAME_NOT_PROVIDED);
+            return;
+        }
+
+        PlayerData pd = Hibernate.getPlayerData(args[1]);
+        if (pd == null) {
+            MessageAdapter.sendMessage(p, Message.Error.CMD_PLAYER_NEVER_ONLINE, args[1]);
+            return;
+        }
+
+        RegionContainer container = WorldGuard.getInstance().getPlatform().getRegionContainer();
+        if (container == null) return;
+        RegionManager manager = container.get(BukkitAdapter.adapt(p.getWorld()));
+        if (manager == null) return;
+        Location loc = p.getLocation();
+        BlockVector3 vec = BlockVector3.at(loc.getX(), loc.getY(), loc.getZ());
+        ApplicableRegionSet regions = manager.getApplicableRegions(vec);
+        if (regions.size() == 0) {
+            MessageAdapter.sendMessage(p, Message.Error.GS_IN_NO_REGION);
+            return;
+        }
+        List<ProtectedRegion> regionList = new ArrayList<>();
+        regions.forEach(regionList::add);
+
+        if (regionList.stream().noneMatch(region -> region.getOwners().contains(p.getUniqueId()))) {
+            MessageAdapter.sendMessage(p, Message.Error.GS_NO_PERMISSIONS_IN_REGION);
+            return;
+        }
+
+        for (ProtectedRegion region : regionList) {
+            if (!region.getOwners().contains(p.getUniqueId())) {
+                continue;
+            }
+            DefaultDomain owners = region.getOwners();
+            if (owners.contains(UUID.fromString(pd.getUuid()))) {
+                MessageAdapter.sendMessage(p, Message.Error.GS_TRANSFER_PLAYER_IS_ALREADY_OWNER, pd.getName());
+                return;
+            }
+
+            GuiManager.entryGui(GsTransferGui.class, p, pd.getName(), pd, region);
+        }
+    }
+
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         List<String> l = new ArrayList<>();
@@ -164,21 +232,21 @@ public class GsCommand implements CommandExecutor, TabCompleter {
         if (args.length == 1) {
             l.add("add");
             l.add("remove");
-            l.add("ban");
-            l.add("unban");
-            l.add("whitelist");
+            //l.add("ban");
+            //l.add("unban");
+            //l.add("whitelist");
             l.add("info");
             l.add("delete");
             l.add("transfer");
 
-            l.add("flags");
+            //l.add("flags");
             return l;
         }
-        if (args.length == 2 && args[0].equals("whitelist")) {
+        /*if (args.length == 2 && args[0].equals("whitelist")) {
             l.add("on");
             l.add("off");
             return l;
-        }
+        }*/
 
         if (args.length == 2 && args[0].equals("add")) {
             return null;
