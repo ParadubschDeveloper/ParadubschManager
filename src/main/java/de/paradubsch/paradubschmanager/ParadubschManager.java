@@ -1,16 +1,15 @@
 package de.paradubsch.paradubschmanager;
 
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.ProtocolManager;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import de.craftery.util.gui.GuiManager;
 import de.paradubsch.paradubschmanager.commands.*;
 import de.paradubsch.paradubschmanager.config.ConfigurationManager;
+import de.paradubsch.paradubschmanager.lifecycle.*;
 import de.paradubsch.paradubschmanager.lifecycle.playtime.PlaytimeManager;
-import de.paradubsch.paradubschmanager.lifecycle.TestDatabaseConnection;
-import de.paradubsch.paradubschmanager.lifecycle.PlayerCacher;
-import de.paradubsch.paradubschmanager.lifecycle.QuitListener;
 import de.paradubsch.paradubschmanager.util.lang.LanguageManager;
-import de.paradubsch.paradubschmanager.lifecycle.ChatMessageListener;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.command.*;
@@ -35,6 +34,8 @@ public final class ParadubschManager extends JavaPlugin {
     @Getter
     private WorldEditPlugin worldEditPlugin;
 
+    private ProtocolManager protocolManager;
+
     @Override
     public void onEnable() {
         instance = this;
@@ -55,12 +56,21 @@ public final class ParadubschManager extends JavaPlugin {
 
         worldGuardPlugin = initializeWorldGuardPlugin();
         worldEditPlugin = initializeWorldEditPlugin();
+        protocolManager = ProtocolLibrary.getProtocolManager();
 
         languageManager = new LanguageManager();
         playtimeManager = new PlaytimeManager();
         this.guiManager = new GuiManager(this, languageManager);
         Bukkit.getConsoleSender().sendMessage("[Paradubsch] !> Initialization done");
 
+    }
+
+    public ProtocolManager getProtocolManager() {
+        ProtocolManager pm = ParadubschManager.getInstance().protocolManager;
+        if (pm == null) {
+            ParadubschManager.getInstance().protocolManager = ProtocolLibrary.getProtocolManager();
+        }
+        return pm;
     }
 
     @Override
@@ -72,6 +82,7 @@ public final class ParadubschManager extends JavaPlugin {
         new ChatMessageListener();
         new PlayerCacher();
         new QuitListener();
+        new TabDecorationManager(this);
     }
 
     private void registerCommands() {
