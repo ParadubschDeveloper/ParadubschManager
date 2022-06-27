@@ -14,6 +14,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 
 public class Hibernate {
@@ -63,6 +64,32 @@ public class Hibernate {
             }
             e.printStackTrace();
             return new PlayerData(p);
+        }
+    }
+
+    public static PlayerData getPlayerData(UUID uuid) {
+        Transaction transaction = null;
+        try {
+            @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
+
+            transaction = session.beginTransaction();
+
+            PlayerData playerData = session.get(PlayerData.class, uuid.toString());
+            transaction.commit();
+            if (playerData == null) {
+                playerData = new PlayerData();
+                playerData.setUuid(uuid.toString());
+            }
+            return playerData;
+
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+            PlayerData playerData = new PlayerData();
+            playerData.setUuid(uuid.toString());
+            return playerData;
         }
     }
 

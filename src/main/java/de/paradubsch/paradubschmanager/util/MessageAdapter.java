@@ -17,7 +17,7 @@ public class MessageAdapter {
     }
 
     public static void sendMessage(CommandSender cs, BaseMessageType template, String... args) {
-        new Thread(() -> {
+        Bukkit.getScheduler().runTask(ParadubschManager.getInstance(), () -> {
             Language playerLang;
             if (cs instanceof Player) {
                 Player player = (Player) cs;
@@ -31,11 +31,11 @@ public class MessageAdapter {
             Component message = Component.text(ChatColor.translateAlternateColorCodes('&', ConfigurationManager.getString("chatPrefix")))
                     .append(infoText);
             cs.sendMessage(message);
-        }).start();
+        });
     }
 
     public static void sendUnprefixedMessage(CommandSender cs, BaseMessageType constant, String... args) {
-        new Thread(() -> {
+        Bukkit.getScheduler().runTask(ParadubschManager.getInstance(), () -> {
             Language playerLang;
             if (cs instanceof Player) {
                 Player player = (Player) cs;
@@ -47,16 +47,16 @@ public class MessageAdapter {
 
             Component constantText = ParadubschManager.getInstance().getLanguageManager().get(constant, playerLang, args);
             cs.sendMessage(constantText);
-        }).start();
+        });
     }
 
     public static void broadcastMessage(BaseMessageType template, String... args) {
-        new Thread(() -> {
+        Bukkit.getScheduler().runTask(ParadubschManager.getInstance(), () -> {
             Language lang = Language.getDefaultLanguage();
 
             Component constantText = ParadubschManager.getInstance().getLanguageManager().get(template, lang, args);
             Bukkit.getServer().sendMessage(constantText);
-        }).start();
+        });
     }
 
 }

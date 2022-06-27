@@ -63,6 +63,7 @@ public class GsCommand implements CommandExecutor, TabCompleter {
                 break;
             }*/
             case "info": {
+                gsInfo(p);
                 break;
             }
             case "delete": {
@@ -119,9 +120,14 @@ public class GsCommand implements CommandExecutor, TabCompleter {
             if (!region.getOwners().contains(p.getUniqueId())) {
                 continue;
             }
+            DefaultDomain owners = region.getOwners();
             DefaultDomain members = region.getMembers();
             if (members.contains(UUID.fromString(pd.getUuid()))) {
                 MessageAdapter.sendMessage(p, Message.Error.GS_ADD_PLAYER_ALREADY_MEMBER, pd.getName());
+                return;
+            }
+            if (owners.contains(UUID.fromString(pd.getUuid()))) {
+                MessageAdapter.sendMessage(p, Message.Error.GS_ADD_PLAYER_IS_OWNER);
                 return;
             }
 
@@ -254,6 +260,52 @@ public class GsCommand implements CommandExecutor, TabCompleter {
             GuiManager.entryGui(GsDeleteGui.class, p, region);
         }
 
+    }
+
+    private static void gsInfo(Player p) {
+        Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
+            RegionContainer container = WorldGuard.getInstance().getPlatform().getRegionContainer();
+            if (container == null) return;
+            RegionManager manager = container.get(BukkitAdapter.adapt(p.getWorld()));
+            if (manager == null) return;
+            Location loc = p.getLocation();
+            BlockVector3 vec = BlockVector3.at(loc.getX(), loc.getY(), loc.getZ());
+            ApplicableRegionSet regions = manager.getApplicableRegions(vec);
+            if (regions.size() == 0) {
+                MessageAdapter.sendMessage(p, Message.Error.GS_IN_NO_REGION);
+                return;
+            }
+
+            for (ProtectedRegion region : regions) {
+                StringBuilder owners = new StringBuilder();
+                List<PlayerData> ownerPlayerDataList = new ArrayList<>();
+                for (UUID uuid : region.getOwners().getUniqueIds()) {
+                    PlayerData pd = Hibernate.getPlayerData(uuid);
+                    ownerPlayerDataList.add(pd);
+                }
+                for (int i = 0; i < ownerPlayerDataList.size(); i++) {
+                    owners.append(ownerPlayerDataList.get(i).getName());
+                    if (i != ownerPlayerDataList.size() - 1) {
+                        owners.append(", ");
+                    }
+                }
+                StringBuilder members = new StringBuilder();
+                List<PlayerData> memberPlayerDataList = new ArrayList<>();
+                for (UUID uuid : region.getMembers().getUniqueIds()) {
+                    PlayerData pd = Hibernate.getPlayerData(uuid);
+                    memberPlayerDataList.add(pd);
+                }
+                for (int i = 0; i < memberPlayerDataList.size(); i++) {
+                    members.append(memberPlayerDataList.get(i).getName());
+                    if (i != memberPlayerDataList.size() - 1) {
+                        members.append(", ");
+                    }
+                }
+                MessageAdapter.sendMessage(p, Message.Info.GS_INFO_REGION_NAME, region.getId());
+                MessageAdapter.sendMessage(p, Message.Info.GS_INFO_REGION_OWNERS, owners.toString());
+                MessageAdapter.sendMessage(p, Message.Info.GS_INFO_REGION_MEMBERS, members.toString());
+            }
+        });
     }
 
     @Override

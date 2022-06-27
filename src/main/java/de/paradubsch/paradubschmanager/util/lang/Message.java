@@ -38,7 +38,8 @@ public class Message {
         GS_REMOVE_PLAYER_NOT_MEMBER("gsRemovePlayerNotMember", "&cDer Spieler &a%1 &cist kein Mitglied auf deinem Grundstück!"),
         GS_TRANSFER_NAME_NOT_PROVIDED("gsTransferNameNotProvided", "&cDu musst einen Spieler angeben, an den du das Grundstück übergeben möchtest."),
         GS_NO_PERMISSIONS_IN_REGION("gsNoPermissionsInRegion", "&cDu hast dafür hier nicht die Berechtigung!"),
-        GS_TRANSFER_PLAYER_IS_ALREADY_OWNER("gsTransferPlayerIsAlreadyOwner", "&cDer Spieler &a%1 &cist bereits Inhaber dieses Grundstücks!");
+        GS_TRANSFER_PLAYER_IS_ALREADY_OWNER("gsTransferPlayerIsAlreadyOwner", "&cDer Spieler &a%1 &cist bereits Inhaber dieses Grundstücks!"),
+        GS_ADD_PLAYER_IS_OWNER("gsAddPlayerIsOwner", "&cDu kannst dich nicht selbst als Mitglied eintragen!");
 
         private final String key;
         private final String def;
@@ -98,7 +99,10 @@ public class Message {
         GS_ADD_ADDED_PLAYER_SUCCESSFUL("gsAddAddedPlayerSuccessful", "Du hast den Spieler &a%1 &7erfolgreich auf dein Grundstück hinzugefügt."),
         GS_REMOVE_REMOVED_PLAYER_SUCCESSFUL("gsRemoveRemovedPlayerSuccessful", "Du hast den Spieler &a%1 &7erfolgreich von deinem Grundstück entfernt."),
         GS_TRANSFER_SUCCESSFUL("gsTransferSuccessful", "Das Grundstück wurde &aerfolgreich &7an &c%1 &7 übergeben."),
-        GS_DELETE_SUCCESSFUL("gsDeleteSuccessful", "Dein Grundstück wurde &aerfolgreich &7gelöscht.");
+        GS_DELETE_SUCCESSFUL("gsDeleteSuccessful", "Dein Grundstück wurde &aerfolgreich &7gelöscht."),
+        GS_INFO_REGION_NAME("gsInfoRegionName", "&aRegion: &6%1"),
+        GS_INFO_REGION_OWNERS("gsInfoRegionOwners", "&aBesitzer: &6%1"),
+        GS_INFO_REGION_MEMBERS("gsInfoRegionMembers", "&aMitglieder: &6%1");
 
         private final String key;
         private final String def;
