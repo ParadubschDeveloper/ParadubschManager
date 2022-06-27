@@ -97,7 +97,8 @@ public class Message {
         REGION_SAVED_SUCCESSFUL("regionSavedSuccessful","Dein Grundstück wurde erfolgreich gesichert!"),
         GS_ADD_ADDED_PLAYER_SUCCESSFUL("gsAddAddedPlayerSuccessful", "Du hast den Spieler &a%1 &7erfolgreich auf dein Grundstück hinzugefügt."),
         GS_REMOVE_REMOVED_PLAYER_SUCCESSFUL("gsRemoveRemovedPlayerSuccessful", "Du hast den Spieler &a%1 &7erfolgreich von deinem Grundstück entfernt."),
-        GS_TRANSFER_SUCCESSFUL("gsTransferSuccessful", "Das Grundstück wurde &aerfolgreich &7an &c%1 &7 übergeben.");
+        GS_TRANSFER_SUCCESSFUL("gsTransferSuccessful", "Das Grundstück wurde &aerfolgreich &7an &c%1 &7 übergeben."),
+        GS_DELETE_SUCCESSFUL("gsDeleteSuccessful", "Dein Grundstück wurde &aerfolgreich &7gelöscht.");
 
         private final String key;
         private final String def;
@@ -164,7 +165,10 @@ public class Message {
         SAVE_CONFIRM_BUTTON_TITLE("guiSaveConfirmButtonTitle", "&a&lGrundstück sichern"),
         GS_TRANSFER_TITLE("guiGsTransferTitle", "&a&lGrundstück übertragen"),
         GS_TRANSFER_BUTTON_TITLE("guiGsTransferButtonTitle", "&a&lGrundstück übertragen"),
-        GS_TRANSFER_BUTTON_LORE("guiGsTransferButtonLore", "&aHiermit überträgst du dein Grundstück an den Spieler &b%1");
+        GS_TRANSFER_BUTTON_LORE("guiGsTransferButtonLore", "&aHiermit überträgst du dein Grundstück an den Spieler &b%1"),
+        GS_DELETE_TITLE("guiGsDeleteTitle", "&a&lGrundstück löschen?"),
+        GS_DELETE_BUTTON_TITLE("guiGsDeleteButtonTitle", "&cGrundstück löschen"),
+        GS_DELETE_BUTTON_LORE("guiGSDeleteButtonLore", "Dieser Vorgang kann &cnicht &7mehr rückgängig gemacht werden!");
 
         private final String key;
         private final String def;

@@ -22,6 +22,7 @@ import java.util.*;
 public class GuiManager implements Listener {
     private final Map<Component, List<GuiItem>> guis = new HashMap<>();
     private final Map<Player, Stack<Class<? extends BaseGui>>> sessions = new HashMap<>();
+    private final Map<Player, List<Object>> sessionData = new HashMap<>();
 
     @Getter
     private static JavaPlugin plugin;
@@ -50,6 +51,7 @@ public class GuiManager implements Listener {
                 guis.get(event.getView().title()).forEach(guiItem -> {
                     if (event.getCurrentItem() == null) return;
                     if (event.getCurrentItem().isSimilar(guiItem.getItemStack())) {
+                        guiItem.applyArgs(GuiManager.instance.sessionData.get((Player) event.getWhoClicked()).toArray());
                         Bukkit.getScheduler().runTask(GuiManager.plugin, () -> {
                             guiItem.onClick((Player) event.getWhoClicked());
                         });
@@ -69,10 +71,10 @@ public class GuiManager implements Listener {
         return Bukkit.createInventory(null, rows * 9, title);
     }
 
-    public static <T extends GuiItem> void addGuiItem(BaseGui src, Class<T> guiItem, int row, int column) {
+    public static <T extends GuiItem> void addGuiItem(BaseGui src, Class<T> guiItem, Player p, int row, int column) {
         try {
             T item = guiItem.getConstructor().newInstance();
-            item.applyArgs(src.args.toArray());
+            item.applyArgs(GuiManager.instance.sessionData.get(p).toArray());
             item.instantiate(src.lang);
             item.build();
             try {
@@ -108,7 +110,9 @@ public class GuiManager implements Listener {
             PlayerData playerData = Hibernate.getPlayerData(p);
             Language playerLang = Language.getLanguageByShortName(playerData.getLanguage());
             BaseGui window = gui.getConstructor().newInstance();
-            window.applyArgs(args);
+            window.applyArgs(p, args);
+            List<Object> argList = new ArrayList<>(Arrays.asList(args));
+            GuiManager.instance.sessionData.put(p, argList);
             window.init(playerLang);
             window.build();
             return window.inv;

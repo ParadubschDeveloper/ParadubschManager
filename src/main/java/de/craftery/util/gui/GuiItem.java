@@ -72,6 +72,7 @@ public abstract class GuiItem {
     }
 
     public void applyArgs(Object... args) {
+        this.args.clear();
         this.args.addAll(Arrays.asList(args));
     }
 

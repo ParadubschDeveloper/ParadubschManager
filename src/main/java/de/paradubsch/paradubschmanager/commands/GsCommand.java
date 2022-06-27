@@ -11,6 +11,7 @@ import com.sk89q.worldguard.protection.regions.RegionContainer;
 import de.craftery.util.gui.GuiManager;
 import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.gui.window.ClaimGui;
+import de.paradubsch.paradubschmanager.gui.window.GsDeleteGui;
 import de.paradubsch.paradubschmanager.gui.window.GsTransferGui;
 import de.paradubsch.paradubschmanager.models.PlayerData;
 import de.paradubsch.paradubschmanager.util.Expect;
@@ -65,6 +66,7 @@ public class GsCommand implements CommandExecutor, TabCompleter {
                 break;
             }
             case "delete": {
+                gsDelete(p, args);
                 break;
             }
             case "transfer": {
@@ -223,6 +225,35 @@ public class GsCommand implements CommandExecutor, TabCompleter {
 
             GuiManager.entryGui(GsTransferGui.class, p, pd.getName(), pd, region);
         }
+    }
+
+    private static void gsDelete(Player p , String[] args) {
+        RegionContainer container = WorldGuard.getInstance().getPlatform().getRegionContainer();
+        if (container == null) return;
+        RegionManager manager = container.get(BukkitAdapter.adapt(p.getWorld()));
+        if (manager == null) return;
+        Location loc = p.getLocation();
+        BlockVector3 vec = BlockVector3.at(loc.getX(), loc.getY(), loc.getZ());
+        ApplicableRegionSet regions = manager.getApplicableRegions(vec);
+        if (regions.size() == 0) {
+            MessageAdapter.sendMessage(p, Message.Error.GS_IN_NO_REGION);
+            return;
+        }
+        List<ProtectedRegion> regionList = new ArrayList<>();
+        regions.forEach(regionList::add);
+
+        if (regionList.stream().noneMatch(region -> region.getOwners().contains(p.getUniqueId()))) {
+            MessageAdapter.sendMessage(p, Message.Error.GS_NO_PERMISSIONS_IN_REGION);
+            return;
+        }
+
+        for (ProtectedRegion region : regionList) {
+            if (!region.getOwners().contains(p.getUniqueId())) {
+                continue;
+            }
+            GuiManager.entryGui(GsDeleteGui.class, p, region);
+        }
+
     }
 
     @Override
