@@ -31,6 +31,8 @@ import java.util.Set;
 public class TabDecorationManager implements Listener {
     private final JavaPlugin plugin;
 
+    private static Scoreboard sb;
+
     public TabDecorationManager(JavaPlugin plugin) {
         this.plugin = plugin;
         Bukkit.getPluginManager().registerEvents(this, plugin);
@@ -41,7 +43,7 @@ public class TabDecorationManager implements Listener {
     @EventHandler
     private void onPlayerJoin(PlayerJoinEvent event) {
         broadcastTabDecorations();
-        setScoreboardTeam(event.getPlayer());
+        broadcastScoreboardTeams();
     }
 
     @EventHandler
@@ -58,11 +60,9 @@ public class TabDecorationManager implements Listener {
     }
 
     private void broadcastScoreboardTeams() {
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
-            for (Player p : Bukkit.getOnlinePlayers()) {
-                setScoreboardTeam(p);
-            }
-        });
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            setScoreboardTeam(p);
+        }
     }
 
     public static void displayTabDecorations(Player p) {
@@ -106,7 +106,11 @@ public class TabDecorationManager implements Listener {
         String color = ConfigurationManager.getConfig().getString("tabprefix." + groupName + ".color", "&7");
         if (team == null || prefix == null) return;
 
-        Scoreboard scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
+        if (TabDecorationManager.sb == null) {
+            TabDecorationManager.sb = Bukkit.getScoreboardManager().getNewScoreboard();
+        }
+
+        Scoreboard scoreboard = TabDecorationManager.sb;
         Team scoreboardTeam = scoreboard.getTeam(team);
         if (scoreboardTeam == null) {
             scoreboardTeam = scoreboard.registerNewTeam(team);
