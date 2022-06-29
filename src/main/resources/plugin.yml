@@ -7,6 +7,9 @@ authors: [ "Paradubsch Server Team" ]
 load: "POSTWORLD"
 prefix: "ParadubschManager"
 website: "https://gitlab.com/paradubsch-developer/paradubschmanager"
+depend:
+  - HeadDatabase
+  - ProtocolLib
 
 commands:
   msg:

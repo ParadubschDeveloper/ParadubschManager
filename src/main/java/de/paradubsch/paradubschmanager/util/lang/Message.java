@@ -102,7 +102,9 @@ public class Message {
         GS_DELETE_SUCCESSFUL("gsDeleteSuccessful", "Dein Grundstück wurde &aerfolgreich &7gelöscht."),
         GS_INFO_REGION_NAME("gsInfoRegionName", "&aRegion: &6%1"),
         GS_INFO_REGION_OWNERS("gsInfoRegionOwners", "&aBesitzer: &6%1"),
-        GS_INFO_REGION_MEMBERS("gsInfoRegionMembers", "&aMitglieder: &6%1");
+        GS_INFO_REGION_MEMBERS("gsInfoRegionMembers", "&aMitglieder: &6%1"),
+        TAB_HEADER("tabHeader", "&6Paradubsch\n\n&7Spieler &8> &a%1\n"),
+        TAB_FOOTER("tabFooter", "\n&7Hast du fragen? Wende dich an ein Teammitglied.\nDiscord: &ahttps://discord.gg/GgXaq6ubvp");
 
         private final String key;
         private final String def;

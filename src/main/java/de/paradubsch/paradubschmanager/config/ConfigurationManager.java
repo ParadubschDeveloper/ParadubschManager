@@ -17,6 +17,10 @@ public class ConfigurationManager {
         config.addDefault("chatPrefix", "&8&l[&6&lParadubsch&8&l] &r");
         config.addDefault("homePrice", 150);
 
+        config.addDefault("tabprefix.default.prefix", "&7Spieler");
+        config.addDefault("tabprefix.default.team", "999Spieler");
+        config.addDefault("tabprefix.default.color", "&7");
+
         config.addDefault("hibernate.driver", "com.mysql.cj.jdbc.Driver");
         config.addDefault("hibernate.url", "jdbc:mysql://localhost:3306/paradubschtest?useSSL=false");
         config.addDefault("hibernate.user", "paradubsch");
@@ -43,6 +47,10 @@ public class ConfigurationManager {
 
     public static @NotNull int getInt(String path) {
         return ParadubschManager.getInstance().getConfig().getInt(path);
+    }
+
+    public static FileConfiguration getConfig() {
+        return ParadubschManager.getInstance().getConfig();
     }
 
     public static FileConfiguration getCustomConfig(String filename) {
