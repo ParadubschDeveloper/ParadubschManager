@@ -11,6 +11,8 @@ import de.paradubsch.paradubschmanager.lifecycle.*;
 import de.paradubsch.paradubschmanager.lifecycle.playtime.PlaytimeManager;
 import de.paradubsch.paradubschmanager.util.lang.LanguageManager;
 import lombok.Getter;
+import net.luckperms.api.LuckPerms;
+import net.luckperms.api.LuckPermsProvider;
 import org.bukkit.Bukkit;
 import org.bukkit.command.*;
 import org.bukkit.plugin.Plugin;
@@ -35,6 +37,8 @@ public final class ParadubschManager extends JavaPlugin {
     private WorldEditPlugin worldEditPlugin;
 
     private ProtocolManager protocolManager;
+
+    private LuckPerms luckPermsApi;
 
     @Override
     public void onEnable() {
@@ -65,12 +69,24 @@ public final class ParadubschManager extends JavaPlugin {
 
     }
 
-    public ProtocolManager getProtocolManager() {
+    public static ProtocolManager getProtocolManager() {
         ProtocolManager pm = ParadubschManager.getInstance().protocolManager;
         if (pm == null) {
             ParadubschManager.getInstance().protocolManager = ProtocolLibrary.getProtocolManager();
         }
-        return pm;
+        return ParadubschManager.getInstance().protocolManager;
+    }
+
+    public static LuckPerms getLuckPermsApi() {
+        LuckPerms lp = ParadubschManager.getInstance().luckPermsApi;
+        if (lp == null) {
+            try {
+                ParadubschManager.getInstance().luckPermsApi = LuckPermsProvider.get();
+            } catch (IllegalStateException ex) {
+                return null;
+            }
+        }
+        return ParadubschManager.getInstance().luckPermsApi;
     }
 
     @Override
@@ -101,6 +117,7 @@ public final class ParadubschManager extends JavaPlugin {
         register("delhome", new DelhomeCommand());
         register("gs", new GsCommand());
         register("save", new SaveCommand());
+        register("rank", new RankCommand());
     }
 
     private void register(String command, CommandExecutor obj) {

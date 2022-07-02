@@ -10,6 +10,9 @@ website: "https://gitlab.com/paradubsch-developer/paradubschmanager"
 depend:
   - HeadDatabase
   - ProtocolLib
+  - LuckPerms
+  - WorldEdit
+  - WorldGuard
 
 commands:
   msg:
@@ -102,6 +105,12 @@ commands:
     permission: paradubsch.save
     permission-message: 'Du benötigst die Berechtigung paradubsch.save um dein Zuhause zu sichern!'
     usage: '/save'
+  rank:
+    description: Gibt einem Spieler einen Rang
+    aliases: [rang]
+    permission: paradubsch.rank
+    permission-message: 'Du benötigst die Berechtigung paradubsch.rank um jemandem einen Rang zuzuweisen!'
+    usage: "/rank <User> <Rank>"
 
 
 permissions:
@@ -166,5 +175,8 @@ permissions:
     description: 'Erlaubt Zugriff auf den /gs Befehl.'
     default: true
   paradubsch.save:
-    description: "Gibt zugriff Saveanfragen zu erhalten und auszuführen"
+    description: "Erlaubt Saveanfragen zu erhalten und auszuführen"
+    default: false
+  paradubsch.rank:
+    description: "Erlaubt Spielern einen Rang zu geben"
     default: false

@@ -59,14 +59,16 @@ public class TabDecorationManager implements Listener {
         });
     }
 
-    private void broadcastScoreboardTeams() {
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            setScoreboardTeam(p);
-        }
+    public static void broadcastScoreboardTeams() {
+        Bukkit.getScheduler().runTask(ParadubschManager.getInstance(), () -> {
+            for (Player p : Bukkit.getOnlinePlayers()) {
+                setScoreboardTeam(p);
+            }
+        });
     }
 
     public static void displayTabDecorations(Player p) {
-        PacketContainer packet = ParadubschManager.getInstance().getProtocolManager().createPacket(PacketType.Play.Server.PLAYER_LIST_HEADER_FOOTER);
+        PacketContainer packet = ParadubschManager.getProtocolManager().createPacket(PacketType.Play.Server.PLAYER_LIST_HEADER_FOOTER);
         PlayerData playerData = Hibernate.getPlayerData(p);
         Language playerLang = Language.getLanguageByShortName(playerData.getLanguage());
         String header = ParadubschManager.getInstance().getLanguageManager().getString(Message.Info.TAB_HEADER, playerLang, Bukkit.getOnlinePlayers().size() + "");
@@ -74,7 +76,7 @@ public class TabDecorationManager implements Listener {
         packet.getChatComponents().write(0, WrappedChatComponent.fromText(ChatColor.translateAlternateColorCodes('&', header)));
         packet.getChatComponents().write(1, WrappedChatComponent.fromText(ChatColor.translateAlternateColorCodes('&', footer)));
         try {
-            ParadubschManager.getInstance().getProtocolManager().sendServerPacket(p, packet);
+            ParadubschManager.getProtocolManager().sendServerPacket(p, packet);
         } catch (InvocationTargetException e) {
             e.printStackTrace();
         }

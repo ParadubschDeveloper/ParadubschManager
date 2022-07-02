@@ -39,7 +39,9 @@ public class Message {
         GS_TRANSFER_NAME_NOT_PROVIDED("gsTransferNameNotProvided", "&cDu musst einen Spieler angeben, an den du das Grundstück übergeben möchtest."),
         GS_NO_PERMISSIONS_IN_REGION("gsNoPermissionsInRegion", "&cDu hast dafür hier nicht die Berechtigung!"),
         GS_TRANSFER_PLAYER_IS_ALREADY_OWNER("gsTransferPlayerIsAlreadyOwner", "&cDer Spieler &a%1 &cist bereits Inhaber dieses Grundstücks!"),
-        GS_ADD_PLAYER_IS_OWNER("gsAddPlayerIsOwner", "&cDu kannst dich nicht selbst als Mitglied eintragen!");
+        GS_ADD_PLAYER_IS_OWNER("gsAddPlayerIsOwner", "&cDu kannst dich nicht selbst als Mitglied eintragen!"),
+        CMD_RANK_NOT_PROVIDED("cmdRankNotProvided", "&cDu musst einen Rang angeben, welchen du vergeben möchtest!"),
+        CMD_RANK_NOT_FOUND("cmdRankNotFound", "&cDer Rang &b%1 &ckonnte nicht gefunden werden!");
 
         private final String key;
         private final String def;
@@ -104,7 +106,8 @@ public class Message {
         GS_INFO_REGION_OWNERS("gsInfoRegionOwners", "&aBesitzer: &6%1"),
         GS_INFO_REGION_MEMBERS("gsInfoRegionMembers", "&aMitglieder: &6%1"),
         TAB_HEADER("tabHeader", "&6Paradubsch\n\n&7Spieler &8> &a%1\n"),
-        TAB_FOOTER("tabFooter", "\n&7Hast du fragen? Wende dich an ein Teammitglied.\nDiscord: &ahttps://discord.gg/GgXaq6ubvp");
+        TAB_FOOTER("tabFooter", "\n&7Hast du fragen? Wende dich an ein Teammitglied.\nDiscord: &ahttps://discord.gg/GgXaq6ubvp"),
+        CMD_RANKED_SUCCESSFUL("cmdRankedSuccessful", "&aDu hast erfolgreich den Rang &6%1 &aan &b%2 &avergeben.");
 
         private final String key;
         private final String def;

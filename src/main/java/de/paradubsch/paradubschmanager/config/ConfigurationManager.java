@@ -21,6 +21,11 @@ public class ConfigurationManager {
         config.addDefault("tabprefix.default.team", "999Spieler");
         config.addDefault("tabprefix.default.color", "&7");
 
+        config.addDefault("chatprefix.default.prefix", "&7Spieler");
+        config.addDefault("chatprefix.default.namecolor", "&7");
+        config.addDefault("chatprefix.default.chatcolor", "&7");
+        config.addDefault("chatprefix.default.prio", 0);
+
         config.addDefault("hibernate.driver", "com.mysql.cj.jdbc.Driver");
         config.addDefault("hibernate.url", "jdbc:mysql://localhost:3306/paradubschtest?useSSL=false");
         config.addDefault("hibernate.user", "paradubsch");
