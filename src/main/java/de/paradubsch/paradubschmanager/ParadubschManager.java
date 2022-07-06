@@ -118,16 +118,14 @@ public final class ParadubschManager extends JavaPlugin {
         register("gs", new GsCommand());
         register("save", new SaveCommand());
         register("rank", new RankCommand());
+        register("b", new BanCommand());
     }
 
-    private void register(String command, CommandExecutor obj) {
+    private <T extends CommandExecutor & TabCompleter> void register(String command, T obj) {
         PluginCommand pc = Bukkit.getPluginCommand(command);
         if (pc == null) return;
         pc.setExecutor(obj);
-
-        if (obj instanceof TabExecutor) {
-            pc.setTabCompleter((TabCompleter) obj);
-        }
+        pc.setTabCompleter(obj);
     }
 
     private WorldGuardPlugin initializeWorldGuardPlugin () {

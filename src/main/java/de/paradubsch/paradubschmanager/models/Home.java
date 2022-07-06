@@ -11,10 +11,11 @@ import javax.persistence.*;
 @Cacheable
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Table(name = "homes")
+@SequenceGenerator(name="homesSequence",sequenceName="homes_sequence")
 public class Home {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="homesSequence")
     @Column(name = "home_id")
     private long id;
 

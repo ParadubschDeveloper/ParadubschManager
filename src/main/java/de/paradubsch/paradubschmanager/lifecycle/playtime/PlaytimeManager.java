@@ -21,7 +21,6 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 public class PlaytimeManager implements Listener {
@@ -29,13 +28,15 @@ public class PlaytimeManager implements Listener {
 
     public PlaytimeManager() {
         ParadubschManager.getInstance().getServer().getPluginManager().registerEvents(this, ParadubschManager.getInstance());
-        Bukkit.getOnlinePlayers().forEach(player -> CompletableFuture.supplyAsync(() -> Hibernate.getPlayerData(player))
-                .thenAccept(pd -> {
-                    PlaytimeInstance pi = new PlaytimeInstance();
-                    pi.setPlaytime(pd.getPlaytime());
-                    pi.setLastRecordTime(System.currentTimeMillis());
-                    cachedData.put(player, pi);
-                }));
+        Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
+            Bukkit.getOnlinePlayers().forEach(player -> {
+                PlayerData pd = Hibernate.getPlayerData(player);
+                PlaytimeInstance pi = new PlaytimeInstance();
+                pi.setPlaytime(pd.getPlaytime());
+                pi.setLastRecordTime(System.currentTimeMillis());
+                cachedData.put(player, pi);
+            });
+        });
         enableScheduler();
     }
 
@@ -54,13 +55,13 @@ public class PlaytimeManager implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
-        CompletableFuture.supplyAsync(() -> Hibernate.getPlayerData(player))
-                .thenAccept(pd -> {
-                   PlaytimeInstance pi = new PlaytimeInstance();
-                   pi.setPlaytime(pd.getPlaytime());
-                   pi.setLastRecordTime(System.currentTimeMillis());
-                   cachedData.put(player, pi);
-                });
+        Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
+           PlayerData pd =  Hibernate.getPlayerData(player);
+            PlaytimeInstance pi = new PlaytimeInstance();
+            pi.setPlaytime(pd.getPlaytime());
+            pi.setLastRecordTime(System.currentTimeMillis());
+            cachedData.put(player, pi);
+        });
     }
 
     @EventHandler
@@ -78,11 +79,11 @@ public class PlaytimeManager implements Listener {
         pi.setLastRecordTime(System.currentTimeMillis());
         cachedData.remove(player);
 
-        CompletableFuture.supplyAsync(() -> Hibernate.getPlayerData(player))
-                .thenApply(pd -> {
-                    pd.setPlaytime(newPlaytime);
-                    return pd;
-                }).thenAcceptAsync(Hibernate::save);
+        Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
+            PlayerData pd = Hibernate.getPlayerData(player);
+            pd.setPlaytime(newPlaytime);
+            Hibernate.save(pd);
+        });
     }
 
     private void enableScheduler () {
@@ -100,14 +101,12 @@ public class PlaytimeManager implements Listener {
 
             checkPassedGroups(player, newPlaytime);
 
-            CompletableFuture.supplyAsync(() -> Hibernate.getPlayerData(player))
-                    .thenApply(pd -> {
-                        pd.setPlaytime(newPlaytime);
-                        return pd;
-                    }).thenAcceptAsync(Hibernate::save);
-
+            Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
+                PlayerData pd = Hibernate.getPlayerData(player);
+                pd.setPlaytime(newPlaytime);
+                Hibernate.save(pd);
+            });
         }), 20*60*5, 20*60*5);
-
     }
 
     //This method is very temporary and will be improved in the future.

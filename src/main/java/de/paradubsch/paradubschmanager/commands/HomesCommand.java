@@ -2,12 +2,13 @@ package de.paradubsch.paradubschmanager.commands;
 
 import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.models.Home;
+import de.paradubsch.paradubschmanager.models.PlayerData;
 import de.paradubsch.paradubschmanager.util.Expect;
 import de.paradubsch.paradubschmanager.util.Hibernate;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.lang.Language;
-import de.paradubsch.paradubschmanager.util.lang.LanguageManager;
 import de.paradubsch.paradubschmanager.util.lang.Message;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -18,7 +19,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 public class HomesCommand implements CommandExecutor, TabCompleter {
     @Override
@@ -29,32 +29,27 @@ public class HomesCommand implements CommandExecutor, TabCompleter {
         }
         Player player = (Player) sender;
 
-        CompletableFuture.supplyAsync(() -> Hibernate.getHomes(player)).thenAccept(homes -> {
-            CompletableFuture.supplyAsync(() -> Hibernate.getPlayerData(player)).thenAccept(playerData -> {
-                if (homes.size() == 0) {
-                    MessageAdapter.sendMessage(player, Message.Info.CMD_HOMES_NO_HOMES);
-                    return;
-                }
+        Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
+            List<Home> homes =  Hibernate.getHomes(player);
+            PlayerData playerData = Hibernate.getPlayerData(player);
 
-                StringBuilder homesString = new StringBuilder();
+            if (homes.size() == 0) {
+                MessageAdapter.sendMessage(player, Message.Info.CMD_HOMES_NO_HOMES);
+                return;
+            }
 
-                Language playerLang = Language.getLanguageByShortName(playerData.getLanguage());
+            StringBuilder homesString = new StringBuilder();
+            Language playerLang = Language.getLanguageByShortName(playerData.getLanguage());
 
-                for (int i = 0; i < homes.size(); i++) {
-                    Home home = homes.get(i);
+            for (int i = 0; i < homes.size(); i++) {
+                Home home = homes.get(i);
+                if (i != 0) homesString.append(", ");
+                String homeN = ParadubschManager.getInstance().getLanguageManager().getString(Message.Constant.CMD_HOMES_TEMPLATE, playerLang, home.getName());
+                homesString.append(homeN);
+            }
 
-                    if (i != 0) homesString.append(", ");
-
-                    String homeN = ParadubschManager.getInstance().getLanguageManager().getString(Message.Constant.CMD_HOMES_TEMPLATE, playerLang, home.getName());
-
-                    homesString.append(homeN);
-                }
-
-                MessageAdapter.sendMessage(player, Message.Info.CMD_HOMES_HOMES, homesString.toString());
-
-            });
+            MessageAdapter.sendMessage(player, Message.Info.CMD_HOMES_HOMES, homesString.toString());
         });
-
         return true;
     }
 

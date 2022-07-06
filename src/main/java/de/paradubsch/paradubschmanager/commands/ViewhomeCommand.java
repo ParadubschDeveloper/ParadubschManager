@@ -1,10 +1,12 @@
 package de.paradubsch.paradubschmanager.commands;
 
+import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.models.Home;
 import de.paradubsch.paradubschmanager.util.Expect;
 import de.paradubsch.paradubschmanager.util.Hibernate;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.lang.Message;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -31,7 +33,8 @@ public class ViewhomeCommand implements CommandExecutor, TabCompleter {
             return true;
         }
 
-        CompletableFuture.supplyAsync(() -> Hibernate.getHomes(player)).thenAccept(homes -> {
+        Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
+           List<Home> homes = Hibernate.getHomes(player);
             if (homes.stream().anyMatch(home -> home.getName().equals(args[0]))) {
                 Home home = homes.stream().filter(home1 -> home1.getName().equals(args[0])).findFirst().get();
                 MessageAdapter.sendMessage(player, Message.Info.CMD_VIEWHOME, home.getName());
@@ -42,7 +45,6 @@ public class ViewhomeCommand implements CommandExecutor, TabCompleter {
                 MessageAdapter.sendMessage(player, Message.Error.CMD_VIEWHOME_HOME_NOT_FOUND, args[0]);
             }
         });
-
         return true;
     }
 

@@ -1,5 +1,6 @@
 package de.paradubsch.paradubschmanager.util;
 
+import de.paradubsch.paradubschmanager.models.PlayerData;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -26,10 +27,6 @@ public class Expect {
         }
 
         return sender instanceof Player;
-    }
-
-    public static Boolean cachedPlayer (@NotNull String player) {
-        return Hibernate.getPlayerData(player) != null;
     }
 
     public static Boolean colorCode(String code) {

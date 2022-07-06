@@ -111,6 +111,12 @@ commands:
     permission: paradubsch.rank
     permission-message: 'Du benötigst die Berechtigung paradubsch.rank um jemandem einen Rang zuzuweisen!'
     usage: "/rank <User> <Rank>"
+  b:
+    description: Ban a Player from the server
+    aliases: [ban]
+    permission: paradubsch.ban
+    permission-message: 'Du benötigst die Berechtigung paradubsch.ban um jemandem einen Ban zuzuweisen!'
+    usage: "/ban <User> <Duration> <Reason>"
 
 
 permissions:
@@ -179,4 +185,7 @@ permissions:
     default: false
   paradubsch.rank:
     description: "Erlaubt Spielern einen Rang zu geben"
+    default: false
+  paradubsch.ban:
+    description: "Erlaubt Spielern einen Ban zu geben"
     default: false

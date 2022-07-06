@@ -56,6 +56,10 @@ public class PlayerData {
     @Cascade(value = SAVE_UPDATE)
     private SaveRequest openSaveRequest;
 
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "playerRef")
+    @Cascade(value = SAVE_UPDATE)
+    private PunishmentHolder punishmentHolder;
+
     public PlayerData () {}
 
     public PlayerData(Player player) {

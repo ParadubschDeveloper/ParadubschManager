@@ -1,10 +1,13 @@
 package de.paradubsch.paradubschmanager.commands;
 
+import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.models.Home;
+import de.paradubsch.paradubschmanager.models.PlayerData;
 import de.paradubsch.paradubschmanager.util.Expect;
 import de.paradubsch.paradubschmanager.util.Hibernate;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.lang.Message;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -15,7 +18,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 public class DelhomeCommand implements CommandExecutor, TabCompleter {
     @Override
@@ -35,13 +37,14 @@ public class DelhomeCommand implements CommandExecutor, TabCompleter {
             MessageAdapter.sendMessage(sender, Message.Info.CMD_DELHOME_CONFIRM, args[0]);
             return true;
         } else if (args[1].equals("confirm")) {
-            CompletableFuture.supplyAsync(() -> Hibernate.getPlayerData(player)).thenApplyAsync(playerData -> {
+            Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
+                PlayerData playerData = Hibernate.getPlayerData(player);
                 List<Home> homes = Hibernate.getHomes(player);
 
                 if (homes.stream().anyMatch(home -> home.getName().equals(args[0]))) {
                     Home home = homes.stream().filter(home1 -> home1.getName().equals(args[0])).findFirst().get();
                     homes.remove(home);
-                    Hibernate.deleteHome(home);
+                    Hibernate.delete(home);
 
                     playerData.setHomes(homes);
                     MessageAdapter.sendMessage(player, Message.Info.CMD_DELHOME_DONE, args[0]);
@@ -52,9 +55,8 @@ public class DelhomeCommand implements CommandExecutor, TabCompleter {
                     MessageAdapter.sendMessage(player, Message.Error.CMD_VIEWHOME_HOME_NOT_FOUND, args[0]);
                 }
 
-
-                return playerData;
-            }).thenAccept(Hibernate::save);
+                Hibernate.save(playerData);
+            });
         }
 
         return true;

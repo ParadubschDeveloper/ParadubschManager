@@ -1,8 +1,6 @@
 package de.paradubsch.paradubschmanager.config;
 
-import de.paradubsch.paradubschmanager.models.Home;
-import de.paradubsch.paradubschmanager.models.PlayerData;
-import de.paradubsch.paradubschmanager.models.SaveRequest;
+import de.paradubsch.paradubschmanager.models.*;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
@@ -47,6 +45,10 @@ public class HibernateConfigurator {
                 configuration.addAnnotatedClass(PlayerData.class);
                 configuration.addAnnotatedClass(Home.class);
                 configuration.addAnnotatedClass(SaveRequest.class);
+                configuration.addAnnotatedClass(PunishmentHolder.class);
+                configuration.addAnnotatedClass(WarnPunishment.class);
+                configuration.addAnnotatedClass(BanPunishment.class);
+                configuration.addAnnotatedClass(MutePunishment.class);
 
                 ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                         .applySettings(configuration.getProperties()).build();

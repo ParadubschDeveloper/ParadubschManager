@@ -3,6 +3,7 @@ package de.paradubsch.paradubschmanager.lifecycle;
 import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.config.HibernateConfigurator;
 import de.paradubsch.paradubschmanager.models.PlayerData;
+import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -14,7 +15,11 @@ public class QuitListener implements Listener {
 
     @EventHandler
     public void onQuitEvent(PlayerQuitEvent e) {
-        new Thread(() -> HibernateConfigurator.getSessionFactory().getCache().evictEntityData(PlayerData.class, e.getPlayer().getUniqueId().toString())).start();
+        Bukkit.getScheduler().runTaskAsynchronously(
+                ParadubschManager.getInstance(),
+                () -> HibernateConfigurator.getSessionFactory()
+                        .getCache()
+                        .evictEntityData(PlayerData.class, e.getPlayer().getUniqueId().toString())
+        );
     }
-
 }

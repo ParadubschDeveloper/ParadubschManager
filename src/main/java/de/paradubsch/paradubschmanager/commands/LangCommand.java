@@ -1,11 +1,13 @@
 package de.paradubsch.paradubschmanager.commands;
 
+import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.models.PlayerData;
 import de.paradubsch.paradubschmanager.util.Expect;
 import de.paradubsch.paradubschmanager.util.Hibernate;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.lang.Language;
 import de.paradubsch.paradubschmanager.util.lang.Message;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -17,7 +19,6 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 public class LangCommand implements CommandExecutor, TabCompleter {
     @Override
@@ -37,14 +38,12 @@ public class LangCommand implements CommandExecutor, TabCompleter {
             return true;
         }
 
-        CompletableFuture.supplyAsync(() -> {
+        Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
             PlayerData pd = Hibernate.getPlayerData(player);
             pd.setLanguage(Language.getLanguageByName(args[0]).getShortName());
-            return pd;
-        })
-                .thenAcceptAsync(Hibernate::save)
-                .thenAccept(v -> MessageAdapter.sendMessage(player, Message.Info.CMD_LANGUAGE_SET, args[0]));
-
+            Hibernate.save(pd);
+            MessageAdapter.sendMessage(player, Message.Info.CMD_LANGUAGE_SET, args[0]);
+        });
         return true;
     }
 

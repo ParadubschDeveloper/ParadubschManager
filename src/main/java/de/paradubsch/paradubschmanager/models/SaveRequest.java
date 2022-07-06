@@ -12,10 +12,11 @@ import java.io.Serializable;
 @Cacheable
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Table(name = "saveRequests")
+@SequenceGenerator(name="saveRequestSequence",sequenceName="save_request_sequence")
 public class SaveRequest implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="saveRequestSequence")
     @Column(name = "save_id")
     private int id;
 
