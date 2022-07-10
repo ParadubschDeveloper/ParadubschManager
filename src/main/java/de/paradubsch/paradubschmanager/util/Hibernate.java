@@ -2,9 +2,7 @@ package de.paradubsch.paradubschmanager.util;
 
 import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.config.HibernateConfigurator;
-import de.paradubsch.paradubschmanager.models.Home;
-import de.paradubsch.paradubschmanager.models.PlayerData;
-import de.paradubsch.paradubschmanager.models.SaveRequest;
+import de.paradubsch.paradubschmanager.models.*;
 import lombok.Cleanup;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -14,6 +12,7 @@ import org.hibernate.Transaction;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -146,10 +145,10 @@ public class Hibernate {
             session.saveOrUpdate(o);
             transaction.commit();
         } catch (Exception e) {
+            e.printStackTrace();
             if (transaction != null) {
                 transaction.rollback();
             }
-            e.printStackTrace();
         }
     }
 
@@ -202,10 +201,10 @@ public class Hibernate {
             return saveRequest;
 
         } catch (Exception e) {
+            e.printStackTrace();
             if (transaction != null) {
                 transaction.rollback();
             }
-            e.printStackTrace();
             return null;
         }
     }
@@ -221,6 +220,77 @@ public class Hibernate {
             org.hibernate.Hibernate.initialize(saveRequest);
             transaction.commit();
             return saveRequest;
+
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static PunishmentHolder getPunishmentHolder(PlayerData pd) {
+        Transaction transaction = null;
+        PunishmentHolder punishmentHolder;
+        try {
+            @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
+
+            transaction = session.beginTransaction();
+
+            punishmentHolder = session.get(PunishmentHolder.class, pd.getUuid());
+            if (punishmentHolder == null) {
+                punishmentHolder = new PunishmentHolder();
+                punishmentHolder.setPlayerRef(pd);
+                punishmentHolder.setUuid(pd.getUuid());
+            }
+            transaction.commit();
+            return punishmentHolder;
+
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+            punishmentHolder = new PunishmentHolder();
+            punishmentHolder.setPlayerRef(pd);
+            punishmentHolder.setUuid(pd.getUuid());
+            return null;
+        }
+    }
+
+    public static <T extends WarnPunishment> Long saveAndReturnPunishment (T o) {
+        if (o == null) {
+            return null;
+        }
+        Transaction transaction = null;
+        try {
+            @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
+
+            transaction = session.beginTransaction();
+            long id = (long) session.save(o);
+
+            transaction.commit();
+            return id;
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            return null;
+        }
+    }
+
+    public static <T, I extends Serializable> T get (Class<T> clazz, I id) {
+        Transaction transaction = null;
+        try {
+            @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
+
+            transaction = session.beginTransaction();
+
+            T t = session.get(clazz, id);
+            transaction.commit();
+            return t;
 
         } catch (Exception e) {
             if (transaction != null) {

@@ -1,6 +1,8 @@
 package de.paradubsch.paradubschmanager.models;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.bukkit.entity.Player;
 import org.hibernate.annotations.*;
 import org.hibernate.annotations.Cache;
@@ -45,6 +47,8 @@ public class PlayerData {
     @Column(name ="money", columnDefinition = "BIGINT DEFAULT 150")
     private long money = 150L;
 
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "playerRef", fetch = FetchType.LAZY)
     @Cascade(value = SAVE_UPDATE)
     private List<Home> homes;
@@ -52,10 +56,14 @@ public class PlayerData {
     @Column(name = "max_homes", columnDefinition = "INT DEFAULT 2")
     private int maxHomes = 2;
 
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "playerRef")
     @Cascade(value = SAVE_UPDATE)
     private SaveRequest openSaveRequest;
 
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "playerRef")
     @Cascade(value = SAVE_UPDATE)
     private PunishmentHolder punishmentHolder;

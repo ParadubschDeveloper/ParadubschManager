@@ -12,7 +12,7 @@ import java.io.Serializable;
 @Cacheable
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Table(name = "saveRequests")
-@SequenceGenerator(name="saveRequestSequence",sequenceName="save_request_sequence")
+@SequenceGenerator(name="saveRequestSequence",sequenceName="save_request_sequence", allocationSize = 1)
 public class SaveRequest implements Serializable {
 
     @Id

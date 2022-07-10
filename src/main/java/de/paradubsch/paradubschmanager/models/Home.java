@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Cacheable
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Table(name = "homes")
-@SequenceGenerator(name="homesSequence",sequenceName="homes_sequence")
+@SequenceGenerator(name="homesSequence",sequenceName="homes_sequence", allocationSize = 1)
 public class Home {
 
     @Id

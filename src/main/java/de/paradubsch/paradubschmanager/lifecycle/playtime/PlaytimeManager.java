@@ -19,7 +19,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
@@ -118,12 +120,16 @@ public class PlaytimeManager implements Listener {
             CompletableFuture<User> userFuture = userManager.loadUser(player.getUniqueId());
 
             User lpUser = userFuture.join();
-            StringBuilder beforeGroup = new StringBuilder();
+            List<String> beforeGroups = new ArrayList<>();
             lpUser.getNodes().stream().filter(NodeType.INHERITANCE::matches).forEach((node) -> {
-                lpUser.data().remove(node);
-                beforeGroup.append(node.getKey());
+                beforeGroups.add(node.getKey());
             });
-            String beforeGroupName = beforeGroup.toString();
+
+            if (beforeGroups.size() > 1) {
+                return;
+            }
+
+            String beforeGroupName = beforeGroups.get(0);
 
             // time > 2h || rank lapis
             if (time > 2*60*60*1000 && beforeGroupName.equals("group.default")) {

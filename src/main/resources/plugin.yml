@@ -17,19 +17,19 @@ depend:
 commands:
   msg:
     description: Schreibe einem anderen Spieler eine private Nachricht.
-    aliases: [tell]
+    aliases: [tell, nachricht, post, pm, brief, mail]
     permission: paradubsch.msg
     permission-message: 'Du benötigst die Berechtigung paradubsch.msg um zu chatten!'
     usage: '/msg <Spieler> <Nachricht>'
   prefix:
-    description: Setze den Prefix vo dir oder von einem Spieler.
+    description: Setze den Prefix von dir oder von einem Spieler.
     aliases: [setprefix]
     permission: paradubsch.prefix
     permission-message: 'Du benötigst die Berechtigung paradubsch.prefix um einen Prefix zu setzen!'
     usage: '/prefix <Player> <Prefix>'
   lang:
     description: Stelle deine Sprache ein.
-    aliases: [ language, sprache ]
+    aliases: [ language, sprache, landsmann, sprachwahl ]
     permission: paradubsch.lang
     permission-message: 'Du benötigst die Berechtigung paradubsch.lang um deine Sprache zu setzen!'
     usage: '/lang <Sprache>'
@@ -47,13 +47,13 @@ commands:
     usage: '/defaultchatcolor <Name> <Farbe>'
   playtime:
     description: Schaue deine Spielzeit an.
-    aliases: [ spielzeit ]
+    aliases: [ spielzeit, zeitdeinerfreizeitdieduindiesenserververschwendethast ]
     permission: paradubsch.playtime.self
     permission-message: 'Du benötigst die Berechtigung paradubsch.playtime um deine Spielzeit zu sehen!'
     usage: '/playtime <Name>'
   money:
     description: Schaue deine Geldmenge an.
-    aliases: [ geld, gelth, bal, balance ]
+    aliases: [ geld, gelth, bal, balance, gelt, moneten, para, kohle, heu, bares, kröten, kleingeld, zaster, knete, cash ]
     permission: paradubsch.money.self
     permission-message: 'Du benötigst die Berechtigung paradubsch.money.self um deine Geldmenge zu sehen!'
     usage: '/money'

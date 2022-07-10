@@ -49,6 +49,7 @@ public class HibernateConfigurator {
                 configuration.addAnnotatedClass(WarnPunishment.class);
                 configuration.addAnnotatedClass(BanPunishment.class);
                 configuration.addAnnotatedClass(MutePunishment.class);
+                configuration.addAnnotatedClass(PunishmentUpdate.class);
 
                 ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                         .applySettings(configuration.getProperties()).build();

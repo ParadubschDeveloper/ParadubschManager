@@ -7,6 +7,7 @@ import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import de.craftery.util.gui.GuiManager;
 import de.paradubsch.paradubschmanager.commands.*;
 import de.paradubsch.paradubschmanager.config.ConfigurationManager;
+import de.paradubsch.paradubschmanager.config.HibernateConfigurator;
 import de.paradubsch.paradubschmanager.lifecycle.*;
 import de.paradubsch.paradubschmanager.lifecycle.playtime.PlaytimeManager;
 import de.paradubsch.paradubschmanager.util.lang.LanguageManager;
@@ -17,6 +18,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.*;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public final class ParadubschManager extends JavaPlugin {
     private static ParadubschManager instance;
@@ -91,6 +95,17 @@ public final class ParadubschManager extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        Bukkit.getScheduler().cancelTasks(this);
+        worldGuardPlugin = null;
+        worldEditPlugin = null;
+        playtimeManager = null;
+        protocolManager = null;
+        luckPermsApi = null;
+        languageManager = null;
+        guiManager = null;
+        unregisterCommands();
+        HibernateConfigurator.shutdown();
+        System.gc();
         Bukkit.getConsoleSender().sendMessage("[Paradubsch] !> Disabled");
     }
 
@@ -121,11 +136,22 @@ public final class ParadubschManager extends JavaPlugin {
         register("b", new BanCommand());
     }
 
+    List<String> registeredCommands = new ArrayList<>();
     private <T extends CommandExecutor & TabCompleter> void register(String command, T obj) {
+        registeredCommands.add(command);
         PluginCommand pc = Bukkit.getPluginCommand(command);
         if (pc == null) return;
         pc.setExecutor(obj);
         pc.setTabCompleter(obj);
+    }
+
+    private void unregisterCommands() {
+        for (String command : registeredCommands) {
+            PluginCommand pc = Bukkit.getPluginCommand(command);
+            if (pc == null) continue;
+            pc.setExecutor(null);
+            pc.setTabCompleter(null);
+        }
     }
 
     private WorldGuardPlugin initializeWorldGuardPlugin () {
