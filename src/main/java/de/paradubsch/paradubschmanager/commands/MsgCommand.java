@@ -19,7 +19,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 public class MsgCommand implements CommandExecutor, TabCompleter {
 
@@ -52,40 +51,40 @@ public class MsgCommand implements CommandExecutor, TabCompleter {
             message.append(args[i]).append(" ");
         }
 
-        CompletableFuture.supplyAsync(() -> {
+        Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
+            Language language;
             if (s instanceof Player) {
                 Player player = (Player) s;
                 PlayerData playerData = Hibernate.getPlayerData(player);
-                return Language.getLanguageByShortName(playerData.getLanguage());
+                language = Language.getLanguageByShortName(playerData.getLanguage());
             } else {
-                return Language.getDefaultLanguage();
+                language = Language.getDefaultLanguage();
             }
-        }).thenAccept(language -> MessageAdapter.sendUnprefixedMessage(
-                s,
-                Message.Constant.MSG_TEMPLATE,
-                ParadubschManager.getInstance().getLanguageManager().getString(Message.Constant.FROM_YOU, language),
-                receiver.getName(),
-                message.toString()
-        ));
 
-        CompletableFuture.supplyAsync(() -> Language.getLanguageByShortName(Hibernate.getPlayerData(receiver).getLanguage()))
-                .thenAccept(playerLang -> {
-                    String sender;
-                    if (s instanceof Player) {
-                        sender = s.getName();
-                    } else {
-                        sender = ParadubschManager.getInstance().getLanguageManager().getString(Message.Constant.SERVER_CONSOLE, playerLang);
-                    }
+            MessageAdapter.sendUnprefixedMessage(
+                    s,
+                    Message.Constant.MSG_TEMPLATE,
+                    ParadubschManager.getInstance().getLanguageManager().getString(Message.Constant.FROM_YOU, language),
+                    receiver.getName(),
+                    message.toString()
+            );
 
-                    MessageAdapter.sendUnprefixedMessage(
-                        receiver,
-                        Message.Constant.MSG_TEMPLATE,
-                        sender,
-                        ParadubschManager.getInstance().getLanguageManager().getString(Message.Constant.TO_YOU, playerLang),
-                        message.toString()
-                    );
-                });
+            Language playerLang = Language.getLanguageByShortName(Hibernate.getPlayerData(receiver).getLanguage());
+            String sender;
+            if (s instanceof Player) {
+                sender = s.getName();
+            } else {
+                sender = ParadubschManager.getInstance().getLanguageManager().getString(Message.Constant.SERVER_CONSOLE, playerLang);
+            }
 
+            MessageAdapter.sendUnprefixedMessage(
+                    receiver,
+                    Message.Constant.MSG_TEMPLATE,
+                    sender,
+                    ParadubschManager.getInstance().getLanguageManager().getString(Message.Constant.TO_YOU, playerLang),
+                    message.toString()
+            );
+        });
         return true;
     }
 

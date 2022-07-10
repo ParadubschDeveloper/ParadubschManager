@@ -18,7 +18,6 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.concurrent.CompletableFuture;
 
 public class MoneyCommand implements CommandExecutor, TabCompleter {
 
@@ -50,11 +49,12 @@ public class MoneyCommand implements CommandExecutor, TabCompleter {
             return;
         }
         Player player = (Player) sender;
-        CompletableFuture.supplyAsync(() -> Hibernate.getPlayerData(player))
-                .thenAccept(playerData -> {
-                    String money = String.format(Locale.GERMAN, "%,d", playerData.getMoney());
-                    MessageAdapter.sendMessage(player, Message.Info.CMD_MONEY_DISPLAY_SELF, money);
-                });
+
+        Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
+            PlayerData playerData =  Hibernate.getPlayerData(player);
+            String money = String.format(Locale.GERMAN, "%,d", playerData.getMoney());
+            MessageAdapter.sendMessage(player, Message.Info.CMD_MONEY_DISPLAY_SELF, money);
+        });
     }
 
     private static void moneyPay (CommandSender sender, String[] args) {
@@ -74,8 +74,9 @@ public class MoneyCommand implements CommandExecutor, TabCompleter {
             return;
         }
 
-        CompletableFuture.supplyAsync(() -> Expect.cachedPlayer(args[1])).thenAccept(isCachedPlayer -> {
-            if (!isCachedPlayer) {
+        Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
+            PlayerData targetPlayerData = Hibernate.getPlayerData(args[1]);
+            if (targetPlayerData == null) {
                 MessageAdapter.sendMessage(sender, Message.Error.CMD_PLAYER_NEVER_ONLINE, args[1]);
                 return;
             }
@@ -98,29 +99,24 @@ public class MoneyCommand implements CommandExecutor, TabCompleter {
             }
             String transferAmountString = String.format(Locale.GERMAN, "%,d", transferAmount);
 
-            CompletableFuture.supplyAsync(() -> Hibernate.getPlayerData(player)).thenAccept(playerData -> {
-                if (playerData.getMoney() < transferAmount) {
-                    MessageAdapter.sendMessage(sender, Message.Error.CMD_MONEY_PAY_NOT_ENOUGH_MONEY, transferAmountString);
-                    return;
-                }
+            PlayerData playerData = Hibernate.getPlayerData(player);
 
-                playerData.setMoney(playerData.getMoney() - transferAmount);
+            if (playerData.getMoney() < transferAmount) {
+                MessageAdapter.sendMessage(sender, Message.Error.CMD_MONEY_PAY_NOT_ENOUGH_MONEY, transferAmountString);
+                return;
+            }
 
+            playerData.setMoney(playerData.getMoney() - transferAmount);
+            Hibernate.save(playerData);
 
-                CompletableFuture.runAsync(() -> Hibernate.save(playerData))
-                        .thenApplyAsync(Void -> Hibernate.getPlayerData(args[1]))
-                        .thenApply(targetPlayerData -> {
-                            targetPlayerData.setMoney(targetPlayerData.getMoney() + transferAmount);
-                            MessageAdapter.sendMessage(player, Message.Info.CMD_MONEY_PAYED, transferAmountString, targetPlayerData.getName());
-                            Player targetPlayer = Bukkit.getPlayer(targetPlayerData.getName());
-                            if (targetPlayer != null) {
-                                MessageAdapter.sendMessage(targetPlayer, Message.Info.CMD_MONEY_RECEIVED, transferAmountString, player.getName());
-                            }
+            targetPlayerData.setMoney(targetPlayerData.getMoney() + transferAmount);
+            MessageAdapter.sendMessage(player, Message.Info.CMD_MONEY_PAYED, transferAmountString, targetPlayerData.getName());
+            Player targetPlayer = Bukkit.getPlayer(targetPlayerData.getName());
+            if (targetPlayer != null) {
+                MessageAdapter.sendMessage(targetPlayer, Message.Info.CMD_MONEY_RECEIVED, transferAmountString, player.getName());
+            }
 
-                            return targetPlayerData;
-                        })
-                        .thenAccept(Hibernate::save);
-            });
+            Hibernate.save(targetPlayerData);
         });
     }
 
@@ -135,17 +131,15 @@ public class MoneyCommand implements CommandExecutor, TabCompleter {
             return;
         }
 
-        CompletableFuture.supplyAsync(() -> Expect.cachedPlayer(args[1])).thenAccept(isCachedPlayer -> {
-            if (!isCachedPlayer) {
+        Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
+            PlayerData targetPlayerData = Hibernate.getPlayerData(args[1]);
+            if (targetPlayerData == null) {
                 MessageAdapter.sendMessage(sender, Message.Error.CMD_PLAYER_NEVER_ONLINE, args[1]);
                 return;
             }
 
-            CompletableFuture.supplyAsync(() -> Hibernate.getPlayerData(args[1])).thenAccept(targetPlayerData -> {
-                String money = String.format(Locale.GERMAN, "%,d", targetPlayerData.getMoney());
-                MessageAdapter.sendMessage(sender, Message.Info.CMD_MONEY_DISPLAY_OTHER, targetPlayerData.getName(), money);
-            });
-
+            String money = String.format(Locale.GERMAN, "%,d", targetPlayerData.getMoney());
+            MessageAdapter.sendMessage(sender, Message.Info.CMD_MONEY_DISPLAY_OTHER, targetPlayerData.getName(), money);
         });
     }
 
@@ -160,8 +154,9 @@ public class MoneyCommand implements CommandExecutor, TabCompleter {
             return;
         }
 
-        CompletableFuture.supplyAsync(() -> Expect.cachedPlayer(args[1])).thenAccept(isCachedPlayer -> {
-            if (!isCachedPlayer) {
+        Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
+           PlayerData targetPlayerData = Hibernate.getPlayerData(args[1]);
+            if (targetPlayerData == null) {
                 MessageAdapter.sendMessage(sender, Message.Error.CMD_PLAYER_NEVER_ONLINE, args[1]);
                 return;
             }
@@ -184,14 +179,10 @@ public class MoneyCommand implements CommandExecutor, TabCompleter {
             }
             String transferAmountString = String.format(Locale.GERMAN, "%,d", transferAmount);
 
-            CompletableFuture.supplyAsync(() -> Hibernate.getPlayerData(args[1]))
-                    .thenApply(targetPlayerData -> {
-                        targetPlayerData.setMoney(transferAmount);
-                        MessageAdapter.sendMessage(sender, Message.Info.CMD_MONEY_SET, targetPlayerData.getName(), transferAmountString);
+            targetPlayerData.setMoney(transferAmount);
+            MessageAdapter.sendMessage(sender, Message.Info.CMD_MONEY_SET, targetPlayerData.getName(), transferAmountString);
 
-                        return targetPlayerData;
-                    })
-                    .thenAccept(Hibernate::save);
+            Hibernate.save(targetPlayerData);
         });
     }
 
@@ -206,8 +197,9 @@ public class MoneyCommand implements CommandExecutor, TabCompleter {
             return;
         }
 
-        CompletableFuture.supplyAsync(() -> Expect.cachedPlayer(args[1])).thenAccept(isCachedPlayer -> {
-            if (!isCachedPlayer) {
+        Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
+            PlayerData targetPlayerData = Hibernate.getPlayerData(args[1]);
+            if (targetPlayerData == null) {
                 MessageAdapter.sendMessage(sender, Message.Error.CMD_PLAYER_NEVER_ONLINE, args[1]);
                 return;
             }
@@ -226,14 +218,10 @@ public class MoneyCommand implements CommandExecutor, TabCompleter {
 
             String transferAmountString = String.format(Locale.GERMAN, "%,d", transferAmount);
 
-            CompletableFuture.supplyAsync(() -> Hibernate.getPlayerData(args[1]))
-                    .thenApply(targetPlayerData -> {
-                        targetPlayerData.setMoney(targetPlayerData.getMoney() + transferAmount);
-                        MessageAdapter.sendMessage(sender, Message.Info.CMD_MONEY_ADD, targetPlayerData.getName(), transferAmountString);
+            targetPlayerData.setMoney(targetPlayerData.getMoney() + transferAmount);
+            MessageAdapter.sendMessage(sender, Message.Info.CMD_MONEY_ADD, targetPlayerData.getName(), transferAmountString);
 
-                        return targetPlayerData;
-                    })
-                    .thenAccept(Hibernate::save);
+            Hibernate.save(targetPlayerData);
         });
     }
 
@@ -243,12 +231,12 @@ public class MoneyCommand implements CommandExecutor, TabCompleter {
             return;
         }
 
-        CompletableFuture.supplyAsync(Hibernate::getMoneyTop).thenAccept(playerDataList -> {
-            if (playerDataList.isEmpty()) {
+        Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
+            List<PlayerData> playerDataList = Hibernate.getMoneyTop();
+            if (playerDataList == null || playerDataList.isEmpty()) {
                 MessageAdapter.sendMessage(sender, Message.Error.CMD_MONEY_TOP_EMPTY);
                 return;
             }
-
             MessageAdapter.sendMessage(sender, Message.Info.CMD_MONEY_TOP_HEADER);
             Bukkit.getScheduler().runTaskLater(ParadubschManager.getInstance(), () -> {
                 for (int i = 0; i < playerDataList.size(); i++) {
@@ -256,7 +244,6 @@ public class MoneyCommand implements CommandExecutor, TabCompleter {
                     MessageAdapter.sendMessage(sender, Message.Info.CMD_MONEY_TOP_PLAYER, (i+1) + "", playerData.getName(), String.format(Locale.GERMAN, "%,d", playerData.getMoney()));
                 }
             }, 1L);
-
         });
     }
 

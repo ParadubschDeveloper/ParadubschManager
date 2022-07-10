@@ -29,6 +29,10 @@ public class ClickableComponent {
             component = component.clickEvent(ClickEvent.runCommand(args.get("ClickCommand")));
         }
 
+        if (args.containsKey("SuggestCommand")){
+            component = component.clickEvent(ClickEvent.suggestCommand(args.get("SuggestCommand")));
+        }
+
         if (args.containsKey("HoverText")){
             component = component.hoverEvent(HoverEvent.showText(Component.text(args.get("HoverText"))));
         }

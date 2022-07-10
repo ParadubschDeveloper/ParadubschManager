@@ -1,9 +1,12 @@
 package de.paradubsch.paradubschmanager.commands;
 
+import de.paradubsch.paradubschmanager.ParadubschManager;
+import de.paradubsch.paradubschmanager.models.PlayerData;
 import de.paradubsch.paradubschmanager.util.Expect;
 import de.paradubsch.paradubschmanager.util.Hibernate;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.lang.Message;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -13,7 +16,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 public class DefaultChatColorCommand implements CommandExecutor, TabCompleter {
     @Override
@@ -38,16 +40,16 @@ public class DefaultChatColorCommand implements CommandExecutor, TabCompleter {
             return true;
         }
 
-        CompletableFuture.supplyAsync(() -> Hibernate.getPlayerData(args[0])).thenAccept(pd -> {
+        Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
+            PlayerData pd = Hibernate.getPlayerData(args[0]);
             if (pd == null) {
                 MessageAdapter.sendMessage(sender, Message.Error.CMD_PLAYER_NEVER_ONLINE, args[0]);
                 return;
             }
             pd.setDefaultChatColor(args[1]);
-            CompletableFuture.runAsync(() -> Hibernate.save(pd))
-                    .thenAccept(v -> MessageAdapter.sendMessage(sender, Message.Info.CMD_DEFAULT_CHAT_COLOR_SET, pd.getName(), args[1], pd.getName()));
+            Hibernate.save(pd);
+            MessageAdapter.sendMessage(sender, Message.Info.CMD_DEFAULT_CHAT_COLOR_SET, pd.getName(), args[1], pd.getName());
         });
-
         return true;
     }
 

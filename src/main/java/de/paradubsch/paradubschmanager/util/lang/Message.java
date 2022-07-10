@@ -41,7 +41,11 @@ public class Message {
         GS_TRANSFER_PLAYER_IS_ALREADY_OWNER("gsTransferPlayerIsAlreadyOwner", "&cDer Spieler &a%1 &cist bereits Inhaber dieses Grundstücks!"),
         GS_ADD_PLAYER_IS_OWNER("gsAddPlayerIsOwner", "&cDu kannst dich nicht selbst als Mitglied eintragen!"),
         CMD_RANK_NOT_PROVIDED("cmdRankNotProvided", "&cDu musst einen Rang angeben, welchen du vergeben möchtest!"),
-        CMD_RANK_NOT_FOUND("cmdRankNotFound", "&cDer Rang &b%1 &ckonnte nicht gefunden werden!");
+        CMD_RANK_NOT_FOUND("cmdRankNotFound", "&cDer Rang &b%1 &ckonnte nicht gefunden werden!"),
+        CMD_BAN_PLAYER_ALREADY_BANNED("cmdBanPlayerAlreadyBanned", "&cDer Spieler &a%1 &cist bereits gebannt!"),
+        CMD_BAN_DURATION_NOT_PROVIDED("cmdBanDurationNotProvided", "&cDu musst eine Dauer angeben!"),
+        CMD_BAN_DURATION_INVALID("cmdBanDurationInvalid", "&cDie Dauer &a%1 &cist nicht gültig."),
+        CMD_BAN_PLAYER_NOT_BANNED("cmdBanPlayerNotBanned", "&cDer Spieler &a%1 &cist nicht gebannt!");
 
         private final String key;
         private final String def;
@@ -108,7 +112,11 @@ public class Message {
         TAB_HEADER("tabHeader", "&6Paradubsch\n\n&7Spieler &8> &a%1\n"),
         TAB_FOOTER("tabFooter", "\n&7Hast du fragen? Wende dich an ein Teammitglied.\nDiscord: &ahttps://discord.gg/GgXaq6ubvp"),
         CMD_RANKED_SUCCESSFUL("cmdRankedSuccessful", "&aDu hast erfolgreich den Rang &6%1 &aan &b%2 &avergeben."),
-        CMD_RANKED_UP_SUCCESSFUL("cmdRankedUpSuccessful", "&aHerzlichen Glückwunsch! Du bist in den Rang &6%1 &aaufgestiegen.");
+        CMD_RANKED_UP_SUCCESSFUL("cmdRankedUpSuccessful", "&aHerzlichen Glückwunsch! Du bist in den Rang &6%1 &aaufgestiegen."),
+        CMD_BAN_SUGGEST_UPDATE("cmdBanSuggestUpdate", "Möchtest du den Ban statdessen Updaten? @ClickableComponent<Text=&a[Update]|SuggestCommand=/ban update %1 |HoverText=Ban updaten>"),
+        CMD_BAN_PLAYER_UNBANNED("cmdBanPlayerUnbanned", "&aDer Spieler &6%1 &awurde erfolgreich entbannt."),
+        CMD_BAN_KICK_MESSAGE("cmdBanKickMessage", "&6» &4Paradubsch &6«\n\n&7Du wurdest gebannt!\n\n&7Grund: &e%1\n\n&7Dauer: &c%2\n\n&7Ban-Id: &a%3"),
+        CMD_BAN_PLAYER_BANNED("cmdBanPlayerBanned", "&aDer Spieler &6%1 &awurde erfolgreich gebannt.");
 
         private final String key;
         private final String def;

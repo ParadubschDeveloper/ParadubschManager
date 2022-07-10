@@ -1,6 +1,7 @@
 package de.paradubsch.paradubschmanager.commands;
 
 import de.paradubsch.paradubschmanager.ParadubschManager;
+import de.paradubsch.paradubschmanager.models.PlayerData;
 import de.paradubsch.paradubschmanager.util.Expect;
 import de.paradubsch.paradubschmanager.util.Hibernate;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
@@ -16,7 +17,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
 public class PlaytimeCommand implements CommandExecutor, TabCompleter {
@@ -55,41 +55,35 @@ public class PlaytimeCommand implements CommandExecutor, TabCompleter {
             return true;
         }
 
-        CompletableFuture.supplyAsync(() -> Expect.cachedPlayer(args[0]))
-                .thenAccept(isCached -> {
-                    if (!isCached) {
-                        MessageAdapter.sendMessage(sender, Message.Error.CMD_PLAYER_NEVER_ONLINE, args[0]);
-                        return;
-                    }
+        Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
+            PlayerData pd = Hibernate.getPlayerData(args[0]);
+            if (pd == null) {
+                MessageAdapter.sendMessage(sender, Message.Error.CMD_PLAYER_NEVER_ONLINE, args[0]);
+                return;
+            }
+            long playtime;
+            if (Bukkit.getOnlinePlayers().stream().anyMatch(player -> player.getName().equals(pd.getName()))) {
+                playtime = ParadubschManager.getInstance().getPlaytimeManager().getPlaytime(Bukkit.getPlayer(pd.getName()));
+            } else {
+                playtime = pd.getPlaytime();
+            }
 
-                    CompletableFuture.supplyAsync(() -> Hibernate.getPlayerData(args[0]))
-                            .thenAccept(pd -> {
-                                long playtime;
-                                if (Bukkit.getOnlinePlayers().stream().anyMatch(player -> player.getName().equals(pd.getName()))) {
-                                    playtime = ParadubschManager.getInstance().getPlaytimeManager().getPlaytime(Bukkit.getPlayer(pd.getName()));
-                                } else {
-                                    playtime = pd.getPlaytime();
-                                }
+            long day = 86400000;
+            long days = TimeUnit.MILLISECONDS.toDays(playtime);
+            playtime = playtime - day*days;
 
-                                long day = 86400000;
-                                long days = TimeUnit.MILLISECONDS.toDays(playtime);
-                                playtime = playtime - day*days;
+            long hour = 3600000;
+            long hours = TimeUnit.MILLISECONDS.toHours(playtime);
+            playtime = playtime - hours*hour;
 
-                                long hour = 3600000;
-                                long hours = TimeUnit.MILLISECONDS.toHours(playtime);
-                                playtime = playtime - hours*hour;
+            long minute = 60000;
+            long minutes = TimeUnit.MILLISECONDS.toMinutes(playtime);
+            playtime = playtime - minutes*minute;
 
-                                long minute = 60000;
-                                long minutes = TimeUnit.MILLISECONDS.toMinutes(playtime);
-                                playtime = playtime - minutes*minute;
+            long seconds = TimeUnit.MILLISECONDS.toSeconds(playtime);
 
-                                long seconds = TimeUnit.MILLISECONDS.toSeconds(playtime);
-
-                                MessageAdapter.sendMessage(sender, Message.Info.CMD_OTHER_PLAYTIME, pd.getName(), days + "", hours + "", minutes + "", seconds + "");
-                            });
-                });
-
-
+            MessageAdapter.sendMessage(sender, Message.Info.CMD_OTHER_PLAYTIME, pd.getName(), days + "", hours + "", minutes + "", seconds + "");
+        });
         return true;
     }
 

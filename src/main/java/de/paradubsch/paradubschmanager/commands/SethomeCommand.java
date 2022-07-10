@@ -2,6 +2,7 @@ package de.paradubsch.paradubschmanager.commands;
 
 import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.models.Home;
+import de.paradubsch.paradubschmanager.models.PlayerData;
 import de.paradubsch.paradubschmanager.util.Expect;
 import de.paradubsch.paradubschmanager.util.Hibernate;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
@@ -17,7 +18,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 public class SethomeCommand implements CommandExecutor, TabCompleter {
     @Override
@@ -37,7 +37,8 @@ public class SethomeCommand implements CommandExecutor, TabCompleter {
         }
 
         if (args.length > 1 && args[1].equalsIgnoreCase("confirm")) {
-            CompletableFuture.supplyAsync(() -> Hibernate.getPlayerData(player)).thenApplyAsync(playerData -> {
+            Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
+                PlayerData playerData = Hibernate.getPlayerData(player);
                 List<Home> homes = Hibernate.getHomes(player);
 
                 if (homes.stream().anyMatch(home -> home.getName().equals(homeName))) {
@@ -52,15 +53,15 @@ public class SethomeCommand implements CommandExecutor, TabCompleter {
                     playerData.setHomes(homes);
 
                     MessageAdapter.sendMessage(player, Message.Info.CMD_HOME_SET, homeName);
-
-                    return playerData;
+                    Hibernate.save(playerData);
+                    return;
                 }
 
                 if (homes.size() >= playerData.getMaxHomes()) {
                     MessageAdapter.sendMessage(sender, Message.Error.CMD_SETHOME_NOT_ENOUGH_HOMES);
                     Bukkit.getScheduler().runTaskLater(ParadubschManager.getInstance(), () ->
                             MessageAdapter.sendMessage(sender, Message.Info.CMD_SETHOME_BUYHOME), 1L);
-                    return playerData;
+                    return;
                 }
 
                 Home home = new Home();
@@ -77,27 +78,29 @@ public class SethomeCommand implements CommandExecutor, TabCompleter {
                 playerData.setHomes(homes);
 
                 MessageAdapter.sendMessage(player, Message.Info.CMD_HOME_SET, homeName);
-
-                return playerData;
-            }).thenAccept(Hibernate::save);
+                Hibernate.save(playerData);
+            });
             return true;
         }
 
-        CompletableFuture.supplyAsync(() -> Hibernate.getPlayerData(player)).thenApplyAsync(playerData -> {
+        Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
+            PlayerData playerData = Hibernate.getPlayerData(player);
             List<Home> homes = Hibernate.getHomes(player);
 
             if (homes.stream().anyMatch(home -> home.getName().equals(homeName))) {
                 MessageAdapter.sendMessage(sender, Message.Error.CMD_SETHOME_ALREADY_EXISTING, homeName);
                 Bukkit.getScheduler().runTaskLater(ParadubschManager.getInstance(), () ->
                         MessageAdapter.sendMessage(sender, Message.Info.CMD_SETHOME_OVERRIDE_EXISTING_HOME, homeName), 1L);
-                return playerData;
+                Hibernate.save(playerData);
+                return;
             }
 
             if (homes.size() >= playerData.getMaxHomes()) {
                 MessageAdapter.sendMessage(sender, Message.Error.CMD_SETHOME_NOT_ENOUGH_HOMES);
                 Bukkit.getScheduler().runTaskLater(ParadubschManager.getInstance(), () ->
                         MessageAdapter.sendMessage(sender, Message.Info.CMD_SETHOME_BUYHOME), 1L);
-                return playerData;
+                Hibernate.save(playerData);
+                return;
             }
 
             Home home = new Home();
@@ -114,11 +117,8 @@ public class SethomeCommand implements CommandExecutor, TabCompleter {
             playerData.setHomes(homes);
 
             MessageAdapter.sendMessage(player, Message.Info.CMD_HOME_SET, homeName);
-
-            return playerData;
-        }).thenAccept(Hibernate::save);
-
-
+            Hibernate.save(playerData);
+        });
         return true;
     }
 

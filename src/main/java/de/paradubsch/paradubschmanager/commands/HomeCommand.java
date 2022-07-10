@@ -19,7 +19,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 public class HomeCommand implements CommandExecutor, TabCompleter {
     @Override
@@ -37,7 +36,8 @@ public class HomeCommand implements CommandExecutor, TabCompleter {
             homeName = args[0];
         }
 
-        CompletableFuture.supplyAsync(() -> Hibernate.getHomes(player)).thenAccept(homes -> {
+        Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
+            List<Home> homes = Hibernate.getHomes(player);
             if (homes.stream().anyMatch(home -> home.getName().equals(homeName))) {
                 Home home = homes.stream().filter(home1 -> home1.getName().equals(homeName)).findFirst().get();
 
@@ -55,7 +55,6 @@ public class HomeCommand implements CommandExecutor, TabCompleter {
                 MessageAdapter.sendMessage(player,Message.Error.CMD_HOME_NOT_FOUND, homeName);
             }
         });
-
         return true;
     }
 
