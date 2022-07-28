@@ -18,13 +18,19 @@ public class PlayerJoinTest {
         server = MockBukkit.mock();
         MockBukkit.load(ParadubschManager.class);
         server.getScheduler().performOneTick();
+        server.getScheduler().waitAsyncTasksFinished();
+        server.getScheduler().waitAsyncEventsFinished();
     }
 
     @AfterAll
     public static void tearDown() {
-        server.getScheduler().performTicks(20*3);
+        server.getScheduler().waitAsyncTasksFinished();
+        server.getScheduler().waitAsyncEventsFinished();
+        System.out.println("Disabling plugin");
         server.getPluginManager().disablePlugins();
+        System.out.println("Disabling server");
         MockBukkit.unmock();
+        System.out.println("Disabled");
     }
 
     @Order(1)
@@ -32,7 +38,8 @@ public class PlayerJoinTest {
     @Test
     public void playerJoin() {
         player = server.addPlayer();
-        server.getScheduler().performTicks(5);
+        server.getScheduler().waitAsyncTasksFinished();
+        server.getScheduler().waitAsyncEventsFinished();
         Assertions.assertEquals(1, server.getOnlinePlayers().size());
     }
 
