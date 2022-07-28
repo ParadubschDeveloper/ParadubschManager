@@ -1,5 +1,9 @@
 image: maven:3.8.1
 
+job:
+  tags:
+    - no
+
 stages:
   - test
 
