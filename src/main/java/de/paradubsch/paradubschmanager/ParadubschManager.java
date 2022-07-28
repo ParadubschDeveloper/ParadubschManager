@@ -17,8 +17,12 @@ import net.luckperms.api.LuckPermsProvider;
 import org.bukkit.Bukkit;
 import org.bukkit.command.*;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.plugin.java.JavaPluginLoader;
+import org.jetbrains.annotations.Nullable;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,7 +77,7 @@ public final class ParadubschManager extends JavaPlugin {
 
     }
 
-    public static ProtocolManager getProtocolManager() {
+    public static @Nullable ProtocolManager getProtocolManager() {
         ProtocolManager pm = ParadubschManager.getInstance().protocolManager;
         if (pm == null) {
             ParadubschManager.getInstance().protocolManager = ProtocolLibrary.getProtocolManager();
@@ -172,5 +176,13 @@ public final class ParadubschManager extends JavaPlugin {
 
     public static ParadubschManager getInstance() {
         return instance;
+    }
+
+    public ParadubschManager() {
+        super();
+    }
+
+    protected ParadubschManager(JavaPluginLoader loader, PluginDescriptionFile descriptionFile, File dataFolder, File file) {
+        super(loader, descriptionFile, dataFolder, file);
     }
 }

@@ -8,6 +8,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -44,7 +45,7 @@ public class Hibernate {
         });
     }
 
-    public static PlayerData getPlayerData(Player p) {
+    public static PlayerData getPlayerData(@NotNull Player p) {
         Transaction transaction = null;
         try {
             @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();

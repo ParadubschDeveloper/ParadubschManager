@@ -1,6 +1,7 @@
 package de.paradubsch.paradubschmanager.lifecycle;
 
 import com.comphenix.protocol.PacketType;
+import com.comphenix.protocol.ProtocolManager;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.wrappers.WrappedChatComponent;
 import de.paradubsch.paradubschmanager.ParadubschManager;
@@ -68,7 +69,9 @@ public class TabDecorationManager implements Listener {
     }
 
     public static void displayTabDecorations(Player p) {
-        PacketContainer packet = ParadubschManager.getProtocolManager().createPacket(PacketType.Play.Server.PLAYER_LIST_HEADER_FOOTER);
+        ProtocolManager pm = ParadubschManager.getProtocolManager();
+        if (pm == null) return;
+        PacketContainer packet = pm.createPacket(PacketType.Play.Server.PLAYER_LIST_HEADER_FOOTER);
         PlayerData playerData = Hibernate.getPlayerData(p);
         Language playerLang = Language.getLanguageByShortName(playerData.getLanguage());
         String header = ParadubschManager.getInstance().getLanguageManager().getString(Message.Info.TAB_HEADER, playerLang, Bukkit.getOnlinePlayers().size() + "");
@@ -76,7 +79,7 @@ public class TabDecorationManager implements Listener {
         packet.getChatComponents().write(0, WrappedChatComponent.fromText(ChatColor.translateAlternateColorCodes('&', header)));
         packet.getChatComponents().write(1, WrappedChatComponent.fromText(ChatColor.translateAlternateColorCodes('&', footer)));
         try {
-            ParadubschManager.getProtocolManager().sendServerPacket(p, packet);
+            pm.sendServerPacket(p, packet);
         } catch (InvocationTargetException e) {
             e.printStackTrace();
         }
