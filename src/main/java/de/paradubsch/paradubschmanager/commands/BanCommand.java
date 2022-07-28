@@ -40,6 +40,7 @@ public class BanCommand implements TabCompleter, CommandExecutor {
                 break;
             }
             case "edit": {
+                editBan(sender, args);
                 break;
             }
             case "delete": {
@@ -178,6 +179,67 @@ public class BanCommand implements TabCompleter, CommandExecutor {
             Hibernate.save(ban);
 
             MessageAdapter.sendMessage(sender, Message.Info.CMD_BAN_PLAYER_UNBANNED, target.getName());
+        });
+    }
+
+    private void editBan(CommandSender sender, String[] args) {
+        //ban edit player expiration reason
+        Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
+            if (!Expect.minArgs(2, args)) {
+                MessageAdapter.sendMessage(sender, Message.Error.CMD_PLAYER_NOT_PROVIDED);
+                return;
+            }
+
+            PlayerData target = Hibernate.getPlayerData(args[1]);
+            if (target == null) {
+                MessageAdapter.sendMessage(sender, Message.Error.CMD_PLAYER_NEVER_ONLINE, args[0]);
+                return;
+            }
+
+            PunishmentHolder ph = Hibernate.getPunishmentHolder(target);
+
+            if (ph == null || !ph.isActiveBan()) {
+                MessageAdapter.sendMessage(sender, Message.Error.CMD_BAN_PLAYER_NOT_BANNED, target.getName());
+                return;
+            }
+
+            Timestamp banExpiration = parseExpiration(args[2]);
+
+            if (banExpiration == null) {
+                MessageAdapter.sendMessage(sender, Message.Error.CMD_BAN_DURATION_INVALID, args[2]);
+                return;
+            }
+
+            StringBuilder banReasonBuilder = new StringBuilder();
+            for (int i = 3; i < args.length; i++) {
+                banReasonBuilder.append(args[i]).append(" ");
+            }
+            String banReason = banReasonBuilder.toString().trim();
+
+            if (banReason.isEmpty()) {
+                banReason = "\"The Ban Hammer has Spoken!\"";
+            }
+            BanPunishment ban = Hibernate.get(BanPunishment.class, ph.getActiveBanId());
+            if (ban == null) return;
+
+            ph.setActiveBanReason(banReason);
+            ph.setActiveBanExpiration(banExpiration);
+            Hibernate.save(ph);
+
+            PunishmentUpdate update = new PunishmentUpdate();
+            update.setPunishmentRef(ban);
+            update.setReason(banReason);
+            update.setExpiration(banExpiration);
+            if (sender instanceof Player) {
+                PlayerData giver = Hibernate.getPlayerData((Player) sender);
+                update.setGivenBy(giver);
+            }
+            Hibernate.save(update);
+
+            ban.setHasUpdate(true);
+            Hibernate.save(ban);
+
+            MessageAdapter.sendMessage(sender, Message.Info.CMD_BAN_EDITED, target.getName());
         });
     }
 
