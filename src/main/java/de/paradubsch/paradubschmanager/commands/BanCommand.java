@@ -8,6 +8,7 @@ import de.paradubsch.paradubschmanager.models.PunishmentUpdate;
 import de.paradubsch.paradubschmanager.util.Expect;
 import de.paradubsch.paradubschmanager.util.Hibernate;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
+import de.paradubsch.paradubschmanager.util.TimeCalculations;
 import de.paradubsch.paradubschmanager.util.lang.Language;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 import net.kyori.adventure.text.Component;
@@ -76,12 +77,13 @@ public class BanCommand implements TabCompleter, CommandExecutor {
                 return;
             }
 
-            Timestamp banExpiration = parseExpiration(args[1]);
-
+            Timestamp banExpiration = TimeCalculations.parseExpiration(args[1]);
             if (banExpiration == null) {
                 MessageAdapter.sendMessage(sender, Message.Error.CMD_BAN_DURATION_INVALID, args[1]);
                 return;
             }
+            Language lang = Language.getLanguageByName(target.getLanguage());
+            String expirationString = TimeCalculations.timeStampToExpiration(banExpiration, lang);
 
             StringBuilder banReasonBuilder = new StringBuilder();
             for (int i = 2; i < args.length; i++) {
@@ -117,8 +119,7 @@ public class BanCommand implements TabCompleter, CommandExecutor {
 
             Player targetPlayer = Bukkit.getPlayer(target.getName());
             if (targetPlayer != null) {
-                Language lang = Language.getLanguageByName(target.getLanguage());
-                Component msg = ParadubschManager.getInstance().getLanguageManager().get(Message.Info.CMD_BAN_KICK_MESSAGE, lang, banReason, args[1], "#b-" + id);
+                Component msg = ParadubschManager.getInstance().getLanguageManager().get(Message.Info.CMD_BAN_KICK_MESSAGE, lang, banReason, expirationString, "#b-" + id);
                 Bukkit.getScheduler().runTask(ParadubschManager.getInstance(), () -> {
                     // kicking is currently not supported by the testing environment
                     try {
@@ -209,7 +210,7 @@ public class BanCommand implements TabCompleter, CommandExecutor {
                 return;
             }
 
-            Timestamp banExpiration = parseExpiration(args[2]);
+            Timestamp banExpiration = TimeCalculations.parseExpiration(args[2]);
 
             if (banExpiration == null) {
                 MessageAdapter.sendMessage(sender, Message.Error.CMD_BAN_DURATION_INVALID, args[2]);
@@ -256,36 +257,6 @@ public class BanCommand implements TabCompleter, CommandExecutor {
             MessageAdapter.sendMessage(sender, Message.Info.CMD_BAN_EDITED, target.getName());
         });
     }
-
-    private Timestamp parseExpiration(String exp) {
-        if (exp.matches("^[Pp]erma(nent)?$")) {
-            return Timestamp.from(Instant.ofEpochMilli(System.currentTimeMillis() + 946728000000L));
-        } else if (exp.matches("^\\d+(.|,)?\\d*[ydhm]$")) {
-            String[] split = exp.split("(?=[ydhm])");
-            float amount = Float.parseFloat(split[0]);
-            long msTimestamp;
-            switch (split[1]) {
-                case "y":
-                    msTimestamp = (long) (amount * 365 * 24 * 60 * 60 * 1000L) + System.currentTimeMillis();
-                    break;
-                case "d":
-                    msTimestamp = (long) (amount * 24 * 60 * 60 * 1000L) + System.currentTimeMillis();
-                    break;
-                case "h":
-                    msTimestamp = (long) (amount * 60 * 60 * 1000L) + System.currentTimeMillis();
-                    break;
-                case "m":
-                    msTimestamp = (long) (amount * 60 * 1000L) + System.currentTimeMillis();
-                    break;
-                default:
-                    return null;
-            }
-            return Timestamp.from(Instant.ofEpochMilli(msTimestamp));
-        } else {
-            return null;
-        }
-    }
-
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         List<String> l = new ArrayList<>();

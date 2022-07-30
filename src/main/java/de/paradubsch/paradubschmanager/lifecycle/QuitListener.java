@@ -13,8 +13,10 @@ public class QuitListener implements Listener {
         ParadubschManager.getInstance().getServer().getPluginManager().registerEvents(this, ParadubschManager.getInstance());
     }
 
+    @SuppressWarnings("deprecation")
     @EventHandler
     public void onQuitEvent(PlayerQuitEvent e) {
+        e.setQuitMessage("");
         Bukkit.getScheduler().runTaskAsynchronously(
                 ParadubschManager.getInstance(),
                 () -> HibernateConfigurator.getSessionFactory()

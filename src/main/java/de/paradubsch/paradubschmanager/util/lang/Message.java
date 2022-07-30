@@ -152,7 +152,16 @@ public class Message {
         FROM_YOU("constantFromYou", "Du"),
         TO_YOU("constantToYou", "Dir"),
         CHAT_MESSAGE_TEMPLATE("constantChatMessageTemplate", "%1 &8| %2%3&r &8» %4%5"),
-        CMD_HOMES_TEMPLATE("constantCmdHomesTemplate", "@ClickableComponent<Text=&a%1|ClickCommand=/viewhome %1|HoverText=Anzeigen>");
+        CMD_HOMES_TEMPLATE("constantCmdHomesTemplate", "@ClickableComponent<Text=&a%1|ClickCommand=/viewhome %1|HoverText=Anzeigen>"),
+        PERMANENT("constantPermanent", "Permanent"),
+        DAY_SINGULAR("constantDaySingular", "Tag"),
+        DAY_PLURAL("constantDayPlural", "Tage"),
+        HOUR_SINGULAR("constantHourSingular", "Stunde"),
+        HOUR_PLURAL("constantHourPlural", "Stunden"),
+        MINUTE_SINGULAR("constantMinuteSingular", "Minute"),
+        MINUTE_PLURAL("constantMinutePlural", "Minuten"),
+        SECOND_SINGULAR("constantSecondSingular", "Sekunde"),
+        SECOND_PLURAL("constantSecondPlural", "Sekunden");
 
         private final String key;
         private final String def;

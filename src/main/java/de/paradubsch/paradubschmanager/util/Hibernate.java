@@ -21,28 +21,25 @@ import java.util.UUID;
 
 public class Hibernate {
     public static void cachePlayerName(Player p) {
-        Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
-            Transaction transaction = null;
-            try {
-                @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
+        Transaction transaction = null;
+        try {
+            @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
 
-                transaction = session.beginTransaction();
-
-                PlayerData playerData = session.get(PlayerData.class, p.getUniqueId().toString());
-                if (playerData == null) {
-                    session.save(new PlayerData(p));
-                } else if (!playerData.getName().equals(p.getName())) {
-                    playerData.setName(p.getName());
-                    session.saveOrUpdate(playerData);
-                }
-                transaction.commit();
-            } catch (Exception e) {
-                if (transaction != null) {
-                    transaction.rollback();
-                }
-                e.printStackTrace();
+            PlayerData playerData = session.get(PlayerData.class, p.getUniqueId().toString());
+            if (playerData == null) {
+                session.save(new PlayerData(p));
+            } else if (!playerData.getName().equals(p.getName())) {
+                playerData.setName(p.getName());
+                session.saveOrUpdate(playerData);
             }
-        });
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
     }
 
     public static PlayerData getPlayerData(@NotNull Player p) {
