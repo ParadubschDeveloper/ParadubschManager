@@ -260,6 +260,35 @@ public class Hibernate {
         }
     }
 
+    public static PunishmentHolder getPunishmentHolder(Player player) {
+        Transaction transaction = null;
+        PunishmentHolder punishmentHolder;
+        try {
+            @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
+
+            transaction = session.beginTransaction();
+
+            punishmentHolder = session.get(PunishmentHolder.class, player.getUniqueId().toString());
+            if (punishmentHolder == null) {
+                punishmentHolder = new PunishmentHolder();
+                punishmentHolder.setPlayerRef(Hibernate.getPlayerData(player));
+                punishmentHolder.setUuid(player.getUniqueId().toString());
+            }
+            transaction.commit();
+            return punishmentHolder;
+
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+            punishmentHolder = new PunishmentHolder();
+            punishmentHolder.setPlayerRef(Hibernate.getPlayerData(player));
+            punishmentHolder.setUuid(player.getUniqueId().toString());
+            return null;
+        }
+    }
+
     public static <T extends WarnPunishment> Long saveAndReturnPunishment (T o) {
         if (o == null) {
             return null;
@@ -279,6 +308,28 @@ public class Hibernate {
                 transaction.rollback();
             }
             return null;
+        }
+    }
+
+    public static List<PunishmentUpdate> getBanUpdates(BanPunishment ban) {
+        Transaction transaction = null;
+        try {
+            @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
+
+            transaction = session.beginTransaction();
+
+            BanPunishment playerData = session.get(BanPunishment.class, ban.getId());
+            List<PunishmentUpdate> updates = playerData.getUpdates();
+            org.hibernate.Hibernate.initialize(updates);
+            transaction.commit();
+            return updates;
+
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+            return new ArrayList<>();
         }
     }
 

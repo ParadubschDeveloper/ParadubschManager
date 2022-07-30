@@ -8,6 +8,8 @@ import de.paradubsch.paradubschmanager.models.PlayerData;
 import de.paradubsch.paradubschmanager.util.Hibernate;
 import org.junit.jupiter.api.*;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class PlayerJoinTest {
     private static ServerMock server;
@@ -40,7 +42,7 @@ public class PlayerJoinTest {
         player = server.addPlayer();
         server.getScheduler().waitAsyncTasksFinished();
         server.getScheduler().waitAsyncEventsFinished();
-        Assertions.assertEquals(1, server.getOnlinePlayers().size());
+        assertEquals(1, server.getOnlinePlayers().size());
     }
 
     @Order(2)
@@ -48,16 +50,16 @@ public class PlayerJoinTest {
     @Test
     public void playerHasData() {
         PlayerData playerData = Hibernate.getPlayerData(player);
-        Assertions.assertNotNull(playerData);
+        assertNotNull(playerData);
 
-        Assertions.assertNotNull(playerData.getUuid());
-        Assertions.assertNotNull(playerData.getName());
-        Assertions.assertNotNull(playerData.getLanguage());
-        Assertions.assertNotNull(playerData.getChatPrefix());
-        Assertions.assertNotNull(playerData.getNameColor());
-        Assertions.assertNotNull(playerData.getDefaultChatColor());
-        Assertions.assertEquals(0L, playerData.getPlaytime());
-        Assertions.assertEquals(150L, playerData.getMoney());
-        Assertions.assertEquals(2, playerData.getMaxHomes());
+        assertNotNull(playerData.getUuid());
+        assertNotNull(playerData.getName());
+        assertNotNull(playerData.getLanguage());
+        assertNotNull(playerData.getChatPrefix());
+        assertNotNull(playerData.getNameColor());
+        assertNotNull(playerData.getDefaultChatColor());
+        assertEquals(0L, playerData.getPlaytime());
+        assertEquals(150L, playerData.getMoney());
+        assertEquals(2, playerData.getMaxHomes());
     }
 }

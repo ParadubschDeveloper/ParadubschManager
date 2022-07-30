@@ -39,6 +39,7 @@ public class BanCommand implements TabCompleter, CommandExecutor {
             case "list": {
                 break;
             }
+            case "update":
             case "edit": {
                 editBan(sender, args);
                 break;
@@ -118,7 +119,12 @@ public class BanCommand implements TabCompleter, CommandExecutor {
             if (targetPlayer != null) {
                 Language lang = Language.getLanguageByName(target.getLanguage());
                 Component msg = ParadubschManager.getInstance().getLanguageManager().get(Message.Info.CMD_BAN_KICK_MESSAGE, lang, banReason, args[1], "#b-" + id);
-                Bukkit.getScheduler().runTask(ParadubschManager.getInstance(), () -> targetPlayer.kick(msg));
+                Bukkit.getScheduler().runTask(ParadubschManager.getInstance(), () -> {
+                    // kicking is currently not supported by the testing environment
+                    try {
+                        targetPlayer.kick(msg);
+                    } catch (Exception ignored) {}
+                });
             }
 
             MessageAdapter.sendMessage(sender, Message.Info.CMD_BAN_PLAYER_BANNED, target.getName());
@@ -221,6 +227,14 @@ public class BanCommand implements TabCompleter, CommandExecutor {
             }
             BanPunishment ban = Hibernate.get(BanPunishment.class, ph.getActiveBanId());
             if (ban == null) return;
+
+            if (banExpiration.getTime() > System.currentTimeMillis() + 915170400000L) {
+                ban.setPermanent(true);
+                ph.setPermaBanned(true);
+            } else {
+                ban.setPermanent(false);
+                ph.setPermaBanned(false);
+            }
 
             ph.setActiveBanReason(banReason);
             ph.setActiveBanExpiration(banExpiration);

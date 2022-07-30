@@ -16,34 +16,36 @@ public class MessageAdapter {
         ParadubschManager.getInstance().getLogger().warning(ex.getMessage());
     }
 
+    public static Language getSenderLang(CommandSender sender) {
+        Language language;
+        if (sender instanceof Player) {
+            Player player = (Player) sender;
+            PlayerData playerData = Hibernate.getPlayerData(player);
+            language = Language.getLanguageByShortName(playerData.getLanguage());
+        } else {
+            language = Language.getDefaultLanguage();
+        }
+        return language;
+    }
+
+    public static Component getSendableMessage(CommandSender cs, BaseMessageType template, String... args) {
+        Language playerLang = getSenderLang(cs);
+
+        Component infoText = ParadubschManager.getInstance().getLanguageManager().get(template, playerLang, args);
+        return Component.text(ChatColor.translateAlternateColorCodes('&', ConfigurationManager.getString("chatPrefix")))
+                .append(infoText);
+    }
+
     public static void sendMessage(CommandSender cs, BaseMessageType template, String... args) {
         Bukkit.getScheduler().runTask(ParadubschManager.getInstance(), () -> {
-            Language playerLang;
-            if (cs instanceof Player) {
-                Player player = (Player) cs;
-                PlayerData playerData = Hibernate.getPlayerData(player);
-                playerLang = Language.getLanguageByShortName(playerData.getLanguage());
-            } else {
-                playerLang = Language.getDefaultLanguage();
-            }
-
-            Component infoText = ParadubschManager.getInstance().getLanguageManager().get(template, playerLang, args);
-            Component message = Component.text(ChatColor.translateAlternateColorCodes('&', ConfigurationManager.getString("chatPrefix")))
-                    .append(infoText);
+            Component message = getSendableMessage(cs, template, args);
             cs.sendMessage(message);
         });
     }
 
     public static void sendUnprefixedMessage(CommandSender cs, BaseMessageType constant, String... args) {
         Bukkit.getScheduler().runTask(ParadubschManager.getInstance(), () -> {
-            Language playerLang;
-            if (cs instanceof Player) {
-                Player player = (Player) cs;
-                PlayerData playerData = Hibernate.getPlayerData(player);
-                playerLang = Language.getLanguageByShortName(playerData.getLanguage());
-            } else {
-                playerLang = Language.getDefaultLanguage();
-            }
+            Language playerLang = getSenderLang(cs);
 
             Component constantText = ParadubschManager.getInstance().getLanguageManager().get(constant, playerLang, args);
             cs.sendMessage(constantText);
