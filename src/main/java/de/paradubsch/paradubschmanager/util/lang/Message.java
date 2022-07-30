@@ -48,7 +48,10 @@ public class Message {
         CMD_BAN_PLAYER_NOT_BANNED("cmdBanPlayerNotBanned", "&cDer Spieler &a%1 &cist nicht gebannt!"),
         CMD_GM_NO_GAMEMODE_PROVIDED("cmdGmNoGamemodeProvided", "&cDu musst einen Gamemode angeben!"),
         CMD_PLAYER_NOT_ONLINE("cmdPlayerNotOnline", "&cDer Spieler &a%1 &cist nicht online!"),
-        CMD_GM_GAMEMODE_INVALID("cmdGmGamemodeInvalid", "&cDer Gamemode &a%1 &cist nicht gültig!");
+        CMD_GM_GAMEMODE_INVALID("cmdGmGamemodeInvalid", "&cDer Gamemode &a%1 &cist nicht gültig!"),
+        CMD_WARP_NOT_PROVIDED("cmdWarpNotProvided", "&cDu musst einen Warp angeben!"),
+        CMD_WARP_NOT_FOUND("cmdWarpNotFound", "&cDer Warp &b%1 &ckonnte nicht gefunden werden!"),
+        CMD_WARPS_NO_WARPS("cmdWarpsNoWarps", "&cEs sind keine Warps vorhanden!");
 
         private final String key;
         private final String def;
@@ -122,7 +125,11 @@ public class Message {
         CMD_BAN_PLAYER_BANNED("cmdBanPlayerBanned", "&aDer Spieler &6%1 &awurde erfolgreich gebannt."),
         CMD_BAN_EDITED("cmdBanEdited", "&aDer Ban wurde erfolgreich bearbeitet."),
         CMD_WARN_KICK_MESSAGE("cmdWarnKickMessage", "&6» &4Paradubsch &6«\n\n&7Du wurdest vom Server geworfen!\n\n&7Grund: &e%1\n\n&7Warn-Id: &a%2"),
-        CMD_BAN_PLAYER_WARNED("cmdBanPlayerWarned", "&aDer Spieler &6%1 &awurde erfolgreich gewarnt.");
+        CMD_BAN_PLAYER_WARNED("cmdBanPlayerWarned", "&aDer Spieler &6%1 &awurde erfolgreich gewarnt."),
+        CMD_WARP_CREATED("cmdWarpCreated", "&aDer Warp &6%1 &awurde erfolgreich erstellt."),
+        CMD_WARP_TELEPORTED("cmdWarpTeleported", "&aDu wurdest erfolgreich zum Warp &6%1 &ateleportiert."),
+        CMD_WARP_DELETED("cmdWarpDeleted", "&aDer Warp &6%1 &awurde erfolgreich gelöscht."),
+        CMD_WARPS_WARPS("cmdWarpsWarps", "Warps: %1");
 
         private final String key;
         private final String def;
@@ -163,7 +170,8 @@ public class Message {
         MINUTE_SINGULAR("constantMinuteSingular", "Minute"),
         MINUTE_PLURAL("constantMinutePlural", "Minuten"),
         SECOND_SINGULAR("constantSecondSingular", "Sekunde"),
-        SECOND_PLURAL("constantSecondPlural", "Sekunden");
+        SECOND_PLURAL("constantSecondPlural", "Sekunden"),
+        CMD_WARP_TEMPLATE("constantCmdWarpTemplate", "@ClickableComponent<Text=&a%1|ClickCommand=/warp %1|HoverText=Teleportieren>");
 
         private final String key;
         private final String def;

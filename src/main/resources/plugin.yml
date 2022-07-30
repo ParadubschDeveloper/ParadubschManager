@@ -129,6 +129,18 @@ commands:
     permission: paradubsch.warn
     permission-message: 'Du benötigst die Berechnigung paradubsch.warn um jemandem einen Warn zuzuweisen!'
     usage: '/warn <User> <Reason>'
+  warp:
+    description: Teleportiert einen Spieler zu einem anderen.
+    aliases: []
+    permission: paradubsch.warp.use
+    permission-message: 'Du benötigst die Berechtigung paradubsch.warp um jemandem zu teleportieren!'
+    usage: '/warp <warp>'
+  warps:
+    description: Zeigt alle Warps an.
+    aliases: [warplist, warpliste]
+    permission: paradubsch.warps
+    permission-message: 'Du benötigst die Berechtigung paradubsch.warp.list um alle Warps zu sehen!'
+    usage: '/warps'
 
 
 permissions:
@@ -210,3 +222,12 @@ permissions:
   paradubsch.warn:
     description: "Erlaubt Spielern einen Warn zu geben"
     default: false
+  paradubsch.warp.use:
+    description: "Erlaubt Spielern zu teleportieren"
+    default: true
+  paradubsch.warp.manage:
+    description: "Erlaubt Warps zu bearbeiten"
+    default: false
+  paradubsch.warps:
+    description: "Erlaubt Zugriff auf den /warps Befehl."
+    default: true

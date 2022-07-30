@@ -140,6 +140,8 @@ public final class ParadubschManager extends JavaPlugin {
         register("cb", new BanCommand());
         register("gm", new GmCommand());
         register("warn", new WarnCommand());
+        register("warp", new WarpCommand());
+        register("warps", new WarpsCommand());
     }
 
     List<String> registeredCommands = new ArrayList<>();

@@ -10,6 +10,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.jetbrains.annotations.NotNull;
 
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -325,6 +326,43 @@ public class Hibernate {
             if (transaction != null) {
                 transaction.rollback();
             }
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
+    public static Warp getWarp(String name) {
+        Transaction transaction = null;
+        try {
+            @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
+
+            transaction = session.beginTransaction();
+
+            Warp warp = session.get(Warp.class, name);
+            transaction.commit();
+            return warp;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            return null;
+        }
+    }
+
+    public static List<Warp> getWarps() {
+        try {
+            @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
+
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<Warp> cq = cb.createQuery(Warp.class);
+            Root<Warp> rootEntry = cq.from(Warp.class);
+            CriteriaQuery<Warp> all = cq.select(rootEntry);
+
+            TypedQuery<Warp> allQuery = session.createQuery(all);
+            return allQuery.getResultList();
+        } catch (Exception e) {
             e.printStackTrace();
             return new ArrayList<>();
         }
