@@ -141,6 +141,36 @@ commands:
     permission: paradubsch.warps
     permission-message: 'Du benötigst die Berechtigung paradubsch.warp.list um alle Warps zu sehen!'
     usage: '/warps'
+  farmwelt:
+    description: Teleportiert dich in die Farmwelt
+    aliases: []
+    permission: paradubsch.farmwelt
+    permission-message: 'Du benötigst die Berechtigung paradubsch.farmwelten um dich in die Farmwelt zu teleportieren!'
+    usage: '/farmwelt'
+  bauwelt:
+    description: Teleportiert dich in die Bauwelt
+    aliases: []
+    permission: paradubsch.bauwelt
+    permission-message: 'Du benötigst die Berechtigung paradubsch.bauwelten um dich in die Bauwelt zu teleportieren!'
+    usage: '/bauwelt'
+  nether:
+    description: Teleportiert dich in den Nether
+    aliases: []
+    permission: paradubsch.nether
+    permission-message: 'Du benötigst die Berechtigung paradubsch.nether um dich in den Nether zu teleportieren!'
+    usage: '/nether'
+  end:
+    description: Teleportiert dich ins End.
+    aliases: []
+    permission: paradubsch.end
+    permission-message: 'Du benötigst die Berechtigung paradubsch.end um dich ins End zu teleportieren!'
+    usage: '/end'
+  spawn:
+    description: Teleportiert dich zum Spawn.
+    aliases: []
+    permission: paradubsch.spawn
+    permission-message: 'Du benötigst die Berechtigung paradubsch.spawn um dich zum Spawn zu teleportieren!'
+    usage: '/spawn'
 
 
 permissions:
@@ -230,4 +260,19 @@ permissions:
     default: false
   paradubsch.warps:
     description: "Erlaubt Zugriff auf den /warps Befehl."
+    default: true
+  paradubsch.farmwelt:
+    description: "Erlaubt Zugriff auf den /farmwelt Befehl."
+    default: true
+  paradubsch.bauwelt:
+    description: "Erlaubt Zugriff auf den /bauwelt Befehl."
+    default: true
+  paradubsch.nether:
+    description: "Erlaubt Zugriff auf den /nether Befehl."
+    default: true
+  paradubsch.end:
+    description: "Erlaubt Zugriff auf den /end Befehl."
+    default: true
+  paradubsch.spawn:
+    description: "Erlaubt Zugriff auf den /spawn Befehl."
     default: true

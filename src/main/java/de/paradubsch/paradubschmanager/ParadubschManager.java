@@ -142,6 +142,11 @@ public final class ParadubschManager extends JavaPlugin {
         register("warn", new WarnCommand());
         register("warp", new WarpCommand());
         register("warps", new WarpsCommand());
+        register("bauwelt", new BauweltCommand());
+        register("farmwelt", new FarmweltCommand());
+        register("nether", new NetherCommand());
+        register("end", new EndCommand());
+        register("spawn", new SpawnCommand());
     }
 
     List<String> registeredCommands = new ArrayList<>();
