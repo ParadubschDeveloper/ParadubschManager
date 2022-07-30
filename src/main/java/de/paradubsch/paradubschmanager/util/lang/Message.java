@@ -120,7 +120,9 @@ public class Message {
         CMD_BAN_PLAYER_UNBANNED("cmdBanPlayerUnbanned", "&aDer Spieler &6%1 &awurde erfolgreich entbannt."),
         CMD_BAN_KICK_MESSAGE("cmdBanKickMessage", "&6» &4Paradubsch &6«\n\n&7Du wurdest gebannt!\n\n&7Grund: &e%1\n\n&7Dauer: &c%2\n\n&7Ban-Id: &a%3"),
         CMD_BAN_PLAYER_BANNED("cmdBanPlayerBanned", "&aDer Spieler &6%1 &awurde erfolgreich gebannt."),
-        CMD_BAN_EDITED("cmdBanEdited", "&aDer Ban wurde erfolgreich bearbeitet.");
+        CMD_BAN_EDITED("cmdBanEdited", "&aDer Ban wurde erfolgreich bearbeitet."),
+        CMD_WARN_KICK_MESSAGE("cmdWarnKickMessage", "&6» &4Paradubsch &6«\n\n&7Du wurdest vom Server geworfen!\n\n&7Grund: &e%1\n\n&7Warn-Id: &a%2"),
+        CMD_BAN_PLAYER_WARNED("cmdBanPlayerWarned", "&aDer Spieler &6%1 &awurde erfolgreich gewarnt.");
 
         private final String key;
         private final String def;

@@ -139,6 +139,7 @@ public final class ParadubschManager extends JavaPlugin {
         register("rank", new RankCommand());
         register("cb", new BanCommand());
         register("gm", new GmCommand());
+        register("warn", new WarnCommand());
     }
 
     List<String> registeredCommands = new ArrayList<>();

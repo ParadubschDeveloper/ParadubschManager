@@ -19,7 +19,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.sql.Timestamp;
 import java.time.Instant;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -112,7 +111,7 @@ public class BanTest {
         adminPlayer.performCommand("paradubschmanager:ban " + targetPlayer.getName() + " 1d " + banCause);
 
         server.getScheduler().waitAsyncTasksFinished();
-        server.getScheduler().performTicks(5);
+        server.getScheduler().performTicks(10);
 
         String nextMsg = adminPlayer.nextMessage();
         Component sent = MessageAdapter.getSendableMessage(adminPlayer, Message.Info.CMD_BAN_PLAYER_BANNED, targetPlayer.getName());
@@ -151,7 +150,7 @@ public class BanTest {
         String unbanReason = "unbanning reason 123";
         adminPlayer.performCommand("paradubschmanager:ban delete " + targetPlayer.getName() + " " + unbanReason);
         server.getScheduler().waitAsyncTasksFinished();
-        server.getScheduler().performTicks(5);
+        server.getScheduler().performTicks(10);
 
         String nextMsg = adminPlayer.nextMessage();
         Component sent = MessageAdapter.getSendableMessage(adminPlayer, Message.Info.CMD_BAN_PLAYER_UNBANNED, targetPlayer.getName());

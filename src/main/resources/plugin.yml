@@ -123,6 +123,12 @@ commands:
     permission: paradubsch.gm.self
     permission-message: 'Du benötigst die Berechtigung paradubsch.gm um deinen Gamemode zu setzen!'
     usage: '/gm <Gamemode> <Spieler>'
+  warn:
+    description: Warn einen Spieler.
+    aliases: [warnen]
+    permission: paradubsch.warn
+    permission-message: 'Du benötigst die Berechnigung paradubsch.warn um jemandem einen Warn zuzuweisen!'
+    usage: '/warn <User> <Reason>'
 
 
 permissions:
@@ -200,4 +206,7 @@ permissions:
     default: false
   paradubsch.gm.other:
     description: "Erlaubt Zugriff auf den /gm <Gamemode> <Name> Befehl."
+    default: false
+  paradubsch.warn:
+    description: "Erlaubt Spielern einen Warn zu geben"
     default: false
