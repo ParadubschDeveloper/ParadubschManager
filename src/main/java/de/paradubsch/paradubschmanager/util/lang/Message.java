@@ -45,7 +45,10 @@ public class Message {
         CMD_BAN_PLAYER_ALREADY_BANNED("cmdBanPlayerAlreadyBanned", "&cDer Spieler &a%1 &cist bereits gebannt!"),
         CMD_BAN_DURATION_NOT_PROVIDED("cmdBanDurationNotProvided", "&cDu musst eine Dauer angeben!"),
         CMD_BAN_DURATION_INVALID("cmdBanDurationInvalid", "&cDie Dauer &a%1 &cist nicht gültig."),
-        CMD_BAN_PLAYER_NOT_BANNED("cmdBanPlayerNotBanned", "&cDer Spieler &a%1 &cist nicht gebannt!");
+        CMD_BAN_PLAYER_NOT_BANNED("cmdBanPlayerNotBanned", "&cDer Spieler &a%1 &cist nicht gebannt!"),
+        CMD_GM_NO_GAMEMODE_PROVIDED("cmdGmNoGamemodeProvided", "&cDu musst einen Gamemode angeben!"),
+        CMD_PLAYER_NOT_ONLINE("cmdPlayerNotOnline", "&cDer Spieler &a%1 &cist nicht online!"),
+        CMD_GM_GAMEMODE_INVALID("cmdGmGamemodeInvalid", "&cDer Gamemode &a%1 &cist nicht gültig!");
 
         private final String key;
         private final String def;

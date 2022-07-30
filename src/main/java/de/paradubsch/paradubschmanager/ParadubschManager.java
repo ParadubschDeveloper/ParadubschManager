@@ -115,7 +115,7 @@ public final class ParadubschManager extends JavaPlugin {
 
     private void registerEvents() {
         new ChatMessageListener();
-        new PlayerCacher();
+        new PlayerJoinPrecedure();
         new QuitListener();
         new TabDecorationManager(this);
     }
@@ -137,7 +137,8 @@ public final class ParadubschManager extends JavaPlugin {
         register("gs", new GsCommand());
         register("save", new SaveCommand());
         register("rank", new RankCommand());
-        register("b", new BanCommand());
+        register("cb", new BanCommand());
+        register("gm", new GmCommand());
     }
 
     List<String> registeredCommands = new ArrayList<>();

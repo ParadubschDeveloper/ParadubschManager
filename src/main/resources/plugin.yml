@@ -111,12 +111,18 @@ commands:
     permission: paradubsch.rank
     permission-message: 'Du benötigst die Berechtigung paradubsch.rank um jemandem einen Rang zuzuweisen!'
     usage: "/rank <User> <Rank>"
-  b:
+  cb:
     description: Ban a Player from the server
     aliases: [ban]
     permission: paradubsch.ban
     permission-message: 'Du benötigst die Berechtigung paradubsch.ban um jemandem einen Ban zuzuweisen!'
     usage: "/ban <User> <Duration> <Reason>"
+  gm:
+    description: Setze deinen Gamemode.
+    aliases: [gamemode]
+    permission: paradubsch.gm.self
+    permission-message: 'Du benötigst die Berechtigung paradubsch.gm um deinen Gamemode zu setzen!'
+    usage: '/gm <Gamemode> <Spieler>'
 
 
 permissions:
@@ -188,4 +194,10 @@ permissions:
     default: false
   paradubsch.ban:
     description: "Erlaubt Spielern einen Ban zu geben"
+    default: false
+  paradubsch.gm.self:
+    description: "Erlaubt Zugriff auf den /gm Befehl."
+    default: false
+  paradubsch.gm.other:
+    description: "Erlaubt Zugriff auf den /gm <Gamemode> <Name> Befehl."
     default: false
