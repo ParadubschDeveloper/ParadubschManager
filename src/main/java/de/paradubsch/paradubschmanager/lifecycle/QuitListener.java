@@ -2,7 +2,7 @@ package de.paradubsch.paradubschmanager.lifecycle;
 
 import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.config.HibernateConfigurator;
-import de.paradubsch.paradubschmanager.models.PlayerData;
+import de.paradubsch.paradubschmanager.persistance.model.PlayerData;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

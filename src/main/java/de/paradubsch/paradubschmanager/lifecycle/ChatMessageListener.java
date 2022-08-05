@@ -1,7 +1,7 @@
 package de.paradubsch.paradubschmanager.lifecycle;
 
 import de.paradubsch.paradubschmanager.ParadubschManager;
-import de.paradubsch.paradubschmanager.models.PlayerData;
+import de.paradubsch.paradubschmanager.persistance.model.PlayerData;
 import de.paradubsch.paradubschmanager.util.Hibernate;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.lang.Message;

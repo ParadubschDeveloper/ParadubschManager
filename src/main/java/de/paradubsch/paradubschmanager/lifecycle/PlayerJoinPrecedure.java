@@ -2,8 +2,8 @@ package de.paradubsch.paradubschmanager.lifecycle;
 
 import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.commands.GmCommand;
-import de.paradubsch.paradubschmanager.models.PlayerData;
-import de.paradubsch.paradubschmanager.models.PunishmentHolder;
+import de.paradubsch.paradubschmanager.persistance.model.PlayerData;
+import de.paradubsch.paradubschmanager.persistance.model.PunishmentHolder;
 import de.paradubsch.paradubschmanager.util.Hibernate;
 import de.paradubsch.paradubschmanager.util.TimeCalculations;
 import de.paradubsch.paradubschmanager.util.lang.Language;
@@ -13,6 +13,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.persistence.PersistentDataType;
@@ -26,15 +27,12 @@ public class PlayerJoinPrecedure implements Listener {
     }
 
     @SuppressWarnings("deprecation")
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerJoin(PlayerJoinEvent event) {
         event.setJoinMessage("");
         Player player = event.getPlayer();
         Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
-            Hibernate.cachePlayerName(player);
             PunishmentHolder ph = Hibernate.getPunishmentHolder(player);
-
-            if (ph == null) return;
 
             if (!ph.isActiveBan()) return;
 

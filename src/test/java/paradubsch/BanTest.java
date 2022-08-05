@@ -4,9 +4,10 @@ import be.seeseemelk.mockbukkit.MockBukkit;
 import be.seeseemelk.mockbukkit.ServerMock;
 import be.seeseemelk.mockbukkit.entity.PlayerMock;
 import de.paradubsch.paradubschmanager.ParadubschManager;
-import de.paradubsch.paradubschmanager.models.BanPunishment;
-import de.paradubsch.paradubschmanager.models.PunishmentHolder;
-import de.paradubsch.paradubschmanager.models.PunishmentUpdate;
+import de.paradubsch.paradubschmanager.persistance.model.BanPunishment;
+import de.paradubsch.paradubschmanager.persistance.model.PunishmentHolder;
+import de.paradubsch.paradubschmanager.persistance.model.PunishmentUpdate;
+import de.paradubsch.paradubschmanager.persistance.repository.BanPunishmentRepository;
 import de.paradubsch.paradubschmanager.util.Hibernate;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.lang.Message;
@@ -127,7 +128,7 @@ public class BanTest {
         assertTrue(ph.getActiveBanExpiration().getTime() > Timestamp.from(Instant.now()).getTime());
         assertFalse(ph.isPermaBanned());
 
-        BanPunishment ban = Hibernate.get(BanPunishment.class, ph.getActiveBanId());
+        BanPunishment ban = Hibernate.getRepository(BanPunishmentRepository.class).findById(ph.getActiveBanId()).orElse(null);
         assertNotNull(ban);
         assertEquals(ban.getId(), ph.getActiveBanId());
         assertEquals(ban.getHolderRef().getUuid(), targetPlayer.getUniqueId().toString());
@@ -158,7 +159,7 @@ public class BanTest {
         assertEquals(sentMsg, nextMsg);
 
         ph = Hibernate.getPunishmentHolder(targetPlayer);
-        BanPunishment ban = Hibernate.get(BanPunishment.class, banId);
+        BanPunishment ban = Hibernate.getRepository(BanPunishmentRepository.class).findById(banId).orElse(null);
         assertNotNull(ph);
         assertNotNull(ban);
 
@@ -205,7 +206,7 @@ public class BanTest {
         assertTrue(ph.getActiveBanExpiration().getTime() > Timestamp.from(Instant.now()).getTime());
         assertTrue(ph.isPermaBanned());
 
-        BanPunishment ban = Hibernate.get(BanPunishment.class, ph.getActiveBanId());
+        BanPunishment ban = Hibernate.getRepository(BanPunishmentRepository.class).findById(ph.getActiveBanId()).orElse(null);
         assertNotNull(ban);
         assertEquals(ban.getId(), ph.getActiveBanId());
         assertEquals(ban.getHolderRef().getUuid(), targetPlayer.getUniqueId().toString());
@@ -223,7 +224,7 @@ public class BanTest {
         String editReason = "unbanning reason 123";
         adminPlayer.performCommand("paradubschmanager:ban edit " + targetPlayer.getName() + " 1d " + editReason);
         server.getScheduler().waitAsyncTasksFinished();
-        server.getScheduler().performTicks(5);
+        server.getScheduler().performTicks(10);
 
         String nextMsg = adminPlayer.nextMessage();
         Component sent = MessageAdapter.getSendableMessage(adminPlayer, Message.Info.CMD_BAN_EDITED, targetPlayer.getName());
@@ -233,7 +234,7 @@ public class BanTest {
         PunishmentHolder ph = Hibernate.getPunishmentHolder(targetPlayer);
         assertNotNull(ph);
 
-        BanPunishment ban = Hibernate.get(BanPunishment.class, ph.getActiveBanId());
+        BanPunishment ban = Hibernate.getRepository(BanPunishmentRepository.class).findById(ph.getActiveBanId()).orElse(null);
         assertNotNull(ban);
 
         assertTrue(ph.isActiveBan());

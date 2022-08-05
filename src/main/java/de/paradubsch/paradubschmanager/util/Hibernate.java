@@ -2,13 +2,18 @@ package de.paradubsch.paradubschmanager.util;
 
 import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.config.HibernateConfigurator;
-import de.paradubsch.paradubschmanager.models.*;
+import de.paradubsch.paradubschmanager.persistance.model.*;
+import de.paradubsch.paradubschmanager.persistance.repository.*;
 import lombok.Cleanup;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.repository.Repository;
 
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -18,103 +23,40 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Level;
 
 
 public class Hibernate {
-    public static void cachePlayerName(Player p) {
-        Transaction transaction = null;
-        try {
-            @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
-            transaction = session.beginTransaction();
-
-            PlayerData playerData = session.get(PlayerData.class, p.getUniqueId().toString());
-            if (playerData == null) {
-                session.save(new PlayerData(p));
-            } else if (!playerData.getName().equals(p.getName())) {
-                playerData.setName(p.getName());
-                session.saveOrUpdate(playerData);
-            }
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
-        }
+    public static <T extends Repository<?, ?>> T getRepository(Class<T> clazz) {
+        return ParadubschManager.getInstance().getCtx().getBean(clazz);
     }
 
     public static PlayerData getPlayerData(@NotNull Player p) {
-        Transaction transaction = null;
-        try {
-            @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
-
-            transaction = session.beginTransaction();
-
-            PlayerData playerData = session.get(PlayerData.class, p.getUniqueId().toString());
-            transaction.commit();
-            if (playerData == null) {
-                return new PlayerData(p);
-            } else {
-                return playerData;
-            }
-
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
-            return new PlayerData(p);
+        PlayerDataRepository repository = getRepository(PlayerDataRepository.class);
+        PlayerData playerData = repository.findById(p.getUniqueId().toString()).orElse(null);
+        if (playerData == null) {
+            playerData = new PlayerData(p);
+            repository.save(playerData);
+            Bukkit.getLogger().log(Level.INFO, "!> Cached player data for " + p.getName());
+        } else if (!playerData.getName().equals(p.getName())) {
+            playerData.setName(p.getName());
+            repository.save(playerData);
         }
+        return playerData;
     }
 
     public static PlayerData getPlayerData(UUID uuid) {
-        Transaction transaction = null;
-        try {
-            @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
-
-            transaction = session.beginTransaction();
-
-            PlayerData playerData = session.get(PlayerData.class, uuid.toString());
-            transaction.commit();
-            if (playerData == null) {
-                playerData = new PlayerData();
-                playerData.setUuid(uuid.toString());
-            }
-            return playerData;
-
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
-            PlayerData playerData = new PlayerData();
-            playerData.setUuid(uuid.toString());
-            return playerData;
-        }
+        PlayerDataRepository repository = getRepository(PlayerDataRepository.class);
+        return repository.findById(uuid.toString()).orElse(null);
     }
 
     public static List<Home> getHomes(Player p) {
-        Transaction transaction = null;
-        try {
-            @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
-
-            transaction = session.beginTransaction();
-
-            PlayerData playerData = session.get(PlayerData.class, p.getUniqueId().toString());
-            List<Home> homes = playerData.getHomes();
-            org.hibernate.Hibernate.initialize(homes);
-            transaction.commit();
-            return homes;
-
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
-            return new ArrayList<>();
-        }
+        PlayerDataRepository repository = getRepository(PlayerDataRepository.class);
+        PlayerData pd = repository.findById(p.getUniqueId().toString()).orElse(null);
+        return pd == null ? new ArrayList<>() : pd.getHomes();
     }
 
+    @Deprecated
     public static void delete(Object home) {
         Transaction transaction = null;
         try {
@@ -131,6 +73,7 @@ public class Hibernate {
         }
     }
 
+    @Deprecated
     public static void save (Object o) {
         if (o == null) {
             return;
@@ -152,239 +95,59 @@ public class Hibernate {
     }
 
     public static PlayerData getPlayerData(String playerName) {
-        try {
-            @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
-
-            CriteriaBuilder cb = session.getCriteriaBuilder();
-            CriteriaQuery<PlayerData> cq = cb.createQuery(PlayerData.class);
-            Root<PlayerData> root = cq.from(PlayerData.class);
-            cq.select(root).where(cb.equal(
-                    cb.lower(root.get("name")),
-                    playerName.toLowerCase()
-            ));
-
-            return session.createQuery(cq).uniqueResult();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+       PlayerDataRepository repository = getRepository(PlayerDataRepository.class);
+       return repository.findFirstByNameIgnoreCase(playerName);
     }
 
     public static List<PlayerData> getMoneyTop () {
-        try {
-            @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
-
-            CriteriaBuilder cb = session.getCriteriaBuilder();
-            CriteriaQuery<PlayerData> cq = cb.createQuery(PlayerData.class);
-            Root<PlayerData> root = cq.from(PlayerData.class);
-            cq.select(root).orderBy(cb.desc(root.get("money")));
-
-            return session.createQuery(cq).setMaxResults(10).list();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+        PlayerDataRepository repository = getRepository(PlayerDataRepository.class);
+        Pageable pageable = PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, "money"));
+        return repository.findAll(pageable).getContent();
     }
 
     public static SaveRequest getSaveRequest(Player p) {
-        Transaction transaction = null;
-        try {
-            @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
-
-            transaction = session.beginTransaction();
-
-            PlayerData playerData = session.get(PlayerData.class, p.getUniqueId().toString());
-            SaveRequest saveRequest = playerData.getOpenSaveRequest();
-            org.hibernate.Hibernate.initialize(saveRequest);
-            transaction.commit();
-            return saveRequest;
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            return null;
-        }
+        return getPlayerData(p).getOpenSaveRequest();
     }
 
     public static SaveRequest getSaveRequest(int id) {
-        Transaction transaction = null;
-        try {
-            @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
-
-            transaction = session.beginTransaction();
-
-            SaveRequest saveRequest = session.get(SaveRequest.class, id);
-            org.hibernate.Hibernate.initialize(saveRequest);
-            transaction.commit();
-            return saveRequest;
-
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
-            return null;
-        }
+        return getRepository(SaveRequestRepository.class).findById(id).orElse(null);
     }
 
     public static PunishmentHolder getPunishmentHolder(PlayerData pd) {
-        Transaction transaction = null;
-        PunishmentHolder punishmentHolder;
-        try {
-            @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
-
-            transaction = session.beginTransaction();
-
-            punishmentHolder = session.get(PunishmentHolder.class, pd.getUuid());
-            if (punishmentHolder == null) {
-                punishmentHolder = new PunishmentHolder();
-                punishmentHolder.setPlayerRef(pd);
-                punishmentHolder.setUuid(pd.getUuid());
-            }
-            transaction.commit();
-            return punishmentHolder;
-
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
+        PunishmentHolderRepository punishmentHolderRepository = getRepository(PunishmentHolderRepository.class);
+        PunishmentHolder punishmentHolder = punishmentHolderRepository.findById(pd.getUuid()).orElse(null);
+        if (punishmentHolder == null) {
             punishmentHolder = new PunishmentHolder();
             punishmentHolder.setPlayerRef(pd);
             punishmentHolder.setUuid(pd.getUuid());
-            return null;
         }
+        return punishmentHolder;
     }
-
     public static PunishmentHolder getPunishmentHolder(Player player) {
-        Transaction transaction = null;
-        PunishmentHolder punishmentHolder;
-        try {
-            @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
-
-            transaction = session.beginTransaction();
-
-            punishmentHolder = session.get(PunishmentHolder.class, player.getUniqueId().toString());
-            if (punishmentHolder == null) {
-                punishmentHolder = new PunishmentHolder();
-                punishmentHolder.setPlayerRef(Hibernate.getPlayerData(player));
-                punishmentHolder.setUuid(player.getUniqueId().toString());
-            }
-            transaction.commit();
-            return punishmentHolder;
-
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
+        PunishmentHolderRepository punishmentHolderRepository = getRepository(PunishmentHolderRepository.class);
+        PlayerDataRepository playerDataRepositoryRepository = getRepository(PlayerDataRepository.class);
+        PunishmentHolder punishmentHolder = punishmentHolderRepository.findById(player.getUniqueId().toString()).orElse(null);
+        if (punishmentHolder == null) {
             punishmentHolder = new PunishmentHolder();
-            punishmentHolder.setPlayerRef(Hibernate.getPlayerData(player));
+            punishmentHolder.setPlayerRef(playerDataRepositoryRepository.findById(player.getUniqueId().toString()).orElse(null));
             punishmentHolder.setUuid(player.getUniqueId().toString());
-            return null;
         }
-    }
-
-    public static <T extends WarnPunishment> Long saveAndReturnPunishment (T o) {
-        if (o == null) {
-            return null;
-        }
-        Transaction transaction = null;
-        try {
-            @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
-
-            transaction = session.beginTransaction();
-            long id = (long) session.save(o);
-
-            transaction.commit();
-            return id;
-        } catch (Exception e) {
-            e.printStackTrace();
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            return null;
-        }
+        return punishmentHolder;
     }
 
     public static List<PunishmentUpdate> getBanUpdates(BanPunishment ban) {
-        Transaction transaction = null;
-        try {
-            @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
-
-            transaction = session.beginTransaction();
-
-            BanPunishment playerData = session.get(BanPunishment.class, ban.getId());
-            List<PunishmentUpdate> updates = playerData.getUpdates();
-            org.hibernate.Hibernate.initialize(updates);
-            transaction.commit();
-            return updates;
-
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
-            return new ArrayList<>();
-        }
+        PunishmentUpdateRepository repository = getRepository(PunishmentUpdateRepository.class);
+        return repository.findByPunishmentRef(ban);
     }
 
     public static Warp getWarp(String name) {
-        Transaction transaction = null;
-        try {
-            @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
-
-            transaction = session.beginTransaction();
-
-            Warp warp = session.get(Warp.class, name);
-            transaction.commit();
-            return warp;
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            return null;
-        }
+        WarpRepository repository = getRepository(WarpRepository.class);
+        return repository.findById(name).orElse(null);
     }
 
     public static List<Warp> getWarps() {
-        try {
-            @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
-
-            CriteriaBuilder cb = session.getCriteriaBuilder();
-            CriteriaQuery<Warp> cq = cb.createQuery(Warp.class);
-            Root<Warp> rootEntry = cq.from(Warp.class);
-            CriteriaQuery<Warp> all = cq.select(rootEntry);
-
-            TypedQuery<Warp> allQuery = session.createQuery(all);
-            return allQuery.getResultList();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ArrayList<>();
-        }
+        WarpRepository repository = getRepository(WarpRepository.class);
+        return repository.findAll();
     }
 
-    public static <T, I extends Serializable> T get (Class<T> clazz, I id) {
-        Transaction transaction = null;
-        try {
-            @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
-
-            transaction = session.beginTransaction();
-
-            T t = session.get(clazz, id);
-            transaction.commit();
-            return t;
-
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
-            return null;
-        }
-    }
 }

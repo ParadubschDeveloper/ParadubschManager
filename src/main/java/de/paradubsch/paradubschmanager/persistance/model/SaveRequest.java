@@ -1,4 +1,4 @@
-package de.paradubsch.paradubschmanager.models;
+package de.paradubsch.paradubschmanager.persistance.model;
 
 import lombok.Data;
 import org.hibernate.annotations.Cache;

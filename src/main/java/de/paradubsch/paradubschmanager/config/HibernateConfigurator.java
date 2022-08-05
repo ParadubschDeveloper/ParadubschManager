@@ -1,6 +1,5 @@
 package de.paradubsch.paradubschmanager.config;
 
-import de.paradubsch.paradubschmanager.models.*;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
@@ -12,7 +11,7 @@ import java.util.Properties;
 public class HibernateConfigurator {
     private static SessionFactory sessionFactory;
     public static SessionFactory getSessionFactory() {
-        if (sessionFactory == null) {
+        /*if (sessionFactory == null) {
             try {
                 Configuration configuration = new Configuration();
 
@@ -59,7 +58,7 @@ public class HibernateConfigurator {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
+        }*/
         return sessionFactory;
     }
 

@@ -4,7 +4,7 @@ import be.seeseemelk.mockbukkit.MockBukkit;
 import be.seeseemelk.mockbukkit.ServerMock;
 import be.seeseemelk.mockbukkit.entity.PlayerMock;
 import de.paradubsch.paradubschmanager.ParadubschManager;
-import de.paradubsch.paradubschmanager.models.PlayerData;
+import de.paradubsch.paradubschmanager.persistance.model.PlayerData;
 import de.paradubsch.paradubschmanager.util.Hibernate;
 import org.junit.jupiter.api.*;
 

@@ -43,6 +43,12 @@
                             <createDependencyReducedPom>false</createDependencyReducedPom>
                             <createSourcesJar>false</createSourcesJar>
                             <createTestSourcesJar>false</createTestSourcesJar>
+                            <!--<transformers>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                                    <resource>META-INF/spring.factories</resource>
+                                </transformer>
+                            </transformers> -->
+
                             <filters>
                                 <filter>
                                     <artifact>*:*</artifact>
@@ -90,8 +96,8 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <!-- Plugin for Unit Tests -->
+            <!--<plugin>
+
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.0.0-M7</version>
@@ -100,7 +106,7 @@
                     <junitArtifactName>org.junit.jupiter:junit-jupiter</junitArtifactName>
                     <trimStackTrace>false</trimStackTrace>
                 </configuration>
-            </plugin>
+            </plugin> -->
         </plugins>
         <resources>
             <resource>
@@ -109,6 +115,19 @@
             </resource>
         </resources>
     </build>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <!-- Import dependency management from Spring Boot -->
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>2.7.2</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <repositories>
         <repository>
@@ -174,11 +193,10 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- JPA Stuff -->
+        <!-- Runtime -->
         <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
-            <version>5.4.27.Final</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
         <dependency>
             <groupId>mysql</groupId>
@@ -187,13 +205,13 @@
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-ehcache</artifactId>
-            <version>5.4.27.Final</version>
+            <artifactId>hibernate-jcache</artifactId>
+            <version>5.6.10.Final</version>
         </dependency>
         <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-c3p0</artifactId>
-            <version>5.4.27.Final</version>
+            <groupId>org.ehcache</groupId>
+            <artifactId>ehcache</artifactId>
+            <version>3.6.3</version>
         </dependency>
 
         <!-- Testing -->

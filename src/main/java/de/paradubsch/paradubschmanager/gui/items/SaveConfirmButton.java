@@ -6,7 +6,7 @@ import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedCuboidRegion;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
 import de.craftery.util.gui.GuiItem;
-import de.paradubsch.paradubschmanager.models.SaveRequest;
+import de.paradubsch.paradubschmanager.persistance.model.SaveRequest;
 import de.paradubsch.paradubschmanager.util.Hibernate;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.lang.Message;

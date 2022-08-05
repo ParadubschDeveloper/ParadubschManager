@@ -13,7 +13,7 @@ import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.gui.window.ClaimGui;
 import de.paradubsch.paradubschmanager.gui.window.GsDeleteGui;
 import de.paradubsch.paradubschmanager.gui.window.GsTransferGui;
-import de.paradubsch.paradubschmanager.models.PlayerData;
+import de.paradubsch.paradubschmanager.persistance.model.PlayerData;
 import de.paradubsch.paradubschmanager.util.Expect;
 import de.paradubsch.paradubschmanager.util.Hibernate;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;

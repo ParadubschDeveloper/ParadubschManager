@@ -1,7 +1,6 @@
 package de.paradubsch.paradubschmanager.commands;
 
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
-import com.sk89q.worldedit.math.BlockVector2;
 import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.regions.Region;
 import com.sk89q.worldguard.WorldGuard;
@@ -13,7 +12,7 @@ import com.sk89q.worldguard.protection.regions.RegionContainer;
 import de.craftery.util.gui.GuiManager;
 import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.gui.window.SaveConfirmGui;
-import de.paradubsch.paradubschmanager.models.SaveRequest;
+import de.paradubsch.paradubschmanager.persistance.model.SaveRequest;
 import de.paradubsch.paradubschmanager.util.Expect;
 import de.paradubsch.paradubschmanager.util.Hibernate;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;

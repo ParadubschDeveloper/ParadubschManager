@@ -1,8 +1,7 @@
 package de.paradubsch.paradubschmanager.commands;
 
 import de.paradubsch.paradubschmanager.ParadubschManager;
-import de.paradubsch.paradubschmanager.models.Home;
-import de.paradubsch.paradubschmanager.models.Warp;
+import de.paradubsch.paradubschmanager.persistance.model.Warp;
 import de.paradubsch.paradubschmanager.util.Hibernate;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.lang.Language;

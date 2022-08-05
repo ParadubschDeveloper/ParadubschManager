@@ -3,7 +3,7 @@ package de.paradubsch.paradubschmanager.lifecycle.playtime;
 import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.config.ConfigurationManager;
 import de.paradubsch.paradubschmanager.lifecycle.TabDecorationManager;
-import de.paradubsch.paradubschmanager.models.PlayerData;
+import de.paradubsch.paradubschmanager.persistance.model.PlayerData;
 import de.paradubsch.paradubschmanager.util.Hibernate;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.lang.Message;
@@ -15,6 +15,7 @@ import net.luckperms.api.node.types.InheritanceNode;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -24,6 +25,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
+import java.util.logging.Level;
 
 public class PlaytimeManager implements Listener {
     private final Map<Player, PlaytimeInstance> cachedData = new HashMap<>();
@@ -53,12 +55,16 @@ public class PlaytimeManager implements Listener {
         return newPlaytime;
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
         Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
             PlayerData pd = Hibernate.getPlayerData(player);
+            if (pd == null) {
+                Bukkit.getLogger().log(Level.WARNING, "PlayerData for " + player.getName() + " is null!");
+                return;
+            }
             PlaytimeInstance pi = new PlaytimeInstance();
             pi.setPlaytime(pd.getPlaytime());
             pi.setLastRecordTime(System.currentTimeMillis());
@@ -121,9 +127,7 @@ public class PlaytimeManager implements Listener {
 
             User lpUser = userFuture.join();
             List<String> beforeGroups = new ArrayList<>();
-            lpUser.getNodes().stream().filter(NodeType.INHERITANCE::matches).forEach((node) -> {
-                beforeGroups.add(node.getKey());
-            });
+            lpUser.getNodes().stream().filter(NodeType.INHERITANCE::matches).forEach((node) -> beforeGroups.add(node.getKey()));
 
             if (beforeGroups.size() > 1) {
                 return;

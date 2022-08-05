@@ -1,9 +1,10 @@
 package de.paradubsch.paradubschmanager.commands;
 
 import de.paradubsch.paradubschmanager.ParadubschManager;
-import de.paradubsch.paradubschmanager.models.PlayerData;
-import de.paradubsch.paradubschmanager.models.PunishmentHolder;
-import de.paradubsch.paradubschmanager.models.WarnPunishment;
+import de.paradubsch.paradubschmanager.persistance.model.PlayerData;
+import de.paradubsch.paradubschmanager.persistance.model.PunishmentHolder;
+import de.paradubsch.paradubschmanager.persistance.model.WarnPunishment;
+import de.paradubsch.paradubschmanager.persistance.repository.WarnPunishmentRepository;
 import de.paradubsch.paradubschmanager.util.Expect;
 import de.paradubsch.paradubschmanager.util.Hibernate;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
@@ -40,8 +41,6 @@ public class WarnCommand implements CommandExecutor, TabCompleter {
         PlayerData target = Hibernate.getPlayerData(targetPlayer);
         PunishmentHolder ph = Hibernate.getPunishmentHolder(target);
 
-        if (ph == null) return false;
-
         StringBuilder warnReasonBuilder = new StringBuilder();
         for (int i = 1; i < args.length; i++) {
             warnReasonBuilder.append(args[i]).append(" ");
@@ -60,7 +59,7 @@ public class WarnCommand implements CommandExecutor, TabCompleter {
             warn.setGivenBy(giver);
 
         }
-        long id = Hibernate.saveAndReturnPunishment(warn);
+        long id = Hibernate.getRepository(WarnPunishmentRepository.class).save(warn).getId();
 
         Language lang = Language.getLanguageByName(target.getLanguage());
         Component msg = ParadubschManager.getInstance().getLanguageManager().get(Message.Info.CMD_WARN_KICK_MESSAGE, lang, warnReason, "#w-" + id);

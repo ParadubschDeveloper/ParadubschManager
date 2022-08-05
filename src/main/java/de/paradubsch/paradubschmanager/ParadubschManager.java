@@ -7,7 +7,7 @@ import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import de.craftery.util.gui.GuiManager;
 import de.paradubsch.paradubschmanager.commands.*;
 import de.paradubsch.paradubschmanager.config.ConfigurationManager;
-import de.paradubsch.paradubschmanager.config.HibernateConfigurator;
+import de.paradubsch.paradubschmanager.persistance.SpringConfigurer;
 import de.paradubsch.paradubschmanager.lifecycle.*;
 import de.paradubsch.paradubschmanager.lifecycle.playtime.PlaytimeManager;
 import de.paradubsch.paradubschmanager.util.lang.LanguageManager;
@@ -22,12 +22,17 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.java.JavaPluginLoader;
 import org.jetbrains.annotations.Nullable;
+import org.springframework.boot.SpringApplication;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.core.io.DefaultResourceLoader;
+import org.springframework.core.io.ResourceLoader;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
-public final class ParadubschManager extends JavaPlugin {
+public class ParadubschManager extends JavaPlugin {
     private static ParadubschManager instance;
 
     @Getter
@@ -49,23 +54,27 @@ public final class ParadubschManager extends JavaPlugin {
 
     private LuckPerms luckPermsApi;
 
+    @Getter
+    private ConfigurableApplicationContext ctx;
+
     @Override
     public void onEnable() {
         instance = this;
+        Bukkit.getLogger().log(Level.INFO,"!> Initializing");
         ConfigurationManager.copyDefaultConfiguration();
-        registerEvents();
 
-        Bukkit.getConsoleSender().sendMessage("");
-        Bukkit.getConsoleSender().sendMessage("==== Paradubsch ====");
-        Bukkit.getConsoleSender().sendMessage("Author: Paradubsch-Team");
-        Bukkit.getConsoleSender().sendMessage("Version: PREALPHA");
-        Bukkit.getConsoleSender().sendMessage("==== Paradubsch ====");
-        Bukkit.getConsoleSender().sendMessage("");
-        Bukkit.getConsoleSender().sendMessage("[Paradubsch] !> Initializing");
-        Bukkit.getConsoleSender().sendMessage("[Paradubsch] !>> Registering commands");
+        Bukkit.getLogger().log(Level.INFO,"!>> Starting Database Service");
+        ResourceLoader loader = new DefaultResourceLoader(Thread.currentThread().getContextClassLoader());
+        ctx = SpringConfigurer.initializeSpringApplication(loader);
+
+        Bukkit.getLogger().log(Level.INFO,"!>> Events commands");
+        this.registerEvents();
+        Bukkit.getLogger().log(Level.INFO,"!>> Registering commands");
         this.registerCommands();
-        Bukkit.getConsoleSender().sendMessage("[Paradubsch] !>> Testing Database Connection");
-        new TestDatabaseConnection();
+
+
+        Bukkit.getConsoleSender().sendMessage("!>> Testing Database Connection");
+        //new TestDatabaseConnection();
 
         worldGuardPlugin = initializeWorldGuardPlugin();
         worldEditPlugin = initializeWorldEditPlugin();
@@ -74,7 +83,7 @@ public final class ParadubschManager extends JavaPlugin {
         languageManager = new LanguageManager();
         playtimeManager = new PlaytimeManager();
         this.guiManager = new GuiManager(this, languageManager);
-        Bukkit.getConsoleSender().sendMessage("[Paradubsch] !> Initialization done");
+        Bukkit.getConsoleSender().sendMessage("!> Initialization done");
 
     }
 
@@ -101,7 +110,6 @@ public final class ParadubschManager extends JavaPlugin {
     @Override
     public void onDisable() {
         Bukkit.getOnlinePlayers().forEach(Player::closeInventory);
-
         Bukkit.getScheduler().cancelTasks(this);
         worldGuardPlugin = null;
         worldEditPlugin = null;
@@ -111,7 +119,7 @@ public final class ParadubschManager extends JavaPlugin {
         languageManager = null;
         guiManager = null;
         unregisterCommands();
-        HibernateConfigurator.shutdown();
+        SpringApplication.exit(ctx);
         System.gc();
         Bukkit.getConsoleSender().sendMessage("[Paradubsch] !> Disabled");
     }

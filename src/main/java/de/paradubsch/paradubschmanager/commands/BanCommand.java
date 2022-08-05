@@ -1,10 +1,13 @@
 package de.paradubsch.paradubschmanager.commands;
 
 import de.paradubsch.paradubschmanager.ParadubschManager;
-import de.paradubsch.paradubschmanager.models.BanPunishment;
-import de.paradubsch.paradubschmanager.models.PlayerData;
-import de.paradubsch.paradubschmanager.models.PunishmentHolder;
-import de.paradubsch.paradubschmanager.models.PunishmentUpdate;
+import de.paradubsch.paradubschmanager.persistance.model.BanPunishment;
+import de.paradubsch.paradubschmanager.persistance.model.PlayerData;
+import de.paradubsch.paradubschmanager.persistance.model.PunishmentHolder;
+import de.paradubsch.paradubschmanager.persistance.model.PunishmentUpdate;
+import de.paradubsch.paradubschmanager.persistance.repository.BanPunishmentRepository;
+import de.paradubsch.paradubschmanager.persistance.repository.PunishmentHolderRepository;
+import de.paradubsch.paradubschmanager.persistance.repository.PunishmentUpdateRepository;
 import de.paradubsch.paradubschmanager.util.Expect;
 import de.paradubsch.paradubschmanager.util.Hibernate;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
@@ -109,13 +112,13 @@ public class BanCommand implements TabCompleter, CommandExecutor {
             }
             ban.setHolderRef(ph);
 
-            Hibernate.save(ph);
-            long id = Hibernate.saveAndReturnPunishment(ban);
+            Hibernate.getRepository(PunishmentHolderRepository.class).save(ph);
+            long id = Hibernate.getRepository(BanPunishmentRepository.class).save(ban).getId();
             ph.setActiveBanId(id);
             ph.setActiveBan(true);
             ph.setActiveBanExpiration(banExpiration);
             ph.setActiveBanReason(banReason);
-            Hibernate.save(ph);
+            Hibernate.getRepository(PunishmentHolderRepository.class).save(ph);
 
             Player targetPlayer = Bukkit.getPlayer(target.getName());
             if (targetPlayer != null) {
@@ -163,14 +166,14 @@ public class BanCommand implements TabCompleter, CommandExecutor {
                 unbanReason = "No reason given";
             }
 
-            BanPunishment ban = Hibernate.get(BanPunishment.class, ph.getActiveBanId());
+            BanPunishment ban = Hibernate.getRepository(BanPunishmentRepository.class).findById(ph.getActiveBanId()).orElse(null);
             if (ban == null) return;
 
             ph.setActiveBanId(0);
             ph.setActiveBanReason(null);
             ph.setActiveBanExpiration(Timestamp.valueOf(LocalDateTime.ofInstant(Instant.now(), ZoneId.systemDefault())));
             ph.setActiveBan(false);
-            Hibernate.save(ph);
+            Hibernate.getRepository(PunishmentHolderRepository.class).save(ph);
 
             PunishmentUpdate update = new PunishmentUpdate();
             update.setPunishmentRef(ban);
@@ -180,10 +183,10 @@ public class BanCommand implements TabCompleter, CommandExecutor {
                 PlayerData giver = Hibernate.getPlayerData((Player) sender);
                 update.setGivenBy(giver);
             }
-            Hibernate.save(update);
+            Hibernate.getRepository(PunishmentUpdateRepository.class).save(update);
 
             ban.setHasUpdate(true);
-            Hibernate.save(ban);
+            Hibernate.getRepository(BanPunishmentRepository.class).save(ban);
 
             MessageAdapter.sendMessage(sender, Message.Info.CMD_BAN_PLAYER_UNBANNED, target.getName());
         });
@@ -226,7 +229,7 @@ public class BanCommand implements TabCompleter, CommandExecutor {
             if (banReason.isEmpty()) {
                 banReason = "\"The Ban Hammer has Spoken!\"";
             }
-            BanPunishment ban = Hibernate.get(BanPunishment.class, ph.getActiveBanId());
+            BanPunishment ban = Hibernate.getRepository(BanPunishmentRepository.class).findById(ph.getActiveBanId()).orElse(null);
             if (ban == null) return;
 
             if (banExpiration.getTime() > System.currentTimeMillis() + 915170400000L) {
@@ -239,7 +242,7 @@ public class BanCommand implements TabCompleter, CommandExecutor {
 
             ph.setActiveBanReason(banReason);
             ph.setActiveBanExpiration(banExpiration);
-            Hibernate.save(ph);
+            Hibernate.getRepository(PunishmentHolderRepository.class).save(ph);
 
             PunishmentUpdate update = new PunishmentUpdate();
             update.setPunishmentRef(ban);
@@ -249,10 +252,10 @@ public class BanCommand implements TabCompleter, CommandExecutor {
                 PlayerData giver = Hibernate.getPlayerData((Player) sender);
                 update.setGivenBy(giver);
             }
-            Hibernate.save(update);
+            Hibernate.getRepository(PunishmentUpdateRepository.class).save(update);
 
             ban.setHasUpdate(true);
-            Hibernate.save(ban);
+            Hibernate.getRepository(BanPunishmentRepository.class).save(ban);
 
             MessageAdapter.sendMessage(sender, Message.Info.CMD_BAN_EDITED, target.getName());
         });

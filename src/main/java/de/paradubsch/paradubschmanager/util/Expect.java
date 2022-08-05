@@ -1,6 +1,5 @@
 package de.paradubsch.paradubschmanager.util;
 
-import de.paradubsch.paradubschmanager.models.PlayerData;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
