@@ -16,7 +16,6 @@ import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
 import org.bukkit.Bukkit;
 import org.bukkit.command.*;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -100,8 +99,6 @@ public final class ParadubschManager extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        Bukkit.getOnlinePlayers().forEach(Player::closeInventory);
-
         Bukkit.getScheduler().cancelTasks(this);
         worldGuardPlugin = null;
         worldEditPlugin = null;
