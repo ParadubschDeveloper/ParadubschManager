@@ -130,7 +130,9 @@ public class Message {
         CMD_WARP_TELEPORTED("cmdWarpTeleported", "&aDu wurdest erfolgreich zum Warp &6%1 &ateleportiert."),
         CMD_WARP_DELETED("cmdWarpDeleted", "&aDer Warp &6%1 &awurde erfolgreich gelöscht."),
         CMD_WARPS_WARPS("cmdWarpsWarps", "Warps: %1"),
-        CMD_GAMEMODE_CHANGED("cmdGamemodeChanged", "&aDer Spielmodus von &6%1 &awurde erfolgreich zu &6%2 &agewechselt.");
+        CMD_GAMEMODE_CHANGED("cmdGamemodeChanged", "&aDer Spielmodus von &6%1 &awurde erfolgreich zu &6%2 &agewechselt."),
+        CMD_VANISH_DISABLED("cmdVanishDisabled", "&aDer Spieler &6%1 &aist nun wieder sichtbar."),
+        CMD_VANISH_ENABLED("cmdVanishEnabled", "&aDer Spieler &6%1 &aist nun unsichtbar.");
 
         private final String key;
         private final String def;

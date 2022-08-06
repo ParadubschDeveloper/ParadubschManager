@@ -12,6 +12,7 @@ import de.paradubsch.paradubschmanager.lifecycle.*;
 import de.paradubsch.paradubschmanager.lifecycle.playtime.PlaytimeManager;
 import de.paradubsch.paradubschmanager.util.lang.LanguageManager;
 import lombok.Getter;
+import lombok.Setter;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
 import org.bukkit.Bukkit;
@@ -26,6 +27,7 @@ import org.jetbrains.annotations.Nullable;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public final class ParadubschManager extends JavaPlugin {
     private static ParadubschManager instance;
@@ -48,6 +50,10 @@ public final class ParadubschManager extends JavaPlugin {
     private ProtocolManager protocolManager;
 
     private LuckPerms luckPermsApi;
+
+    @Getter
+    @Setter
+    private List<UUID> vanishedPlayers = new ArrayList<>();
 
     @Override
     public void onEnable() {
@@ -149,6 +155,7 @@ public final class ParadubschManager extends JavaPlugin {
         register("nether", new NetherCommand());
         register("end", new EndCommand());
         register("spawn", new SpawnCommand());
+        register("vanish", new VanishCommand());
     }
 
     List<String> registeredCommands = new ArrayList<>();

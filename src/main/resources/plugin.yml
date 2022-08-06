@@ -171,6 +171,12 @@ commands:
     permission: paradubsch.spawn
     permission-message: 'Du benötigst die Berechtigung paradubsch.spawn um dich zum Spawn zu teleportieren!'
     usage: '/spawn'
+  vanish:
+    description: Versteckt dich.
+    aliases: [v, verstecken, hide]
+    permission: paradubsch.vanish.self
+    permission-message: 'Du benötigst die Berechtigung paradubsch.vanish um dich zu verstecken!'
+    usage: '/vanish'
 
 
 permissions:
@@ -276,3 +282,12 @@ permissions:
   paradubsch.spawn:
     description: "Erlaubt Zugriff auf den /spawn Befehl."
     default: true
+  paradubsch.vanish.self:
+    description: "Erlaubt Zugriff auf den /vanish Befehl."
+    default: false
+  paradubsch.vanish.other:
+    description: "Erlaubt Zugriff auf den /vanish <Name> Befehl."
+    default: false
+  paradubsch.vanish.bypass:
+    description: "Erlaubt dir Spieler im Vanish zu sehen"
+    default: false
