@@ -39,31 +39,35 @@ public class GmCommand implements CommandExecutor, TabCompleter {
                 MessageAdapter.sendMessage(sender, Message.Error.CMD_PLAYER_NOT_ONLINE, args[1]);
                 return true;
             }
+        } else {
+            if (!Expect.playerSender(sender)) {
+                return true;
+            }
+            targetPlayer = (Player) sender;
         }
-        if (!Expect.playerSender(sender)) {
-            return true;
-        }
-        targetPlayer = (Player) sender;
-
         switch (args[0]) {
             case "s": case "0": case "survival": {
                 targetPlayer.setGameMode(GameMode.SURVIVAL);
                 targetPlayer.getPersistentDataContainer().set(GM_KEY, PersistentDataType.INTEGER, 0);
+                MessageAdapter.sendMessage(sender, Message.Info.CMD_GAMEMODE_CHANGED, targetPlayer.getName(), "Survival");
                 break;
             }
             case "c": case "1": case "creative": {
                 targetPlayer.setGameMode(GameMode.CREATIVE);
                 targetPlayer.getPersistentDataContainer().set(GM_KEY, PersistentDataType.INTEGER, 1);
+                MessageAdapter.sendMessage(sender, Message.Info.CMD_GAMEMODE_CHANGED, targetPlayer.getName(), "Creative");
                 break;
             }
             case "a": case "2": case "adventure": {
                 targetPlayer.setGameMode(GameMode.ADVENTURE);
                 targetPlayer.getPersistentDataContainer().set(GM_KEY, PersistentDataType.INTEGER, 2);
+                MessageAdapter.sendMessage(sender, Message.Info.CMD_GAMEMODE_CHANGED, targetPlayer.getName(), "Adventure");
                 break;
             }
             case "3": case "spectator": {
                 targetPlayer.setGameMode(GameMode.SPECTATOR);
                 targetPlayer.getPersistentDataContainer().set(GM_KEY, PersistentDataType.INTEGER, 3);
+                MessageAdapter.sendMessage(sender, Message.Info.CMD_GAMEMODE_CHANGED, targetPlayer.getName(), "Spectator");
                 break;
             }
             default: MessageAdapter.sendMessage(sender, Message.Error.CMD_GM_GAMEMODE_INVALID, args[0]);
