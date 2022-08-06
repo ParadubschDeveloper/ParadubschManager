@@ -38,8 +38,7 @@ public class TimeCalculations {
         }
     }
 
-    public static String timeStampToExpiration(Timestamp timestamp, Language lang) {
-        long ms = timestamp.getTime() - System.currentTimeMillis() + 500L;
+    public static String timeMsToExpiration(long ms, Language lang) {
         LanguageManager lm = ParadubschManager.getInstance().getLanguageManager();
         if (ms > 915170400000L) {
             return lm.getString(Message.Constant.PERMANENT, lang);
@@ -87,5 +86,10 @@ public class TimeCalculations {
 
             return returner.toString();
         }
+    }
+
+    public static String timeStampToExpiration(Timestamp timestamp, Language lang) {
+        long ms = timestamp.getTime() - System.currentTimeMillis() + 500L;
+        return timeMsToExpiration(ms, lang);
     }
 }

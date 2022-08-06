@@ -156,6 +156,7 @@ public final class ParadubschManager extends JavaPlugin {
         register("end", new EndCommand());
         register("spawn", new SpawnCommand());
         register("vanish", new VanishCommand());
+        register("seen", new SeenCommand());
     }
 
     List<String> registeredCommands = new ArrayList<>();

@@ -177,6 +177,12 @@ commands:
     permission: paradubsch.vanish.self
     permission-message: 'Du benötigst die Berechtigung paradubsch.vanish um dich zu verstecken!'
     usage: '/vanish'
+  seen:
+    description: Zeigt die letzte Zeit an, wann ein Spieler online war.
+    aliases: [lastseen]
+    permission: paradubsch.seen
+    permission-message: 'Du benötigst die Berechtigung paradubsch.seen um die letzte Zeit anzusehen!'
+    usage: '/seen <User>'
 
 
 permissions:
@@ -290,4 +296,7 @@ permissions:
     default: false
   paradubsch.vanish.bypass:
     description: "Erlaubt dir Spieler im Vanish zu sehen"
+    default: false
+  paradubsch.seen:
+    description: "Erlaubt Zugriff auf den /seen Befehl."
     default: false
