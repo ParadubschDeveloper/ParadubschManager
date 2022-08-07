@@ -56,7 +56,11 @@ public class Message {
         CMD_REPLY_NO_REPLY_CANDIDATE("cmdReplyNoReplyCandidate", "&cDu hast keine aktive Unterhaltung!"),
         CMD_REPLY_CANDIDATE_OFFLINE("cmdReplyCandidateOffline", "&cDein Unterhaltungspartner ist bereits offline!"),
         CMD_SPEED_NOT_PROVIDED("cmdSpeedNotProvided", "&cDu musst eine Geschwindigkeit angeben!"),
-        CMD_SPEED_NOT_VALID("cmdSpeedNotValid", "&cDie Geschwindigkeit &a%1 &cist nicht gültig!");
+        CMD_SPEED_NOT_VALID("cmdSpeedNotValid", "&cDie Geschwindigkeit &a%1 &cist nicht gültig!"),
+        CMD_KICK_NAME_NOT_PROVIDED("cmdKickNameNotProvided", "&cDu musst einen Spieler angeben, den du kicken möchtest!"),
+        CMD_KICK_PLAYER_NOT_IN_REGION("cmdKickPlayerNotInRegion", "&cDer Spieler &a%1 &cist nicht auf deinem Grundstück!"),
+        CMD_KICK_YOU_GOT_KICKED("cmdKickYouGotKicked", "&cDu wurdest vom Grundstück geworfen!");
+
 
         private final String key;
         private final String def;
@@ -141,7 +145,8 @@ public class Message {
         CMD_PLAYER_LAST_SEEN("cmdPlayerLastSeen", "Der Spieler &6%1 &7wurde zuletzt gesehen vor &a%2."),
         CMD_SPEED_SET("cmdSpeedSet", "&aDeine Geschwindigkeit &awurde erfolgreich auf &6%1 &agewechselt."),
         CMD_DAY_SET("cmdDaySet", "&aDu hast die Zeit erfolgreich auf &6Tag &agewechselt."),
-        CMD_DAY_NIGHT("cmdDayNightSet", "&aDu hast die Zeit erfolgreich auf &6Nacht &agewechselt.");
+        CMD_DAY_NIGHT("cmdDayNightSet", "&aDu hast die Zeit erfolgreich auf &6Nacht &agewechselt."),
+        CMD_KICK_PLAYER_KICKED("cmdKickPlayerKicked", "&cDer Spieler &a%1 &cwurde gekickt!");
 
         private final String key;
         private final String def;

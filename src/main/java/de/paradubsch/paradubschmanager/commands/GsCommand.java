@@ -55,7 +55,11 @@ public class GsCommand implements CommandExecutor, TabCompleter {
             }
             /*case "ban": {
                 break;
-            }
+            }*/
+            case "kick": {
+                gsKick(p, args);
+                break;
+            }/*
             case "unban": {
                 break;
             }
@@ -67,7 +71,7 @@ public class GsCommand implements CommandExecutor, TabCompleter {
                 break;
             }
             case "delete": {
-                gsDelete(p, args);
+                gsDelete(p);
                 break;
             }
             case "transfer": {
@@ -86,6 +90,27 @@ public class GsCommand implements CommandExecutor, TabCompleter {
         GuiManager.entryGui(ClaimGui.class, p);
     }
 
+    private static @Nullable List<ProtectedRegion> getRegionsPlayerIsIn(Player p, boolean checkOwnerPermission) {
+        RegionContainer container = WorldGuard.getInstance().getPlatform().getRegionContainer();
+        if (container == null) return null;
+        RegionManager manager = container.get(BukkitAdapter.adapt(p.getWorld()));
+        if (manager == null) return null;
+        Location loc = p.getLocation();
+        BlockVector3 vec = BlockVector3.at(loc.getX(), loc.getY(), loc.getZ());
+        ApplicableRegionSet regions = manager.getApplicableRegions(vec);
+        if (regions.size() == 0) {
+            MessageAdapter.sendMessage(p, Message.Error.GS_IN_NO_REGION);
+            return null;
+        }
+        List<ProtectedRegion> regionList = new ArrayList<>();
+        regions.forEach(regionList::add);
+        if (checkOwnerPermission && regionList.stream().noneMatch(region -> region.getOwners().contains(p.getUniqueId()))) {
+            MessageAdapter.sendMessage(p, Message.Error.GS_NO_PERMISSIONS_IN_REGION);
+            return null;
+        }
+        return regionList;
+    }
+
     private static void gsAdd(Player p, String[] args) {
         if (!Expect.minArgs(2, args)) {
             MessageAdapter.sendMessage(p, Message.Error.GS_ADD_NAME_NOT_PROVIDED);
@@ -98,25 +123,10 @@ public class GsCommand implements CommandExecutor, TabCompleter {
             return;
         }
 
-        RegionContainer container = WorldGuard.getInstance().getPlatform().getRegionContainer();
-        if (container == null) return;
-        RegionManager manager = container.get(BukkitAdapter.adapt(p.getWorld()));
-        if (manager == null) return;
-        Location loc = p.getLocation();
-        BlockVector3 vec = BlockVector3.at(loc.getX(), loc.getY(), loc.getZ());
-        ApplicableRegionSet regions = manager.getApplicableRegions(vec);
-        if (regions.size() == 0) {
-            MessageAdapter.sendMessage(p, Message.Error.GS_IN_NO_REGION);
-            return;
-        }
-        List<ProtectedRegion> regionList = new ArrayList<>();
-        regions.forEach(regionList::add);
+        List<ProtectedRegion> regionList = getRegionsPlayerIsIn(p, true);
+        if (regionList == null) return;
 
-        if (regionList.stream().noneMatch(region -> region.getOwners().contains(p.getUniqueId()))) {
-            MessageAdapter.sendMessage(p, Message.Error.GS_NO_PERMISSIONS_IN_REGION);
-            return;
-        }
-        for (ProtectedRegion region : regions) {
+        for (ProtectedRegion region : regionList) {
             if (!region.getOwners().contains(p.getUniqueId())) {
                 continue;
             }
@@ -152,26 +162,10 @@ public class GsCommand implements CommandExecutor, TabCompleter {
             return;
         }
 
-        RegionContainer container = WorldGuard.getInstance().getPlatform().getRegionContainer();
-        if (container == null) return;
-        RegionManager manager = container.get(BukkitAdapter.adapt(p.getWorld()));
-        if (manager == null) return;
-        Location loc = p.getLocation();
-        BlockVector3 vec = BlockVector3.at(loc.getX(), loc.getY(), loc.getZ());
-        ApplicableRegionSet regions = manager.getApplicableRegions(vec);
-        if (regions.size() == 0) {
-            MessageAdapter.sendMessage(p, Message.Error.GS_IN_NO_REGION);
-            return;
-        }
-        List<ProtectedRegion> regionList = new ArrayList<>();
-        regions.forEach(regionList::add);
+        List<ProtectedRegion> regionList = getRegionsPlayerIsIn(p, true);
+        if (regionList == null) return;
 
-        if (regionList.stream().noneMatch(region -> region.getOwners().contains(p.getUniqueId()))) {
-            MessageAdapter.sendMessage(p, Message.Error.GS_NO_PERMISSIONS_IN_REGION);
-            return;
-        }
-
-        for (ProtectedRegion region : regions) {
+        for (ProtectedRegion region : regionList) {
             if (!region.getOwners().contains(p.getUniqueId())) {
                 continue;
             }
@@ -200,24 +194,8 @@ public class GsCommand implements CommandExecutor, TabCompleter {
             return;
         }
 
-        RegionContainer container = WorldGuard.getInstance().getPlatform().getRegionContainer();
-        if (container == null) return;
-        RegionManager manager = container.get(BukkitAdapter.adapt(p.getWorld()));
-        if (manager == null) return;
-        Location loc = p.getLocation();
-        BlockVector3 vec = BlockVector3.at(loc.getX(), loc.getY(), loc.getZ());
-        ApplicableRegionSet regions = manager.getApplicableRegions(vec);
-        if (regions.size() == 0) {
-            MessageAdapter.sendMessage(p, Message.Error.GS_IN_NO_REGION);
-            return;
-        }
-        List<ProtectedRegion> regionList = new ArrayList<>();
-        regions.forEach(regionList::add);
-
-        if (regionList.stream().noneMatch(region -> region.getOwners().contains(p.getUniqueId()))) {
-            MessageAdapter.sendMessage(p, Message.Error.GS_NO_PERMISSIONS_IN_REGION);
-            return;
-        }
+        List<ProtectedRegion> regionList = getRegionsPlayerIsIn(p, true);
+        if (regionList == null) return;
 
         for (ProtectedRegion region : regionList) {
             if (!region.getOwners().contains(p.getUniqueId())) {
@@ -233,25 +211,9 @@ public class GsCommand implements CommandExecutor, TabCompleter {
         }
     }
 
-    private static void gsDelete(Player p , String[] args) {
-        RegionContainer container = WorldGuard.getInstance().getPlatform().getRegionContainer();
-        if (container == null) return;
-        RegionManager manager = container.get(BukkitAdapter.adapt(p.getWorld()));
-        if (manager == null) return;
-        Location loc = p.getLocation();
-        BlockVector3 vec = BlockVector3.at(loc.getX(), loc.getY(), loc.getZ());
-        ApplicableRegionSet regions = manager.getApplicableRegions(vec);
-        if (regions.size() == 0) {
-            MessageAdapter.sendMessage(p, Message.Error.GS_IN_NO_REGION);
-            return;
-        }
-        List<ProtectedRegion> regionList = new ArrayList<>();
-        regions.forEach(regionList::add);
-
-        if (regionList.stream().noneMatch(region -> region.getOwners().contains(p.getUniqueId()))) {
-            MessageAdapter.sendMessage(p, Message.Error.GS_NO_PERMISSIONS_IN_REGION);
-            return;
-        }
+    private static void gsDelete(Player p) {
+        List<ProtectedRegion> regionList = getRegionsPlayerIsIn(p, true);
+        if (regionList == null) return;
 
         for (ProtectedRegion region : regionList) {
             if (!region.getOwners().contains(p.getUniqueId())) {
@@ -264,19 +226,10 @@ public class GsCommand implements CommandExecutor, TabCompleter {
 
     private static void gsInfo(Player p) {
         Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
-            RegionContainer container = WorldGuard.getInstance().getPlatform().getRegionContainer();
-            if (container == null) return;
-            RegionManager manager = container.get(BukkitAdapter.adapt(p.getWorld()));
-            if (manager == null) return;
-            Location loc = p.getLocation();
-            BlockVector3 vec = BlockVector3.at(loc.getX(), loc.getY(), loc.getZ());
-            ApplicableRegionSet regions = manager.getApplicableRegions(vec);
-            if (regions.size() == 0) {
-                MessageAdapter.sendMessage(p, Message.Error.GS_IN_NO_REGION);
-                return;
-            }
+            List<ProtectedRegion> regionList = getRegionsPlayerIsIn(p, false);
+            if (regionList == null) return;
 
-            for (ProtectedRegion region : regions) {
+            for (ProtectedRegion region : regionList) {
                 StringBuilder owners = new StringBuilder();
                 List<PlayerData> ownerPlayerDataList = new ArrayList<>();
                 for (UUID uuid : region.getOwners().getUniqueIds()) {
@@ -308,6 +261,40 @@ public class GsCommand implements CommandExecutor, TabCompleter {
         });
     }
 
+    private static void gsKick(Player player, String[] args) {
+        if (!Expect.minArgs(2, args)) {
+            MessageAdapter.sendMessage(player, Message.Error.CMD_KICK_NAME_NOT_PROVIDED);
+            return;
+        }
+        Player target = Bukkit.getPlayer(args[1]);
+        if (target == null) {
+            MessageAdapter.sendMessage(player, Message.Error.CMD_PLAYER_NOT_ONLINE, args[1]);
+            return;
+        }
+
+        if (!player.getWorld().equals(target.getWorld())) {
+            MessageAdapter.sendMessage(player, Message.Error.CMD_KICK_PLAYER_NOT_IN_REGION, target.getName());
+            return;
+        }
+
+        List<ProtectedRegion> regionList = getRegionsPlayerIsIn(player, true);
+        if (regionList == null) return;
+        boolean kicked = false;
+        for (ProtectedRegion region : regionList) {
+            Location loc = target.getLocation();
+            if (region.contains(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ())) {
+                WarpCommand.warp(target, "spawn");
+                MessageAdapter.sendMessage(player, Message.Info.CMD_KICK_PLAYER_KICKED, target.getName());
+                MessageAdapter.sendMessage(target, Message.Error.CMD_KICK_YOU_GOT_KICKED);
+                kicked = true;
+                break;
+            }
+        }
+        if (!kicked) {
+            MessageAdapter.sendMessage(player, Message.Error.CMD_KICK_PLAYER_NOT_IN_REGION, target.getName());
+        }
+    }
+
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         List<String> l = new ArrayList<>();
@@ -316,6 +303,7 @@ public class GsCommand implements CommandExecutor, TabCompleter {
             l.add("add");
             l.add("remove");
             //l.add("ban");
+            l.add("kick");
             //l.add("unban");
             //l.add("whitelist");
             l.add("info");
@@ -331,7 +319,7 @@ public class GsCommand implements CommandExecutor, TabCompleter {
             return l;
         }*/
 
-        if (args.length == 2 && args[0].equals("add")) {
+        if (args.length == 2 && (args[0].equals("add") || args[0].equals("kick"))) {
             return null;
         }
 
