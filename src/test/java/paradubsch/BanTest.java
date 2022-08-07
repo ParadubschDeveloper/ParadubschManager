@@ -13,6 +13,7 @@ import de.paradubsch.paradubschmanager.util.lang.Message;
 import net.kyori.adventure.text.Component;
 import org.bukkit.command.PluginCommand;
 import org.junit.jupiter.api.*;
+import paradubsch.util.ChatUtilities;
 import paradubsch.util.ComponentConversion;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -111,9 +112,9 @@ public class BanTest {
         adminPlayer.performCommand("paradubschmanager:ban " + targetPlayer.getName() + " 1d " + banCause);
 
         server.getScheduler().waitAsyncTasksFinished();
-        server.getScheduler().performTicks(10);
 
-        String nextMsg = adminPlayer.nextMessage();
+        System.out.println("1 expext ban message");
+        String nextMsg = ChatUtilities.waitNextMessage(server, adminPlayer);
         Component sent = MessageAdapter.getSendableMessage(adminPlayer, Message.Info.CMD_BAN_PLAYER_BANNED, targetPlayer.getName());
         String sentMsg = ComponentConversion.fromComponent(sent);
         assertEquals(sentMsg, nextMsg);
@@ -150,9 +151,9 @@ public class BanTest {
         String unbanReason = "unbanning reason 123";
         adminPlayer.performCommand("paradubschmanager:ban delete " + targetPlayer.getName() + " " + unbanReason);
         server.getScheduler().waitAsyncTasksFinished();
-        server.getScheduler().performTicks(10);
 
-        String nextMsg = adminPlayer.nextMessage();
+        System.out.println("2 expext unbanban message");
+        String nextMsg = ChatUtilities.waitNextMessage(server, adminPlayer);
         Component sent = MessageAdapter.getSendableMessage(adminPlayer, Message.Info.CMD_BAN_PLAYER_UNBANNED, targetPlayer.getName());
         String sentMsg = ComponentConversion.fromComponent(sent);
         assertEquals(sentMsg, nextMsg);
@@ -189,9 +190,9 @@ public class BanTest {
         adminPlayer.performCommand("paradubschmanager:ban " + targetPlayer.getName() + " perma " + banCause);
 
         server.getScheduler().waitAsyncTasksFinished();
-        server.getScheduler().performTicks(5);
 
-        String nextMsg = adminPlayer.nextMessage();
+        System.out.println("3 expext ban message");
+        String nextMsg = ChatUtilities.waitNextMessage(server, adminPlayer);
         Component sent = MessageAdapter.getSendableMessage(adminPlayer, Message.Info.CMD_BAN_PLAYER_BANNED, targetPlayer.getName());
         String sentMsg = ComponentConversion.fromComponent(sent);
         assertEquals(sentMsg, nextMsg);
@@ -223,9 +224,9 @@ public class BanTest {
         String editReason = "unbanning reason 123";
         adminPlayer.performCommand("paradubschmanager:ban edit " + targetPlayer.getName() + " 1d " + editReason);
         server.getScheduler().waitAsyncTasksFinished();
-        server.getScheduler().performTicks(5);
 
-        String nextMsg = adminPlayer.nextMessage();
+        System.out.println("4 expext edit ban message");
+        String nextMsg = ChatUtilities.waitNextMessage(server, adminPlayer);
         Component sent = MessageAdapter.getSendableMessage(adminPlayer, Message.Info.CMD_BAN_EDITED, targetPlayer.getName());
         String sentMsg = ComponentConversion.fromComponent(sent);
         assertEquals(sentMsg, nextMsg);

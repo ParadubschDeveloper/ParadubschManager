@@ -160,6 +160,7 @@ public final class ParadubschManager extends JavaPlugin {
         register("vanish", new VanishCommand());
         register("seen", new SeenCommand());
         register("reply", new ReplyCommand());
+        register("speed", new SpeedCommand());
     }
 
     List<String> registeredCommands = new ArrayList<>();

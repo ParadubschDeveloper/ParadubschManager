@@ -54,7 +54,9 @@ public class Message {
         CMD_WARPS_NO_WARPS("cmdWarpsNoWarps", "&cEs sind keine Warps vorhanden!"),
         CMD_PLAYER_ONLINE("cmdPlayerOnline", "&cDer Spieler &a%1 &cist online!"),
         CMD_REPLY_NO_REPLY_CANDIDATE("cmdReplyNoReplyCandidate", "&cDu hast keine aktive Unterhaltung!"),
-        CMD_REPLY_CANDIDATE_OFFLINE("cmdReplyCandidateOffline", "&cDein Unterhaltungspartner ist bereits offline!");
+        CMD_REPLY_CANDIDATE_OFFLINE("cmdReplyCandidateOffline", "&cDein Unterhaltungspartner ist bereits offline!"),
+        CMD_SPEED_NOT_PROVIDED("cmdSpeedNotProvided", "&cDu musst eine Geschwindigkeit angeben!"),
+        CMD_SPEED_NOT_VALID("cmdSpeedNotValid", "&cDie Geschwindigkeit &a%1 &cist nicht gültig!");
 
         private final String key;
         private final String def;
@@ -136,7 +138,8 @@ public class Message {
         CMD_GAMEMODE_CHANGED("cmdGamemodeChanged", "&aDer Spielmodus von &6%1 &awurde erfolgreich zu &6%2 &agewechselt."),
         CMD_VANISH_DISABLED("cmdVanishDisabled", "&aDer Spieler &6%1 &aist nun wieder sichtbar."),
         CMD_VANISH_ENABLED("cmdVanishEnabled", "&aDer Spieler &6%1 &aist nun unsichtbar."),
-        CMD_PLAYER_LAST_SEEN("cmdPlayerLastSeen", "Der Spieler &6%1 &7wurde zuletzt gesehen vor &a%2.");
+        CMD_PLAYER_LAST_SEEN("cmdPlayerLastSeen", "Der Spieler &6%1 &7wurde zuletzt gesehen vor &a%2."),
+        CMD_SPEED_SET("cmdSpeedSet", "&aDeine Geschwindigkeit &awurde erfolgreich auf &6%1 &agewechselt.");
 
         private final String key;
         private final String def;

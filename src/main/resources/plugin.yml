@@ -189,6 +189,12 @@ commands:
     permission: paradubsch.reply
     permission-message: 'Du benötigst die Berechtigung paradubsch.reply um auf eine Nachricht zu antworten!'
     usage: '/reply <Nachricht>'
+  speed:
+    description: Setzt die Geschwindigkeit eines Spielers.
+    aliases: [geschwindigkeit, speed]
+    permission: paradubsch.speed
+    permission-message: 'Du benötigst die Berechtigung paradubsch.speed um deine Geschwindigkeit zu setzen!'
+    usage: '/speed <Geschwindigkeit>'
 
 
 permissions:
@@ -309,3 +315,6 @@ permissions:
   paradubsch.reply:
     description: "Erlaubt Zugriff auf den /reply Befehl."
     default: true
+  paradubsch.speed:
+    description: "Erlaubt Zugriff auf den /speed Befehl."
+    default: false
