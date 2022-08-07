@@ -23,6 +23,7 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
+@Disabled
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class BanTest {
     private static ServerMock server;
@@ -41,6 +42,7 @@ public class BanTest {
         targetPlayer = server.addPlayer();
         server.getScheduler().waitAsyncTasksFinished();
         server.getScheduler().waitAsyncEventsFinished();
+        server.getScheduler().performOneTick();
     }
 
     @AfterAll

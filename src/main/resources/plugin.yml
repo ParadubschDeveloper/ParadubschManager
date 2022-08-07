@@ -195,6 +195,18 @@ commands:
     permission: paradubsch.speed
     permission-message: 'Du benötigst die Berechtigung paradubsch.speed um deine Geschwindigkeit zu setzen!'
     usage: '/speed <Geschwindigkeit>'
+  day:
+    description: Setzt die Zeit auf Tag.
+    aliases: [tag]
+    permission: paradubsch.day
+    permission-message: 'Du benötigst die Berechtigung paradubsch.day um den Tag zu setzen!'
+    usage: '/day'
+  night:
+    description: Setzt die Zeit auf Nacht.
+    aliases: [nacht]
+    permission: paradubsch.night
+    permission-message: 'Du benötigst die Berechtigung paradubsch.night um die Nacht zu setzen!'
+    usage: '/night'
 
 
 permissions:
@@ -317,4 +329,10 @@ permissions:
     default: true
   paradubsch.speed:
     description: "Erlaubt Zugriff auf den /speed Befehl."
+    default: false
+  paradubsch.day:
+    description: "Erlaubt Zugriff auf den /day Befehl."
+    default: false
+  paradubsch.night:
+    description: "Erlaubt Zugriff auf den /night Befehl."
     default: false

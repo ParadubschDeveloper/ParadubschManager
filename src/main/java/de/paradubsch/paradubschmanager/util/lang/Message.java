@@ -139,7 +139,9 @@ public class Message {
         CMD_VANISH_DISABLED("cmdVanishDisabled", "&aDer Spieler &6%1 &aist nun wieder sichtbar."),
         CMD_VANISH_ENABLED("cmdVanishEnabled", "&aDer Spieler &6%1 &aist nun unsichtbar."),
         CMD_PLAYER_LAST_SEEN("cmdPlayerLastSeen", "Der Spieler &6%1 &7wurde zuletzt gesehen vor &a%2."),
-        CMD_SPEED_SET("cmdSpeedSet", "&aDeine Geschwindigkeit &awurde erfolgreich auf &6%1 &agewechselt.");
+        CMD_SPEED_SET("cmdSpeedSet", "&aDeine Geschwindigkeit &awurde erfolgreich auf &6%1 &agewechselt."),
+        CMD_DAY_SET("cmdDaySet", "&aDu hast die Zeit erfolgreich auf &6Tag &agewechselt."),
+        CMD_DAY_NIGHT("cmdDayNightSet", "&aDu hast die Zeit erfolgreich auf &6Nacht &agewechselt.");
 
         private final String key;
         private final String def;
