@@ -52,7 +52,9 @@ public class Message {
         CMD_WARP_NOT_PROVIDED("cmdWarpNotProvided", "&cDu musst einen Warp angeben!"),
         CMD_WARP_NOT_FOUND("cmdWarpNotFound", "&cDer Warp &b%1 &ckonnte nicht gefunden werden!"),
         CMD_WARPS_NO_WARPS("cmdWarpsNoWarps", "&cEs sind keine Warps vorhanden!"),
-        CMD_PLAYER_ONLINE("cmdPlayerOnline", "&cDer Spieler &a%1 &cist online!");
+        CMD_PLAYER_ONLINE("cmdPlayerOnline", "&cDer Spieler &a%1 &cist online!"),
+        CMD_REPLY_NO_REPLY_CANDIDATE("cmdReplyNoReplyCandidate", "&cDu hast keine aktive Unterhaltung!"),
+        CMD_REPLY_CANDIDATE_OFFLINE("cmdReplyCandidateOffline", "&cDein Unterhaltungspartner ist bereits offline!");
 
         private final String key;
         private final String def;

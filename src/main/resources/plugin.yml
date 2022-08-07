@@ -183,6 +183,12 @@ commands:
     permission: paradubsch.seen
     permission-message: 'Du benötigst die Berechtigung paradubsch.seen um die letzte Zeit anzusehen!'
     usage: '/seen <User>'
+  reply:
+    description: Antwortet auf eine Nachricht.
+    aliases: [antwort, r]
+    permission: paradubsch.reply
+    permission-message: 'Du benötigst die Berechtigung paradubsch.reply um auf eine Nachricht zu antworten!'
+    usage: '/reply <Nachricht>'
 
 
 permissions:
@@ -300,3 +306,6 @@ permissions:
   paradubsch.seen:
     description: "Erlaubt Zugriff auf den /seen Befehl."
     default: false
+  paradubsch.reply:
+    description: "Erlaubt Zugriff auf den /reply Befehl."
+    default: true

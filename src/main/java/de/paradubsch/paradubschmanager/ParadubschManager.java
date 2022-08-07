@@ -25,9 +25,7 @@ import org.bukkit.plugin.java.JavaPluginLoader;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public final class ParadubschManager extends JavaPlugin {
     private static ParadubschManager instance;
@@ -54,6 +52,10 @@ public final class ParadubschManager extends JavaPlugin {
     @Getter
     @Setter
     private List<UUID> vanishedPlayers = new ArrayList<>();
+
+    @Getter
+    @Setter
+    private Map<UUID, UUID> replyCandidates = new HashMap<>();
 
     @Override
     public void onEnable() {
@@ -157,6 +159,7 @@ public final class ParadubschManager extends JavaPlugin {
         register("spawn", new SpawnCommand());
         register("vanish", new VanishCommand());
         register("seen", new SeenCommand());
+        register("reply", new ReplyCommand());
     }
 
     List<String> registeredCommands = new ArrayList<>();
