@@ -22,7 +22,7 @@ public class BanPunishment extends WarnPunishment {
     @Column(name = "has_update", columnDefinition = "BOOLEAN DEFAULT FALSE")
     private boolean hasUpdate = false;
 
-    public static BanPunishment getById(Serializable id) {
+    public static BanPunishment getByIdO(Serializable id) {
         return BaseDatabaseEntity.getById(BanPunishment.class, id);
     }
 }

@@ -163,7 +163,7 @@ public class BanCommand implements TabCompleter, CommandExecutor {
                 unbanReason = "No reason given";
             }
 
-            BanPunishment ban = BanPunishment.getById(ph.getActiveBanId());
+            BanPunishment ban = BanPunishment.getByIdO(ph.getActiveBanId());
             if (ban == null) return;
 
             ph.setActiveBanId(0);
