@@ -11,16 +11,18 @@ import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.Index;
 import javax.persistence.Table;
+import java.io.Serializable;
 import java.util.List;
 
 import static org.hibernate.annotations.CascadeType.*;
 
 @Data
+@EqualsAndHashCode(callSuper = false)
 @Entity
 @Cacheable
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Table(name = "player_data", indexes = @Index(name = "player_data_index", columnList = "name"))
-public class PlayerData {
+public class PlayerData extends BaseDatabaseEntity<PlayerData, String> {
 
     @Id
     @Column(name = "uuid", columnDefinition = "VARCHAR(36)")
@@ -73,5 +75,9 @@ public class PlayerData {
     public PlayerData(Player player) {
         this.uuid = player.getUniqueId().toString();
         this.name = player.getName();
+    }
+
+    public static PlayerData getById(Serializable id) {
+        return BaseDatabaseEntity.getById(PlayerData.class, id);
     }
 }

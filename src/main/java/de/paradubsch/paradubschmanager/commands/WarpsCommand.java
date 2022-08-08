@@ -1,9 +1,7 @@
 package de.paradubsch.paradubschmanager.commands;
 
 import de.paradubsch.paradubschmanager.ParadubschManager;
-import de.paradubsch.paradubschmanager.models.Home;
 import de.paradubsch.paradubschmanager.models.Warp;
-import de.paradubsch.paradubschmanager.util.Hibernate;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.lang.Language;
 import de.paradubsch.paradubschmanager.util.lang.Message;
@@ -22,7 +20,7 @@ public class WarpsCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
-            List<Warp> warps = Hibernate.getWarps();
+            List<Warp> warps = Warp.getAll();
 
             if (warps.size() == 0) {
                 MessageAdapter.sendMessage(sender, Message.Error.CMD_WARPS_NO_WARPS);

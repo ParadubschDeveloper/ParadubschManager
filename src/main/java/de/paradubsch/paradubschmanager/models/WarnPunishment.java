@@ -10,12 +10,14 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
 
 import static org.hibernate.annotations.CascadeType.SAVE_UPDATE;
 
 @Data
+@EqualsAndHashCode(callSuper = false)
 @Entity
 @Cacheable
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
@@ -23,7 +25,7 @@ import static org.hibernate.annotations.CascadeType.SAVE_UPDATE;
 @SequenceGenerator(name="punishmentSequence",sequenceName="punishment_sequence", allocationSize = 1)
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "punishment_type", discriminatorType = DiscriminatorType.STRING)
-public class WarnPunishment {
+public class WarnPunishment extends BaseDatabaseEntity<WarnPunishment, Long> {
 
     @Id
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="punishmentSequence")
@@ -48,4 +50,8 @@ public class WarnPunishment {
     @OneToMany(mappedBy = "punishmentRef", fetch = FetchType.LAZY)
     @Cascade(value = SAVE_UPDATE)
     private List<PunishmentUpdate> updates;
+
+    public static WarnPunishment getById(Long id) {
+        return BaseDatabaseEntity.getById(WarnPunishment.class, id);
+    }
 }

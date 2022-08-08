@@ -1,20 +1,23 @@
 package de.paradubsch.paradubschmanager.models;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 @Data
+@EqualsAndHashCode(callSuper = false)
 @Entity
 @Cacheable
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Table(name = "punishments_updates")
 @SequenceGenerator(name="punishmentUpdateSequence",sequenceName="punishment_update_sequence", allocationSize = 1)
-public class PunishmentUpdate {
+public class PunishmentUpdate extends BaseDatabaseEntity<PunishmentUpdate, Long> {
 
     @Id
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="punishmentUpdateSequence")
@@ -39,4 +42,8 @@ public class PunishmentUpdate {
 
     @Column
     private Timestamp expiration;
+
+    public static PunishmentUpdate getById(Serializable id) {
+        return BaseDatabaseEntity.getById(PunishmentUpdate.class, id);
+    }
 }

@@ -110,7 +110,7 @@ public class BanCommand implements TabCompleter, CommandExecutor {
             ban.setHolderRef(ph);
 
             Hibernate.save(ph);
-            long id = Hibernate.saveAndReturnPunishment(ban);
+            long id = (long) ban.save();
             ph.setActiveBanId(id);
             ph.setActiveBan(true);
             ph.setActiveBanExpiration(banExpiration);
@@ -163,7 +163,7 @@ public class BanCommand implements TabCompleter, CommandExecutor {
                 unbanReason = "No reason given";
             }
 
-            BanPunishment ban = Hibernate.get(BanPunishment.class, ph.getActiveBanId());
+            BanPunishment ban = BanPunishment.getById(ph.getActiveBanId());
             if (ban == null) return;
 
             ph.setActiveBanId(0);

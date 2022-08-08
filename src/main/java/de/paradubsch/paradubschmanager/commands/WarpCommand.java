@@ -90,7 +90,7 @@ public class WarpCommand implements CommandExecutor, TabCompleter {
     }
 
     public static void warp (Player player, String warpName) {
-        Warp warp = Hibernate.getWarp(warpName);
+        Warp warp = Warp.getById(warpName);
 
         if (warp == null) {
             MessageAdapter.sendMessage(player, Message.Error.CMD_WARP_NOT_FOUND, warpName);
@@ -107,15 +107,14 @@ public class WarpCommand implements CommandExecutor, TabCompleter {
             MessageAdapter.sendMessage(sender, Message.Error.CMD_WARP_NOT_PROVIDED);
             return;
         }
-
-        Warp warp = Hibernate.getWarp(args[1]);
+        Warp warp = Warp.getById(args[1]);
 
         if (warp == null) {
             MessageAdapter.sendMessage(sender, Message.Error.CMD_WARP_NOT_FOUND, args[1]);
             return;
         }
 
-        Hibernate.delete(warp);
+        warp.delete();
 
         MessageAdapter.sendMessage(sender, Message.Info.CMD_WARP_DELETED, args[1]);
     }

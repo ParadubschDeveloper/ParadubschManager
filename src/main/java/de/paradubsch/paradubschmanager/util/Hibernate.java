@@ -1,16 +1,40 @@
+/**
+ * Deprecated:
+ * I want to get rid of these methods and implement these in BaseDatabaseEntity or in the Entitys itself if needed.
+ *
+ * This will avoid code duplication and will improve the readability of the code.
+ * Example 1:
+ *   Old:
+ *   Hibernate.delete(object);
+ *
+ *   New:
+ *   object.delete();
+ * Example 2:
+ *   Old:
+ *   Hibernate.getWarp(id);
+ *
+ *   New:
+ *   Warp.getById(Warp.class, id); //TODO: I hope I or somebody else can get rid of the Warp.class needed in here
+ *   // StackOverflow Question: Java: Get static child Class : https://stackoverflow.com/questions/73283417/java-get-static-child-class
+ *
+ * Example 3:
+ *   Old:
+ *   Hibernate.save(object);
+ *
+ *   New:
+ *   object.save();
+ */
+
 package de.paradubsch.paradubschmanager.util;
 
-import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.config.HibernateConfigurator;
 import de.paradubsch.paradubschmanager.models.*;
 import lombok.Cleanup;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.jetbrains.annotations.NotNull;
 
-import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -20,7 +44,15 @@ import java.util.List;
 import java.util.UUID;
 
 
+/**
+ * Deprecated. View File Header for more information.
+ */
+@Deprecated
 public class Hibernate {
+    /**
+     * Deprecated. View File Header for more information.
+     */
+    @Deprecated
     public static void cachePlayerName(Player p) {
         Transaction transaction = null;
         try {
@@ -43,6 +75,10 @@ public class Hibernate {
         }
     }
 
+    /**
+     * Deprecated. View File Header for more information.
+     */
+    @Deprecated
     public static PlayerData getPlayerData(@NotNull Player p) {
         Transaction transaction = null;
         try {
@@ -67,6 +103,10 @@ public class Hibernate {
         }
     }
 
+    /**
+     * Deprecated. View File Header for more information.
+     */
+    @Deprecated
     public static PlayerData getPlayerData(UUID uuid) {
         Transaction transaction = null;
         try {
@@ -93,6 +133,10 @@ public class Hibernate {
         }
     }
 
+    /**
+     * Deprecated. View File Header for more information.
+     */
+    @Deprecated
     public static List<Home> getHomes(Player p) {
         Transaction transaction = null;
         try {
@@ -115,22 +159,10 @@ public class Hibernate {
         }
     }
 
-    public static void delete(Object home) {
-        Transaction transaction = null;
-        try {
-            @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
-            transaction = session.beginTransaction();
-
-            session.delete(home);
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
-        }
-    }
-
+    /**
+     * Deprecated. View File Header for more information.
+     */
+    @Deprecated
     public static void save (Object o) {
         if (o == null) {
             return;
@@ -151,6 +183,10 @@ public class Hibernate {
         }
     }
 
+    /**
+     * Deprecated. View File Header for more information.
+     */
+    @Deprecated
     public static PlayerData getPlayerData(String playerName) {
         try {
             @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
@@ -170,6 +206,10 @@ public class Hibernate {
         }
     }
 
+    /**
+     * Deprecated. View File Header for more information.
+     */
+    @Deprecated
     public static List<PlayerData> getMoneyTop () {
         try {
             @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
@@ -186,6 +226,10 @@ public class Hibernate {
         }
     }
 
+    /**
+     * Deprecated. View File Header for more information.
+     */
+    @Deprecated
     public static SaveRequest getSaveRequest(Player p) {
         Transaction transaction = null;
         try {
@@ -208,6 +252,10 @@ public class Hibernate {
         }
     }
 
+    /**
+     * Deprecated. View File Header for more information.
+     */
+    @Deprecated
     public static SaveRequest getSaveRequest(int id) {
         Transaction transaction = null;
         try {
@@ -229,6 +277,10 @@ public class Hibernate {
         }
     }
 
+    /**
+     * Deprecated. View File Header for more information.
+     */
+    @Deprecated
     public static PunishmentHolder getPunishmentHolder(PlayerData pd) {
         Transaction transaction = null;
         PunishmentHolder punishmentHolder;
@@ -258,6 +310,10 @@ public class Hibernate {
         }
     }
 
+    /**
+     * Deprecated. View File Header for more information.
+     */
+    @Deprecated
     public static PunishmentHolder getPunishmentHolder(Player player) {
         Transaction transaction = null;
         PunishmentHolder punishmentHolder;
@@ -287,28 +343,10 @@ public class Hibernate {
         }
     }
 
-    public static <T extends WarnPunishment> Long saveAndReturnPunishment (T o) {
-        if (o == null) {
-            return null;
-        }
-        Transaction transaction = null;
-        try {
-            @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
-
-            transaction = session.beginTransaction();
-            long id = (long) session.save(o);
-
-            transaction.commit();
-            return id;
-        } catch (Exception e) {
-            e.printStackTrace();
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            return null;
-        }
-    }
-
+    /**
+     * Deprecated. View File Header for more information.
+     */
+    @Deprecated
     public static List<PunishmentUpdate> getBanUpdates(BanPunishment ban) {
         Transaction transaction = null;
         try {
@@ -331,43 +369,10 @@ public class Hibernate {
         }
     }
 
-    public static Warp getWarp(String name) {
-        Transaction transaction = null;
-        try {
-            @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
-
-            transaction = session.beginTransaction();
-
-            Warp warp = session.get(Warp.class, name);
-            transaction.commit();
-            return warp;
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            return null;
-        }
-    }
-
-    public static List<Warp> getWarps() {
-        try {
-            @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
-
-            CriteriaBuilder cb = session.getCriteriaBuilder();
-            CriteriaQuery<Warp> cq = cb.createQuery(Warp.class);
-            Root<Warp> rootEntry = cq.from(Warp.class);
-            CriteriaQuery<Warp> all = cq.select(rootEntry);
-
-            TypedQuery<Warp> allQuery = session.createQuery(all);
-            return allQuery.getResultList();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ArrayList<>();
-        }
-    }
-
+    /**
+     * Deprecated. View File Header for more information.
+     */
+    @Deprecated
     public static <T, I extends Serializable> T get (Class<T> clazz, I id) {
         Transaction transaction = null;
         try {

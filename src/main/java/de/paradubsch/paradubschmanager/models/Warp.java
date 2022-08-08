@@ -1,19 +1,22 @@
 package de.paradubsch.paradubschmanager.models;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
 @Data
+@EqualsAndHashCode(callSuper = false)
 @Entity
 @Cacheable
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Table(name = "warps")
-public class Warp {
+public class Warp extends BaseDatabaseEntity<Warp, String> {
     @Id
     @Column(name = "name", columnDefinition = "VARCHAR(96)", nullable = false)
     private String name;
@@ -39,4 +42,12 @@ public class Warp {
 
     @Column(name = "yaw", nullable = false)
     private float yaw;
+
+    public static Warp getById(String id) {
+        return BaseDatabaseEntity.getById(Warp.class, id);
+    }
+
+    public static List<Warp> getAll() {
+        return BaseDatabaseEntity.getAll(Warp.class);
+    }
 }

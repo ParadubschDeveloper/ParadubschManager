@@ -60,7 +60,7 @@ public class WarnCommand implements CommandExecutor, TabCompleter {
             warn.setGivenBy(giver);
 
         }
-        long id = Hibernate.saveAndReturnPunishment(warn);
+        long id = (long) warn.save();
 
         Language lang = Language.getLanguageByName(target.getLanguage());
         Component msg = ParadubschManager.getInstance().getLanguageManager().get(Message.Info.CMD_WARN_KICK_MESSAGE, lang, warnReason, "#w-" + id);
