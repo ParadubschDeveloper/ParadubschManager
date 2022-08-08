@@ -207,6 +207,12 @@ commands:
     permission: paradubsch.night
     permission-message: 'Du benötigst die Berechtigung paradubsch.night um die Nacht zu setzen!'
     usage: '/night'
+  i:
+    description: Alias für gs info
+    aliases: [info, gsinfo]
+    permission: paradubsch.i
+    permission-message: 'Du benötigst die Berechtigung paradubsch.i um den Befehl zu nutzen'
+    usage: '/i'
 
 
 permissions:
@@ -336,3 +342,6 @@ permissions:
   paradubsch.night:
     description: "Erlaubt Zugriff auf den /night Befehl."
     default: false
+  paradubsch.i:
+    description: "Erlaubt Zugriff auf den /i Befehl."
+    default: true

@@ -224,7 +224,7 @@ public class GsCommand implements CommandExecutor, TabCompleter {
 
     }
 
-    private static void gsInfo(Player p) {
+    public static void gsInfo(Player p) {
         Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
             List<ProtectedRegion> regionList = getRegionsPlayerIsIn(p, false);
             if (regionList == null) return;

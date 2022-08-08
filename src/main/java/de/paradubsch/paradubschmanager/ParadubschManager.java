@@ -163,6 +163,7 @@ public final class ParadubschManager extends JavaPlugin {
         register("speed", new SpeedCommand());
         register("day", new DayCommand());
         register("night", new NightCommand());
+        register("i", new ICommand());
     }
 
     List<String> registeredCommands = new ArrayList<>();
