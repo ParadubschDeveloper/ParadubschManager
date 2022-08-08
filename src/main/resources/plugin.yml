@@ -213,6 +213,12 @@ commands:
     permission: paradubsch.i
     permission-message: 'Du benötigst die Berechtigung paradubsch.i um den Befehl zu nutzen'
     usage: '/i'
+  run:
+    description: Startet einen Befehl.
+    aliases: []
+    permission: paradubsch.run
+    permission-message: 'Du benötigst die Berechtigung paradubsch.run um einen Befehl zu starten!'
+    usage: '/run <Befehl>'
 
 
 permissions:
@@ -345,3 +351,6 @@ permissions:
   paradubsch.i:
     description: "Erlaubt Zugriff auf den /i Befehl."
     default: true
+  paradubsch.run:
+    description: "Erlaubt Zugriff auf den /run Befehl."
+    default: false

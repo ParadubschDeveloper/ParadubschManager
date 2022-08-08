@@ -146,7 +146,8 @@ public class Message {
         CMD_SPEED_SET("cmdSpeedSet", "&aDeine Geschwindigkeit &awurde erfolgreich auf &6%1 &agewechselt."),
         CMD_DAY_SET("cmdDaySet", "&aDu hast die Zeit erfolgreich auf &6Tag &agewechselt."),
         CMD_DAY_NIGHT("cmdDayNightSet", "&aDu hast die Zeit erfolgreich auf &6Nacht &agewechselt."),
-        CMD_KICK_PLAYER_KICKED("cmdKickPlayerKicked", "&cDer Spieler &a%1 &cwurde gekickt!");
+        CMD_KICK_PLAYER_KICKED("cmdKickPlayerKicked", "&cDer Spieler &a%1 &cwurde gekickt!"),
+        CMD_RUN_APPLIED_FIX_WORLD_HEIGHT("cmdRunAppliedFixWorldHeight", "&aDer Patch wurde erfolgreich auf dem Server angewendet. %1 betroffene Grundstücke!");
 
         private final String key;
         private final String def;
