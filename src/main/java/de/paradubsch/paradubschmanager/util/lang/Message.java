@@ -59,7 +59,12 @@ public class Message {
         CMD_SPEED_NOT_VALID("cmdSpeedNotValid", "&cDie Geschwindigkeit &a%1 &cist nicht gültig!"),
         CMD_KICK_NAME_NOT_PROVIDED("cmdKickNameNotProvided", "&cDu musst einen Spieler angeben, den du kicken möchtest!"),
         CMD_KICK_PLAYER_NOT_IN_REGION("cmdKickPlayerNotInRegion", "&cDer Spieler &a%1 &cist nicht auf deinem Grundstück!"),
-        CMD_KICK_YOU_GOT_KICKED("cmdKickYouGotKicked", "&cDu wurdest vom Grundstück geworfen!");
+        CMD_KICK_YOU_GOT_KICKED("cmdKickYouGotKicked", "&cDu wurdest vom Grundstück geworfen!"),
+        CMD_TPA_ALREADY_SENT("cmdTpaAlreadySent", "&cDu hast bereits eine Teleport-Anfrage an &a%1 &cgesendet!"),
+        CMD_TPA_TIMEOUT("cmdTpaTimeout", "&cDeine Teleportationsanfrage an &6%1 &aist abgelaufen."),
+        CMD_TPA_NOT_GOT("cmdTpaNotGot", "&cDu hast keine Teleportationsanfrage von &a%1 &cbekommen!"),
+        CMD_TPA_NO_TPA_GOT("cmdTpaNoTpaGot", "&cDu hast keine Teleportationsanfrage von bekommen!"),
+        CMD_TPA_SELF("cmdTpaSelf", "&cDu kannst dich nicht zur dir selbst teleportieren!");
 
 
         private final String key;
@@ -147,7 +152,12 @@ public class Message {
         CMD_DAY_SET("cmdDaySet", "&aDu hast die Zeit erfolgreich auf &6Tag &agewechselt."),
         CMD_DAY_NIGHT("cmdDayNightSet", "&aDu hast die Zeit erfolgreich auf &6Nacht &agewechselt."),
         CMD_KICK_PLAYER_KICKED("cmdKickPlayerKicked", "&cDer Spieler &a%1 &cwurde gekickt!"),
-        CMD_RUN_APPLIED_FIX_WORLD_HEIGHT("cmdRunAppliedFixWorldHeight", "&aDer Patch wurde erfolgreich auf dem Server angewendet. %1 betroffene Grundstücke!");
+        CMD_RUN_APPLIED_FIX_WORLD_HEIGHT("cmdRunAppliedFixWorldHeight", "&aDer Patch wurde erfolgreich auf dem Server angewendet. %1 betroffene Grundstücke!"),
+        CMD_TPA_SENT("cmdTpaSent", "&aDu hast dem Spieler &6%1 &aeine Teleportationsanfrage gesendet."),
+        CMD_TPA_RECEIVED("cmdTpaReceived", "&aDu hast eine Teleportationsanfrage von &6%1 &aerhalten. @ClickableComponent<Text=&7[&aAnnehmen&7]|SuggestCommand=/tpaccept %1 |HoverText=&aTeleportationsanfrage annehmen>"),
+        CMD_ACCEPTED_TPA("cmdAcceptedTpa", "&aDu hast die Teleportationsanfrage von &6%1 &aangenommen."),
+        CMD_ACCEPTED_TPA_RECEIVED("cmdAcceptedTpaReceived", "&6%1 &ahat deine Teleportationsanfrage angenommen."),
+        CMD_TPA_CANCELED("cmdTpaCanceled", "&aDu hast deine Teleportationsanfrage an &6%1 &aabgebrochen.");
 
         private final String key;
         private final String def;

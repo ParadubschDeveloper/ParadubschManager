@@ -219,6 +219,24 @@ commands:
     permission: paradubsch.run
     permission-message: 'Du benötigst die Berechtigung paradubsch.run um einen Befehl zu starten!'
     usage: '/run <Befehl>'
+  tpa:
+    description: Sendet einem Spieler ein Teleport-Anfrage.
+    aliases: [teleportierungsanfrage]
+    permission: paradubsch.tpa
+    permission-message: 'Du benötigst die Berechtigung paradubsch.tpa um einem Spieler ein Teleport-Anfrage zu senden!'
+    usage: '/tpa <User>'
+  tpaccept:
+    description: Akzeptiert eine Teleport-Anfrage.
+    aliases: [teleportierungsanfrageakzeptieren]
+    permission: paradubsch.tpaccept
+    permission-message: 'Du benötigst die Berechtigung paradubsch.tpaccept um eine Teleport-Anfrage zu akzeptieren!'
+    usage: '/tpaccept [name]'
+  tpacancel:
+    description: Abbrechen einer Teleport-Anfrage.
+    aliases: [teleportierungsanfrageabbrechen]
+    permission: paradubsch.tpacancel
+    permission-message: 'Du benötigst die Berechtigung paradubsch.tpacancel um eine Teleport-Anfrage zu abbrechen!'
+    usage: '/tpacancel'
 
 
 permissions:
@@ -354,3 +372,12 @@ permissions:
   paradubsch.run:
     description: "Erlaubt Zugriff auf den /run Befehl."
     default: false
+  paradubsch.tpa:
+    description: "Erlaubt Zugriff auf den /tpa Befehl."
+    default: true
+  paradubsch.tpaccept:
+    description: "Erlaubt Zugriff auf den /tpaccept Befehl."
+    default: true
+  paradubsch.tpacancel:
+    description: "Erlaubt Zugriff auf den /tpacancel Befehl."
+    default: true

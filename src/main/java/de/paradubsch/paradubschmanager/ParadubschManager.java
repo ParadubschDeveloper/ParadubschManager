@@ -49,13 +49,15 @@ public final class ParadubschManager extends JavaPlugin {
 
     private LuckPerms luckPermsApi;
 
-    @Getter
     @Setter
+    @Getter
     private List<UUID> vanishedPlayers = new ArrayList<>();
 
     @Getter
-    @Setter
-    private Map<UUID, UUID> replyCandidates = new HashMap<>();
+    private final Map<UUID, UUID> replyCandidates = new HashMap<>();
+
+    @Getter
+    private final List<TpaRequest> tpaRequests = new ArrayList<>();
 
     @Override
     public void onEnable() {
@@ -165,6 +167,9 @@ public final class ParadubschManager extends JavaPlugin {
         register("night", new NightCommand());
         register("i", new ICommand());
         register("run", new RunCommand());
+        register("tpa", new TpaCommand());
+        register("tpaccept", new TpacceptCommand());
+        register("tpacancel", new TpacancelCommand());
     }
 
     List<String> registeredCommands = new ArrayList<>();
