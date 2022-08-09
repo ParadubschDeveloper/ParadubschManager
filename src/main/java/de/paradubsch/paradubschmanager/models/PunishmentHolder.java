@@ -81,4 +81,9 @@ public class PunishmentHolder extends BaseDatabaseEntity<PunishmentHolder, Strin
     public static PunishmentHolder getById(Serializable id) {
         return BaseDatabaseEntity.getById(PunishmentHolder.class, id);
     }
+
+    @Override
+    public Serializable getIdentifyingColumn() {
+        return this.uuid;
+    }
 }

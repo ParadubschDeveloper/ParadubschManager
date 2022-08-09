@@ -132,7 +132,7 @@ public class BanTest {
 
         BanPunishment ban = Hibernate.get(BanPunishment.class, ph.getActiveBanId());
         assertNotNull(ban);
-        assertEquals(ban.getId(), ph.getActiveBanId());
+        assertEquals(ban.getIdentifyingColumn(), ph.getActiveBanId());
         assertEquals(ban.getHolderRef().getUuid(), targetPlayer.getUniqueId().toString());
         assertEquals(ban.getReason(), banCause);
         assertEquals(ban.getGivenBy().getUuid(), adminPlayer.getUniqueId().toString());
@@ -210,7 +210,7 @@ public class BanTest {
 
         BanPunishment ban = Hibernate.get(BanPunishment.class, ph.getActiveBanId());
         assertNotNull(ban);
-        assertEquals(ban.getId(), ph.getActiveBanId());
+        assertEquals(ban.getIdentifyingColumn(), ph.getActiveBanId());
         assertEquals(ban.getHolderRef().getUuid(), targetPlayer.getUniqueId().toString());
         assertEquals(ban.getReason(), banCause);
         assertEquals(ban.getGivenBy().getUuid(), adminPlayer.getUniqueId().toString());

@@ -40,4 +40,9 @@ public class SaveRequest extends BaseDatabaseEntity<SaveRequest, Integer> implem
     public static SaveRequest getById(Serializable id) {
         return BaseDatabaseEntity.getById(SaveRequest.class, id);
     }
+
+    @Override
+    public Serializable getIdentifyingColumn() {
+        return this.id;
+    }
 }

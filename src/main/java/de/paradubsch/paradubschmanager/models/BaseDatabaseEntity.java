@@ -1,5 +1,6 @@
 package de.paradubsch.paradubschmanager.models;
 
+import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.config.HibernateConfigurator;
 import lombok.Cleanup;
 import org.hibernate.Session;
@@ -14,12 +15,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class BaseDatabaseEntity<P extends BaseDatabaseEntity<?, ?>, ID extends Serializable> {
+    public abstract Serializable getIdentifyingColumn();
     public Serializable save() {
         Transaction transaction = null;
         try {
             @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
             transaction = session.beginTransaction();
             Serializable returner = session.save(this);
+            ParadubschManager.getInstance().getCachingManager().cacheEntity(this.getClass(), this, this.getIdentifyingColumn());
             transaction.commit();
             return returner;
         } catch (Exception e) {
@@ -37,6 +40,7 @@ public abstract class BaseDatabaseEntity<P extends BaseDatabaseEntity<?, ?>, ID 
             @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
             transaction = session.beginTransaction();
             session.saveOrUpdate(this);
+            ParadubschManager.getInstance().getCachingManager().cacheEntity(this.getClass(), this, this.getIdentifyingColumn());
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
@@ -53,6 +57,7 @@ public abstract class BaseDatabaseEntity<P extends BaseDatabaseEntity<?, ?>, ID 
             transaction = session.beginTransaction();
 
             session.delete(this);
+            ParadubschManager.getInstance().getCachingManager().deleteEntity(this.getClass(), this.getIdentifyingColumn());
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
@@ -63,6 +68,15 @@ public abstract class BaseDatabaseEntity<P extends BaseDatabaseEntity<?, ?>, ID 
     }
 
     protected static <T extends BaseDatabaseEntity<?, ?>> T getById(Class<T> clazz, Serializable id) {
+        if (id == null) {
+            return null;
+        }
+
+        T cached = ParadubschManager.getInstance().getCachingManager().getEntity(clazz, id);
+        if (cached != null) {
+            return cached;
+        }
+
         Transaction transaction = null;
         try {
             @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
@@ -70,6 +84,7 @@ public abstract class BaseDatabaseEntity<P extends BaseDatabaseEntity<?, ?>, ID 
             transaction = session.beginTransaction();
 
             T returner = session.get(clazz, id);
+            ParadubschManager.getInstance().getCachingManager().cacheEntity(clazz, returner, id);
             transaction.commit();
             return returner;
         } catch (Exception e) {

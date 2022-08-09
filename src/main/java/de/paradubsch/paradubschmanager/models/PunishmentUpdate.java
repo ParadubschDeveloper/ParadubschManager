@@ -46,4 +46,9 @@ public class PunishmentUpdate extends BaseDatabaseEntity<PunishmentUpdate, Long>
     public static PunishmentUpdate getById(Serializable id) {
         return BaseDatabaseEntity.getById(PunishmentUpdate.class, id);
     }
+
+    @Override
+    public Serializable getIdentifyingColumn() {
+        return this.id;
+    }
 }

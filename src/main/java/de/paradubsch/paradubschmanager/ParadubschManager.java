@@ -59,10 +59,16 @@ public final class ParadubschManager extends JavaPlugin {
     @Getter
     private final List<TpaRequest> tpaRequests = new ArrayList<>();
 
+    @Getter
+    private CachingManager cachingManager;
+
     @Override
     public void onEnable() {
         instance = this;
         ConfigurationManager.copyDefaultConfiguration();
+
+        cachingManager = new CachingManager();
+
         registerEvents();
 
         Bukkit.getConsoleSender().sendMessage("");
@@ -119,6 +125,7 @@ public final class ParadubschManager extends JavaPlugin {
         luckPermsApi = null;
         languageManager = null;
         guiManager = null;
+        cachingManager = null;
         unregisterCommands();
         HibernateConfigurator.shutdown();
         System.gc();
@@ -172,6 +179,7 @@ public final class ParadubschManager extends JavaPlugin {
         register("tpaccept", new TpacceptCommand());
         register("tpacancel", new TpacancelCommand());
         register("invsee", new InvseeCommand());
+        register("job", new JobCommand());
     }
 
     List<String> registeredCommands = new ArrayList<>();

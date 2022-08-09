@@ -3,6 +3,8 @@
  * I want to get rid of these methods and implement these in BaseDatabaseEntity or in the Entitys itself if needed.
  *
  * This will avoid code duplication and will improve the readability of the code.
+ * Also it will avoid mistakes using my CachingManager. (Own inmemory 2nd level cache)
+ *
  * Example 1:
  *   Old:
  *   Hibernate.delete(object);
@@ -27,6 +29,7 @@
 
 package de.paradubsch.paradubschmanager.util;
 
+import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.config.HibernateConfigurator;
 import de.paradubsch.paradubschmanager.models.*;
 import lombok.Cleanup;
@@ -62,9 +65,12 @@ public class Hibernate {
             PlayerData playerData = session.get(PlayerData.class, p.getUniqueId().toString());
             if (playerData == null) {
                 session.save(new PlayerData(p));
+                ParadubschManager.getInstance().getCachingManager().cacheEntity(PlayerData.class, new PlayerData(p), p.getUniqueId().toString());
+
             } else if (!playerData.getName().equals(p.getName())) {
                 playerData.setName(p.getName());
                 session.saveOrUpdate(playerData);
+                ParadubschManager.getInstance().getCachingManager().cacheEntity(PlayerData.class, playerData, p.getUniqueId().toString());
             }
             transaction.commit();
         } catch (Exception e) {
@@ -80,6 +86,11 @@ public class Hibernate {
      */
     @Deprecated
     public static PlayerData getPlayerData(@NotNull Player p) {
+        PlayerData cached = ParadubschManager.getInstance().getCachingManager().getEntity(PlayerData.class, p.getUniqueId().toString());
+        if (cached != null) {
+            return cached;
+        }
+
         Transaction transaction = null;
         try {
             @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
@@ -91,6 +102,7 @@ public class Hibernate {
             if (playerData == null) {
                 return new PlayerData(p);
             } else {
+                ParadubschManager.getInstance().getCachingManager().cacheEntity(PlayerData.class, playerData, p.getUniqueId().toString());
                 return playerData;
             }
 
@@ -163,7 +175,7 @@ public class Hibernate {
      * Deprecated. View File Header for more information.
      */
     @Deprecated
-    public static void save (Object o) {
+    public static <T extends BaseDatabaseEntity<?, ?>> void save (T o) {
         if (o == null) {
             return;
         }
@@ -174,6 +186,7 @@ public class Hibernate {
             transaction = session.beginTransaction();
 
             session.saveOrUpdate(o);
+            ParadubschManager.getInstance().getCachingManager().cacheEntity(o.getClass(), o, o.getIdentifyingColumn());
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
@@ -238,8 +251,7 @@ public class Hibernate {
             transaction = session.beginTransaction();
 
             PlayerData playerData = session.get(PlayerData.class, p.getUniqueId().toString());
-            SaveRequest saveRequest = playerData.getOpenSaveRequest();
-            org.hibernate.Hibernate.initialize(saveRequest);
+            SaveRequest saveRequest = SaveRequest.getById(playerData.getOpenSaveRequest());
             transaction.commit();
             return saveRequest;
 
@@ -354,7 +366,7 @@ public class Hibernate {
 
             transaction = session.beginTransaction();
 
-            BanPunishment playerData = session.get(BanPunishment.class, ban.getId());
+            BanPunishment playerData = session.get(BanPunishment.class, ban.getIdentifyingColumn());
             List<PunishmentUpdate> updates = playerData.getUpdates();
             org.hibernate.Hibernate.initialize(updates);
             transaction.commit();

@@ -157,7 +157,8 @@ public class Message {
         CMD_TPA_RECEIVED("cmdTpaReceived", "&aDu hast eine Teleportationsanfrage von &6%1 &aerhalten. @ClickableComponent<Text=&7[&aAnnehmen&7]|SuggestCommand=/tpaccept %1 |HoverText=&aTeleportationsanfrage annehmen>"),
         CMD_ACCEPTED_TPA("cmdAcceptedTpa", "&aDu hast die Teleportationsanfrage von &6%1 &aangenommen."),
         CMD_ACCEPTED_TPA_RECEIVED("cmdAcceptedTpaReceived", "&6%1 &ahat deine Teleportationsanfrage angenommen."),
-        CMD_TPA_CANCELED("cmdTpaCanceled", "&aDu hast deine Teleportationsanfrage an &6%1 &aabgebrochen.");
+        CMD_TPA_CANCELED("cmdTpaCanceled", "&aDu hast deine Teleportationsanfrage an &6%1 &aabgebrochen."),
+        JOB_CHANGED("jobChanged", "&aDu übst jetzt den Job &6%1 &aaus.");
 
         private final String key;
         private final String def;
@@ -199,7 +200,8 @@ public class Message {
         MINUTE_PLURAL("constantMinutePlural", "Minuten"),
         SECOND_SINGULAR("constantSecondSingular", "Sekunde"),
         SECOND_PLURAL("constantSecondPlural", "Sekunden"),
-        CMD_WARP_TEMPLATE("constantCmdWarpTemplate", "@ClickableComponent<Text=&a%1|ClickCommand=/warp %1|HoverText=Teleportieren>");
+        CMD_WARP_TEMPLATE("constantCmdWarpTemplate", "@ClickableComponent<Text=&a%1|ClickCommand=/warp %1|HoverText=Teleportieren>"),
+        BLANK("constantBlank", "%1");
 
         private final String key;
         private final String def;
@@ -237,7 +239,10 @@ public class Message {
         GS_TRANSFER_BUTTON_LORE("guiGsTransferButtonLore", "&aHiermit überträgst du dein Grundstück an den Spieler &b%1"),
         GS_DELETE_TITLE("guiGsDeleteTitle", "&a&lGrundstück löschen?"),
         GS_DELETE_BUTTON_TITLE("guiGsDeleteButtonTitle", "&cGrundstück löschen"),
-        GS_DELETE_BUTTON_LORE("guiGSDeleteButtonLore", "Dieser Vorgang kann &cnicht &7mehr rückgängig gemacht werden!");
+        GS_DELETE_BUTTON_LORE("guiGSDeleteButtonLore", "Dieser Vorgang kann &cnicht &7mehr rückgängig gemacht werden!"),
+        JOB_GUI_TITLE("guiJobGuiTitle", "&a&lJobs"),
+        JOB_MINER_TITLE("guiJobMinerTitle", "&7&lMiner"),
+        JOB_MINER_LORE("guiJobMinerLore", "&aDu bekommst Geld indem du Erze farmst.");
 
         private final String key;
         private final String def;

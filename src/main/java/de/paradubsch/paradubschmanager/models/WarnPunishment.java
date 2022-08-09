@@ -10,6 +10,7 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -52,5 +53,10 @@ public class WarnPunishment extends BaseDatabaseEntity<WarnPunishment, Long> {
 
     public static WarnPunishment getById(Long id) {
         return BaseDatabaseEntity.getById(WarnPunishment.class, id);
+    }
+
+    @Override
+    public Serializable getIdentifyingColumn() {
+        return this.id;
     }
 }

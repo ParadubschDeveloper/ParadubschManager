@@ -42,4 +42,9 @@ public class Home extends BaseDatabaseEntity<Home, Long> {
     public static Home getById(Serializable id) {
         return BaseDatabaseEntity.getById(Home.class, id);
     }
+
+    @Override
+    public Serializable getIdentifyingColumn() {
+        return this.id;
+    }
 }

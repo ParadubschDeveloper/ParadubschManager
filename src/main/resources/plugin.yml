@@ -179,7 +179,7 @@ commands:
     usage: '/vanish'
   seen:
     description: Zeigt die letzte Zeit an, wann ein Spieler online war.
-    aliases: [lastseen]
+    aliases: [lastseen, online]
     permission: paradubsch.seen
     permission-message: 'Du benötigst die Berechtigung paradubsch.seen um die letzte Zeit anzusehen!'
     usage: '/seen <User>'
@@ -243,6 +243,12 @@ commands:
     permission: paradubsch.invsee.view
     permission-message: 'Du benötigst die Berechtigung paradubsch.invsee um einem Spieler seine Inventar anzuzeigen!'
     usage: '/invsee <User>'
+  job:
+    description: Menu zur Job Vergabe
+    aliases: [jobs, beruf, berufe]
+    permission: paradubsch.job
+    permission-message: 'Du benötigst die Berechtigung paradubsch.job um das Menu zu nutzen!'
+    usage: '/job'
 
 
 permissions:
@@ -393,3 +399,6 @@ permissions:
   paradubsch.invsee.modify:
     description: "Erlaubt Zugriff auf den /invsee Befehl."
     default: false
+  paradubsch.job:
+    description: "Erlaubt Zugriff auf den /job Befehl."
+    default: true

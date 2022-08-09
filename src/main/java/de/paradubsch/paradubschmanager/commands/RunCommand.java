@@ -7,6 +7,7 @@ import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedCuboidRegion;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
 import com.sk89q.worldguard.protection.regions.RegionType;
+import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.util.Expect;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.lang.Message;
@@ -32,6 +33,10 @@ public class RunCommand implements CommandExecutor, TabCompleter {
                 migrate(sender, args);
                 break;
             }
+            case "debug": {
+                debug(sender, args);
+                break;
+            }
         }
 
         return true;
@@ -46,6 +51,21 @@ public class RunCommand implements CommandExecutor, TabCompleter {
                 break;
             }
         }
+    }
+
+    private void debug(CommandSender sender, String[] args) {
+        if (!Expect.minArgs(2, args)) return;
+
+        switch (args[1]) {
+            case "getDataInCachingManager": {
+                getDataInCachingManager(sender);
+                break;
+            }
+        }
+    }
+
+    private void getDataInCachingManager(CommandSender sender) {
+        MessageAdapter.sendMessage(sender, Message.Constant.BLANK, ParadubschManager.getInstance().getCachingManager().getCache().toString());
     }
 
     private void worldHeightFix(CommandSender sender) {
@@ -78,11 +98,16 @@ public class RunCommand implements CommandExecutor, TabCompleter {
         List<String> l = new ArrayList<>();
         if (args.length == 1) {
             l.add("migrate");
+            l.add("debug");
             return l;
         }
 
-        if (args.length == 2) {
+        if (args.length == 2 && args[0].equals("migrate")) {
             l.add("worldHeightFix");
+            return l;
+        }
+        if (args.length == 2 && args[0].equals("debug")) {
+            l.add("getDataInCachingManager");
             return l;
         }
 

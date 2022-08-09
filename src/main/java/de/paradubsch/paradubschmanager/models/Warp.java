@@ -7,6 +7,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -49,5 +50,10 @@ public class Warp extends BaseDatabaseEntity<Warp, String> {
 
     public static List<Warp> getAll() {
         return BaseDatabaseEntity.getAll(Warp.class);
+    }
+
+    @Override
+    public Serializable getIdentifyingColumn() {
+        return this.name;
     }
 }

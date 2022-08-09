@@ -58,11 +58,8 @@ public class PlayerData extends BaseDatabaseEntity<PlayerData, String> {
     @Column(name = "max_homes", columnDefinition = "INT DEFAULT 2")
     private int maxHomes = 2;
 
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "playerRef")
-    @Cascade(value = SAVE_UPDATE)
-    private SaveRequest openSaveRequest;
+    @Column(name = "active_save_id")
+    private Integer openSaveRequest;
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
@@ -79,5 +76,10 @@ public class PlayerData extends BaseDatabaseEntity<PlayerData, String> {
 
     public static PlayerData getById(Serializable id) {
         return BaseDatabaseEntity.getById(PlayerData.class, id);
+    }
+
+    @Override
+    public Serializable getIdentifyingColumn() {
+        return this.uuid;
     }
 }
