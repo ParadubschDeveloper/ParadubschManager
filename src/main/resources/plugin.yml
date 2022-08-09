@@ -237,6 +237,12 @@ commands:
     permission: paradubsch.tpacancel
     permission-message: 'Du benötigst die Berechtigung paradubsch.tpacancel um eine Teleport-Anfrage zu abbrechen!'
     usage: '/tpacancel'
+  invsee:
+    description: Zeigt einem Spieler seine Inventar an.
+    aliases: []
+    permission: paradubsch.invsee.view
+    permission-message: 'Du benötigst die Berechtigung paradubsch.invsee um einem Spieler seine Inventar anzuzeigen!'
+    usage: '/invsee <User>'
 
 
 permissions:
@@ -381,3 +387,9 @@ permissions:
   paradubsch.tpacancel:
     description: "Erlaubt Zugriff auf den /tpacancel Befehl."
     default: true
+  paradubsch.invsee.view:
+    description: "Erlaubt Zugriff auf den /invsee Befehl."
+    default: false
+  paradubsch.invsee.modify:
+    description: "Erlaubt Zugriff auf den /invsee Befehl."
+    default: false

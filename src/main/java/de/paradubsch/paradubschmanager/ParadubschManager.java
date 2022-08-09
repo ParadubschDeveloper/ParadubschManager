@@ -130,6 +130,7 @@ public final class ParadubschManager extends JavaPlugin {
         new PlayerJoinPrecedure();
         new QuitListener();
         new TabDecorationManager(this);
+        new InvseeInventoryGuard();
     }
 
     private void registerCommands() {
@@ -170,6 +171,7 @@ public final class ParadubschManager extends JavaPlugin {
         register("tpa", new TpaCommand());
         register("tpaccept", new TpacceptCommand());
         register("tpacancel", new TpacancelCommand());
+        register("invsee", new InvseeCommand());
     }
 
     List<String> registeredCommands = new ArrayList<>();
