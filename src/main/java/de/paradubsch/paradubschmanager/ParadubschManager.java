@@ -9,6 +9,7 @@ import de.paradubsch.paradubschmanager.commands.*;
 import de.paradubsch.paradubschmanager.config.ConfigurationManager;
 import de.paradubsch.paradubschmanager.config.HibernateConfigurator;
 import de.paradubsch.paradubschmanager.lifecycle.*;
+import de.paradubsch.paradubschmanager.lifecycle.jobs.JobManager;
 import de.paradubsch.paradubschmanager.lifecycle.playtime.PlaytimeManager;
 import de.paradubsch.paradubschmanager.util.lang.LanguageManager;
 import lombok.Getter;
@@ -62,6 +63,9 @@ public final class ParadubschManager extends JavaPlugin {
     @Getter
     private CachingManager cachingManager;
 
+    @Getter
+    private JobManager jobManager;
+
     @Override
     public void onEnable() {
         instance = this;
@@ -82,6 +86,8 @@ public final class ParadubschManager extends JavaPlugin {
         this.registerCommands();
         Bukkit.getConsoleSender().sendMessage("[Paradubsch] !>> Testing Database Connection");
         new TestDatabaseConnection();
+
+        jobManager = new JobManager();
 
         worldGuardPlugin = initializeWorldGuardPlugin();
         worldEditPlugin = initializeWorldEditPlugin();
@@ -126,6 +132,7 @@ public final class ParadubschManager extends JavaPlugin {
         languageManager = null;
         guiManager = null;
         cachingManager = null;
+        jobManager = null;
         unregisterCommands();
         HibernateConfigurator.shutdown();
         System.gc();

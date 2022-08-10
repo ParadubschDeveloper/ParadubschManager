@@ -201,7 +201,8 @@ public class Message {
         SECOND_SINGULAR("constantSecondSingular", "Sekunde"),
         SECOND_PLURAL("constantSecondPlural", "Sekunden"),
         CMD_WARP_TEMPLATE("constantCmdWarpTemplate", "@ClickableComponent<Text=&a%1|ClickCommand=/warp %1|HoverText=Teleportieren>"),
-        BLANK("constantBlank", "%1");
+        BLANK("constantBlank", "%1"),
+        LUMBERJACK("constantLumberjack", "Holzfäller");
 
         private final String key;
         private final String def;
@@ -242,7 +243,9 @@ public class Message {
         GS_DELETE_BUTTON_LORE("guiGSDeleteButtonLore", "Dieser Vorgang kann &cnicht &7mehr rückgängig gemacht werden!"),
         JOB_GUI_TITLE("guiJobGuiTitle", "&a&lJobs"),
         JOB_MINER_TITLE("guiJobMinerTitle", "&7&lMiner"),
-        JOB_MINER_LORE("guiJobMinerLore", "&aDu bekommst Geld indem du Erze farmst.");
+        JOB_MINER_LORE("guiJobMinerLore", "&aDu bekommst Geld indem du Erze farmst."),
+        JOB_LUMBERJACK_TITLE("guiJobLumberjackTitle", "&7&lHolzfäller"),
+        JOB_LUMBERJACK_LORE("guiJobLumberjackLore", "&aDu bekommst Geld indem du Holz farmst.");
 
         private final String key;
         private final String def;

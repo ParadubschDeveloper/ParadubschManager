@@ -60,6 +60,12 @@
                                     </excludes>
                                 </filter>
                             </filters>
+                            <relocations>
+                                <relocation>
+                                    <pattern>com.jeff_media.customblockdata</pattern>
+                                    <shadedPattern>de.paradubsch.lib.customblockdata</shadedPattern>
+                                </relocation>
+                            </relocations>
                         </configuration>
                     </execution>
                 </executions>
@@ -126,6 +132,10 @@
         <repository>
             <id>dmulloy2-repo</id>
             <url>https://repo.dmulloy2.net/repository/public/</url>
+        </repository>
+        <repository>
+            <id>jeff-media-gbr</id>
+            <url>https://hub.jeff-media.com/nexus/repository/jeff-media-public/</url>
         </repository>
     </repositories>
 
@@ -194,6 +204,14 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-c3p0</artifactId>
             <version>5.4.27.Final</version>
+        </dependency>
+
+        <!-- Libaries -->
+        <dependency>
+            <groupId>com.jeff_media</groupId>
+            <artifactId>CustomBlockData</artifactId>
+            <version>2.1.0</version>
+            <scope>compile</scope>
         </dependency>
 
         <!-- Testing -->

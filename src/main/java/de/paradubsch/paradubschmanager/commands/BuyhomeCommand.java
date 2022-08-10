@@ -32,7 +32,7 @@ public class BuyhomeCommand implements CommandExecutor, TabCompleter {
         Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
             PlayerData playerData = Hibernate.getPlayerData(player);
             if (args.length == 0) {
-                int price = ConfigurationManager.getInt("homePrice");
+                int price = ConfigurationManager.getInt("homePrice") * playerData.getMaxHomes();
                 MessageAdapter.sendMessage(player, Message.Info.CMD_BUYHOME, price + "");
             } else if (args[0].equals("confirm")) {
                 int price = ConfigurationManager.getInt("homePrice");

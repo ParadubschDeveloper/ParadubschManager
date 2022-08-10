@@ -1,5 +1,6 @@
 package de.paradubsch.paradubschmanager.models;
 
+import de.paradubsch.paradubschmanager.lifecycle.jobs.JobLevel;
 import de.paradubsch.paradubschmanager.lifecycle.jobs.JobType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -24,6 +25,10 @@ public class WorkerPlayer extends BaseDatabaseEntity<WorkerPlayer, String> {
     @Enumerated(EnumType.STRING)
     private JobType job;
 
+    @Column(name = "job_level", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private JobLevel jobLevel = JobLevel.ONE;
+
     @Column(name = "experience", nullable = false, columnDefinition = "BIGINT DEFAULT 0")
     private long experience = 0;
 
@@ -36,6 +41,7 @@ public class WorkerPlayer extends BaseDatabaseEntity<WorkerPlayer, String> {
             workee = new WorkerPlayer();
             workee.setUuid(uuid);
             workee.setJob(JobType.UNEMPLOYED);
+            workee.setJobLevel(JobLevel.ONE);
             workee.save();
         }
         return workee;

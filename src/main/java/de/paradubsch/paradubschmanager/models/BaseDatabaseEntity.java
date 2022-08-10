@@ -3,6 +3,9 @@ package de.paradubsch.paradubschmanager.models;
 import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.config.HibernateConfigurator;
 import lombok.Cleanup;
+import lombok.var;
+import org.bukkit.Bukkit;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -109,6 +112,33 @@ public abstract class BaseDatabaseEntity<P extends BaseDatabaseEntity<?, ?>, ID 
         } catch (Exception e) {
             e.printStackTrace();
             return new ArrayList<>();
+        }
+    }
+
+    public void cacheChanges() {
+        ParadubschManager.getInstance().getCachingManager().cacheEntity(this.getClass(), this, this.getIdentifyingColumn());
+    }
+
+    private long flushTimeout = 0;
+    private boolean flushingScheduled = false;
+    public void scheduleFlushing(long ticks) {
+        flushTimeout = ticks;
+        if (!flushingScheduled) {
+            flushingScheduled = true;
+
+            var clazz = this.getClass();
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    flushTimeout--;
+                    if (flushTimeout <= 0) {
+                        flushingScheduled = false;
+                        var obj = ParadubschManager.getInstance().getCachingManager().getEntity(clazz, getIdentifyingColumn());
+                        obj.saveOrUpdate();
+                        cancel();
+                    }
+                }
+            }.runTaskTimer(ParadubschManager.getInstance(), 0, 1);
         }
     }
 }

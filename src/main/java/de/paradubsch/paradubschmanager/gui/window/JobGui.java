@@ -2,6 +2,7 @@ package de.paradubsch.paradubschmanager.gui.window;
 
 import de.craftery.util.gui.BaseGui;
 import de.paradubsch.paradubschmanager.gui.items.CancelButton;
+import de.paradubsch.paradubschmanager.gui.items.LumberjackJobButton;
 import de.paradubsch.paradubschmanager.gui.items.MiningJobButton;
 import de.paradubsch.paradubschmanager.util.lang.Language;
 import de.paradubsch.paradubschmanager.util.lang.Message;
@@ -14,7 +15,8 @@ public class JobGui extends BaseGui {
 
     @Override
     public void build() {
-        this.addItem(MiningJobButton.class, 2, 5);
+        this.addItem(MiningJobButton.class, 2, 2);
+        this.addItem(LumberjackJobButton.class, 2, 5);
         this.addItem(CancelButton.class, 3, 9);
     }
 }

@@ -19,6 +19,7 @@ import org.bukkit.persistence.PersistentDataType;
 
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.UUID;
 
 public class PlayerJoinPrecedure implements Listener {
     public PlayerJoinPrecedure() {
@@ -70,5 +71,13 @@ public class PlayerJoinPrecedure implements Listener {
                 }
             }
         }, 2L);
+        if (!event.getPlayer().hasPermission("paradubsch.vanish.bypass")) {
+            for (UUID pUUID : ParadubschManager.getInstance().getVanishedPlayers()) {
+                Player p = Bukkit.getPlayer(pUUID);
+                if (p != null) {
+                    event.getPlayer().hidePlayer(ParadubschManager.getInstance(), p);
+                }
+            }
+        }
     }
 }
