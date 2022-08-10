@@ -5,6 +5,7 @@ import lombok.EqualsAndHashCode;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 @Data
@@ -21,4 +22,7 @@ public class MutePunishment extends WarnPunishment {
     @Column(name = "has_update", columnDefinition = "BOOLEAN DEFAULT FALSE")
     private boolean hasUpdate = false;
 
+    public static MutePunishment getById(Serializable id) {
+        return BaseDatabaseEntity.getById(MutePunishment.class, id);
+    }
 }

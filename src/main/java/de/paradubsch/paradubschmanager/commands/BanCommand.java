@@ -8,6 +8,7 @@ import de.paradubsch.paradubschmanager.models.PunishmentUpdate;
 import de.paradubsch.paradubschmanager.util.Expect;
 import de.paradubsch.paradubschmanager.util.Hibernate;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
+import de.paradubsch.paradubschmanager.util.TimeCalculations;
 import de.paradubsch.paradubschmanager.util.lang.Language;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 import net.kyori.adventure.text.Component;
@@ -39,7 +40,9 @@ public class BanCommand implements TabCompleter, CommandExecutor {
             case "list": {
                 break;
             }
+            case "update":
             case "edit": {
+                editBan(sender, args);
                 break;
             }
             case "delete": {
@@ -74,12 +77,13 @@ public class BanCommand implements TabCompleter, CommandExecutor {
                 return;
             }
 
-            Timestamp banExpiration = parseExpiration(args[1]);
-
+            Timestamp banExpiration = TimeCalculations.parseExpiration(args[1]);
             if (banExpiration == null) {
                 MessageAdapter.sendMessage(sender, Message.Error.CMD_BAN_DURATION_INVALID, args[1]);
                 return;
             }
+            Language lang = Language.getLanguageByName(target.getLanguage());
+            String expirationString = TimeCalculations.timeStampToExpiration(banExpiration, lang);
 
             StringBuilder banReasonBuilder = new StringBuilder();
             for (int i = 2; i < args.length; i++) {
@@ -106,7 +110,7 @@ public class BanCommand implements TabCompleter, CommandExecutor {
             ban.setHolderRef(ph);
 
             Hibernate.save(ph);
-            long id = Hibernate.saveAndReturnPunishment(ban);
+            long id = (long) ban.save();
             ph.setActiveBanId(id);
             ph.setActiveBan(true);
             ph.setActiveBanExpiration(banExpiration);
@@ -115,9 +119,13 @@ public class BanCommand implements TabCompleter, CommandExecutor {
 
             Player targetPlayer = Bukkit.getPlayer(target.getName());
             if (targetPlayer != null) {
-                Language lang = Language.getLanguageByName(target.getLanguage());
-                Component msg = ParadubschManager.getInstance().getLanguageManager().get(Message.Info.CMD_BAN_KICK_MESSAGE, lang, banReason, args[1], "#b-" + id);
-                Bukkit.getScheduler().runTask(ParadubschManager.getInstance(), () -> targetPlayer.kick(msg));
+                Component msg = ParadubschManager.getInstance().getLanguageManager().get(Message.Info.CMD_BAN_KICK_MESSAGE, lang, banReason, expirationString, "#b-" + id);
+                Bukkit.getScheduler().runTask(ParadubschManager.getInstance(), () -> {
+                    // kicking is currently not supported by the testing environment
+                    try {
+                        targetPlayer.kick(msg);
+                    } catch (Exception ignored) {}
+                });
             }
 
             MessageAdapter.sendMessage(sender, Message.Info.CMD_BAN_PLAYER_BANNED, target.getName());
@@ -155,7 +163,7 @@ public class BanCommand implements TabCompleter, CommandExecutor {
                 unbanReason = "No reason given";
             }
 
-            BanPunishment ban = Hibernate.get(BanPunishment.class, ph.getActiveBanId());
+            BanPunishment ban = BanPunishment.getByIdO(ph.getActiveBanId());
             if (ban == null) return;
 
             ph.setActiveBanId(0);
@@ -181,35 +189,74 @@ public class BanCommand implements TabCompleter, CommandExecutor {
         });
     }
 
-    private Timestamp parseExpiration(String exp) {
-        if (exp.matches("^[Pp]erma(nent)?$")) {
-            return Timestamp.from(Instant.ofEpochMilli(System.currentTimeMillis() + 946728000000L));
-        } else if (exp.matches("^\\d+(.|,)?\\d*[ydhm]$")) {
-            String[] split = exp.split("(?=[ydhm])");
-            float amount = Float.parseFloat(split[0]);
-            long msTimestamp;
-            switch (split[1]) {
-                case "y":
-                    msTimestamp = (long) (amount * 365 * 24 * 60 * 60 * 1000L) + System.currentTimeMillis();
-                    break;
-                case "d":
-                    msTimestamp = (long) (amount * 24 * 60 * 60 * 1000L) + System.currentTimeMillis();
-                    break;
-                case "h":
-                    msTimestamp = (long) (amount * 60 * 60 * 1000L) + System.currentTimeMillis();
-                    break;
-                case "m":
-                    msTimestamp = (long) (amount * 60 * 1000L) + System.currentTimeMillis();
-                    break;
-                default:
-                    return null;
+    private void editBan(CommandSender sender, String[] args) {
+        //ban edit player expiration reason
+        Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
+            if (!Expect.minArgs(2, args)) {
+                MessageAdapter.sendMessage(sender, Message.Error.CMD_PLAYER_NOT_PROVIDED);
+                return;
             }
-            return Timestamp.from(Instant.ofEpochMilli(msTimestamp));
-        } else {
-            return null;
-        }
-    }
 
+            PlayerData target = Hibernate.getPlayerData(args[1]);
+            if (target == null) {
+                MessageAdapter.sendMessage(sender, Message.Error.CMD_PLAYER_NEVER_ONLINE, args[0]);
+                return;
+            }
+
+            PunishmentHolder ph = Hibernate.getPunishmentHolder(target);
+
+            if (ph == null || !ph.isActiveBan()) {
+                MessageAdapter.sendMessage(sender, Message.Error.CMD_BAN_PLAYER_NOT_BANNED, target.getName());
+                return;
+            }
+
+            Timestamp banExpiration = TimeCalculations.parseExpiration(args[2]);
+
+            if (banExpiration == null) {
+                MessageAdapter.sendMessage(sender, Message.Error.CMD_BAN_DURATION_INVALID, args[2]);
+                return;
+            }
+
+            StringBuilder banReasonBuilder = new StringBuilder();
+            for (int i = 3; i < args.length; i++) {
+                banReasonBuilder.append(args[i]).append(" ");
+            }
+            String banReason = banReasonBuilder.toString().trim();
+
+            if (banReason.isEmpty()) {
+                banReason = "\"The Ban Hammer has Spoken!\"";
+            }
+            BanPunishment ban = Hibernate.get(BanPunishment.class, ph.getActiveBanId());
+            if (ban == null) return;
+
+            if (banExpiration.getTime() > System.currentTimeMillis() + 915170400000L) {
+                ban.setPermanent(true);
+                ph.setPermaBanned(true);
+            } else {
+                ban.setPermanent(false);
+                ph.setPermaBanned(false);
+            }
+
+            ph.setActiveBanReason(banReason);
+            ph.setActiveBanExpiration(banExpiration);
+            Hibernate.save(ph);
+
+            PunishmentUpdate update = new PunishmentUpdate();
+            update.setPunishmentRef(ban);
+            update.setReason(banReason);
+            update.setExpiration(banExpiration);
+            if (sender instanceof Player) {
+                PlayerData giver = Hibernate.getPlayerData((Player) sender);
+                update.setGivenBy(giver);
+            }
+            Hibernate.save(update);
+
+            ban.setHasUpdate(true);
+            Hibernate.save(ban);
+
+            MessageAdapter.sendMessage(sender, Message.Info.CMD_BAN_EDITED, target.getName());
+        });
+    }
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         List<String> l = new ArrayList<>();

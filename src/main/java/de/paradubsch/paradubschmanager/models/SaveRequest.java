@@ -1,6 +1,7 @@
 package de.paradubsch.paradubschmanager.models;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -8,12 +9,13 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Data
+@EqualsAndHashCode(callSuper = false)
 @Entity
 @Cacheable
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Table(name = "saveRequests")
 @SequenceGenerator(name="saveRequestSequence",sequenceName="save_request_sequence", allocationSize = 1)
-public class SaveRequest implements Serializable {
+public class SaveRequest extends BaseDatabaseEntity<SaveRequest, Integer> implements Serializable{
 
     @Id
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="saveRequestSequence")
@@ -34,4 +36,13 @@ public class SaveRequest implements Serializable {
 
     @OneToOne(fetch = FetchType.EAGER)
     private PlayerData playerRef;
+
+    public static SaveRequest getById(Serializable id) {
+        return BaseDatabaseEntity.getById(SaveRequest.class, id);
+    }
+
+    @Override
+    public Serializable getIdentifyingColumn() {
+        return this.id;
+    }
 }

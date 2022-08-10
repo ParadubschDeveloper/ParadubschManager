@@ -9,18 +9,24 @@ import de.paradubsch.paradubschmanager.commands.*;
 import de.paradubsch.paradubschmanager.config.ConfigurationManager;
 import de.paradubsch.paradubschmanager.config.HibernateConfigurator;
 import de.paradubsch.paradubschmanager.lifecycle.*;
+import de.paradubsch.paradubschmanager.lifecycle.jobs.JobManager;
 import de.paradubsch.paradubschmanager.lifecycle.playtime.PlaytimeManager;
 import de.paradubsch.paradubschmanager.util.lang.LanguageManager;
 import lombok.Getter;
+import lombok.Setter;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
 import org.bukkit.Bukkit;
 import org.bukkit.command.*;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.plugin.java.JavaPluginLoader;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.File;
+import java.util.*;
 
 public final class ParadubschManager extends JavaPlugin {
     private static ParadubschManager instance;
@@ -44,10 +50,29 @@ public final class ParadubschManager extends JavaPlugin {
 
     private LuckPerms luckPermsApi;
 
+    @Setter
+    @Getter
+    private List<UUID> vanishedPlayers = new ArrayList<>();
+
+    @Getter
+    private final Map<UUID, UUID> replyCandidates = new HashMap<>();
+
+    @Getter
+    private final List<TpaRequest> tpaRequests = new ArrayList<>();
+
+    @Getter
+    private CachingManager cachingManager;
+
+    @Getter
+    private JobManager jobManager;
+
     @Override
     public void onEnable() {
         instance = this;
         ConfigurationManager.copyDefaultConfiguration();
+
+        cachingManager = new CachingManager();
+
         registerEvents();
 
         Bukkit.getConsoleSender().sendMessage("");
@@ -62,6 +87,8 @@ public final class ParadubschManager extends JavaPlugin {
         Bukkit.getConsoleSender().sendMessage("[Paradubsch] !>> Testing Database Connection");
         new TestDatabaseConnection();
 
+        jobManager = new JobManager();
+
         worldGuardPlugin = initializeWorldGuardPlugin();
         worldEditPlugin = initializeWorldEditPlugin();
         protocolManager = ProtocolLibrary.getProtocolManager();
@@ -73,7 +100,7 @@ public final class ParadubschManager extends JavaPlugin {
 
     }
 
-    public static ProtocolManager getProtocolManager() {
+    public static @Nullable ProtocolManager getProtocolManager() {
         ProtocolManager pm = ParadubschManager.getInstance().protocolManager;
         if (pm == null) {
             ParadubschManager.getInstance().protocolManager = ProtocolLibrary.getProtocolManager();
@@ -95,6 +122,7 @@ public final class ParadubschManager extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        Bukkit.getOnlinePlayers().forEach(Player::closeInventory);
         Bukkit.getScheduler().cancelTasks(this);
         worldGuardPlugin = null;
         worldEditPlugin = null;
@@ -103,6 +131,8 @@ public final class ParadubschManager extends JavaPlugin {
         luckPermsApi = null;
         languageManager = null;
         guiManager = null;
+        cachingManager = null;
+        jobManager = null;
         unregisterCommands();
         HibernateConfigurator.shutdown();
         System.gc();
@@ -111,9 +141,10 @@ public final class ParadubschManager extends JavaPlugin {
 
     private void registerEvents() {
         new ChatMessageListener();
-        new PlayerCacher();
+        new PlayerJoinPrecedure();
         new QuitListener();
         new TabDecorationManager(this);
+        new InvseeInventoryGuard();
     }
 
     private void registerCommands() {
@@ -133,7 +164,29 @@ public final class ParadubschManager extends JavaPlugin {
         register("gs", new GsCommand());
         register("save", new SaveCommand());
         register("rank", new RankCommand());
-        register("b", new BanCommand());
+        register("cb", new BanCommand());
+        register("gm", new GmCommand());
+        register("warn", new WarnCommand());
+        register("warp", new WarpCommand());
+        register("warps", new WarpsCommand());
+        register("bauwelt", new BauweltCommand());
+        register("farmwelt", new FarmweltCommand());
+        register("nether", new NetherCommand());
+        register("end", new EndCommand());
+        register("spawn", new SpawnCommand());
+        register("vanish", new VanishCommand());
+        register("seen", new SeenCommand());
+        register("reply", new ReplyCommand());
+        register("speed", new SpeedCommand());
+        register("day", new DayCommand());
+        register("night", new NightCommand());
+        register("i", new ICommand());
+        register("run", new RunCommand());
+        register("tpa", new TpaCommand());
+        register("tpaccept", new TpacceptCommand());
+        register("tpacancel", new TpacancelCommand());
+        register("invsee", new InvseeCommand());
+        register("job", new JobCommand());
     }
 
     List<String> registeredCommands = new ArrayList<>();
@@ -172,5 +225,13 @@ public final class ParadubschManager extends JavaPlugin {
 
     public static ParadubschManager getInstance() {
         return instance;
+    }
+
+    public ParadubschManager() {
+        super();
+    }
+
+    protected ParadubschManager(JavaPluginLoader loader, PluginDescriptionFile descriptionFile, File dataFolder, File file) {
+        super(loader, descriptionFile, dataFolder, file);
     }
 }

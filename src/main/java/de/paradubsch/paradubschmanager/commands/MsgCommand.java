@@ -50,13 +50,18 @@ public class MsgCommand implements CommandExecutor, TabCompleter {
         for (int i = 1; i < args.length; i++) {
             message.append(args[i]).append(" ");
         }
+        sendMsg(s, receiver, message.toString());
+        return true;
+    }
 
+    public static void sendMsg(CommandSender s, Player receiver, String message) {
         Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
             Language language;
             if (s instanceof Player) {
                 Player player = (Player) s;
                 PlayerData playerData = Hibernate.getPlayerData(player);
                 language = Language.getLanguageByShortName(playerData.getLanguage());
+                ParadubschManager.getInstance().getReplyCandidates().put(receiver.getUniqueId(), player.getUniqueId());
             } else {
                 language = Language.getDefaultLanguage();
             }
@@ -66,7 +71,7 @@ public class MsgCommand implements CommandExecutor, TabCompleter {
                     Message.Constant.MSG_TEMPLATE,
                     ParadubschManager.getInstance().getLanguageManager().getString(Message.Constant.FROM_YOU, language),
                     receiver.getName(),
-                    message.toString()
+                    message
             );
 
             Language playerLang = Language.getLanguageByShortName(Hibernate.getPlayerData(receiver).getLanguage());
@@ -82,10 +87,9 @@ public class MsgCommand implements CommandExecutor, TabCompleter {
                     Message.Constant.MSG_TEMPLATE,
                     sender,
                     ParadubschManager.getInstance().getLanguageManager().getString(Message.Constant.TO_YOU, playerLang),
-                    message.toString()
+                    message
             );
         });
-        return true;
     }
 
     @Override

@@ -32,7 +32,7 @@ public class SaveConfirmButton extends GuiItem {
 
         manager.addRegion(region1);
         MessageAdapter.sendMessage(p, Message.Info.SAVE_REGION_SUCCESS);
-        Hibernate.delete(saveRequest);
+        saveRequest.delete();
         for (Player player : Bukkit.getOnlinePlayers()) {
             if (player.getName().equals(saveRequest.getPlayerRef().getName())) {
                 MessageAdapter.sendMessage(player, Message.Info.REGION_SAVED_SUCCESSFUL);

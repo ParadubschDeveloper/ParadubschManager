@@ -44,7 +44,7 @@ public class DelhomeCommand implements CommandExecutor, TabCompleter {
                 if (homes.stream().anyMatch(home -> home.getName().equals(args[0]))) {
                     Home home = homes.stream().filter(home1 -> home1.getName().equals(args[0])).findFirst().get();
                     homes.remove(home);
-                    Hibernate.delete(home);
+                    home.delete();
 
                     playerData.setHomes(homes);
                     MessageAdapter.sendMessage(player, Message.Info.CMD_DELHOME_DONE, args[0]);

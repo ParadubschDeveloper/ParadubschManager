@@ -1,0 +1,9 @@
+image: maven:3.8.1
+
+stages:
+  - test
+
+test:
+  stage: test
+  script:
+    - "mvn test -f pom.xml"

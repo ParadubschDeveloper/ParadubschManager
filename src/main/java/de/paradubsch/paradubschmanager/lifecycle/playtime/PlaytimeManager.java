@@ -58,7 +58,7 @@ public class PlaytimeManager implements Listener {
         Player player = event.getPlayer();
 
         Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
-           PlayerData pd =  Hibernate.getPlayerData(player);
+            PlayerData pd = Hibernate.getPlayerData(player);
             PlaytimeInstance pi = new PlaytimeInstance();
             pi.setPlaytime(pd.getPlaytime());
             pi.setLastRecordTime(System.currentTimeMillis());

@@ -1,6 +1,7 @@
 package de.paradubsch.paradubschmanager.lifecycle;
 
 import com.comphenix.protocol.PacketType;
+import com.comphenix.protocol.ProtocolManager;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.wrappers.WrappedChatComponent;
 import de.paradubsch.paradubschmanager.ParadubschManager;
@@ -27,16 +28,14 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 public class TabDecorationManager implements Listener {
-    private final JavaPlugin plugin;
-
     private static Scoreboard sb;
 
     public TabDecorationManager(JavaPlugin plugin) {
-        this.plugin = plugin;
         Bukkit.getPluginManager().registerEvents(this, plugin);
-        Bukkit.getScheduler().runTaskLater(plugin, this::broadcastTabDecorations, 20*5);
+        Bukkit.getScheduler().runTaskLater(plugin, TabDecorationManager::broadcastTabDecorations, 20*5);
         broadcastScoreboardTeams();
     }
 
@@ -51,8 +50,8 @@ public class TabDecorationManager implements Listener {
         broadcastTabDecorations();
     }
 
-    private void broadcastTabDecorations() {
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+    public static void broadcastTabDecorations() {
+        Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
             for (Player p : Bukkit.getOnlinePlayers()) {
                 TabDecorationManager.displayTabDecorations(p);
             }
@@ -68,15 +67,25 @@ public class TabDecorationManager implements Listener {
     }
 
     public static void displayTabDecorations(Player p) {
-        PacketContainer packet = ParadubschManager.getProtocolManager().createPacket(PacketType.Play.Server.PLAYER_LIST_HEADER_FOOTER);
+        ProtocolManager pm = ParadubschManager.getProtocolManager();
+        if (pm == null) return;
+        PacketContainer packet = pm.createPacket(PacketType.Play.Server.PLAYER_LIST_HEADER_FOOTER);
         PlayerData playerData = Hibernate.getPlayerData(p);
         Language playerLang = Language.getLanguageByShortName(playerData.getLanguage());
-        String header = ParadubschManager.getInstance().getLanguageManager().getString(Message.Info.TAB_HEADER, playerLang, Bukkit.getOnlinePlayers().size() + "");
+        int onlinePlayers = 0;
+        List<UUID> vanishedPlayers = ParadubschManager.getInstance().getVanishedPlayers();
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            if (!vanishedPlayers.contains(player.getUniqueId())) {
+                onlinePlayers++;
+            }
+        }
+
+        String header = ParadubschManager.getInstance().getLanguageManager().getString(Message.Info.TAB_HEADER, playerLang, onlinePlayers + "");
         String footer = ParadubschManager.getInstance().getLanguageManager().getString(Message.Info.TAB_FOOTER, playerLang);
         packet.getChatComponents().write(0, WrappedChatComponent.fromText(ChatColor.translateAlternateColorCodes('&', header)));
         packet.getChatComponents().write(1, WrappedChatComponent.fromText(ChatColor.translateAlternateColorCodes('&', footer)));
         try {
-            ParadubschManager.getProtocolManager().sendServerPacket(p, packet);
+            pm.sendServerPacket(p, packet);
         } catch (InvocationTargetException e) {
             e.printStackTrace();
         }

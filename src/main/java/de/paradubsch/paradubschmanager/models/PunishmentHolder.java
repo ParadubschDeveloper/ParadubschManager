@@ -8,17 +8,19 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
 
 import static org.hibernate.annotations.CascadeType.SAVE_UPDATE;
 
 @Data
+@EqualsAndHashCode(callSuper = false)
 @Entity
 @Cacheable
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Table(name = "punishment_holder")
-public class PunishmentHolder {
+public class PunishmentHolder extends BaseDatabaseEntity<PunishmentHolder, String> {
     @Id
     @Column(name = "uuid", columnDefinition = "VARCHAR(36)")
     private String uuid;
@@ -76,4 +78,12 @@ public class PunishmentHolder {
     @Cascade(value = SAVE_UPDATE)
     private List<WarnPunishment> warns;
 
+    public static PunishmentHolder getById(Serializable id) {
+        return BaseDatabaseEntity.getById(PunishmentHolder.class, id);
+    }
+
+    @Override
+    public Serializable getIdentifyingColumn() {
+        return this.uuid;
+    }
 }

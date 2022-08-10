@@ -27,15 +27,13 @@ public class GsClaimButton extends GuiItem {
         saveRequest.setZ((long) p.getLocation().getZ());
         saveRequest.setWorld(p.getLocation().getWorld().getName());
         saveRequest.setPlayerRef(pd);
-        pd.setOpenSaveRequest(saveRequest);
-        Hibernate.save(pd);
-
-        SaveRequest newSaveRequest = Hibernate.getSaveRequest(p);
-        if (newSaveRequest == null) return;
+        pd.setOpenSaveRequest(saveRequest.getId());
+        Integer saveId = (Integer) saveRequest.save();
+        pd.saveOrUpdate();
 
         for (Player player : Bukkit.getOnlinePlayers()) {
             if (player.hasPermission("paradubsch.save")) {
-                MessageAdapter.sendMessage(player, Message.Info.GS_CLAIM_REQUEST, p.getName(), newSaveRequest.getId() + "");
+                MessageAdapter.sendMessage(player, Message.Info.GS_CLAIM_REQUEST, p.getName(), saveId.toString() + "");
             }
         }
     }

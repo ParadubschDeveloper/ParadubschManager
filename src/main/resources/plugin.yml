@@ -111,12 +111,144 @@ commands:
     permission: paradubsch.rank
     permission-message: 'Du benötigst die Berechtigung paradubsch.rank um jemandem einen Rang zuzuweisen!'
     usage: "/rank <User> <Rank>"
-  b:
+  cb:
     description: Ban a Player from the server
     aliases: [ban]
     permission: paradubsch.ban
     permission-message: 'Du benötigst die Berechtigung paradubsch.ban um jemandem einen Ban zuzuweisen!'
     usage: "/ban <User> <Duration> <Reason>"
+  gm:
+    description: Setze deinen Gamemode.
+    aliases: [gamemode]
+    permission: paradubsch.gm.self
+    permission-message: 'Du benötigst die Berechtigung paradubsch.gm um deinen Gamemode zu setzen!'
+    usage: '/gm <Gamemode> <Spieler>'
+  warn:
+    description: Warn einen Spieler.
+    aliases: [warnen]
+    permission: paradubsch.warn
+    permission-message: 'Du benötigst die Berechnigung paradubsch.warn um jemandem einen Warn zuzuweisen!'
+    usage: '/warn <User> <Reason>'
+  warp:
+    description: Teleportiert einen Spieler zu einem anderen.
+    aliases: []
+    permission: paradubsch.warp.use
+    permission-message: 'Du benötigst die Berechtigung paradubsch.warp um jemandem zu teleportieren!'
+    usage: '/warp <warp>'
+  warps:
+    description: Zeigt alle Warps an.
+    aliases: [warplist, warpliste]
+    permission: paradubsch.warps
+    permission-message: 'Du benötigst die Berechtigung paradubsch.warp.list um alle Warps zu sehen!'
+    usage: '/warps'
+  farmwelt:
+    description: Teleportiert dich in die Farmwelt
+    aliases: []
+    permission: paradubsch.farmwelt
+    permission-message: 'Du benötigst die Berechtigung paradubsch.farmwelten um dich in die Farmwelt zu teleportieren!'
+    usage: '/farmwelt'
+  bauwelt:
+    description: Teleportiert dich in die Bauwelt
+    aliases: []
+    permission: paradubsch.bauwelt
+    permission-message: 'Du benötigst die Berechtigung paradubsch.bauwelten um dich in die Bauwelt zu teleportieren!'
+    usage: '/bauwelt'
+  nether:
+    description: Teleportiert dich in den Nether
+    aliases: []
+    permission: paradubsch.nether
+    permission-message: 'Du benötigst die Berechtigung paradubsch.nether um dich in den Nether zu teleportieren!'
+    usage: '/nether'
+  end:
+    description: Teleportiert dich ins End.
+    aliases: []
+    permission: paradubsch.end
+    permission-message: 'Du benötigst die Berechtigung paradubsch.end um dich ins End zu teleportieren!'
+    usage: '/end'
+  spawn:
+    description: Teleportiert dich zum Spawn.
+    aliases: []
+    permission: paradubsch.spawn
+    permission-message: 'Du benötigst die Berechtigung paradubsch.spawn um dich zum Spawn zu teleportieren!'
+    usage: '/spawn'
+  vanish:
+    description: Versteckt dich.
+    aliases: [v, verstecken, hide]
+    permission: paradubsch.vanish.self
+    permission-message: 'Du benötigst die Berechtigung paradubsch.vanish um dich zu verstecken!'
+    usage: '/vanish'
+  seen:
+    description: Zeigt die letzte Zeit an, wann ein Spieler online war.
+    aliases: [lastseen, online]
+    permission: paradubsch.seen
+    permission-message: 'Du benötigst die Berechtigung paradubsch.seen um die letzte Zeit anzusehen!'
+    usage: '/seen <User>'
+  reply:
+    description: Antwortet auf eine Nachricht.
+    aliases: [antwort, r]
+    permission: paradubsch.reply
+    permission-message: 'Du benötigst die Berechtigung paradubsch.reply um auf eine Nachricht zu antworten!'
+    usage: '/reply <Nachricht>'
+  speed:
+    description: Setzt die Geschwindigkeit eines Spielers.
+    aliases: [geschwindigkeit, speed]
+    permission: paradubsch.speed
+    permission-message: 'Du benötigst die Berechtigung paradubsch.speed um deine Geschwindigkeit zu setzen!'
+    usage: '/speed <Geschwindigkeit>'
+  day:
+    description: Setzt die Zeit auf Tag.
+    aliases: [tag]
+    permission: paradubsch.day
+    permission-message: 'Du benötigst die Berechtigung paradubsch.day um den Tag zu setzen!'
+    usage: '/day'
+  night:
+    description: Setzt die Zeit auf Nacht.
+    aliases: [nacht]
+    permission: paradubsch.night
+    permission-message: 'Du benötigst die Berechtigung paradubsch.night um die Nacht zu setzen!'
+    usage: '/night'
+  i:
+    description: Alias für gs info
+    aliases: [info, gsinfo]
+    permission: paradubsch.i
+    permission-message: 'Du benötigst die Berechtigung paradubsch.i um den Befehl zu nutzen'
+    usage: '/i'
+  run:
+    description: Startet einen Befehl.
+    aliases: []
+    permission: paradubsch.run
+    permission-message: 'Du benötigst die Berechtigung paradubsch.run um einen Befehl zu starten!'
+    usage: '/run <Befehl>'
+  tpa:
+    description: Sendet einem Spieler ein Teleport-Anfrage.
+    aliases: [teleportierungsanfrage]
+    permission: paradubsch.tpa
+    permission-message: 'Du benötigst die Berechtigung paradubsch.tpa um einem Spieler ein Teleport-Anfrage zu senden!'
+    usage: '/tpa <User>'
+  tpaccept:
+    description: Akzeptiert eine Teleport-Anfrage.
+    aliases: [teleportierungsanfrageakzeptieren]
+    permission: paradubsch.tpaccept
+    permission-message: 'Du benötigst die Berechtigung paradubsch.tpaccept um eine Teleport-Anfrage zu akzeptieren!'
+    usage: '/tpaccept [name]'
+  tpacancel:
+    description: Abbrechen einer Teleport-Anfrage.
+    aliases: [teleportierungsanfrageabbrechen]
+    permission: paradubsch.tpacancel
+    permission-message: 'Du benötigst die Berechtigung paradubsch.tpacancel um eine Teleport-Anfrage zu abbrechen!'
+    usage: '/tpacancel'
+  invsee:
+    description: Zeigt einem Spieler seine Inventar an.
+    aliases: []
+    permission: paradubsch.invsee.view
+    permission-message: 'Du benötigst die Berechtigung paradubsch.invsee um einem Spieler seine Inventar anzuzeigen!'
+    usage: '/invsee <User>'
+  job:
+    description: Menu zur Job Vergabe
+    aliases: [jobs, beruf, berufe]
+    permission: paradubsch.job
+    permission-message: 'Du benötigst die Berechtigung paradubsch.job um das Menu zu nutzen!'
+    usage: '/job'
 
 
 permissions:
@@ -189,3 +321,84 @@ permissions:
   paradubsch.ban:
     description: "Erlaubt Spielern einen Ban zu geben"
     default: false
+  paradubsch.gm.self:
+    description: "Erlaubt Zugriff auf den /gm Befehl."
+    default: false
+  paradubsch.gm.other:
+    description: "Erlaubt Zugriff auf den /gm <Gamemode> <Name> Befehl."
+    default: false
+  paradubsch.warn:
+    description: "Erlaubt Spielern einen Warn zu geben"
+    default: false
+  paradubsch.warp.use:
+    description: "Erlaubt Spielern zu teleportieren"
+    default: true
+  paradubsch.warp.manage:
+    description: "Erlaubt Warps zu bearbeiten"
+    default: false
+  paradubsch.warps:
+    description: "Erlaubt Zugriff auf den /warps Befehl."
+    default: true
+  paradubsch.farmwelt:
+    description: "Erlaubt Zugriff auf den /farmwelt Befehl."
+    default: true
+  paradubsch.bauwelt:
+    description: "Erlaubt Zugriff auf den /bauwelt Befehl."
+    default: true
+  paradubsch.nether:
+    description: "Erlaubt Zugriff auf den /nether Befehl."
+    default: true
+  paradubsch.end:
+    description: "Erlaubt Zugriff auf den /end Befehl."
+    default: true
+  paradubsch.spawn:
+    description: "Erlaubt Zugriff auf den /spawn Befehl."
+    default: true
+  paradubsch.vanish.self:
+    description: "Erlaubt Zugriff auf den /vanish Befehl."
+    default: false
+  paradubsch.vanish.other:
+    description: "Erlaubt Zugriff auf den /vanish <Name> Befehl."
+    default: false
+  paradubsch.vanish.bypass:
+    description: "Erlaubt dir Spieler im Vanish zu sehen"
+    default: false
+  paradubsch.seen:
+    description: "Erlaubt Zugriff auf den /seen Befehl."
+    default: false
+  paradubsch.reply:
+    description: "Erlaubt Zugriff auf den /reply Befehl."
+    default: true
+  paradubsch.speed:
+    description: "Erlaubt Zugriff auf den /speed Befehl."
+    default: false
+  paradubsch.day:
+    description: "Erlaubt Zugriff auf den /day Befehl."
+    default: false
+  paradubsch.night:
+    description: "Erlaubt Zugriff auf den /night Befehl."
+    default: false
+  paradubsch.i:
+    description: "Erlaubt Zugriff auf den /i Befehl."
+    default: true
+  paradubsch.run:
+    description: "Erlaubt Zugriff auf den /run Befehl."
+    default: false
+  paradubsch.tpa:
+    description: "Erlaubt Zugriff auf den /tpa Befehl."
+    default: true
+  paradubsch.tpaccept:
+    description: "Erlaubt Zugriff auf den /tpaccept Befehl."
+    default: true
+  paradubsch.tpacancel:
+    description: "Erlaubt Zugriff auf den /tpacancel Befehl."
+    default: true
+  paradubsch.invsee.view:
+    description: "Erlaubt Zugriff auf den /invsee Befehl."
+    default: false
+  paradubsch.invsee.modify:
+    description: "Erlaubt Zugriff auf den /invsee Befehl."
+    default: false
+  paradubsch.job:
+    description: "Erlaubt Zugriff auf den /job Befehl."
+    default: true
