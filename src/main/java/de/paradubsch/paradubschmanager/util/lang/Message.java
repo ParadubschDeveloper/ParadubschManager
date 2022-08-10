@@ -202,7 +202,9 @@ public class Message {
         SECOND_PLURAL("constantSecondPlural", "Sekunden"),
         CMD_WARP_TEMPLATE("constantCmdWarpTemplate", "@ClickableComponent<Text=&a%1|ClickCommand=/warp %1|HoverText=Teleportieren>"),
         BLANK("constantBlank", "%1"),
-        LUMBERJACK("constantLumberjack", "Holzfäller");
+        LUMBERJACK("constantLumberjack", "Holzfäller"),
+        COLLECTOR("constantCollector", "Sammler"),
+        HUNTER("constantHunter", "Jäger");
 
         private final String key;
         private final String def;
@@ -245,7 +247,11 @@ public class Message {
         JOB_MINER_TITLE("guiJobMinerTitle", "&7&lMiner"),
         JOB_MINER_LORE("guiJobMinerLore", "&aDu bekommst Geld indem du Erze farmst."),
         JOB_LUMBERJACK_TITLE("guiJobLumberjackTitle", "&7&lHolzfäller"),
-        JOB_LUMBERJACK_LORE("guiJobLumberjackLore", "&aDu bekommst Geld indem du Holz farmst.");
+        JOB_LUMBERJACK_LORE("guiJobLumberjackLore", "&aDu bekommst Geld indem du Holz farmst."),
+        JOB_COLLECTOR_TITLE("guiJobCollectorTitle", "&7&lSammler"),
+        JOB_COLLECTOR_LORE("guiJobCollectorLore", "&aDu bekommst Geld indem du Pilze und Blumen sammelst."),
+        JOB_HUNTER_TITLE("guiJobHunterTitle", "&7&lJäger"),
+        JOB_HUNTER_LORE("guiJobHunterLore", "&aDu bekommst Geld indem du Tiere und Monster tötest.");
 
         private final String key;
         private final String def;

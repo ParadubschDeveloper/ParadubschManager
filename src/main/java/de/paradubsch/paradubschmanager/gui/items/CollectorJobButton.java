@@ -11,24 +11,24 @@ import de.paradubsch.paradubschmanager.util.lang.Message;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
-public class LumberjackJobButton extends GuiItem {
+public class CollectorJobButton extends GuiItem {
     @Override
     public void onClick(Player p) {
         WorkerPlayer workerPlayer = WorkerPlayer.getByIdOrCreate(p.getUniqueId().toString());
         workerPlayer.setExperience(0);
-        workerPlayer.setJob(JobType.LUMBERJACK);
+        workerPlayer.setJob(JobType.COLLECTOR);
         workerPlayer.setJobLevel(JobLevel.ONE);
         workerPlayer.saveOrUpdate();
         Language lang = MessageAdapter.getSenderLang(p);
-        String jobName = ParadubschManager.getInstance().getLanguageManager().getString(Message.Constant.LUMBERJACK, lang);
+        String jobName = ParadubschManager.getInstance().getLanguageManager().getString(Message.Constant.COLLECTOR, lang);
         MessageAdapter.sendMessage(p, Message.Info.JOB_CHANGED, jobName);
         p.closeInventory();
     }
 
     @Override
     public void build() {
-        this.setItemMaterial(Material.DIAMOND_AXE);
-        this.setDisplayName(Message.Gui.JOB_LUMBERJACK_TITLE);
-        this.addLore(Message.Gui.JOB_LUMBERJACK_LORE);
+        this.setItemMaterial(Material.BUCKET);
+        this.setDisplayName(Message.Gui.JOB_COLLECTOR_TITLE);
+        this.addLore(Message.Gui.JOB_COLLECTOR_LORE);
     }
 }

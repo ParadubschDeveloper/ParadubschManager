@@ -5,18 +5,12 @@ import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.models.PlayerData;
 import de.paradubsch.paradubschmanager.models.WorkerPlayer;
 import org.bukkit.ChatColor;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
-
-public class MiningJob {
+public class CollectorJob {
     public static void onBlockBreak(WorkerPlayer worker, BlockBreakEvent event) {
-        if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getEnchants().keySet().stream().anyMatch(ench -> ench.equals(Enchantment.SILK_TOUCH))) {
-            return;
-        }
-
         PersistentDataContainer customBlockData = new CustomBlockData(event.getBlock(), ParadubschManager.getInstance());
         if (customBlockData.has(JobManager.NOT_ORIGINAL, PersistentDataType.BYTE)) {
             return;
@@ -25,42 +19,45 @@ public class MiningJob {
         int earn = 0;
         boolean progress = false;
         switch (event.getBlock().getType()) {
-            case NETHER_GOLD_ORE:
-            case NETHER_QUARTZ_ORE:
-            case COAL_ORE:
-            case DEEPSLATE_COAL_ORE:
-            case IRON_ORE:
-            case DEEPSLATE_IRON_ORE:
-            case COPPER_ORE:
-            case DEEPSLATE_COPPER_ORE: {
+            case DANDELION:
+            case POPPY:
+            case AZURE_BLUET:
+            case OXEYE_DAISY:
+            case CRIMSON_FUNGUS:
+            case WARPED_FUNGUS:
+            case SUNFLOWER:
+            case ROSE_BUSH:
+            case PEONY:
+            case LILAC: {
                 worker.setExperience(worker.getExperience() + 1);
                 earn = 1;
                 progress = true;
                 break;
             }
-            case GOLD_ORE:
-            case DEEPSLATE_GOLD_ORE:
-            case REDSTONE_ORE:
-            case DEEPSLATE_REDSTONE_ORE:
-            case LAPIS_ORE:
-            case DEEPSLATE_LAPIS_ORE:{
+            case CORNFLOWER:
+            case BLUE_ORCHID:
+            case ALLIUM:
+            case RED_TULIP:
+            case ORANGE_TULIP:
+            case WHITE_TULIP:
+            case PINK_TULIP:
+            case LILY_OF_THE_VALLEY:
+            case BROWN_MUSHROOM:
+            case RED_MUSHROOM: {
                 worker.setExperience(worker.getExperience() + 2);
                 earn = 2;
                 progress = true;
                 break;
             }
-            case DIAMOND_ORE:
-            case DEEPSLATE_DIAMOND_ORE:
-            case EMERALD_ORE:
-            case DEEPSLATE_EMERALD_ORE: {
-                worker.setExperience(worker.getExperience() + 5);
-                earn = 5;
+            case WITHER_ROSE: {
+                worker.setExperience(worker.getExperience() + 3);
+                earn = 3;
                 progress = true;
                 break;
             }
-            case ANCIENT_DEBRIS: {
-                worker.setExperience(worker.getExperience() + 15);
-                earn = 15;
+            case SPORE_BLOSSOM: {
+                worker.setExperience(worker.getExperience() + 5);
+                earn = 5;
                 progress = true;
                 break;
             }

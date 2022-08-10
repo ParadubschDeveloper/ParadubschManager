@@ -63,17 +63,20 @@ public class LumberjackJob {
         ParadubschManager.getInstance().getJobManager()
                 .getProgressPartPercentage().put(UUID.fromString(worker.getUuid()), displayPercentage);
 
-        int moneyToGet = 0;
-        if (getMoney) {
-            moneyToGet = (int) Math.ceil(worker.getJobLevel().getMultiplier() * 1.01f);
-        }
-
         JobLevel nextLevel = worker.getJobLevel().nextLevel();
         if (worker.getExperience() >= 1000L * worker.getJobLevel().getDifficulty()) {
             if (nextLevel != JobLevel.MAX) {
                 worker.setJobLevel(nextLevel);
                 nextLevel = nextLevel.nextLevel();
             }
+        }
+
+        int moneyToGet = 0;
+        if (getMoney) {
+            moneyToGet = (int) Math.ceil(worker.getJobLevel().getMultiplier());
+        }
+        if (nextLevel == JobLevel.MAX) {
+            moneyToGet++;
         }
 
         if (getMoney) {
