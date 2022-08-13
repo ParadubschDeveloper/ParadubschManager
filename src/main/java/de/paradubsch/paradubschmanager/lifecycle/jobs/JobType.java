@@ -5,5 +5,6 @@ public enum JobType {
     LUMBERJACK,
     COLLECTOR,
     HUNTER,
+    FARMER,
     UNEMPLOYED
 }

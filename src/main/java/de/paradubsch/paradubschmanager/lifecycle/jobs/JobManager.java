@@ -51,6 +51,9 @@ public class JobManager implements Listener {
         if (worker.getJob() == JobType.COLLECTOR) {
             CollectorJob.onBlockBreak(worker, event);
         }
+        if (worker.getJob() == JobType.FARMER) {
+            FarmerJob.onBlockBreak(worker, event);
+        }
     }
 
     public static final NamespacedKey NOT_ORIGINAL = new NamespacedKey(ParadubschManager.getInstance(), "notOriginal");

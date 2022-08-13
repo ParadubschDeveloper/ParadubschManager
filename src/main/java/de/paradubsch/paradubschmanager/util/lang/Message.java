@@ -204,7 +204,8 @@ public class Message {
         BLANK("constantBlank", "%1"),
         LUMBERJACK("constantLumberjack", "Holzfäller"),
         COLLECTOR("constantCollector", "Sammler"),
-        HUNTER("constantHunter", "Jäger");
+        HUNTER("constantHunter", "Jäger"),
+        FARMER("constantFarmer", "Bauer");
 
         private final String key;
         private final String def;
@@ -251,7 +252,9 @@ public class Message {
         JOB_COLLECTOR_TITLE("guiJobCollectorTitle", "&7&lSammler"),
         JOB_COLLECTOR_LORE("guiJobCollectorLore", "&aDu bekommst Geld indem du Pilze und Blumen sammelst."),
         JOB_HUNTER_TITLE("guiJobHunterTitle", "&7&lJäger"),
-        JOB_HUNTER_LORE("guiJobHunterLore", "&aDu bekommst Geld indem du Tiere und Monster tötest.");
+        JOB_HUNTER_LORE("guiJobHunterLore", "&aDu bekommst Geld indem du Tiere und Monster tötest."),
+        JOB_FARMER_TITLE("guiJobFarmerTitle", "&7&lBauer"),
+        JOB_FARMER_LORE("guiJobFarmerLore", "&aDu bekommst Geld indem du die Ernte einfährst.");
 
         private final String key;
         private final String def;

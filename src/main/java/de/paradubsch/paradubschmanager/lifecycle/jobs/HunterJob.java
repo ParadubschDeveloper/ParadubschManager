@@ -72,7 +72,7 @@ public class HunterJob {
             case TROPICAL_FISH:
             case WANDERING_TRADER:
             case WITCH:
-            case ZOMBIFIED_PIGLIN:{
+            case ZOMBIFIED_PIGLIN: {
                 worker.setExperience(worker.getExperience() + 2);
                 earn = 2;
                 progress = true;
@@ -87,7 +87,7 @@ public class HunterJob {
             case SKELETON_HORSE:
             case TURTLE:
             case ZOMBIE_HORSE:
-            case SNOWMAN:{
+            case SNOWMAN: {
                 worker.setExperience(worker.getExperience() + 5);
                 earn = 5;
                 progress = true;
@@ -95,7 +95,7 @@ public class HunterJob {
             }
             case AXOLOTL:
             case ELDER_GUARDIAN:
-            case IRON_GOLEM:{
+            case IRON_GOLEM: {
                 worker.setExperience(worker.getExperience() + 10);
                 earn = 10;
                 progress = true;
@@ -109,7 +109,7 @@ public class HunterJob {
             }
             case ENDER_DRAGON: {
                 worker.setExperience(worker.getExperience() + 50);
-                earn = 50;
+                earn = 30;
                 progress = true;
                 break;
             }

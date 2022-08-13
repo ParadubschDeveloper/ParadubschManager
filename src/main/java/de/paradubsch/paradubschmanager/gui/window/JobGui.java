@@ -16,6 +16,7 @@ public class JobGui extends BaseGui {
         this.addItem(MiningJobButton.class, 2, 2);
         this.addItem(HunterJobButton.class, 2, 4);
         this.addItem(LumberjackJobButton.class, 2, 5);
+        this.addItem(FarmerJobButton.class, 2, 6);
         this.addItem(CollectorJobButton.class, 2, 8);
         this.addItem(CancelButton.class, 3, 9);
     }
