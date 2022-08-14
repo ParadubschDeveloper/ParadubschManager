@@ -64,7 +64,8 @@ public class Message {
         CMD_TPA_TIMEOUT("cmdTpaTimeout", "&cDeine Teleportationsanfrage an &6%1 &aist abgelaufen."),
         CMD_TPA_NOT_GOT("cmdTpaNotGot", "&cDu hast keine Teleportationsanfrage von &a%1 &cbekommen!"),
         CMD_TPA_NO_TPA_GOT("cmdTpaNoTpaGot", "&cDu hast keine Teleportationsanfrage von bekommen!"),
-        CMD_TPA_SELF("cmdTpaSelf", "&cDu kannst dich nicht zur dir selbst teleportieren!");
+        CMD_TPA_SELF("cmdTpaSelf", "&cDu kannst dich nicht zur dir selbst teleportieren!"),
+        CMD_RTP_NO_DESTINATION_FOUND("cmdRtpNoDestinationFound", "&cEs konnte kein Ziel gefunden werden!");
 
 
         private final String key;
@@ -158,7 +159,8 @@ public class Message {
         CMD_ACCEPTED_TPA("cmdAcceptedTpa", "&aDu hast die Teleportationsanfrage von &6%1 &aangenommen."),
         CMD_ACCEPTED_TPA_RECEIVED("cmdAcceptedTpaReceived", "&6%1 &ahat deine Teleportationsanfrage angenommen."),
         CMD_TPA_CANCELED("cmdTpaCanceled", "&aDu hast deine Teleportationsanfrage an &6%1 &aabgebrochen."),
-        JOB_CHANGED("jobChanged", "&aDu übst jetzt den Job &6%1 &aaus.");
+        JOB_CHANGED("jobChanged", "&aDu übst jetzt den Job &6%1 &aaus."),
+        COMMAND_TIMEOUT("commandTimeout", "Dieser Befehlt kann erst in &6%1 &7wieder verwendet werden, um Rechenkapazitäten zu sparen.");
 
         private final String key;
         private final String def;
@@ -254,7 +256,9 @@ public class Message {
         JOB_HUNTER_TITLE("guiJobHunterTitle", "&7&lJäger"),
         JOB_HUNTER_LORE("guiJobHunterLore", "&aDu bekommst Geld indem du Tiere und Monster tötest."),
         JOB_FARMER_TITLE("guiJobFarmerTitle", "&7&lBauer"),
-        JOB_FARMER_LORE("guiJobFarmerLore", "&aDu bekommst Geld indem du die Ernte einfährst.");
+        JOB_FARMER_LORE("guiJobFarmerLore", "&aDu bekommst Geld indem du die Ernte einfährst."),
+        BAZAAR_MAIN_TITLE("guiBazaarMainTitle", "&a&lBazaar"),
+        RTP_TITLE("guiRtpTitle", "&a&lRTP");
 
         private final String key;
         private final String def;

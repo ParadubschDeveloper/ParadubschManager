@@ -66,6 +66,9 @@ public final class ParadubschManager extends JavaPlugin {
     @Getter
     private JobManager jobManager;
 
+    @Getter
+    private final Map<UUID, Long> rtpTimeouts = new HashMap<>();
+
     @Override
     public void onEnable() {
         instance = this;
@@ -187,6 +190,8 @@ public final class ParadubschManager extends JavaPlugin {
         register("tpacancel", new TpacancelCommand());
         register("invsee", new InvseeCommand());
         register("job", new JobCommand());
+        register("bazaar", new BazaarCommand());
+        register("rtp", new RtpCommand());
     }
 
     List<String> registeredCommands = new ArrayList<>();

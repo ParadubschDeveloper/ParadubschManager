@@ -16,8 +16,8 @@ import java.util.UUID;
 public class GsTransferConfirmButton extends GuiItem {
     @Override
     public void onClick(Player p) {
-        PlayerData pd = (PlayerData) this.args.get(1);
-        ProtectedRegion region = (ProtectedRegion) this.args.get(2);
+        PlayerData pd = (PlayerData) this.windowArgs.get(1);
+        ProtectedRegion region = (ProtectedRegion) this.windowArgs.get(2);
 
         OfflinePlayer ofPl = Bukkit.getOfflinePlayer(UUID.fromString(pd.getUuid()));
         region.getOwners().clear();
@@ -32,7 +32,7 @@ public class GsTransferConfirmButton extends GuiItem {
         this.setItemMaterial(Material.LIME_STAINED_GLASS_PANE);
         this.setDisplayName(Message.Gui.GS_TRANSFER_BUTTON_TITLE);
 
-        String name = (String) this.args.get(0);
+        String name = (String) this.windowArgs.get(0);
         this.addLore(Message.Gui.GS_TRANSFER_BUTTON_LORE, name);
     }
 }

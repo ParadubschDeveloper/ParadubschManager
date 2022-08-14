@@ -20,7 +20,9 @@ public abstract class GuiItem {
 
     @Getter
     public Language lang;
-    public final List<Object> args = new ArrayList<>();
+    public final List<Object> windowArgs = new ArrayList<>();
+
+    public final List<Object> itemArgs = new ArrayList<>();
 
     public void instantiate(Language lang) {
         this.lang = lang;
@@ -71,9 +73,14 @@ public abstract class GuiItem {
         this.addLore(displayName);
     }
 
-    public void applyArgs(Object... args) {
-        this.args.clear();
-        this.args.addAll(Arrays.asList(args));
+    public void applyWindowArgs(Object... args) {
+        this.windowArgs.clear();
+        this.windowArgs.addAll(Arrays.asList(args));
+    }
+
+    public void applyItemArgs(Object... args) {
+        this.itemArgs.clear();
+        this.itemArgs.addAll(Arrays.asList(args));
     }
 
     public abstract void onClick(Player p);

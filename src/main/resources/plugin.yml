@@ -249,6 +249,18 @@ commands:
     permission: paradubsch.job
     permission-message: 'Du benötigst die Berechtigung paradubsch.job um das Menu zu nutzen!'
     usage: '/job'
+  bazaar:
+    description: Menu zum Bazaar
+    aliases: [bazar, basar, markt, market, marketplace, bz]
+    permission: paradubsch.bazaar
+    permission-message: 'Du benötigst die Berechtigung paradubsch.bazaar um das Menu zu nutzen!'
+    usage: '/bazaar'
+  rtp:
+    description: Menu zum RTP
+    aliases: []
+    permission: paradubsch.rtp
+    permission-message: 'Du benötigst die Berechtigung paradubsch.rtp um das Menu zu nutzen!'
+    usage: '/rtp'
 
 
 permissions:
@@ -401,4 +413,10 @@ permissions:
     default: false
   paradubsch.job:
     description: "Erlaubt Zugriff auf den /job Befehl."
+    default: true
+  paradubsch.bazaar:
+    description: "Erlaubt Zugriff auf den /bazaar Befehl."
+    default: true
+  paradubsch.rtp:
+    description: "Erlaubt Zugriff auf den /rtp Befehl."
     default: true

@@ -50,8 +50,9 @@ public class GuiManager implements Listener {
             Bukkit.getScheduler().runTaskLaterAsynchronously(GuiManager.plugin, () -> {
                 guis.get(event.getView().title()).forEach(guiItem -> {
                     if (event.getCurrentItem() == null) return;
+                    guiItem.applyWindowArgs(GuiManager.instance.sessionData.get((Player) event.getWhoClicked()).toArray());
+                    guiItem.build();
                     if (event.getCurrentItem().isSimilar(guiItem.getItemStack())) {
-                        guiItem.applyArgs(GuiManager.instance.sessionData.get((Player) event.getWhoClicked()).toArray());
                         Bukkit.getScheduler().runTask(GuiManager.plugin, () -> {
                             guiItem.onClick((Player) event.getWhoClicked());
                         });
@@ -71,10 +72,11 @@ public class GuiManager implements Listener {
         return Bukkit.createInventory(null, rows * 9, title);
     }
 
-    public static <T extends GuiItem> void addGuiItem(BaseGui src, Class<T> guiItem, Player p, int row, int column) {
+    public static <T extends GuiItem> void addGuiItem(BaseGui src, Class<T> guiItem, Player p, int row, int column, Object... itemArgs) {
         try {
             T item = guiItem.getConstructor().newInstance();
-            item.applyArgs(GuiManager.instance.sessionData.get(p).toArray());
+            item.applyWindowArgs(GuiManager.instance.sessionData.get(p).toArray());
+            item.applyItemArgs(itemArgs);
             item.instantiate(src.lang);
             item.build();
             try {
@@ -83,7 +85,27 @@ public class GuiManager implements Listener {
                 src.inv.addItem(item.getItemStack());
             }
 
-            registerGuiItem(src.title, item);
+            registerGuiItem(src.title, item, null, itemArgs);
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static <T extends AbstractGuiItem> void addAbstractGuiItem(BaseGui src, Class<T> guiItem, Player p, int row, int column, Object identifier, Object... itemArgs) {
+        try {
+            T item = guiItem.getConstructor().newInstance();
+            item.applyWindowArgs(GuiManager.instance.sessionData.get(p).toArray());
+            item.applyItemArgs(itemArgs);
+            item.instantiate(src.lang);
+            item.setIdentifier(identifier);
+            item.build();
+            try {
+                src.inv.setItem((column - 1) + (row - 1) * 9, item.getItemStack());
+            } catch (IndexOutOfBoundsException ex) {
+                src.inv.addItem(item.getItemStack());
+            }
+
+            registerGuiItem(src.title, item, identifier, itemArgs);
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         }
@@ -95,11 +117,19 @@ public class GuiManager implements Listener {
         }
     }
 
-    private static void registerGuiItem(Component title, GuiItem item) {
+    private static void registerGuiItem(Component title, GuiItem item, Object identifier, Object... itemArgs) {
         registerGui(title);
         Map<Component, List<GuiItem>> gui = GuiManager.instance.guis;
         List<GuiItem> items = gui.get(title);
-        if (items.stream().noneMatch(i -> i.getClass().equals(item.getClass()) && i.getLang().equals(item.getLang()))) {
+        if (item instanceof AbstractGuiItem) {
+            if (items.stream().noneMatch(i ->
+                    i.getClass().equals(item.getClass()) &&
+                            i.getLang().equals(item.getLang()) &&
+                            ((AbstractGuiItem) i).getIdentifier().equals(identifier)
+            )) {
+                items.add(item);
+            }
+        } else if (items.stream().noneMatch(i -> i.getClass().equals(item.getClass()) && i.getLang().equals(item.getLang()))) {
             items.add(item);
         }
         GuiManager.instance.guis.put(title, items);

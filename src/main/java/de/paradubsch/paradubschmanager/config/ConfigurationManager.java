@@ -21,6 +21,11 @@ public class ConfigurationManager {
         config.addDefault("tabprefix.default.team", "999Spieler");
         config.addDefault("tabprefix.default.color", "&7");
 
+        config.addDefault("bazaar.1.item", "OAK_LOG");
+        config.addDefault("bazaar.1.qty", 16);
+        config.addDefault("bazaar.1.offer", 25);
+        config.addDefault("bazaar.1.buy", 5);
+
         config.addDefault("chatprefix.default.prefix", "&7Spieler");
         config.addDefault("chatprefix.default.namecolor", "&7");
         config.addDefault("chatprefix.default.chatcolor", "&7");

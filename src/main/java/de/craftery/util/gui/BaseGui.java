@@ -27,6 +27,10 @@ public abstract class BaseGui {
         GuiManager.addGuiItem(this, guiItem, player, row, column);
     }
 
+    public <T extends AbstractGuiItem> void addAbstractItem(Class<T> guiItem, int row, int column, Object identifier, Object... args) {
+        GuiManager.addAbstractGuiItem(this, guiItem, player, row, column, identifier, args);
+    }
+
     public void applyArgs(Player p, Object... args) {
         this.player = p;
         this.args.clear();
