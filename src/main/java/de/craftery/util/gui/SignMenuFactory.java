@@ -39,6 +39,8 @@ public final class SignMenuFactory {
     }
 
     private void listen() {
+        // In Testing, ProtocolLib will not be available
+        if (ProtocolLibrary.getProtocolManager() == null) return;
         ProtocolLibrary.getProtocolManager().addPacketListener(new PacketAdapter(this.plugin, PacketType.Play.Client.UPDATE_SIGN) {
             @Override
             public void onPacketReceiving(PacketEvent event) {
