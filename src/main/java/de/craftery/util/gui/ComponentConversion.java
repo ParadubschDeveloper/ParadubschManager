@@ -1,4 +1,4 @@
-package paradubsch.util;
+package de.craftery.util.gui;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;

@@ -1,6 +1,8 @@
 package de.paradubsch.paradubschmanager.lifecycle.bazaar;
 
 import de.paradubsch.paradubschmanager.config.ConfigurationManager;
+import de.paradubsch.paradubschmanager.util.lang.BaseMessageType;
+import de.paradubsch.paradubschmanager.util.lang.Message;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 
@@ -31,5 +33,18 @@ public class Bazaar {
             items.add(item);
         }
         return items;
+    }
+
+    public static BaseMessageType translationForMaterial(Material mat) {
+        switch (mat) {
+            case OAK_LOG:
+                return Message.Constant.OAK_LOG;
+            case SPRUCE_LOG:
+                return Message.Constant.SPRUCE_LOG;
+            case ACACIA_LOG:
+                return Message.Constant.ACACIA_LOG;
+            default:
+                return Message.Constant.BLANK;
+        }
     }
 }

@@ -65,7 +65,8 @@ public class Message {
         CMD_TPA_NOT_GOT("cmdTpaNotGot", "&cDu hast keine Teleportationsanfrage von &a%1 &cbekommen!"),
         CMD_TPA_NO_TPA_GOT("cmdTpaNoTpaGot", "&cDu hast keine Teleportationsanfrage von bekommen!"),
         CMD_TPA_SELF("cmdTpaSelf", "&cDu kannst dich nicht zur dir selbst teleportieren!"),
-        CMD_RTP_NO_DESTINATION_FOUND("cmdRtpNoDestinationFound", "&cEs konnte kein Ziel gefunden werden!");
+        CMD_RTP_NO_DESTINATION_FOUND("cmdRtpNoDestinationFound", "&cEs konnte kein Ziel gefunden werden!"),
+        NOT_ENOUGH_MONEY("notEnoughMoney", "&cDafür hast du nicht genug Geld!");
 
 
         private final String key;
@@ -160,7 +161,8 @@ public class Message {
         CMD_ACCEPTED_TPA_RECEIVED("cmdAcceptedTpaReceived", "&6%1 &ahat deine Teleportationsanfrage angenommen."),
         CMD_TPA_CANCELED("cmdTpaCanceled", "&aDu hast deine Teleportationsanfrage an &6%1 &aabgebrochen."),
         JOB_CHANGED("jobChanged", "&aDu übst jetzt den Job &6%1 &aaus."),
-        COMMAND_TIMEOUT("commandTimeout", "Dieser Befehlt kann erst in &6%1 &7wieder verwendet werden, um Rechenkapazitäten zu sparen.");
+        COMMAND_TIMEOUT("commandTimeout", "Dieser Befehlt kann erst in &6%1 &7wieder verwendet werden, um Rechenkapazitäten zu sparen."),
+        BUY_ORDER_PLACED("buyOrderPlaced", "&aDu hast einen Kaufangebot mit &a%1&7x &6%2 &afür &a%3&6€ &aerstellt.");
 
         private final String key;
         private final String def;
@@ -207,7 +209,13 @@ public class Message {
         LUMBERJACK("constantLumberjack", "Holzfäller"),
         COLLECTOR("constantCollector", "Sammler"),
         HUNTER("constantHunter", "Jäger"),
-        FARMER("constantFarmer", "Bauer");
+        FARMER("constantFarmer", "Bauer"),
+        INSERT_NUMBER("constantInsertNumber", "Zahl eingeben"),
+        OAK_LOG("constantOakLog", "Eichenholz"),
+        SPRUCE_LOG("constantSpruceLog", "Fichtenholz"),
+        ACACIA_LOG("constantAcaciaLog", "Akazienholz"),
+        OBJECT_DUMP("constantObjectDump", "@ObjectDump<%1>"),
+        YOU_BUY("constantYouBuy", "Du kaufst:");
 
         private final String key;
         private final String def;
@@ -258,7 +266,24 @@ public class Message {
         JOB_FARMER_TITLE("guiJobFarmerTitle", "&7&lBauer"),
         JOB_FARMER_LORE("guiJobFarmerLore", "&aDu bekommst Geld indem du die Ernte einfährst."),
         BAZAAR_MAIN_TITLE("guiBazaarMainTitle", "&a&lBazaar"),
-        RTP_TITLE("guiRtpTitle", "&a&lRTP");
+        RTP_TITLE("guiRtpTitle", "&a&lRTP"),
+        BACK("guiBack", "&cZurück"),
+        PLACE_BUY_ORDER("guiPlaceBuyOrder", "&a&lKaufangebot stellen"),
+        BUY_ORDER_TITLE("guiBuyOrderTitle", "&a&lKaufangebot erstellen"),
+        AMOUNT("guiAmount", "&a&lAnzahl"),
+        AMOUNT_LORE("guiAmountLore", "&7Anzahl: &a%1"),
+        INVALID_AMOUNT_LORE("guiInvalidAmountLore", "&cUngültige Anzahl"),
+        INVALID_AMOUNT_LORE_MULTIPLE("guiInvalidAmountLoreMultiple", "&cDie Anzahl muss ein Vielfaches von %1 sein"),
+        PRICE("guiPrice", "&6&lPreis pro &a&l%1"),
+        PRICE_LORE("guiPriceLore", "&7Preis: &a%1&6€"),
+        INVALID_PRICE_LORE("guiInvalidPriceLore", "&cUngültiger Preis"),
+        PRICE_TO_HIGH("guiPriceToHigh", "&cDu kannst das bereits direkt für &a%1 &6€ &ckaufen."),
+        PRICE_TO_LOW_1("guiPriceToLow1", "&cDu musst mehr verlangen, da der Server dieses"),
+        PRICE_TO_LOW_2("guiPriceToLow2", "&cItem bereits ab &a%1 &6€ &cautomatisch kauft."),
+        PRICE_LORE_WITH_DESCRIPTION("guiPriceLoreWithDescription", "&7Preis: &a%1&6€ &7(&a%2 &7mal &a%3&6€&7)"),
+        TAXES_LORE("guiTaxesLore", "&7Steuern: &a+%1&6€"),
+        FINAL_PRICE_LORE("guiFinalPriceLore", "&7Gesamtpreis: &a%1&6€"),
+        NOT_ENOUGH_MONEY("guiNotEnoughMoney", "&cDu hast nicht genug Geld.");
 
         private final String key;
         private final String def;

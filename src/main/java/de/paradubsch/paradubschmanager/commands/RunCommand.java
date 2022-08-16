@@ -7,6 +7,8 @@ import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedCuboidRegion;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
 import com.sk89q.worldguard.protection.regions.RegionType;
+import de.craftery.util.gui.ComponentConversion;
+import de.craftery.util.gui.GuiManager;
 import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.util.Expect;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
@@ -20,7 +22,9 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class RunCommand implements CommandExecutor, TabCompleter {
@@ -61,11 +65,53 @@ public class RunCommand implements CommandExecutor, TabCompleter {
                 getDataInCachingManager(sender);
                 break;
             }
+            case "guiManagerGetGuis": {
+                guiManagerGetGuis(sender);
+                break;
+            }
+            case "guiManagerGetSessions": {
+                guiManagerGetSessions(sender);
+                break;
+            }
+            case "guiManagerGetSessionData": {
+                guiManagerGetSessionData(sender);
+                break;
+            }
+            case "guiManagerGetPrompts": {
+                guiManagerGetPrompts(sender);
+                break;
+            }
+            case "getSignMenuFactoryInputs": {
+                getSignMenuFactoryInputs(sender);
+                break;
+            }
         }
     }
 
+    private void getSignMenuFactoryInputs(CommandSender sender) {
+        MessageAdapter.sendMessage(sender, Message.Constant.OBJECT_DUMP, GuiManager.signFactory.getInputs().toString());
+    }
+
+    private void guiManagerGetPrompts(CommandSender sender) {
+        MessageAdapter.sendMessage(sender, Message.Constant.OBJECT_DUMP, GuiManager.prompts.toString());
+    }
+
+    private void guiManagerGetSessionData(CommandSender sender) {
+        MessageAdapter.sendMessage(sender, Message.Constant.OBJECT_DUMP, GuiManager.getInstance().getSessionData().toString());
+    }
+
+    private void guiManagerGetSessions(CommandSender sender) {
+        MessageAdapter.sendMessage(sender, Message.Constant.OBJECT_DUMP, GuiManager.getInstance().getSessions().toString());
+    }
+
+    private void guiManagerGetGuis(CommandSender sender) {
+        Map<String, String> guis = new HashMap<>();
+        GuiManager.getInstance().getGuis().forEach((key, value) -> guis.put(ComponentConversion.fromComponent(key), value.toString()));
+        MessageAdapter.sendMessage(sender, Message.Constant.OBJECT_DUMP, guis.toString());
+    }
+
     private void getDataInCachingManager(CommandSender sender) {
-        MessageAdapter.sendMessage(sender, Message.Constant.BLANK, ParadubschManager.getInstance().getCachingManager().getCache().toString());
+        MessageAdapter.sendMessage(sender, Message.Constant.OBJECT_DUMP, ParadubschManager.getInstance().getCachingManager().getCache().toString());
     }
 
     private void worldHeightFix(CommandSender sender) {
@@ -108,6 +154,11 @@ public class RunCommand implements CommandExecutor, TabCompleter {
         }
         if (args.length == 2 && args[0].equals("debug")) {
             l.add("getDataInCachingManager");
+            l.add("guiManagerGetGuis");
+            l.add("guiManagerGetSessions");
+            l.add("guiManagerGetSessionData");
+            l.add("guiManagerGetPrompts");
+            l.add("getSignMenuFactoryInputs");
             return l;
         }
 

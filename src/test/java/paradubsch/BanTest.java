@@ -14,7 +14,7 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.command.PluginCommand;
 import org.junit.jupiter.api.*;
 import paradubsch.util.ChatUtilities;
-import paradubsch.util.ComponentConversion;
+import de.craftery.util.gui.ComponentConversion;
 
 import static org.junit.jupiter.api.Assertions.*;
 

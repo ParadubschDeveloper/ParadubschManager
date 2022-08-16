@@ -32,27 +32,7 @@ public class LanguageManager {
     }
 
     public Component get (BaseMessageType msg, Language lang, String... args) {
-        FileConfiguration langConf = languageFiles.get(lang.getShortName());
-        String translation = langConf.getString( msg.getConfigPrefix() + "." + msg.getKey());
-        if (translation == null) {
-            translation = msg.getDefault();
-        }
-        for (int i = 1; i <= args.length; i++) {
-            translation = translation.replace("%" + i, args[i-1]);
-        }
-        String translated = ChatColor.translateAlternateColorCodes('&', translation);
-        Component component = Component.text("");
-        String[] parts = translated.split("(?=@.+<.*>)|(?<=>)");
-
-        for (String s : parts) {
-            if (s.matches("^@.+<.*>$")) {
-                component = component.append(ClickableComponent.from(s));
-            } else {
-                component = component.append(Component.text(ChatColor.GRAY + s));
-            }
-
-        }
-        return component;
+        return ChatComponentFactory.assemble(getString(msg, lang, args));
     }
 
     public String getString (BaseMessageType constant, Language lang, String... args) {

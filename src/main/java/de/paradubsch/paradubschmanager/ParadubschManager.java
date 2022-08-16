@@ -80,8 +80,8 @@ public final class ParadubschManager extends JavaPlugin {
 
         Bukkit.getConsoleSender().sendMessage("");
         Bukkit.getConsoleSender().sendMessage("==== Paradubsch ====");
-        Bukkit.getConsoleSender().sendMessage("Author: Paradubsch-Team");
-        Bukkit.getConsoleSender().sendMessage("Version: PREALPHA");
+        Bukkit.getConsoleSender().sendMessage("Author: Crafter_Y, Blintastisch_");
+        Bukkit.getConsoleSender().sendMessage("Version: 1.0");
         Bukkit.getConsoleSender().sendMessage("==== Paradubsch ====");
         Bukkit.getConsoleSender().sendMessage("");
         Bukkit.getConsoleSender().sendMessage("[Paradubsch] !> Initializing");
@@ -236,6 +236,7 @@ public final class ParadubschManager extends JavaPlugin {
         super();
     }
 
+    @SuppressWarnings("all")
     protected ParadubschManager(JavaPluginLoader loader, PluginDescriptionFile descriptionFile, File dataFolder, File file) {
         super(loader, descriptionFile, dataFolder, file);
     }

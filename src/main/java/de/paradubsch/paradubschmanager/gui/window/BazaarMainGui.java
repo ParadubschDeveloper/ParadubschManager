@@ -1,7 +1,7 @@
 package de.paradubsch.paradubschmanager.gui.window;
 
 import de.craftery.util.gui.BaseGui;
-import de.paradubsch.paradubschmanager.gui.items.BazaarItemButtom;
+import de.paradubsch.paradubschmanager.gui.items.BazaarItemButton;
 import de.paradubsch.paradubschmanager.gui.items.CancelButton;
 import de.paradubsch.paradubschmanager.lifecycle.bazaar.Bazaar;
 import de.paradubsch.paradubschmanager.lifecycle.bazaar.BazaarItemData;
@@ -26,9 +26,9 @@ public class BazaarMainGui extends BaseGui {
             // TODO: Add paging
             if (keyIndex > 45) continue;
 
-            int row = (int) Math.floor((double) keyIndex / 9);
+            int row = (int) Math.ceil(keyIndex / 9f);
             int col = keyIndex % 9;
-            this.addAbstractItem(BazaarItemButtom.class, row, col, item.getIndexKey(), item);
+            this.addAbstractItem(BazaarItemButton.class, row, col, item.getIndexKey(), item);
         }
 
         this.addItem(CancelButton.class, 6, 9);

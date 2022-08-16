@@ -1,31 +1,51 @@
 package de.craftery.util.gui;
 
+import de.paradubsch.paradubschmanager.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.lang.BaseMessageType;
 import de.paradubsch.paradubschmanager.util.lang.Language;
+import de.paradubsch.paradubschmanager.util.lang.Message;
 import lombok.Getter;
+import lombok.Setter;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.jetbrains.annotations.NotNull;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 
 public abstract class GuiItem {
+
+    @Setter
     @Getter
     private ItemStack itemStack;
 
     @Getter
     public Language lang;
+
+    /**
+     * The arguments passed when instantiating the Gui of this Item
+     */
     public final List<Object> windowArgs = new ArrayList<>();
 
+    /**
+     * The arguments passed when instantiating the Item
+     */
     public final List<Object> itemArgs = new ArrayList<>();
 
-    public void instantiate(Language lang) {
+    @Getter
+    private Player player;
+    private Class<? extends BaseGui> parent;
+
+    public void instantiate(Language lang, Player player, Class<? extends BaseGui> parent) {
         this.lang = lang;
+        this.player = player;
+        this.parent = parent;
     }
 
     public void setItemHead(String headId) {
@@ -68,6 +88,17 @@ public abstract class GuiItem {
         this.itemStack.setItemMeta(meta);
     }
 
+    public void addLore(String lore) {
+        ItemMeta meta = this.itemStack.getItemMeta();
+        List<Component> loreList = meta.lore();
+        if (loreList == null) {
+            loreList = new ArrayList<>();
+        }
+        loreList.add(Component.text(lore));
+        meta.lore(loreList);
+        this.itemStack.setItemMeta(meta);
+    }
+
     public void addLore(BaseMessageType loreTemplate, String... args) {
         Component displayName = GuiManager.getLanguageManager().get(loreTemplate, lang, args);
         this.addLore(displayName);
@@ -81,6 +112,43 @@ public abstract class GuiItem {
     public void applyItemArgs(Object... args) {
         this.itemArgs.clear();
         this.itemArgs.addAll(Arrays.asList(args));
+    }
+
+    public void prompt(Object identifier, String line1, String line2, String line3) {
+        if (line1 == null) {
+            line1 = "";
+        }
+        if (line2 == null) {
+            line2 = "";
+        }
+        if (line3 == null) {
+            line3 = "";
+        }
+        GuiManager.prompt(parent, player, identifier, line1, line2, line3);
+    }
+
+    public void prompt(PromptType type, Object identifier) {
+        String prompt = "";
+        switch (type) {
+            case INTEGER:
+                prompt = GuiManager.getLanguageManager().getString(Message.Constant.INSERT_NUMBER, MessageAdapter.getSenderLang(player));
+                break;
+        }
+        GuiManager.prompt(parent, player, identifier, "^^^^^^^^^^", prompt, "");
+    }
+
+    /**
+     * Returns the result of a fired prompt or null
+     */
+    public @Nullable String getPrompt(Object identifier) {
+        return GuiManager.getPrompt(player, identifier);
+    }
+
+    /**
+     * A Key-Value Store that is persisted while the player is in the GUI.
+     */
+    public @NotNull KVStore getKvStore() {
+        return new KVStore(player);
     }
 
     public abstract void onClick(Player p);

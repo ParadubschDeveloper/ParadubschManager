@@ -6,6 +6,7 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -15,6 +16,10 @@ public abstract class BaseGui {
     public Component title;
     public Inventory inv;
     public Player player;
+
+    /**
+     * The arguments passed when instantiating this Gui
+     */
     public final List<Object> args = new ArrayList<>();
 
     public void instantiate(Language lang, BaseMessageType title, int rows) {
@@ -23,11 +28,11 @@ public abstract class BaseGui {
         this.inv = GuiManager.createInventory(this.title, rows);
     }
 
-    public <T extends GuiItem> void addItem(Class<T> guiItem, int row, int column) {
-        GuiManager.addGuiItem(this, guiItem, player, row, column);
+    public <T extends GuiItem> void addItem(Class<T> guiItem, int row, int column, Object... args) {
+        GuiManager.addGuiItem(this, guiItem, player, row, column, args);
     }
 
-    public <T extends AbstractGuiItem> void addAbstractItem(Class<T> guiItem, int row, int column, Object identifier, Object... args) {
+    public <T extends AbstractGuiItem> void addAbstractItem(Class<T> guiItem, int row, int column, Serializable identifier, Object... args) {
         GuiManager.addAbstractGuiItem(this, guiItem, player, row, column, identifier, args);
     }
 
@@ -35,6 +40,13 @@ public abstract class BaseGui {
         this.player = p;
         this.args.clear();
         this.args.addAll(Arrays.asList(args));
+    }
+
+    /**
+     * A Key-Value Store that is persisted while the player is in the GUI.
+     */
+    public KVStore getKvStore() {
+        return new KVStore(player);
     }
 
     public abstract void init(Language lang);
