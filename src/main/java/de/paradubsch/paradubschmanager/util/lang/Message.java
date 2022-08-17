@@ -162,7 +162,10 @@ public class Message {
         CMD_TPA_CANCELED("cmdTpaCanceled", "&aDu hast deine Teleportationsanfrage an &6%1 &aabgebrochen."),
         JOB_CHANGED("jobChanged", "&aDu übst jetzt den Job &6%1 &aaus."),
         COMMAND_TIMEOUT("commandTimeout", "Dieser Befehlt kann erst in &6%1 &7wieder verwendet werden, um Rechenkapazitäten zu sparen."),
-        BUY_ORDER_PLACED("buyOrderPlaced", "&aDu hast einen Kaufangebot mit &a%1&7x &6%2 &afür &a%3&6€ &aerstellt.");
+        BUY_ORDER_PLACED("buyOrderPlaced", "&aDu hast einen Kaufangebot mit &a%1&7x &6%2 &afür &a%3&6€ &aerstellt."),
+        CMD_SAVE_REQUESTS_NO_REQUESTS("cmdSaveRequestsNoRequests", "Es gibt derzeit keine offenen Anfragen."),
+        CMD_SAVE_REQUESTS_REQUEST("cmdSaveRequestsRequest", "&6%2&7: &a%3 @ClickableComponent<Text=&7[&aBearbeiten&7]|SuggestCommand=/save tp %1 |HoverText=&aSaveanfrage bearbeiten> @ClickableComponent<Text=&7[&cLöschen&7]|SuggestCommand=/save delete %1 |HoverText=&cSaveanfrage Löschen>"),
+        CMD_SAVE_DELETE_SUCCESS("cmdSaveDeleteSuccess", "&aDie Saveanfrage wurde erfolgreich gelöscht.");
 
         private final String key;
         private final String def;

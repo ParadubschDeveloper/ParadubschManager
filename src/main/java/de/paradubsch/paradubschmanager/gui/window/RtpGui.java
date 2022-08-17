@@ -16,7 +16,7 @@ public class RtpGui extends BaseGui {
     @Override
     public void build() {
         this.addAbstractItem(RtpButton.class, 2, 2, "Farmwelt", Material.GRASS_BLOCK);
-        this.addAbstractItem(RtpButton.class, 2, 4, "Bauwelt", Material.IRON_PICKAXE);
+        this.addAbstractItem(RtpButton.class, 2, 4, "world", Material.IRON_PICKAXE);
         this.addAbstractItem(RtpButton.class, 2, 6, "world_the_end", Material.END_STONE);
         this.addAbstractItem(RtpButton.class, 2, 8, "world_nether", Material.NETHERRACK);
 

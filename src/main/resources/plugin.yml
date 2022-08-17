@@ -261,6 +261,12 @@ commands:
     permission: paradubsch.rtp
     permission-message: 'Du benötigst die Berechtigung paradubsch.rtp um das Menu zu nutzen!'
     usage: '/rtp'
+  saverequests:
+    description: Zeit alle offenen Save-Anfragen an.
+    aliases: [sr]
+    permission: paradubsch.saverequests
+    permission-message: 'Du benötigst die Berechtigung paradubsch.saverequests um alle offenen Save-Anfragen anzusehen!'
+    usage: '/saverequests'
 
 
 permissions:
@@ -420,3 +426,6 @@ permissions:
   paradubsch.rtp:
     description: "Erlaubt Zugriff auf den /rtp Befehl."
     default: true
+  paradubsch.saverequests:
+    description: "Erlaubt Zugriff auf den /saverequests Befehl."
+    default: false

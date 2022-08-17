@@ -192,6 +192,7 @@ public final class ParadubschManager extends JavaPlugin {
         register("job", new JobCommand());
         register("bazaar", new BazaarCommand());
         register("rtp", new RtpCommand());
+        register("saverequests", new SaveRequestsCommand());
     }
 
     List<String> registeredCommands = new ArrayList<>();

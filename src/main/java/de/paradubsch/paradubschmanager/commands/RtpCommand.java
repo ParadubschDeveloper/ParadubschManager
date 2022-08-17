@@ -36,9 +36,6 @@ public class RtpCommand implements CommandExecutor, TabCompleter {
             MessageAdapter.sendMessage(player, Message.Info.COMMAND_TIMEOUT, TimeCalculations.timeMsToExpiration(timeout - System.currentTimeMillis(), MessageAdapter.getSenderLang(player)));
             return true;
         }
-
-        // 10 Minutes
-        ParadubschManager.getInstance().getRtpTimeouts().put(player.getUniqueId(), System.currentTimeMillis() + 600000L);
         GuiManager.entryGui(RtpGui.class, player);
         return true;
     }

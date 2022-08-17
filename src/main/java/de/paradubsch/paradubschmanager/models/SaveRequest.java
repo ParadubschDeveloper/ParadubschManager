@@ -7,6 +7,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -39,6 +40,10 @@ public class SaveRequest extends BaseDatabaseEntity<SaveRequest, Integer> implem
 
     public static SaveRequest getById(Serializable id) {
         return BaseDatabaseEntity.getById(SaveRequest.class, id);
+    }
+
+    public static List<SaveRequest> getAll() {
+        return BaseDatabaseEntity.getAll(SaveRequest.class);
     }
 
     @Override
