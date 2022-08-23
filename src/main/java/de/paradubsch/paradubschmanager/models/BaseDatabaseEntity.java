@@ -4,7 +4,6 @@ import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.config.HibernateConfigurator;
 import lombok.Cleanup;
 import lombok.var;
-import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.hibernate.Session;
 import org.hibernate.Transaction;

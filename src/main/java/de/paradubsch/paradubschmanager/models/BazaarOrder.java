@@ -15,6 +15,8 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -76,6 +78,20 @@ public class BazaarOrder extends BaseDatabaseEntity<BazaarOrder, Long>{
         } catch (Exception e) {
             e.printStackTrace();
             return createByHolderOrderTypeItemTypePrice(holderUuid, orderType, material, price);
+        }
+    }
+
+    public static @NotNull List<BazaarOrder> getOrdersByMaterial(@NotNull OrderType orderType, @NotNull Material material) {
+        try {
+            @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
+
+            return session.createQuery("FROM BazaarOrder where orderType = :orderType and material = :material", BazaarOrder.class)
+                    .setParameter("orderType", orderType)
+                    .setParameter("material", material)
+                    .getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
         }
     }
 }

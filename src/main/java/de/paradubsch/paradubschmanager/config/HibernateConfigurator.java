@@ -53,6 +53,7 @@ public class HibernateConfigurator {
                 configuration.addAnnotatedClass(Warp.class);
                 configuration.addAnnotatedClass(WorkerPlayer.class);
                 configuration.addAnnotatedClass(BazaarOrder.class);
+                configuration.addAnnotatedClass(BazaarCollectable.class);
 
                 ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                         .applySettings(configuration.getProperties()).build();

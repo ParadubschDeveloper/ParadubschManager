@@ -254,6 +254,23 @@ public class GuiManager implements Listener {
         p.openInventory(inv);
     }
 
+    public static void rebuild(Player p) {
+        Stack<Class<? extends BaseGui>> stack = GuiManager.instance.sessions.get(p);
+        if (stack == null) return;
+        if (stack.size() == 0) return;
+        Class<? extends BaseGui> gui = stack.peek();
+        List<Object> args = GuiManager.instance.sessionData.get(p);
+
+        Inventory inv;
+        if (args == null || args.isEmpty()) {
+            inv = getGui(gui, p);
+        } else {
+            inv = getGui(gui, p, args.toArray());
+        }
+        if (inv == null) return;
+        p.openInventory(inv);
+    }
+
     public static void back(Player p) {
         Stack<Class<? extends BaseGui>> stack = GuiManager.instance.sessions.get(p);
         if (stack == null) return;

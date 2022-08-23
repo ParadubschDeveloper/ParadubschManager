@@ -165,7 +165,8 @@ public class Message {
         BUY_ORDER_PLACED("buyOrderPlaced", "&aDu hast einen Kaufangebot mit &a%1&7x &6%2 &afür &a%3&6€ &aerstellt."),
         CMD_SAVE_REQUESTS_NO_REQUESTS("cmdSaveRequestsNoRequests", "Es gibt derzeit keine offenen Anfragen."),
         CMD_SAVE_REQUESTS_REQUEST("cmdSaveRequestsRequest", "&6%2&7: &a%3 @ClickableComponent<Text=&7[&aBearbeiten&7]|SuggestCommand=/save tp %1 |HoverText=&aSaveanfrage bearbeiten> @ClickableComponent<Text=&7[&cLöschen&7]|SuggestCommand=/save delete %1 |HoverText=&cSaveanfrage Löschen>"),
-        CMD_SAVE_DELETE_SUCCESS("cmdSaveDeleteSuccess", "&aDie Saveanfrage wurde erfolgreich gelöscht.");
+        CMD_SAVE_DELETE_SUCCESS("cmdSaveDeleteSuccess", "&aDie Saveanfrage wurde erfolgreich gelöscht."),
+        SOLD_ITEM("soldItem", "Du hast &aerfolgreich &6%1&7x &6%2 &7für &a%3&6€ &7verkauft.");
 
         private final String key;
         private final String def;
@@ -269,7 +270,7 @@ public class Message {
         JOB_FARMER_TITLE("guiJobFarmerTitle", "&7&lBauer"),
         JOB_FARMER_LORE("guiJobFarmerLore", "&aDu bekommst Geld indem du die Ernte einfährst."),
         BAZAAR_MAIN_TITLE("guiBazaarMainTitle", "&a&lBazaar"),
-        RTP_TITLE("guiRtpTitle", "&a&lRTP"),
+        RTP_TITLE("guiRtpTitle", "&a&lRandom Teleport"),
         BACK("guiBack", "&cZurück"),
         PLACE_BUY_ORDER("guiPlaceBuyOrder", "&a&lKaufangebot stellen"),
         BUY_ORDER_TITLE("guiBuyOrderTitle", "&a&lKaufangebot erstellen"),
@@ -286,7 +287,13 @@ public class Message {
         PRICE_LORE_WITH_DESCRIPTION("guiPriceLoreWithDescription", "&7Preis: &a%1&6€ &7(&a%2 &7mal &a%3&6€&7)"),
         TAXES_LORE("guiTaxesLore", "&7Steuern: &a+%1&6€"),
         FINAL_PRICE_LORE("guiFinalPriceLore", "&7Gesamtpreis: &a%1&6€"),
-        NOT_ENOUGH_MONEY("guiNotEnoughMoney", "&cDu hast nicht genug Geld.");
+        NOT_ENOUGH_MONEY("guiNotEnoughMoney", "&cDu hast nicht genug Geld."),
+        SELL_INSTANT_TITLE("guiSellInstantTitle", "&a&lSofort verkaufen"),
+        PRICE_PER_UNIT_LORE("guiPricePerUnitLore", "&7Preis für &a%1 &7Einheiten %2"),
+        SELL_INSTANT_LORE("guiSellInstantLore", "&a%1&6x &7für &a%2&6€"),
+        SERVER_PRICE_LORE("guiServerPriceLore", "&7Server-Preis: &a%1&6€"),
+        AUCTION_NO_LONGER_AVAILABLE("guiAuctionNoLongerAvailable", "&cDieses Gebot ist nicht mehr verfügbar."),
+        NOT_ENOUGH_ITEMS("guiNotEnoughItems", "&cDu hast nicht genug &6%1&c!");
 
         private final String key;
         private final String def;

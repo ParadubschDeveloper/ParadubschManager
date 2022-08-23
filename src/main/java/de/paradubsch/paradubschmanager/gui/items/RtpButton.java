@@ -24,8 +24,8 @@ public class RtpButton extends AbstractGuiItem {
 
     @Override
     public void build() {
-        Material mat = (Material) this.itemArgs.get(0);
-        this.setItemMaterial(mat);
+        String headId = (String) this.itemArgs.get(0);
+        this.setItemHead(headId);
         if (this.getIdentifier() == "world_the_end") {
             this.setDisplayName("§7End");
         } else if (this.getIdentifier() == "world_nether") {
