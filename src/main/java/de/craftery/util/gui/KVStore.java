@@ -1,10 +1,12 @@
 package de.craftery.util.gui;
 
+import lombok.ToString;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@ToString
 public class KVStore {
     private final Map<Object, Object> store;
     private final Player player;

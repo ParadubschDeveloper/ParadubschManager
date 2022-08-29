@@ -85,7 +85,15 @@ public class RunCommand implements CommandExecutor, TabCompleter {
                 getSignMenuFactoryInputs(sender);
                 break;
             }
+            case "getGuiKvStore": {
+                getGuiKvStore(sender);
+                break;
+            }
         }
+    }
+
+    private void getGuiKvStore(CommandSender sender) {
+        MessageAdapter.sendMessage(sender, Message.Constant.OBJECT_DUMP, GuiManager.getKvStores().toString());
     }
 
     private void getSignMenuFactoryInputs(CommandSender sender) {
@@ -159,6 +167,7 @@ public class RunCommand implements CommandExecutor, TabCompleter {
             l.add("guiManagerGetSessionData");
             l.add("guiManagerGetPrompts");
             l.add("getSignMenuFactoryInputs");
+            l.add("getGuiKvStore");
             return l;
         }
 

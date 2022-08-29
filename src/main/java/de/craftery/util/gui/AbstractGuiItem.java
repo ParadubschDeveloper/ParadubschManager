@@ -26,6 +26,7 @@ public abstract class AbstractGuiItem extends GuiItem {
 
     private void addPersistentIdentifier() {
         ItemMeta meta = getItemStack().getItemMeta();
+        if (meta == null) return;
         meta.getPersistentDataContainer().set(GuiManager.itemIdentifier, new PersistentSerializableType(), this.getIdentifier());
         getItemStack().setItemMeta(meta);
     }

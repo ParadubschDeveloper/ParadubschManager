@@ -12,6 +12,8 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -55,5 +57,21 @@ public class BazaarCollectable extends BaseDatabaseEntity<BazaarCollectable, Lon
             collectable.setMaterial(material);
             return collectable;
         }
+    }
+
+    public static List<BazaarCollectable> getByHolder(String holderUuid) {
+        try {
+            @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
+            return session.createQuery("from BazaarCollectable where holder = :holder", BazaarCollectable.class)
+                    .setParameter("holder", holderUuid)
+                    .getResultList();
+        } catch (NoResultException e) {
+            return new ArrayList<>();
+        }
+    }
+
+    @Override
+    public BazaarCollectable clone() {
+        return (BazaarCollectable) super.clone();
     }
 }

@@ -53,7 +53,6 @@ public class HunterJob {
             case BLAZE:
             case COD:
             case DONKEY:
-            case ENDERMAN:
             case EVOKER:
             case GHAST:
             case GLOW_SQUID:
@@ -124,7 +123,7 @@ public class HunterJob {
         pd.setMoney(pd.getMoney() + realEarn);
 
         JobLevel nextLevel = worker.getJobLevel().nextLevel();
-        if (worker.getExperience() >= 500L * worker.getJobLevel().getDifficulty()) {
+        if (worker.getExperience() >= 250L * worker.getJobLevel().getDifficulty()) {
             if (nextLevel != JobLevel.MAX) {
                 worker.setJobLevel(nextLevel);
                 nextLevel = nextLevel.nextLevel();

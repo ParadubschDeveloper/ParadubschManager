@@ -293,7 +293,10 @@ public class Message {
         SELL_INSTANT_LORE("guiSellInstantLore", "&a%1&6x &7für &a%2&6€"),
         SERVER_PRICE_LORE("guiServerPriceLore", "&7Server-Preis: &a%1&6€"),
         AUCTION_NO_LONGER_AVAILABLE("guiAuctionNoLongerAvailable", "&cDieses Gebot ist nicht mehr verfügbar."),
-        NOT_ENOUGH_ITEMS("guiNotEnoughItems", "&cDu hast nicht genug &6%1&c!");
+        NOT_ENOUGH_ITEMS("guiNotEnoughItems", "&cDu hast nicht genug &6%1&c!"),
+        BAZAAR_COLLECT_TITLE("guiBazaarCollectTitle", "&a&lItems einsammeln"),
+        CLICK_TO_COLLECT("guiClickToCollect", "&aKlicke hier um die Items einzusammeln"),
+        COLLECTABLE_AMOUNT("guiCollectableAmount", "&6%1 &7Items abholbereit.");
 
         private final String key;
         private final String def;

@@ -16,7 +16,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class BaseDatabaseEntity<P extends BaseDatabaseEntity<?, ?>, ID extends Serializable> {
+public abstract class BaseDatabaseEntity<P extends BaseDatabaseEntity<?, ?>, ID extends Serializable> implements Cloneable {
     public abstract Serializable getIdentifyingColumn();
     public Serializable save() {
         Transaction transaction = null;
@@ -138,6 +138,16 @@ public abstract class BaseDatabaseEntity<P extends BaseDatabaseEntity<?, ?>, ID 
                     }
                 }
             }.runTaskTimer(ParadubschManager.getInstance(), 0, 1);
+        }
+    }
+
+    @Override
+    public BaseDatabaseEntity<?, ?> clone() {
+        try {
+            return (BaseDatabaseEntity<?, ?>) super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 }

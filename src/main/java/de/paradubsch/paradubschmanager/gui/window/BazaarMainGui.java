@@ -1,6 +1,7 @@
 package de.paradubsch.paradubschmanager.gui.window;
 
 import de.craftery.util.gui.BaseGui;
+import de.paradubsch.paradubschmanager.gui.items.BazaarCollectButton;
 import de.paradubsch.paradubschmanager.gui.items.BazaarItemButton;
 import de.paradubsch.paradubschmanager.gui.items.CancelButton;
 import de.paradubsch.paradubschmanager.lifecycle.bazaar.Bazaar;
@@ -31,6 +32,7 @@ public class BazaarMainGui extends BaseGui {
             this.addAbstractItem(BazaarItemButton.class, row, col, item.getIndexKey(), item);
         }
 
+        this.addItem(BazaarCollectButton.class, 6, 2);
         this.addItem(CancelButton.class, 6, 9);
     }
 }

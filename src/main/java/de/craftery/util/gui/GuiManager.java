@@ -17,6 +17,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -77,7 +78,9 @@ public class GuiManager implements Listener {
                     guiItem.build();
                     if (event.getCurrentItem().isSimilar(guiItem.getItemStack())) {
                         if (guiItem instanceof AbstractGuiItem) {
-                            PersistentDataContainer container = event.getCurrentItem().getItemMeta().getPersistentDataContainer();
+                            ItemMeta meta = event.getCurrentItem().getItemMeta();
+                            if (meta == null) return;
+                            PersistentDataContainer container = meta.getPersistentDataContainer();
                             if (!container.has(GuiManager.itemIdentifier, new PersistentSerializableType())) {
                                 Bukkit.getLogger().log(Level.WARNING, "Abstract Item has no identifier!");
                                 return;
