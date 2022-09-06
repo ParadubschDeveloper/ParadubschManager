@@ -4,7 +4,6 @@ import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.config.ConfigurationManager;
 import de.paradubsch.paradubschmanager.lifecycle.TabDecorationManager;
 import de.paradubsch.paradubschmanager.models.PlayerData;
-import de.paradubsch.paradubschmanager.util.Hibernate;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 import net.luckperms.api.LuckPerms;
@@ -15,6 +14,7 @@ import net.luckperms.api.node.types.InheritanceNode;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
+import java.util.logging.Level;
 
 public class PlaytimeManager implements Listener {
     private final Map<Player, PlaytimeInstance> cachedData = new HashMap<>();
@@ -32,7 +33,7 @@ public class PlaytimeManager implements Listener {
         ParadubschManager.getInstance().getServer().getPluginManager().registerEvents(this, ParadubschManager.getInstance());
         Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
             Bukkit.getOnlinePlayers().forEach(player -> {
-                PlayerData pd = Hibernate.getPlayerData(player);
+                PlayerData pd = PlayerData.getById(player.getUniqueId().toString());
                 PlaytimeInstance pi = new PlaytimeInstance();
                 pi.setPlaytime(pd.getPlaytime());
                 pi.setLastRecordTime(System.currentTimeMillis());
@@ -58,7 +59,7 @@ public class PlaytimeManager implements Listener {
         Player player = event.getPlayer();
 
         Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
-            PlayerData pd = Hibernate.getPlayerData(player);
+            PlayerData pd = PlayerData.getById(player.getUniqueId().toString());
             PlaytimeInstance pi = new PlaytimeInstance();
             pi.setPlaytime(pd.getPlaytime());
             pi.setLastRecordTime(System.currentTimeMillis());
@@ -66,7 +67,7 @@ public class PlaytimeManager implements Listener {
         });
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
 
@@ -82,9 +83,9 @@ public class PlaytimeManager implements Listener {
         cachedData.remove(player);
 
         Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
-            PlayerData pd = Hibernate.getPlayerData(player);
+            PlayerData pd = PlayerData.getById(player.getUniqueId().toString());
             pd.setPlaytime(newPlaytime);
-            Hibernate.save(pd);
+            pd.saveOrUpdate();
         });
     }
 
@@ -92,6 +93,7 @@ public class PlaytimeManager implements Listener {
         Bukkit.getScheduler().scheduleSyncRepeatingTask(ParadubschManager.getInstance(), () -> Bukkit.getOnlinePlayers().forEach(player -> {
             PlaytimeInstance pi = cachedData.get(player);
             if (pi == null) {
+                Bukkit.getLogger().log(Level.WARNING, "Player is not Cached.- This must be an error!");
                 return;
             }
 
@@ -101,12 +103,11 @@ public class PlaytimeManager implements Listener {
             pi.setLastRecordTime(System.currentTimeMillis());
             cachedData.put(player, pi);
 
-            checkPassedGroups(player, newPlaytime);
-
             Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
-                PlayerData pd = Hibernate.getPlayerData(player);
+                PlayerData pd = PlayerData.getById(player.getUniqueId().toString());
                 pd.setPlaytime(newPlaytime);
-                Hibernate.save(pd);
+                pd.saveOrUpdate();
+                checkPassedGroups(player, newPlaytime);
             });
         }), 20*60*5, 20*60*5);
     }
@@ -170,7 +171,7 @@ public class PlaytimeManager implements Listener {
     }
 
     private void applyGroup(Player player, String group) {
-        PlayerData target = Hibernate.getPlayerData(player);
+        PlayerData target = PlayerData.getById(player.getUniqueId().toString());
         LuckPerms api = ParadubschManager.getLuckPermsApi();
         if (api == null) return;
 
@@ -181,7 +182,7 @@ public class PlaytimeManager implements Listener {
         target.setChatPrefix(prefix);
         target.setNameColor(nameColor);
         target.setDefaultChatColor(chatColor);
-        Hibernate.save(target);
+        target.saveOrUpdate();
 
         UserManager userManager = api.getUserManager();
         CompletableFuture<User> userFuture = userManager.loadUser(player.getUniqueId());
