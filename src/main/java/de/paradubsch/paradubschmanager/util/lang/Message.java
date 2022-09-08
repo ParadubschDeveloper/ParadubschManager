@@ -297,7 +297,11 @@ public class Message {
         NOT_ENOUGH_ITEMS("guiNotEnoughItems", "&cDu hast nicht genug &6%1&c!"),
         BAZAAR_COLLECT_TITLE("guiBazaarCollectTitle", "&a&lItems einsammeln"),
         CLICK_TO_COLLECT("guiClickToCollect", "&aKlicke hier um die Items einzusammeln"),
-        COLLECTABLE_AMOUNT("guiCollectableAmount", "&6%1 &7Items abholbereit.");
+        COLLECTABLE_AMOUNT("guiCollectableAmount", "&6%1 &7Items abholbereit."),
+        PLACE_SELL_ORDER("guiPlaceSellOrder", "&a&lVerkaufsangebot stellen"),
+        SELL_ORDER_TITLE("guiSellOrderTitle", "&a&lVerkaufsangebot erstellen"),
+        SELL_PRICE_TO_HIGH("guiPriceToHigh", "&cDer Server bietet das bereits für &a%1 &6€ &can."),
+        SELL_PRICE_TOO_LOW("guiSellPriceTooLow", "&cDer Server kauft das bereits für &a%1 &6€");
 
         private final String key;
         private final String def;
