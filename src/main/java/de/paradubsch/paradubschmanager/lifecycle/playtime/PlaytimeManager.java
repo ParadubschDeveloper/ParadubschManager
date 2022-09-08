@@ -14,7 +14,6 @@ import net.luckperms.api.node.types.InheritanceNode;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -27,88 +26,54 @@ import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
 
 public class PlaytimeManager implements Listener {
-    private final Map<Player, PlaytimeInstance> cachedData = new HashMap<>();
+    private final Map<Player, Long> lastCached = new HashMap<>();
 
     public PlaytimeManager() {
         ParadubschManager.getInstance().getServer().getPluginManager().registerEvents(this, ParadubschManager.getInstance());
-        Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
-            Bukkit.getOnlinePlayers().forEach(player -> {
-                PlayerData pd = PlayerData.getById(player.getUniqueId().toString());
-                PlaytimeInstance pi = new PlaytimeInstance();
-                pi.setPlaytime(pd.getPlaytime());
-                pi.setLastRecordTime(System.currentTimeMillis());
-                cachedData.put(player, pi);
-            });
+        Bukkit.getOnlinePlayers().forEach(player -> {
+                lastCached.put(player, System.currentTimeMillis());
         });
         enableScheduler();
     }
 
     public long getPlaytime(Player player) {
-        PlaytimeInstance pi = cachedData.get(player);
-        if (pi == null) throw new RuntimeException("Player is not Cached.- This must be an error!");
-
-        long newPlaytime = pi.getPlaytime() + System.currentTimeMillis() - pi.getLastRecordTime();
-        pi.setPlaytime(newPlaytime);
-        pi.setLastRecordTime(System.currentTimeMillis());
-        cachedData.put(player, pi);
-        return newPlaytime;
+        Long lastCache = lastCached.get(player);
+        if (lastCache == null) throw new RuntimeException("Player is not Cached.- This must be an error!");
+        PlayerData pd = PlayerData.getById(player.getUniqueId().toString());
+        return pd.getPlaytime() + System.currentTimeMillis() - lastCache;
     }
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
-        Player player = event.getPlayer();
-
-        Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
-            PlayerData pd = PlayerData.getById(player.getUniqueId().toString());
-            PlaytimeInstance pi = new PlaytimeInstance();
-            pi.setPlaytime(pd.getPlaytime());
-            pi.setLastRecordTime(System.currentTimeMillis());
-            cachedData.put(player, pi);
-        });
+        lastCached.put(event.getPlayer(), System.currentTimeMillis());
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler
     public void onQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
 
-        PlaytimeInstance pi = cachedData.get(player);
-        if (pi == null) {
-            return;
+        Long lastCache = lastCached.get(player);
+        if (lastCache == null) {
+            throw new RuntimeException("Player is not Cached.- This must be an error!");
         }
-
-        long newPlaytime = pi.getPlaytime() + System.currentTimeMillis() - pi.getLastRecordTime();
-
-        pi.setPlaytime(newPlaytime);
-        pi.setLastRecordTime(System.currentTimeMillis());
-        cachedData.remove(player);
-
-        Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
-            PlayerData pd = PlayerData.getById(player.getUniqueId().toString());
-            pd.setPlaytime(newPlaytime);
-            pd.saveOrUpdate();
-        });
+        PlayerData pd = PlayerData.getById(player.getUniqueId().toString());
+        pd.setPlaytime(pd.getPlaytime() + System.currentTimeMillis() - lastCache);
+        pd.saveOrUpdate();
+        lastCached.remove(player);
     }
 
     private void enableScheduler () {
         Bukkit.getScheduler().scheduleSyncRepeatingTask(ParadubschManager.getInstance(), () -> Bukkit.getOnlinePlayers().forEach(player -> {
-            PlaytimeInstance pi = cachedData.get(player);
-            if (pi == null) {
+            Long lastCache = lastCached.get(player);
+            if (lastCache == null) {
                 Bukkit.getLogger().log(Level.WARNING, "Player is not Cached.- This must be an error!");
                 return;
             }
-
-            long newPlaytime = pi.getPlaytime() + System.currentTimeMillis() - pi.getLastRecordTime();
-
-            pi.setPlaytime(newPlaytime);
-            pi.setLastRecordTime(System.currentTimeMillis());
-            cachedData.put(player, pi);
-
-            Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
-                PlayerData pd = PlayerData.getById(player.getUniqueId().toString());
-                pd.setPlaytime(newPlaytime);
-                pd.saveOrUpdate();
-                checkPassedGroups(player, newPlaytime);
-            });
+            PlayerData pd = PlayerData.getById(player.getUniqueId().toString());
+            pd.setPlaytime(pd.getPlaytime() + System.currentTimeMillis() - lastCache);
+            pd.saveOrUpdate();
+            lastCached.put(player, System.currentTimeMillis());
+            checkPassedGroups(player, pd.getPlaytime());
         }), 20*60*5, 20*60*5);
     }
 

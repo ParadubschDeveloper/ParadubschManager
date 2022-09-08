@@ -26,6 +26,7 @@ public class HunterJob {
             case MULE:
             case PIG:
             case PIGLIN:
+            case ZOMBIFIED_PIGLIN:
             case PIGLIN_BRUTE:
             case SHEEP:
             case SHULKER:
@@ -70,8 +71,7 @@ public class HunterJob {
             case TRADER_LLAMA:
             case TROPICAL_FISH:
             case WANDERING_TRADER:
-            case WITCH:
-            case ZOMBIFIED_PIGLIN: {
+            case WITCH: {
                 worker.setExperience(worker.getExperience() + 2);
                 earn = 2;
                 progress = true;

@@ -166,7 +166,8 @@ public class Message {
         CMD_SAVE_REQUESTS_NO_REQUESTS("cmdSaveRequestsNoRequests", "Es gibt derzeit keine offenen Anfragen."),
         CMD_SAVE_REQUESTS_REQUEST("cmdSaveRequestsRequest", "&6%2&7: &a%3 @ClickableComponent<Text=&7[&aBearbeiten&7]|SuggestCommand=/save tp %1 |HoverText=&aSaveanfrage bearbeiten> @ClickableComponent<Text=&7[&cLöschen&7]|SuggestCommand=/save delete %1 |HoverText=&cSaveanfrage Löschen>"),
         CMD_SAVE_DELETE_SUCCESS("cmdSaveDeleteSuccess", "&aDie Saveanfrage wurde erfolgreich gelöscht."),
-        SOLD_ITEM("soldItem", "Du hast &aerfolgreich &6%1&7x &6%2 &7für &a%3&6€ &7verkauft.");
+        SOLD_ITEM("soldItem", "Du hast &aerfolgreich &6%1&7x &6%2 &7für &a%3&6€ &7verkauft."),
+        PLAYTIME_SET("playtimeSet", "&aDie Spielzeit von &6%1 &awurde erfolgreich auf &6%2 &ageändert.");
 
         private final String key;
         private final String def;

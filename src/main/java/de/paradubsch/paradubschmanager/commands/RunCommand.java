@@ -10,7 +10,9 @@ import com.sk89q.worldguard.protection.regions.RegionType;
 import de.craftery.util.gui.ComponentConversion;
 import de.craftery.util.gui.GuiManager;
 import de.paradubsch.paradubschmanager.ParadubschManager;
+import de.paradubsch.paradubschmanager.models.PlayerData;
 import de.paradubsch.paradubschmanager.util.Expect;
+import de.paradubsch.paradubschmanager.util.Hibernate;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 import org.bukkit.command.Command;
@@ -54,6 +56,10 @@ public class RunCommand implements CommandExecutor, TabCompleter {
                 worldHeightFix(sender);
                 break;
             }
+            case "setPlayerPlaytime": {
+                setPlayerPlaytime(sender, args);
+                break;
+            }
         }
     }
 
@@ -89,6 +95,19 @@ public class RunCommand implements CommandExecutor, TabCompleter {
                 getGuiKvStore(sender);
                 break;
             }
+        }
+    }
+
+    private void setPlayerPlaytime(CommandSender sender, String[] args) {
+        if (!Expect.minArgs(4, args)) return;
+        String player = args[2];
+        long playtime = Long.parseLong(args[3]);
+
+        PlayerData pd = Hibernate.getPlayerData(player);
+        if (pd != null) {
+            pd.setPlaytime(playtime);
+            pd.saveOrUpdate();
+            MessageAdapter.sendMessage(sender, Message.Info.PLAYTIME_SET, player, playtime + "");
         }
     }
 
@@ -158,8 +177,14 @@ public class RunCommand implements CommandExecutor, TabCompleter {
 
         if (args.length == 2 && args[0].equals("migrate")) {
             l.add("worldHeightFix");
+            l.add("setPlayerPlaytime");
             return l;
         }
+
+        if (args.length == 3 && args[0].equals("migrate") && args[1].equals("setPlayerPlaytime")) {
+            return null;
+        }
+
         if (args.length == 2 && args[0].equals("debug")) {
             l.add("getDataInCachingManager");
             l.add("guiManagerGetGuis");
