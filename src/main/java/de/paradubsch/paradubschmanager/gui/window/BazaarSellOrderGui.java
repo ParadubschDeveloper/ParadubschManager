@@ -16,7 +16,7 @@ public class BazaarSellOrderGui extends BaseGui {
     public void build() {
         BazaarItemData data = (BazaarItemData) this.args.get(0);
         this.addAbstractItem(BazaarSellPriceSelectorButton.class, 2, 3, data.getMaterial() + "priceBtn", data);
-        //this.addAbstractItem(BazaarPlaceSellOrderButton.class, 2, 8, data.getMaterial() + "sellBtn", data);
+        this.addAbstractItem(BazaarPlaceSellOrderButton.class, 2, 8, data.getMaterial() + "sellBtn", data);
         // TODO: Left off here. BazaarPlaceSellOrderButton and instant sell button is missing.
 
         this.addItem(BackButton.class, 3, 8);
