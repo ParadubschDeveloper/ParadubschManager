@@ -168,7 +168,8 @@ public class Message {
         CMD_SAVE_DELETE_SUCCESS("cmdSaveDeleteSuccess", "&aDie Saveanfrage wurde erfolgreich gelöscht."),
         SOLD_ITEM("soldItem", "Du hast &aerfolgreich &6%1&7x &6%2 &7für &a%3&6€ &7verkauft."),
         PLAYTIME_SET("playtimeSet", "&aDie Spielzeit von &6%1 &awurde erfolgreich auf &6%2 &ageändert."),
-        SELL_ORDER_PLACED("sellOrderPlaced", "&aDu hast ein Verkaufsangebot mit &a%1&7x &6%2 &afür &a%3&6€ &aerstellt.");
+        SELL_ORDER_PLACED("sellOrderPlaced", "&aDu hast ein Verkaufsangebot mit &a%1&7x &6%2 &afür &a%3&6€ &aerstellt."),
+        BOUGHT_ITEM("boughtItem", "Du hast &aerfolgreich &6%1&7x &6%2 &7für &a%3&6€ &7gekauft.");
 
         private final String key;
         private final String def;
@@ -304,7 +305,11 @@ public class Message {
         SELL_ORDER_TITLE("guiSellOrderTitle", "&a&lVerkaufsangebot erstellen"),
         SELL_PRICE_TO_HIGH("guiPriceToHigh", "&cDer Server bietet das bereits für &a%1 &6€ &can."),
         SELL_PRICE_TOO_LOW("guiSellPriceTooLow", "&cDer Server kauft das bereits für &a%1 &6€"),
-        SELL_ORDER_TAXES("guiSellOrderTaxesLore", "&7Du zahlst: &a%1&6€ &7Steuern");
+        SELL_ORDER_TAXES("guiSellOrderTaxesLore", "&7Du zahlst: &a%1&6€ &7Steuern"),
+        BUY_INSTANT_TITLE("guiBuyInstantTitle", "&a&lSofort kaufen"),
+        INCOME_PER_UNIT_LORE("guiIncomePerUnitLore", "&7Ertrag für &a%1 &7Einheiten %2"),
+        AUCTION_JUST_TAKEN("guiAuctionJustTaken", "&cDieses Gebot wurde gerade von jemand anderem gekauft."),
+        NOT_ENOUGH_INVENTORY_SPACE("guiNotEnoughInventorySpace", "&cDu hast nicht genug Platz im Inventar.");
 
         private final String key;
         private final String def;

@@ -23,6 +23,8 @@ public class BazaarItemGui extends BaseGui {
     public void build() {
         BazaarItemData data = (BazaarItemData) this.args.get(0);
 
+        this.addAbstractItem(BazaarInstantBuyButton.class, 2, 2, data.getMaterial(), data);
+
         this.addItem(BazaarBuyOrderButton.class, 2, 4, data);
 
         this.addItem(BazaarSellOrderButton.class, 2, 6, data);

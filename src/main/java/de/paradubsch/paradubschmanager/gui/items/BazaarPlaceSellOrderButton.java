@@ -6,6 +6,7 @@ import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.lifecycle.bazaar.Bazaar;
 import de.paradubsch.paradubschmanager.lifecycle.bazaar.BazaarItemData;
 import de.paradubsch.paradubschmanager.lifecycle.bazaar.OrderType;
+import de.paradubsch.paradubschmanager.models.BazaarCollectable;
 import de.paradubsch.paradubschmanager.models.BazaarOrder;
 import de.paradubsch.paradubschmanager.models.PlayerData;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
@@ -14,6 +15,10 @@ import de.paradubsch.paradubschmanager.util.lang.Message;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 public class BazaarPlaceSellOrderButton extends AbstractGuiItem {
     @Override
@@ -67,7 +72,37 @@ public class BazaarPlaceSellOrderButton extends AbstractGuiItem {
 
         MessageAdapter.sendMessage(p, Message.Info.SELL_ORDER_PLACED, data.getAmount() + "", blockName, price + "");
 
-        //TODO: check if sell orders can be resolved already
+        List<BazaarOrder> activeBuyOrders = BazaarOrder.getOrdersByMaterial(OrderType.BUY, data.getMaterial());
+        activeBuyOrders.sort(Comparator.comparingInt(BazaarOrder::getPrice));
+        Collections.reverse(activeBuyOrders);
+
+        int leftToSell = data.getAmount();
+        for (BazaarOrder buyOrder : activeBuyOrders) {
+            if (buyOrder.getPrice() >= order.getPrice()) {
+                BazaarCollectable collectable = BazaarCollectable.getByHolderItemType(buyOrder.getHolderUuid(), data.getMaterial());
+                collectable.setAmount(collectable.getAmount() + data.getAmount());
+                collectable.saveOrUpdate();
+
+                pd.setMoney(pd.getMoney() + buyOrder.getPrice());
+                pd.saveOrUpdate();
+
+                if (buyOrder.getAmount() > leftToSell) {
+                    buyOrder.setAmount(buyOrder.getAmount() - data.getAmount());
+                    buyOrder.saveOrUpdate();
+                    leftToSell = 0;
+                    break;
+                } else {
+                    leftToSell -= buyOrder.getAmount();
+                    buyOrder.delete();
+                }
+            }
+        }
+        if (leftToSell == 0) {
+            order.delete();
+        } else {
+            order.setAmount((long) leftToSell);
+            order.saveOrUpdate();
+        }
 
         GuiManager.rebuild(p);
     }

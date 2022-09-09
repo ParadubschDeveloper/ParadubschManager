@@ -32,7 +32,7 @@ public class BazaarMainGui extends BaseGui {
             this.addAbstractItem(BazaarItemButton.class, row, col, item.getIndexKey(), item);
         }
 
-        this.addItem(BazaarCollectButton.class, 6, 2);
+        this.addItem(BazaarCollectButton.class, 6, 1);
         this.addItem(CancelButton.class, 6, 9);
     }
 }
