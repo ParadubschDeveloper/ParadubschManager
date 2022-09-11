@@ -86,22 +86,16 @@ public class BazaarPlaceSellOrderButton extends AbstractGuiItem {
                 pd.setMoney(pd.getMoney() + buyOrder.getPrice());
                 pd.saveOrUpdate();
 
+                order.delete();
+
                 if (buyOrder.getAmount() > leftToSell) {
                     buyOrder.setAmount(buyOrder.getAmount() - data.getAmount());
                     buyOrder.saveOrUpdate();
-                    leftToSell = 0;
                     break;
                 } else {
-                    leftToSell -= buyOrder.getAmount();
                     buyOrder.delete();
                 }
             }
-        }
-        if (leftToSell == 0) {
-            order.delete();
-        } else {
-            order.setAmount((long) leftToSell);
-            order.saveOrUpdate();
         }
 
         GuiManager.rebuild(p);

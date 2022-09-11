@@ -4,14 +4,17 @@ import de.craftery.util.gui.AbstractGuiItem;
 import de.craftery.util.gui.GuiManager;
 import de.paradubsch.paradubschmanager.lifecycle.bazaar.BazaarItemData;
 import de.paradubsch.paradubschmanager.lifecycle.bazaar.OrderType;
+import de.paradubsch.paradubschmanager.models.BazaarCollectable;
 import de.paradubsch.paradubschmanager.models.BazaarOrder;
 import de.paradubsch.paradubschmanager.models.PlayerData;
-import de.paradubsch.paradubschmanager.util.Hibernate;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.StringValidator;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+
+import java.util.Comparator;
+import java.util.List;
 
 public class BazaarPlaceBuyOrderButton extends AbstractGuiItem {
     @Override
@@ -31,7 +34,7 @@ public class BazaarPlaceBuyOrderButton extends AbstractGuiItem {
 
         int finalPrice = price * batchAmount + taxes;
 
-        PlayerData pd = Hibernate.getPlayerData(p);
+        PlayerData pd = PlayerData.getById(p.getUniqueId().toString());
 
         if (pd.getMoney() < finalPrice) {
             MessageAdapter.sendMessage(p, Message.Error.NOT_ENOUGH_MONEY);
@@ -45,9 +48,40 @@ public class BazaarPlaceBuyOrderButton extends AbstractGuiItem {
         order.setAmount(order.getAmount() + totalAmount);
         order.saveOrUpdate();
 
-        MessageAdapter.sendMessage(p, Message.Info.BUY_ORDER_PLACED, totalAmount + "", blockName, finalPrice + "");
+        MessageAdapter.sendMessage(p, Message.Info.BUY_ORDER_PLACED, price + "", blockName, finalPrice + "");
 
-        //TODO: check if buy orders can be resolved already
+        List<BazaarOrder> activeSellOrders = BazaarOrder.getOrdersByMaterial(OrderType.SELL, data.getMaterial());
+        activeSellOrders.sort(Comparator.comparingInt(BazaarOrder::getPrice));
+
+        long leftToSell = order.getAmount();
+        for (BazaarOrder sellOrder : activeSellOrders) {
+            if (sellOrder.getPrice() <= order.getPrice()) {
+                PlayerData targetPd = PlayerData.getById(sellOrder.getHolderUuid());
+
+                if (sellOrder.getAmount() > leftToSell) {
+                    targetPd.setMoney(targetPd.getMoney() + (leftToSell / data.getAmount()) * sellOrder.getPrice());
+                    sellOrder.setAmount(sellOrder.getAmount() - leftToSell);
+                    sellOrder.saveOrUpdate();
+                    leftToSell = 0;
+                    break;
+                } else {
+                    targetPd.setMoney(targetPd.getMoney() + (sellOrder.getAmount() / data.getAmount()) * sellOrder.getPrice());
+                    leftToSell -= sellOrder.getAmount();
+                    sellOrder.delete();
+                }
+            }
+        }
+        long directSold = order.getAmount() - leftToSell;
+        BazaarCollectable collectable = BazaarCollectable.getByHolderItemType(p.getUniqueId().toString(), data.getMaterial());
+        collectable.setAmount(collectable.getAmount() + directSold);
+        collectable.saveOrUpdate();
+
+        if (leftToSell == 0) {
+            order.delete();
+        } else {
+            order.setAmount(leftToSell);
+            order.saveOrUpdate();
+        }
 
         GuiManager.back(p);
     }
@@ -79,7 +113,7 @@ public class BazaarPlaceBuyOrderButton extends AbstractGuiItem {
         this.addLore("");
         this.addLore(Message.Gui.FINAL_PRICE_LORE, finalPrice + "");
 
-        PlayerData pd = Hibernate.getPlayerData(this.getPlayer());
+        PlayerData pd = PlayerData.getById(this.getPlayer().getUniqueId().toString());
 
         if (pd.getMoney() < finalPrice) {
             this.addLore(Message.Gui.NOT_ENOUGH_MONEY);
