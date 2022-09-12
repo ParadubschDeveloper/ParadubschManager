@@ -7,8 +7,12 @@ import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedCuboidRegion;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
 import com.sk89q.worldguard.protection.regions.RegionType;
+import de.craftery.util.gui.ComponentConversion;
+import de.craftery.util.gui.GuiManager;
 import de.paradubsch.paradubschmanager.ParadubschManager;
+import de.paradubsch.paradubschmanager.models.PlayerData;
 import de.paradubsch.paradubschmanager.util.Expect;
+import de.paradubsch.paradubschmanager.util.Hibernate;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 import org.bukkit.command.Command;
@@ -20,7 +24,9 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class RunCommand implements CommandExecutor, TabCompleter {
@@ -50,6 +56,10 @@ public class RunCommand implements CommandExecutor, TabCompleter {
                 worldHeightFix(sender);
                 break;
             }
+            case "setPlayerPlaytime": {
+                setPlayerPlaytime(sender, args);
+                break;
+            }
         }
     }
 
@@ -61,11 +71,74 @@ public class RunCommand implements CommandExecutor, TabCompleter {
                 getDataInCachingManager(sender);
                 break;
             }
+            case "guiManagerGetGuis": {
+                guiManagerGetGuis(sender);
+                break;
+            }
+            case "guiManagerGetSessions": {
+                guiManagerGetSessions(sender);
+                break;
+            }
+            case "guiManagerGetSessionData": {
+                guiManagerGetSessionData(sender);
+                break;
+            }
+            case "guiManagerGetPrompts": {
+                guiManagerGetPrompts(sender);
+                break;
+            }
+            case "getSignMenuFactoryInputs": {
+                getSignMenuFactoryInputs(sender);
+                break;
+            }
+            case "getGuiKvStore": {
+                getGuiKvStore(sender);
+                break;
+            }
         }
     }
 
+    private void setPlayerPlaytime(CommandSender sender, String[] args) {
+        if (!Expect.minArgs(4, args)) return;
+        String player = args[2];
+        long playtime = Long.parseLong(args[3]);
+
+        PlayerData pd = Hibernate.getPlayerData(player);
+        if (pd != null) {
+            pd.setPlaytime(playtime);
+            pd.saveOrUpdate();
+            MessageAdapter.sendMessage(sender, Message.Info.PLAYTIME_SET, player, playtime + "");
+        }
+    }
+
+    private void getGuiKvStore(CommandSender sender) {
+        MessageAdapter.sendMessage(sender, Message.Constant.OBJECT_DUMP, GuiManager.getKvStores().toString());
+    }
+
+    private void getSignMenuFactoryInputs(CommandSender sender) {
+        MessageAdapter.sendMessage(sender, Message.Constant.OBJECT_DUMP, GuiManager.signFactory.getInputs().toString());
+    }
+
+    private void guiManagerGetPrompts(CommandSender sender) {
+        MessageAdapter.sendMessage(sender, Message.Constant.OBJECT_DUMP, GuiManager.prompts.toString());
+    }
+
+    private void guiManagerGetSessionData(CommandSender sender) {
+        MessageAdapter.sendMessage(sender, Message.Constant.OBJECT_DUMP, GuiManager.getInstance().getSessionData().toString());
+    }
+
+    private void guiManagerGetSessions(CommandSender sender) {
+        MessageAdapter.sendMessage(sender, Message.Constant.OBJECT_DUMP, GuiManager.getInstance().getSessions().toString());
+    }
+
+    private void guiManagerGetGuis(CommandSender sender) {
+        Map<String, String> guis = new HashMap<>();
+        GuiManager.getInstance().getGuis().forEach((key, value) -> guis.put(ComponentConversion.fromComponent(key), value.toString()));
+        MessageAdapter.sendMessage(sender, Message.Constant.OBJECT_DUMP, guis.toString());
+    }
+
     private void getDataInCachingManager(CommandSender sender) {
-        MessageAdapter.sendMessage(sender, Message.Constant.BLANK, ParadubschManager.getInstance().getCachingManager().getCache().toString());
+        MessageAdapter.sendMessage(sender, Message.Constant.OBJECT_DUMP, ParadubschManager.getInstance().getCachingManager().getCache().toString());
     }
 
     private void worldHeightFix(CommandSender sender) {
@@ -104,10 +177,22 @@ public class RunCommand implements CommandExecutor, TabCompleter {
 
         if (args.length == 2 && args[0].equals("migrate")) {
             l.add("worldHeightFix");
+            l.add("setPlayerPlaytime");
             return l;
         }
+
+        if (args.length == 3 && args[0].equals("migrate") && args[1].equals("setPlayerPlaytime")) {
+            return null;
+        }
+
         if (args.length == 2 && args[0].equals("debug")) {
             l.add("getDataInCachingManager");
+            l.add("guiManagerGetGuis");
+            l.add("guiManagerGetSessions");
+            l.add("guiManagerGetSessionData");
+            l.add("guiManagerGetPrompts");
+            l.add("getSignMenuFactoryInputs");
+            l.add("getGuiKvStore");
             return l;
         }
 

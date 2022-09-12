@@ -14,7 +14,6 @@ import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.gui.window.SaveConfirmGui;
 import de.paradubsch.paradubschmanager.models.SaveRequest;
 import de.paradubsch.paradubschmanager.util.Expect;
-import de.paradubsch.paradubschmanager.util.Hibernate;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 import net.kyori.adventure.text.Component;
@@ -57,7 +56,14 @@ public class SaveCommand implements CommandExecutor, TabCompleter {
             saveTp(p, id);
         }
 
-
+        if (args.length == 2 && args[0].equals("delete")) {
+            Integer id = Expect.parseInt(args[1]);
+            if (id == null) {
+                MessageAdapter.sendMessage(sender, Message.Error.CMD_SAVE_TP_INVALID_ID);
+                return true;
+            }
+            saveDelete(p, id);
+        }
         return true;
     }
 
@@ -79,7 +85,7 @@ public class SaveCommand implements CommandExecutor, TabCompleter {
                 MessageAdapter.sendMessage(p, Message.Error.SAVE_AXE_NOT_VALID);
                 return;
             }
-            SaveRequest saveRequest = Hibernate.getSaveRequest(saveRequestId);
+            SaveRequest saveRequest = SaveRequest.getById(saveRequestId);
 
             if (saveRequest == null) {
                 MessageAdapter.sendMessage(p, Message.Error.SAVE_AXE_NOT_VALID);
@@ -140,7 +146,7 @@ public class SaveCommand implements CommandExecutor, TabCompleter {
 
     private static void saveTp(Player p, Integer id) {
         Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
-            SaveRequest request = Hibernate.getSaveRequest(id);
+            SaveRequest request = SaveRequest.getById(id);
             if (request == null) {
                 MessageAdapter.sendMessage(p, Message.Error.CMD_SAVE_TP_INVALID_ID);
                 return;
@@ -156,6 +162,16 @@ public class SaveCommand implements CommandExecutor, TabCompleter {
                 p.getInventory().addItem(generateSaveAxe(p, request));
             });
         });
+    }
+
+    private static void saveDelete(Player p, Integer id) {
+        SaveRequest request = SaveRequest.getById(id);
+        if (request == null) {
+            MessageAdapter.sendMessage(p, Message.Error.CMD_SAVE_TP_INVALID_ID);
+            return;
+        }
+        request.delete();
+        MessageAdapter.sendMessage(p, Message.Info.CMD_SAVE_DELETE_SUCCESS);
     }
 
     private static ItemStack generateSaveAxe(Player p, SaveRequest saveRequest) {

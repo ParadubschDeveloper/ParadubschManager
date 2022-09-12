@@ -35,7 +35,7 @@ public class BuyhomeCommand implements CommandExecutor, TabCompleter {
                 int price = ConfigurationManager.getInt("homePrice") * playerData.getMaxHomes();
                 MessageAdapter.sendMessage(player, Message.Info.CMD_BUYHOME, price + "");
             } else if (args[0].equals("confirm")) {
-                int price = ConfigurationManager.getInt("homePrice");
+                int price = ConfigurationManager.getInt("homePrice") * playerData.getMaxHomes();
                 if (playerData.getMoney() < price) {
                     MessageAdapter.sendMessage(player, Message.Error.CMD_BUYHOME_NOT_ENOUGH_MONEY);
                     return;

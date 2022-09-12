@@ -22,15 +22,17 @@ public class LumberjackJob {
         boolean progress = false;
         switch (event.getBlock().getType()) {
             case OAK_LOG:
-            case BIRCH_LOG: {
+            case BIRCH_LOG:
+            case WARPED_STEM:
+            case CRIMSON_STEM: {
                 worker.setExperience(worker.getExperience() + 2);
-                earnPercent = 20;
+                earnPercent = 40;
                 progress = true;
                 break;
             }
             case ACACIA_LOG: {
                 worker.setExperience(worker.getExperience() + 3);
-                earnPercent = 50;
+                earnPercent = 60;
                 progress = true;
                 break;
             }
@@ -38,7 +40,7 @@ public class LumberjackJob {
             case JUNGLE_LOG:
             case DARK_OAK_LOG:
                 worker.setExperience(worker.getExperience() + 1);
-                earnPercent = 15;
+                earnPercent = 30;
                 progress = true;
                 break;
         }
@@ -63,17 +65,20 @@ public class LumberjackJob {
         ParadubschManager.getInstance().getJobManager()
                 .getProgressPartPercentage().put(UUID.fromString(worker.getUuid()), displayPercentage);
 
-        int moneyToGet = 0;
-        if (getMoney) {
-            moneyToGet = (int) Math.ceil(worker.getJobLevel().getMultiplier() * 1.01f);
-        }
-
         JobLevel nextLevel = worker.getJobLevel().nextLevel();
         if (worker.getExperience() >= 1000L * worker.getJobLevel().getDifficulty()) {
             if (nextLevel != JobLevel.MAX) {
                 worker.setJobLevel(nextLevel);
                 nextLevel = nextLevel.nextLevel();
             }
+        }
+
+        int moneyToGet = 0;
+        if (getMoney) {
+            moneyToGet = (int) Math.ceil(worker.getJobLevel().getMultiplier());
+        }
+        if (nextLevel == JobLevel.MAX) {
+            moneyToGet++;
         }
 
         if (getMoney) {

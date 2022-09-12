@@ -7,7 +7,6 @@ import com.sk89q.worldguard.protection.regions.ProtectedCuboidRegion;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
 import de.craftery.util.gui.GuiItem;
 import de.paradubsch.paradubschmanager.models.SaveRequest;
-import de.paradubsch.paradubschmanager.util.Hibernate;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 import org.bukkit.Bukkit;
@@ -20,8 +19,8 @@ public class SaveConfirmButton extends GuiItem {
     public void onClick(Player p) {
         p.closeInventory();
 
-        ProtectedCuboidRegion region1 = (ProtectedCuboidRegion) this.args.get(0);
-        SaveRequest saveRequest = (SaveRequest) this.args.get(1);
+        ProtectedCuboidRegion region1 = (ProtectedCuboidRegion) this.windowArgs.get(0);
+        SaveRequest saveRequest = (SaveRequest) this.windowArgs.get(1);
 
         RegionContainer container = WorldGuard.getInstance().getPlatform().getRegionContainer();
         if (container == null) return;

@@ -14,7 +14,7 @@ import org.bukkit.entity.Player;
 public class GsDeleteConfirmButton extends GuiItem {
     @Override
     public void onClick(Player p) {
-        ProtectedRegion region = (ProtectedRegion) this.args.get(0);
+        ProtectedRegion region = (ProtectedRegion) this.windowArgs.get(0);
 
         RegionContainer container = WorldGuard.getInstance().getPlatform().getRegionContainer();
         if (container == null) return;

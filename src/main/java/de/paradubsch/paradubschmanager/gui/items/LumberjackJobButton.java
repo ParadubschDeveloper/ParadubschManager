@@ -18,10 +18,12 @@ public class LumberjackJobButton extends GuiItem {
         workerPlayer.setExperience(0);
         workerPlayer.setJob(JobType.LUMBERJACK);
         workerPlayer.setJobLevel(JobLevel.ONE);
+        ParadubschManager.getInstance().getJobManager()
+                .getProgressPartPercentage().put(p.getUniqueId(), 0);
         workerPlayer.saveOrUpdate();
         Language lang = MessageAdapter.getSenderLang(p);
-        ParadubschManager.getInstance().getLanguageManager().getString(Message.Constant.LUMBERJACK, lang);
-        MessageAdapter.sendMessage(p, Message.Info.JOB_CHANGED, "Lumberjack");
+        String jobName = ParadubschManager.getInstance().getLanguageManager().getString(Message.Constant.LUMBERJACK, lang);
+        MessageAdapter.sendMessage(p, Message.Info.JOB_CHANGED, jobName);
         p.closeInventory();
     }
 

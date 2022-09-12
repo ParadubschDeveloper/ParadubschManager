@@ -268,31 +268,6 @@ public class Hibernate {
      * Deprecated. View File Header for more information.
      */
     @Deprecated
-    public static SaveRequest getSaveRequest(int id) {
-        Transaction transaction = null;
-        try {
-            @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
-
-            transaction = session.beginTransaction();
-
-            SaveRequest saveRequest = session.get(SaveRequest.class, id);
-            org.hibernate.Hibernate.initialize(saveRequest);
-            transaction.commit();
-            return saveRequest;
-
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    /**
-     * Deprecated. View File Header for more information.
-     */
-    @Deprecated
     public static PunishmentHolder getPunishmentHolder(PlayerData pd) {
         Transaction transaction = null;
         PunishmentHolder punishmentHolder;
