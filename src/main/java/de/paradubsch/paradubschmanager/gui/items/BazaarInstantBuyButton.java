@@ -34,6 +34,25 @@ public class BazaarInstantBuyButton extends AbstractGuiItem {
             return;
         }
 
+        List<BazaarOrder> orders = BazaarOrder.getOrdersByMaterial(OrderType.SELL, data.getMaterial());
+        orders.sort(Comparator.comparingInt(BazaarOrder::getPrice));
+
+        BazaarOrder order = null;
+        try {
+            order = orders.get(0);
+        } catch (IndexOutOfBoundsException ignored) {}
+
+        int buyPrice = data.getOffer();
+        PlayerData pd = PlayerData.getById(p.getUniqueId().toString());
+        if (order != null) {
+            buyPrice = order.getPrice();
+        }
+        if (pd.getMoney() < buyPrice) {
+            this.getKvStore().set(data.getMaterial().toString() + "notEnoughMoney", 1);
+            GuiManager.rebuild(p);
+            return;
+        }
+
         boolean received = false;
         for (int i = 0; i < 36; i++) {
             ItemStack item = p.getInventory().getItem(i);
@@ -60,17 +79,8 @@ public class BazaarInstantBuyButton extends AbstractGuiItem {
             GuiManager.rebuild(p);
             return;
         }
-        List<BazaarOrder> orders = BazaarOrder.getOrdersByMaterial(OrderType.SELL, data.getMaterial());
-        orders.sort(Comparator.comparingInt(BazaarOrder::getPrice));
 
-        BazaarOrder order = null;
-        try {
-            order = orders.get(0);
-        } catch (IndexOutOfBoundsException ignored) {}
-
-        int buyPrice = data.getOffer();
         if (order != null) {
-            buyPrice = order.getPrice();
             if (order.getAmount() == data.getAmount()) {
                 order.delete();
             } else {
@@ -80,11 +90,10 @@ public class BazaarInstantBuyButton extends AbstractGuiItem {
             BazaarCollectable collectable = BazaarCollectable.getByHolderItemType(order.getHolderUuid(), data.getMaterial());
             collectable.setAmount(collectable.getAmount() + data.getAmount());
             collectable.saveOrUpdate();
-            PlayerData pd = PlayerData.getById(order.getHolderUuid());
             pd.setMoney(pd.getMoney() + buyPrice);
             pd.saveOrUpdate();
         }
-        PlayerData pd = PlayerData.getById(p.getUniqueId().toString());
+
         pd.setMoney(pd.getMoney() - buyPrice);
         pd.saveOrUpdate();
         String translatedItemName = ParadubschManager.getInstance().getLanguageManager().getString(Bazaar.translationForMaterial(data.getMaterial()), MessageAdapter.getSenderLang(p));
@@ -126,6 +135,11 @@ public class BazaarInstantBuyButton extends AbstractGuiItem {
         if (Objects.equals(notEnoughInvSpace, 1)) {
             this.addLore(Message.Gui.NOT_ENOUGH_INVENTORY_SPACE);
             this.getKvStore().set(data.getMaterial().toString() + "notEnoughInventorySpace", 0);
+        }
+        Integer notEnoughMoney = (Integer) this.getKvStore().get(data.getMaterial().toString() + "notEnoughMoney");
+        if (Objects.equals(notEnoughMoney, 1)) {
+            this.addLore(Message.Gui.NOT_ENOUGH_MONEY);
+            this.getKvStore().set(data.getMaterial().toString() + "notEnoughMoney", 0);
         }
 
     }

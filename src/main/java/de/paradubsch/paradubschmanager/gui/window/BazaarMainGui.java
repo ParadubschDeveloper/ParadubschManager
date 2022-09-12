@@ -29,6 +29,7 @@ public class BazaarMainGui extends BaseGui {
 
             int row = (int) Math.ceil(keyIndex / 9f);
             int col = keyIndex % 9;
+            if (col == 0) col = 9;
             this.addAbstractItem(BazaarItemButton.class, row, col, item.getIndexKey(), item);
         }
 
