@@ -103,32 +103,32 @@ public class PlaytimeManager implements Listener {
                 MessageAdapter.sendMessage(player, Message.Info.CMD_RANKED_UP_SUCCESSFUL, "Lapis");
             }
 
-            //time > 60h || rank copper
-            if (time > 60*60*60*1000 && beforeGroupName.equals("group.lapis")) {
+            //time > 72h || rank copper
+            if (time > 72*60*60*1000 && beforeGroupName.equals("group.lapis")) {
                 applyGroup(player, "copper");
                 MessageAdapter.sendMessage(player, Message.Info.CMD_RANKED_UP_SUCCESSFUL, "Copper");
             }
 
-            //time > 225h || rank lithium
-            if (time > 225*60*60*1000 && beforeGroupName.equals("group.copper")) {
+            //time > 193h || rank lithium
+            if (time > 193*60*60*1000 && beforeGroupName.equals("group.copper")) {
                 applyGroup(player, "lithium");
                 MessageAdapter.sendMessage(player, Message.Info.CMD_RANKED_UP_SUCCESSFUL, "Lithium");
             }
 
-            //time > 505h || rank amethyst
-            if (time > 505*60*60*1000 && beforeGroupName.equals("group.lithium")) {
+            //time > 433h || rank amethyst
+            if (time > 433*60*60*1000 && beforeGroupName.equals("group.lithium")) {
                 applyGroup(player, "amethyst");
                 MessageAdapter.sendMessage(player, Message.Info.CMD_RANKED_UP_SUCCESSFUL, "Amethyst");
             }
 
-            //time > 630h || rank gold
-            if (time > 630*60*60*1000L && beforeGroupName.equals("group.amethyst")) {
+            //time > 721h || rank gold
+            if (time > 721*60*60*1000L && beforeGroupName.equals("group.amethyst")) {
                 applyGroup(player, "gold");
                 MessageAdapter.sendMessage(player, Message.Info.CMD_RANKED_UP_SUCCESSFUL, "Gold");
             }
 
-            //time > 817h || rank platin
-            if (time > 817*60*60*1000L && beforeGroupName.equals("group.gold")) {
+            //time > 2161h || rank platin
+            if (time > 2161*60*60*1000L && beforeGroupName.equals("group.gold")) {
                 applyGroup(player, "platin");
                 MessageAdapter.sendMessage(player, Message.Info.CMD_RANKED_UP_SUCCESSFUL, "Platin");
             }
