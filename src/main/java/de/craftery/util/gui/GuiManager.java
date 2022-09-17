@@ -1,7 +1,6 @@
 package de.craftery.util.gui;
 
 import de.paradubsch.paradubschmanager.models.PlayerData;
-import de.paradubsch.paradubschmanager.util.Hibernate;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.lang.Language;
 import de.paradubsch.paradubschmanager.util.lang.LanguageManager;
@@ -10,6 +9,7 @@ import me.arcaniax.hdb.api.DatabaseLoadEvent;
 import me.arcaniax.hdb.api.HeadDatabaseAPI;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -72,6 +72,7 @@ public class GuiManager implements Listener {
             Bukkit.getScheduler().runTaskLaterAsynchronously(GuiManager.plugin, () -> {
                 guis.get(event.getView().title()).forEach(guiItem -> {
                     if (event.getCurrentItem() == null) return;
+                    if (event.getCurrentItem().getType() == Material.AIR) return;
                     Class<? extends BaseGui> gui = sessions.get((Player) event.getWhoClicked()).peek();
                     guiItem.instantiate(MessageAdapter.getSenderLang(event.getWhoClicked()), (Player) event.getWhoClicked(), gui);
                     guiItem.applyWindowArgs(GuiManager.instance.sessionData.get((Player) event.getWhoClicked()).toArray());
@@ -86,8 +87,8 @@ public class GuiManager implements Listener {
                                 return;
                             }
                             Serializable identifier = container.get(GuiManager.itemIdentifier, new PersistentSerializableType());
-                            if (!((AbstractGuiItem) guiItem).getIdentifier().equals(identifier)) {
-                                Bukkit.getLogger().log(Level.INFO, "Got: " + ((AbstractGuiItem) guiItem).getIdentifier() + " Expected: " + identifier);
+                            if (!guiItem.getIdentifier().equals(identifier)) {
+                                Bukkit.getLogger().log(Level.INFO, "Got: " + guiItem.getIdentifier() + " Expected: " + identifier);
                                 return;
                             }
                         }
@@ -124,6 +125,7 @@ public class GuiManager implements Listener {
             item.applyWindowArgs(GuiManager.instance.sessionData.get(p).toArray());
             item.applyItemArgs(itemArgs);
             item.instantiate(src.lang, p, src.getClass());
+            item.setIdentifier(src.lang.toString() + guiItem.getName());
             item.build();
             try {
                 src.inv.setItem((column - 1) + (row - 1) * 9, item.getItemStack());
@@ -131,7 +133,7 @@ public class GuiManager implements Listener {
                 src.inv.addItem(item.getItemStack());
             }
 
-            registerGuiItem(src.title, item, null);
+            registerGuiItem(src.title, item);
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         }
@@ -143,7 +145,7 @@ public class GuiManager implements Listener {
             item.applyWindowArgs(GuiManager.instance.sessionData.get(p).toArray());
             item.applyItemArgs(itemArgs);
             item.instantiate(src.lang, p, src.getClass());
-            item.setIdentifier(identifier);
+            item.setIdentifier(src.lang.toString() + guiItem.getName() + identifier.toString());
             item.build();
             try {
                 src.inv.setItem((column - 1) + (row - 1) * 9, item.getItemStack());
@@ -151,7 +153,7 @@ public class GuiManager implements Listener {
                 src.inv.addItem(item.getItemStack());
             }
 
-            registerGuiItem(src.title, item, identifier);
+            registerGuiItem(src.title, item);
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         }
@@ -163,19 +165,11 @@ public class GuiManager implements Listener {
         }
     }
 
-    private static void registerGuiItem(Component title, GuiItem item, Serializable identifier) {
+    private static void registerGuiItem(Component title, GuiItem item) {
         registerGui(title);
         Map<Component, List<GuiItem>> gui = GuiManager.instance.guis;
         List<GuiItem> items = gui.get(title);
-        if (item instanceof AbstractGuiItem) {
-            if (items.stream().noneMatch(i ->
-                    i.getClass().equals(item.getClass()) &&
-                            i.getLang().equals(item.getLang()) &&
-                            ((AbstractGuiItem) i).getIdentifier().equals(identifier)
-            )) {
-                items.add(item);
-            }
-        } else if (items.stream().noneMatch(i -> i.getClass().equals(item.getClass()) && i.getLang().equals(item.getLang()))) {
+        if (items.stream().noneMatch(i -> i.getIdentifier().equals(item.getIdentifier()))) {
             items.add(item);
         }
         GuiManager.instance.guis.put(title, items);
@@ -183,7 +177,7 @@ public class GuiManager implements Listener {
 
     private static <T extends BaseGui> Inventory getGui (Class<T> gui, Player p, Object... args) {
         try {
-            PlayerData playerData = Hibernate.getPlayerData(p);
+            PlayerData playerData = PlayerData.getById(p.getUniqueId().toString());
             Language playerLang = Language.getLanguageByShortName(playerData.getLanguage());
             BaseGui window = gui.getConstructor().newInstance();
             window.applyArgs(p, args);

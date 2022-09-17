@@ -48,7 +48,7 @@ public class BazaarPlaceBuyOrderButton extends AbstractGuiItem {
         order.setAmount(order.getAmount() + totalAmount);
         order.saveOrUpdate();
 
-        MessageAdapter.sendMessage(p, Message.Info.BUY_ORDER_PLACED, price + "", blockName, finalPrice + "");
+        MessageAdapter.sendMessage(p, Message.Info.BUY_ORDER_PLACED, totalAmount + "", blockName, (price * batchAmount) + "");
 
         List<BazaarOrder> activeSellOrders = BazaarOrder.getOrdersByMaterial(OrderType.SELL, data.getMaterial());
         activeSellOrders.sort(Comparator.comparingInt(BazaarOrder::getPrice));
@@ -72,9 +72,11 @@ public class BazaarPlaceBuyOrderButton extends AbstractGuiItem {
             }
         }
         long directSold = order.getAmount() - leftToSell;
-        BazaarCollectable collectable = BazaarCollectable.getByHolderItemType(p.getUniqueId().toString(), data.getMaterial());
-        collectable.setAmount(collectable.getAmount() + directSold);
-        collectable.saveOrUpdate();
+        if (leftToSell != order.getAmount()) {
+            BazaarCollectable collectable = BazaarCollectable.getByHolderItemType(p.getUniqueId().toString(), data.getMaterial());
+            collectable.setAmount(collectable.getAmount() + directSold);
+            collectable.saveOrUpdate();
+        }
 
         if (leftToSell == 0) {
             order.delete();

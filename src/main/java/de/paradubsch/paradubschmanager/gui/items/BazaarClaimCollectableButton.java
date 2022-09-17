@@ -13,7 +13,7 @@ import org.bukkit.inventory.ItemStack;
 public class BazaarClaimCollectableButton extends AbstractGuiItem {
     @Override
     public void onClick(Player p) {
-        BazaarCollectable collectable = (BazaarCollectable) this.getKvStore().get(this.getIdentifier().toString() + "newestCollectable");
+        BazaarCollectable collectable = (BazaarCollectable) this.getKvStore().get(this.itemArgs.get(0).toString() + "newestCollectable");
         for (int i = 0; i < 36; i++) {
             ItemStack item = p.getInventory().getItem(i);
             if (item == null) {
@@ -35,7 +35,7 @@ public class BazaarClaimCollectableButton extends AbstractGuiItem {
 
     @Override
     public void build() {
-        BazaarCollectable collectable = (BazaarCollectable) this.getKvStore().get(this.getIdentifier().toString() + "newestCollectable");
+        BazaarCollectable collectable = (BazaarCollectable) this.getKvStore().get(this.itemArgs.get(0).toString() + "newestCollectable");
         if (collectable != null) {
             this.setItemMaterial(collectable.getMaterial());
             this.setDisplayName(Bazaar.translationForMaterial(collectable.getMaterial()));

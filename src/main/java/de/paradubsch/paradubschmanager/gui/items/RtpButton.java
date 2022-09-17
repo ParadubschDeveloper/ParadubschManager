@@ -18,7 +18,7 @@ public class RtpButton extends AbstractGuiItem {
         ParadubschManager.getInstance().getRtpTimeouts().put(p.getUniqueId(), System.currentTimeMillis() + 600000L);
 
         p.closeInventory();
-        World world = Bukkit.getWorld((String) this.getIdentifier());
+        World world = Bukkit.getWorld((String) this.itemArgs.get(2));
         RtpCommand.rtp(p, world, 1);
     }
 
@@ -26,14 +26,6 @@ public class RtpButton extends AbstractGuiItem {
     public void build() {
         String headId = (String) this.itemArgs.get(0);
         this.setItemHead(headId);
-        if (this.getIdentifier() == "world_the_end") {
-            this.setDisplayName("§7End");
-        } else if (this.getIdentifier() == "world_nether") {
-            this.setDisplayName("§7Nether");
-        } else if (this.getIdentifier() == "world") {
-            this.setDisplayName("§7Bauwelt");
-        } else {
-            this.setDisplayName("§7" + this.getIdentifier());
-        }
+        this.setDisplayName("§7" + this.itemArgs.get(1));
     }
 }

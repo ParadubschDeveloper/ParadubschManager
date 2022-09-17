@@ -29,10 +29,10 @@ public class RtpGui extends BaseGui {
         this.addItem(PlaceholderButton.class, 1, 5, Material.WHITE_STAINED_GLASS_PANE);
         this.addItem(PlaceholderButton.class, 3, 5, Material.WHITE_STAINED_GLASS_PANE);
 
-        this.addAbstractItem(RtpButton.class, 2, 2, "Farmwelt", "32442");
-        this.addAbstractItem(RtpButton.class, 2, 4, "world", "40774");
-        this.addAbstractItem(RtpButton.class, 2, 6, "world_the_end", "34506");
-        this.addAbstractItem(RtpButton.class, 2, 8, "world_nether", "3030");
+        this.addAbstractItem(RtpButton.class, 2, 2, "Farmwelt", "32442", "Farmwelt", "Farmwelt");
+        this.addAbstractItem(RtpButton.class, 2, 4, "world", "40774", "Bauwelt", "world");
+        this.addAbstractItem(RtpButton.class, 2, 6, "world_the_end", "34506", "End", "world_the_end");
+        this.addAbstractItem(RtpButton.class, 2, 8, "world_nether", "3030", "Nether", "world_nether");
 
         this.addItem(CancelButton.class, 3, 9);
     }

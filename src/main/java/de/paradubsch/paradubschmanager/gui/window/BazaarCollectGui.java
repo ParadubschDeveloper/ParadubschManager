@@ -29,7 +29,7 @@ public class BazaarCollectGui extends BaseGui {
             System.out.println("Set collectable");
             this.getKvStore().set(collectable.getMaterial().toString() + "newestCollectable", collectable);
             System.out.println("Add item");
-            this.addAbstractItem(BazaarClaimCollectableButton.class, row, col, collectable.getMaterial());
+            this.addAbstractItem(BazaarClaimCollectableButton.class, row, col, collectable.getMaterial(), collectable.getMaterial());
         }
 
         this.addItem(BackButton.class, 6, 8);

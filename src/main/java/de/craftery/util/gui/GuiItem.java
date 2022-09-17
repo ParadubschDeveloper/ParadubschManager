@@ -28,6 +28,10 @@ public abstract class GuiItem {
     @Getter
     public Language lang;
 
+    @Getter
+    @Setter
+    private String identifier;
+
     /**
      * The arguments passed when instantiating the Gui of this Item
      */
@@ -149,6 +153,11 @@ public abstract class GuiItem {
      */
     public @NotNull KVStore getKvStore() {
         return new KVStore(player);
+    }
+
+    @Override
+    public String toString() {
+        return this.getIdentifier();
     }
 
     public abstract void onClick(Player p);
