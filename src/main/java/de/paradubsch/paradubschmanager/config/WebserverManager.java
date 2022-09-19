@@ -9,6 +9,8 @@ import org.eclipse.jetty.server.handler.ContextHandler;
 import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.util.thread.QueuedThreadPool;
 
+import java.io.File;
+
 public class WebserverManager {
     private Server webServer;
     private ServerConnector webServerConnector;
@@ -27,7 +29,7 @@ public class WebserverManager {
         ContextHandler ctx = new ContextHandler("/downloadBackup");
         ResourceHandler resourceHandler = new ResourceHandler();
         resourceHandler.setDirAllowed(false);
-        resourceHandler.setResourceBase(".\\plugins\\WorldEdit\\uploadSchematics");
+        resourceHandler.setResourceBase("." + File.separator + "plugins" + File.separator + "WorldEdit" + File.separator + "uploadSchematics");
         ctx.setHandler(resourceHandler);
         webServer.setHandler(ctx);
 

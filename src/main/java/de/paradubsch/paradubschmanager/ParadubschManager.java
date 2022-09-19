@@ -109,7 +109,7 @@ public final class ParadubschManager extends JavaPlugin {
         this.webServer = new WebserverManager().startWebserver();
 
         Bukkit.getConsoleSender().sendMessage("[Paradubsch] !>> Deleting old backups");
-        File index = new File(".\\plugins\\WorldEdit\\uploadSchematics");
+        File index = new File("." + File.separator + "plugins" + File.separator + "WorldEdit" + File.separator + "uploadSchematics");
         if (index.exists()) {
             String[] entries = index.list();
             if (entries != null) {
