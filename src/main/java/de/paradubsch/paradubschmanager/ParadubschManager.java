@@ -8,6 +8,7 @@ import de.craftery.util.gui.GuiManager;
 import de.paradubsch.paradubschmanager.commands.*;
 import de.paradubsch.paradubschmanager.config.ConfigurationManager;
 import de.paradubsch.paradubschmanager.config.HibernateConfigurator;
+import de.paradubsch.paradubschmanager.config.WebserverManager;
 import de.paradubsch.paradubschmanager.lifecycle.*;
 import de.paradubsch.paradubschmanager.lifecycle.jobs.JobManager;
 import de.paradubsch.paradubschmanager.lifecycle.playtime.PlaytimeManager;
@@ -69,6 +70,11 @@ public final class ParadubschManager extends JavaPlugin {
     @Getter
     private final Map<UUID, Long> rtpTimeouts = new HashMap<>();
 
+    @Getter
+    private final Map<UUID, Long> gsBackupTimeouts = new HashMap<>();
+
+    private WebserverManager webServer;
+
     @Override
     public void onEnable() {
         instance = this;
@@ -99,6 +105,27 @@ public final class ParadubschManager extends JavaPlugin {
         languageManager = new LanguageManager();
         playtimeManager = new PlaytimeManager();
         this.guiManager = new GuiManager(this, languageManager);
+        Bukkit.getConsoleSender().sendMessage("[Paradubsch] !>> Starting Web Service");
+        this.webServer = new WebserverManager().startWebserver();
+
+        Bukkit.getConsoleSender().sendMessage("[Paradubsch] !>> Deleting old backups");
+        File index = new File(".\\plugins\\WorldEdit\\uploadSchematics");
+        if (index.exists()) {
+            String[] entries = index.list();
+            if (entries != null) {
+                for (String s : entries) {
+                    File currentFile = new File(index.getPath(), s);
+                    if (!currentFile.delete()) {
+                        Bukkit.getLogger().warning("Could not delete file " + currentFile.getName());
+                    }
+
+                }
+            }
+            if (!index.delete()) {
+                Bukkit.getLogger().warning("Could not delete " + index.getName());
+            }
+        }
+
         Bukkit.getConsoleSender().sendMessage("[Paradubsch] !> Initialization done");
 
     }
@@ -136,6 +163,10 @@ public final class ParadubschManager extends JavaPlugin {
         guiManager = null;
         cachingManager = null;
         jobManager = null;
+
+        webServer.stopWebserver();
+        webServer = null;
+
         unregisterCommands();
         HibernateConfigurator.shutdown();
         System.gc();

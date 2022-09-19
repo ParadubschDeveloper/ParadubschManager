@@ -121,6 +121,10 @@ public class ChatComponentFactory {
             component = component.clickEvent(ClickEvent.runCommand(args.get("ClickCommand")));
         }
 
+        if (args.containsKey("OpenUrl")){
+            component = component.clickEvent(ClickEvent.openUrl(args.get("OpenUrl")));
+        }
+
         if (args.containsKey("SuggestCommand")){
             component = component.clickEvent(ClickEvent.suggestCommand(args.get("SuggestCommand")));
         }

@@ -15,7 +15,7 @@ public class RtpButton extends AbstractGuiItem {
     @Override
     public void onClick(Player p) {
         // 10 Minutes
-        ParadubschManager.getInstance().getRtpTimeouts().put(p.getUniqueId(), System.currentTimeMillis() + 600000L);
+        ParadubschManager.getInstance().getRtpTimeouts().put(p.getUniqueId(), System.currentTimeMillis() + 30000L);
 
         p.closeInventory();
         World world = Bukkit.getWorld((String) this.itemArgs.get(2));

@@ -429,3 +429,6 @@ permissions:
   paradubsch.saverequests:
     description: "Erlaubt Zugriff auf den /saverequests Befehl."
     default: false
+  paradubsch.gs.backup:
+    description: "Erlaubt Zugriff auf den /gs backup Befehl."
+    default: false

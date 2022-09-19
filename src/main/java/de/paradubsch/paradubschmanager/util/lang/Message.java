@@ -66,7 +66,8 @@ public class Message {
         CMD_TPA_NO_TPA_GOT("cmdTpaNoTpaGot", "&cDu hast keine Teleportationsanfrage von bekommen!"),
         CMD_TPA_SELF("cmdTpaSelf", "&cDu kannst dich nicht zur dir selbst teleportieren!"),
         CMD_RTP_NO_DESTINATION_FOUND("cmdRtpNoDestinationFound", "&cEs konnte kein Ziel gefunden werden!"),
-        NOT_ENOUGH_MONEY("notEnoughMoney", "&cDafür hast du nicht genug Geld!");
+        NOT_ENOUGH_MONEY("notEnoughMoney", "&cDafür hast du nicht genug Geld!"),
+        CMD_GS_BACKUP_FAILED("cmdGsBackupFailed", "&cDas Backup konnte nicht erstellt werden!");
 
 
         private final String key;
@@ -169,7 +170,8 @@ public class Message {
         SOLD_ITEM("soldItem", "Du hast &aerfolgreich &6%1&7x &6%2 &7für &a%3&6€ &7verkauft."),
         PLAYTIME_SET("playtimeSet", "&aDie Spielzeit von &6%1 &awurde erfolgreich auf &6%2 &ageändert."),
         SELL_ORDER_PLACED("sellOrderPlaced", "&aDu hast ein Verkaufsangebot mit &a%1&7x &6%2 &afür &a%3&6€ &aerstellt."),
-        BOUGHT_ITEM("boughtItem", "Du hast &aerfolgreich &6%1&7x &6%2 &7für &a%3&6€ &7gekauft.");
+        BOUGHT_ITEM("boughtItem", "Du hast &aerfolgreich &6%1&7x &6%2 &7für &a%3&6€ &7gekauft."),
+        CMD_GS_BACKUP_CREATED("cmdGsBackupCreated", "&aDie Sicherung wurde erfolgreich erstellt. @ClickableComponent<Text=&7[&aHerunterladen&7]|OpenUrl=%1/downloadBackup/%2.schem|HoverText=Link öffnen>");
 
         private final String key;
         private final String def;

@@ -67,6 +67,7 @@ public class RtpCommand implements CommandExecutor, TabCompleter {
                 rtp(player, world, i + 1);
             } else {
                 loc.add(0.0D, 1.2D, 0.0D);
+                ParadubschManager.getInstance().getRtpTimeouts().put(player.getUniqueId(), System.currentTimeMillis() + 600000L);
                 player.teleport(loc);
             }
         }, 10);
