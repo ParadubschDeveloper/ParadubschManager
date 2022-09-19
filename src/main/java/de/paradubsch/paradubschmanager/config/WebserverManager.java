@@ -21,7 +21,7 @@ public class WebserverManager {
         webServer = new Server(threadPool);
 
         webServerConnector = new ServerConnector(webServer);
-        webServerConnector.setPort(8090);
+        webServerConnector.setPort(ConfigurationManager.getInt("http.port"));
         webServer.setConnectors(new Connector[] {webServerConnector});
 
         ContextHandler ctx = new ContextHandler("/downloadBackup");

@@ -17,6 +17,7 @@ public class ConfigurationManager {
         config.addDefault("chatPrefix", "&8&l[&6&lParadubsch&8&l] &r");
         config.addDefault("homePrice", 150);
         config.addDefault("http.server", "http://localhost:8090");
+        config.addDefault("http.port", 8090);
         config.addDefault("http.maxThreads", 5);
         config.addDefault("http.minThreads", 2);
         config.addDefault("http.idleTimeout", 120);
