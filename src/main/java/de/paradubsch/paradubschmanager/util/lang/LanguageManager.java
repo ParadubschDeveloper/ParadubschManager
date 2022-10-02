@@ -2,7 +2,6 @@ package de.paradubsch.paradubschmanager.util.lang;
 
 import de.paradubsch.paradubschmanager.config.ConfigurationManager;
 import net.kyori.adventure.text.Component;
-import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.util.HashMap;

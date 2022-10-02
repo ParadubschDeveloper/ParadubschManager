@@ -2,8 +2,6 @@ package de.paradubsch.paradubschmanager.gui.items;
 
 import de.craftery.util.gui.AbstractGuiItem;
 import de.craftery.util.gui.GuiManager;
-import de.paradubsch.paradubschmanager.ParadubschManager;
-import de.paradubsch.paradubschmanager.lifecycle.bazaar.Bazaar;
 import de.paradubsch.paradubschmanager.lifecycle.bazaar.BazaarItemData;
 import de.paradubsch.paradubschmanager.lifecycle.bazaar.OrderType;
 import de.paradubsch.paradubschmanager.models.BazaarCollectable;
@@ -55,9 +53,8 @@ public class BazaarPlaceSellOrderButton extends AbstractGuiItem {
                 break;
             }
         }
-        String translatedItemName = ParadubschManager.getInstance().getLanguageManager().getString(Bazaar.translationForMaterial(data.getMaterial()), MessageAdapter.getSenderLang(p));
         if (!soldItem) {
-            MessageAdapter.sendMessage(p, Message.Gui.NOT_ENOUGH_ITEMS, translatedItemName);
+            MessageAdapter.sendMessage(p, Message.Gui.NOT_ENOUGH_ITEMS_TRANSLATED, data.getMaterial().name());
             GuiManager.back(p);
             return;
         }
@@ -135,8 +132,7 @@ public class BazaarPlaceSellOrderButton extends AbstractGuiItem {
             }
         }
         if (!hasEnoughItems) {
-            String translatedItemName = ParadubschManager.getInstance().getLanguageManager().getString(Bazaar.translationForMaterial(data.getMaterial()), MessageAdapter.getSenderLang(this.getPlayer()));
-            this.addLore(Message.Gui.NOT_ENOUGH_ITEMS, translatedItemName);
+            this.addLore(Message.Gui.NOT_ENOUGH_ITEMS_TRANSLATED, data.getMaterial().name());
         }
     }
 }

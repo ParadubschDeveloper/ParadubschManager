@@ -78,6 +78,7 @@ public class GuiManager implements Listener {
                     guiItem.applyWindowArgs(GuiManager.instance.sessionData.get((Player) event.getWhoClicked()).toArray());
                     guiItem.build();
                     if (event.getCurrentItem().isSimilar(guiItem.getItemStack())) {
+                        Bukkit.getLogger().info("clicked registerd item");
                         if (guiItem instanceof AbstractGuiItem) {
                             ItemMeta meta = event.getCurrentItem().getItemMeta();
                             if (meta == null) return;
@@ -193,14 +194,15 @@ public class GuiManager implements Listener {
     }
 
     public static <T extends BaseGui> void entryGui (Class<T> gui, Player p, Object... args) {
+        GuiManager.prompts.remove(p);
+        GuiManager.kvStores.remove(p);
+
         Inventory inv = getGui(gui, p, args);
         if (inv == null) return;
         Bukkit.getScheduler().runTask(GuiManager.plugin, () -> {
             Stack<Class<? extends BaseGui>> stack = new Stack<>();
             stack.push(gui);
             GuiManager.instance.sessions.put(p, stack);
-            GuiManager.prompts.remove(p);
-            GuiManager.kvStores.remove(p);
             p.openInventory(inv);
         });
     }

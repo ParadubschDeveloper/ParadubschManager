@@ -7,6 +7,8 @@ import net.kyori.adventure.text.event.HoverEvent;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -111,8 +113,21 @@ public class ChatComponentFactory {
             args.put(keyValue[0], keyValue[1]);
         }
 
-        if (!args.containsKey("Text")) return Component.text(string);
-        TextComponent component = (TextComponent) fromLegacy(args.get("Text"));
+        if (!args.containsKey("Text") && !args.containsKey("Translatable")) return Component.text(string);
+
+        Component component = Component.text("");
+        if (args.containsKey("Text")) {
+            component = fromLegacy(args.get("Text"));
+        }
+        if (args.containsKey("Translatable")) {
+            Material mat = Material.getMaterial(args.get("Translatable"));
+            if (mat == null) {
+                component = Component.text("");
+            } else {
+                component = Component.translatable(new ItemStack(mat).translationKey());
+            }
+        }
+
         return applyArgs(component, args);
     }
 
@@ -170,7 +185,7 @@ public class ChatComponentFactory {
     public static Component fromLegacy(String string) {
         String[] parts = string.split("(?<=&[0-9a-fk-or])|(?=&)");
         TextComponent component = Component.text("");
-        TextComponent appendingComponent= Component.text("");;
+        TextComponent appendingComponent= Component.text("");
         boolean isInitialized = false;
         boolean startComponent = true;
 

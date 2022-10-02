@@ -28,6 +28,12 @@ public abstract class BaseGui {
         this.inv = GuiManager.createInventory(this.title, rows);
     }
 
+    public void instantiate(Language lang, Component title, int rows) {
+        this.title = title;
+        this.lang = lang;
+        this.inv = GuiManager.createInventory(this.title, rows);
+    }
+
     public <T extends GuiItem> void addItem(Class<T> guiItem, int row, int column, Object... args) {
         GuiManager.addGuiItem(this, guiItem, player, row, column, args);
     }
