@@ -34,7 +34,7 @@ public class BazaarPlaceBuyOrderButton extends AbstractGuiItem {
 
         int finalPrice = price * batchAmount + taxes;
 
-        PlayerData pd = PlayerData.getById(p.getUniqueId().toString());
+        PlayerData pd = PlayerData.getByPlayer(p);
 
         if (pd.getMoney() < finalPrice) {
             MessageAdapter.sendMessage(p, Message.Error.NOT_ENOUGH_MONEY);
@@ -115,7 +115,7 @@ public class BazaarPlaceBuyOrderButton extends AbstractGuiItem {
         this.addLore("");
         this.addLore(Message.Gui.FINAL_PRICE_LORE, finalPrice + "");
 
-        PlayerData pd = PlayerData.getById(this.getPlayer().getUniqueId().toString());
+        PlayerData pd = PlayerData.getByPlayer(this.getPlayer());
 
         if (pd.getMoney() < finalPrice) {
             this.addLore(Message.Gui.NOT_ENOUGH_MONEY);

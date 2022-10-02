@@ -50,7 +50,7 @@ public class PlayerJoinTest {
     @DisplayName("Test if the PlayerData is initialized properly")
     @Test
     public void playerHasData() {
-        PlayerData playerData = Hibernate.getPlayerData(player);
+        PlayerData playerData = PlayerData.getByPlayer(player);
         assertNotNull(playerData);
 
         assertNotNull(playerData.getUuid());

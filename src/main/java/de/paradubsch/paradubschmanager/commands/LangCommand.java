@@ -3,7 +3,6 @@ package de.paradubsch.paradubschmanager.commands;
 import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.models.PlayerData;
 import de.paradubsch.paradubschmanager.util.Expect;
-import de.paradubsch.paradubschmanager.util.Hibernate;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.lang.Language;
 import de.paradubsch.paradubschmanager.util.lang.Message;
@@ -39,9 +38,9 @@ public class LangCommand implements CommandExecutor, TabCompleter {
         }
 
         Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
-            PlayerData pd = Hibernate.getPlayerData(player);
+            PlayerData pd = PlayerData.getByPlayer(player);
             pd.setLanguage(Language.getLanguageByName(args[0]).getShortName());
-            Hibernate.save(pd);
+            pd.saveOrUpdate();
             MessageAdapter.sendMessage(player, Message.Info.CMD_LANGUAGE_SET, args[0]);
         });
         return true;

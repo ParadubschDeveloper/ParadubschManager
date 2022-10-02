@@ -70,7 +70,7 @@ public class TabDecorationManager implements Listener {
         ProtocolManager pm = ParadubschManager.getProtocolManager();
         if (pm == null) return;
         PacketContainer packet = pm.createPacket(PacketType.Play.Server.PLAYER_LIST_HEADER_FOOTER);
-        PlayerData playerData = Hibernate.getPlayerData(p);
+        PlayerData playerData = PlayerData.getByPlayer(p);
         Language playerLang = Language.getLanguageByShortName(playerData.getLanguage());
         int onlinePlayers = 0;
         List<UUID> vanishedPlayers = ParadubschManager.getInstance().getVanishedPlayers();

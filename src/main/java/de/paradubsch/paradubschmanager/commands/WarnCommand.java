@@ -37,7 +37,7 @@ public class WarnCommand implements CommandExecutor, TabCompleter {
             return true;
         }
 
-        PlayerData target = Hibernate.getPlayerData(targetPlayer);
+        PlayerData target = PlayerData.getByPlayer(targetPlayer);
         PunishmentHolder ph = Hibernate.getPunishmentHolder(target);
 
         if (ph == null) return false;
@@ -56,7 +56,7 @@ public class WarnCommand implements CommandExecutor, TabCompleter {
         warn.setHolderRef(ph);
         warn.setReason(warnReason);
         if (sender instanceof Player) {
-            PlayerData giver = Hibernate.getPlayerData((Player) sender);
+            PlayerData giver = PlayerData.getByPlayer((Player) sender);
             warn.setGivenBy(giver);
 
         }

@@ -41,14 +41,14 @@ public class PrefixCommand implements CommandExecutor, TabCompleter {
         }
 
         Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
-            PlayerData pd = Hibernate.getPlayerData(args[0]);
+            PlayerData pd = PlayerData.getByName(args[0]);
             if (pd == null) {
                 MessageAdapter.sendMessage(sender, Message.Error.CMD_PLAYER_NEVER_ONLINE, args[0]);
                 return;
             }
 
             pd.setChatPrefix(prefix.toString().trim());
-            Hibernate.save(pd);
+            pd.saveOrUpdate();
             MessageAdapter.sendMessage(sender, Message.Info.CMD_PREFIX_SET, pd.getName(), prefix.toString().trim());
         });
         return true;

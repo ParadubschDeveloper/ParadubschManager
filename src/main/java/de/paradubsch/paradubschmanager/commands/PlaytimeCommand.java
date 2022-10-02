@@ -56,7 +56,7 @@ public class PlaytimeCommand implements CommandExecutor, TabCompleter {
         }
 
         Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
-            PlayerData pd = Hibernate.getPlayerData(args[0]);
+            PlayerData pd = PlayerData.getByName(args[0]);
             if (pd == null) {
                 MessageAdapter.sendMessage(sender, Message.Error.CMD_PLAYER_NEVER_ONLINE, args[0]);
                 return;

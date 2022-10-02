@@ -23,7 +23,7 @@ public class ChatMessageListener implements Listener {
 
         String message = ((TextComponent) e.message()).content();
 
-        PlayerData pd = Hibernate.getPlayerData(e.getPlayer());
+        PlayerData pd = PlayerData.getByPlayer(e.getPlayer());
 
         MessageAdapter.broadcastMessage(
                 Message.Constant.CHAT_MESSAGE_TEMPLATE,

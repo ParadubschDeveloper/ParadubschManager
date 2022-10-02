@@ -30,7 +30,7 @@ public class BazaarPlaceSellOrderButton extends AbstractGuiItem {
 
         int taxes = (int) Math.floor(price * 0.1f);
 
-        PlayerData pd = PlayerData.getById(p.getUniqueId().toString());
+        PlayerData pd = PlayerData.getByPlayer(p);
 
         if (pd.getMoney() < taxes) {
             MessageAdapter.sendMessage(p, Message.Error.NOT_ENOUGH_MONEY);
@@ -117,7 +117,7 @@ public class BazaarPlaceSellOrderButton extends AbstractGuiItem {
         this.addLore("");
         this.addLore(Message.Gui.SELL_ORDER_TAXES, taxes + "");
 
-        PlayerData pd = PlayerData.getById(this.getPlayer().getUniqueId().toString());
+        PlayerData pd = PlayerData.getByPlayer(this.getPlayer());
 
         if (pd.getMoney() < taxes) {
             this.addLore(Message.Gui.NOT_ENOUGH_MONEY);

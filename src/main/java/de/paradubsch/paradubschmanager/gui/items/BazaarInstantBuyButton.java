@@ -41,7 +41,7 @@ public class BazaarInstantBuyButton extends AbstractGuiItem {
         } catch (IndexOutOfBoundsException ignored) {}
 
         int buyPrice = data.getOffer();
-        PlayerData pd = PlayerData.getById(p.getUniqueId().toString());
+        PlayerData pd = PlayerData.getByPlayer(p);
         if (order != null) {
             buyPrice = order.getPrice();
         }

@@ -32,7 +32,7 @@ public class PlayerJoinPrecedure implements Listener {
         event.setJoinMessage("");
         Player player = event.getPlayer();
         Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
-            Hibernate.cachePlayerName(player);
+            PlayerData.cachePlayerName(player);
             PunishmentHolder ph = Hibernate.getPunishmentHolder(player);
 
             if (ph == null) return;
@@ -41,7 +41,7 @@ public class PlayerJoinPrecedure implements Listener {
 
             if (ph.getActiveBanExpiration().getTime() > Timestamp.from(Instant.now()).getTime()) {
                 Bukkit.getScheduler().runTask(ParadubschManager.getInstance(), () -> {
-                    PlayerData target = Hibernate.getPlayerData(player);
+                    PlayerData target = PlayerData.getByPlayer(player);
                     Language lang = Language.getLanguageByName(target.getLanguage());
                     String expirationString = TimeCalculations.timeStampToExpiration(ph.getActiveBanExpiration(), lang);
                     Component msg = ParadubschManager.getInstance().getLanguageManager().get(Message.Info.CMD_BAN_KICK_MESSAGE, lang, ph.getActiveBanReason(), expirationString, "#b-" + ph.getActiveBanId());
@@ -52,7 +52,7 @@ public class PlayerJoinPrecedure implements Listener {
                 ph.setActiveBanExpiration(Timestamp.from(Instant.now()));
                 ph.setActiveBanId(0);
                 ph.setActiveBanReason(null);
-                Hibernate.save(ph);
+                ph.saveOrUpdate();
             }
         });
         Bukkit.getScheduler().runTaskLater(ParadubschManager.getInstance(), () -> {

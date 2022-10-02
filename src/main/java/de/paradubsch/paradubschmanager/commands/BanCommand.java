@@ -58,7 +58,7 @@ public class BanCommand implements TabCompleter, CommandExecutor {
     private void banPlayer(CommandSender sender, String[] args) {
         //ban player duration reason
         Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
-            PlayerData target = Hibernate.getPlayerData(args[0]);
+            PlayerData target = PlayerData.getByName(args[0]);
             if (target == null) {
                 MessageAdapter.sendMessage(sender, Message.Error.CMD_PLAYER_NEVER_ONLINE, args[0]);
                 return;
@@ -104,18 +104,18 @@ public class BanCommand implements TabCompleter, CommandExecutor {
             }
 
             if (sender instanceof Player) {
-                PlayerData giver = Hibernate.getPlayerData((Player) sender);
+                PlayerData giver = PlayerData.getByPlayer((Player) sender);
                 ban.setGivenBy(giver);
             }
             ban.setHolderRef(ph);
 
-            Hibernate.save(ph);
+            ph.saveOrUpdate();
             long id = (long) ban.save();
             ph.setActiveBanId(id);
             ph.setActiveBan(true);
             ph.setActiveBanExpiration(banExpiration);
             ph.setActiveBanReason(banReason);
-            Hibernate.save(ph);
+            ph.saveOrUpdate();
 
             Player targetPlayer = Bukkit.getPlayer(target.getName());
             if (targetPlayer != null) {
@@ -140,7 +140,7 @@ public class BanCommand implements TabCompleter, CommandExecutor {
                 return;
             }
 
-            PlayerData target = Hibernate.getPlayerData(args[1]);
+            PlayerData target = PlayerData.getByName(args[1]);
             if (target == null) {
                 MessageAdapter.sendMessage(sender, Message.Error.CMD_PLAYER_NEVER_ONLINE, args[0]);
                 return;
@@ -170,20 +170,20 @@ public class BanCommand implements TabCompleter, CommandExecutor {
             ph.setActiveBanReason(null);
             ph.setActiveBanExpiration(Timestamp.valueOf(LocalDateTime.ofInstant(Instant.now(), ZoneId.systemDefault())));
             ph.setActiveBan(false);
-            Hibernate.save(ph);
+            ph.saveOrUpdate();
 
             PunishmentUpdate update = new PunishmentUpdate();
             update.setPunishmentRef(ban);
             update.setReason(unbanReason);
             update.setExpiration(Timestamp.valueOf(LocalDateTime.ofInstant(Instant.now(), ZoneId.systemDefault())));
             if (sender instanceof Player) {
-                PlayerData giver = Hibernate.getPlayerData((Player) sender);
+                PlayerData giver = PlayerData.getByPlayer((Player) sender);
                 update.setGivenBy(giver);
             }
-            Hibernate.save(update);
+            update.save();
 
             ban.setHasUpdate(true);
-            Hibernate.save(ban);
+            ban.saveOrUpdate();
 
             MessageAdapter.sendMessage(sender, Message.Info.CMD_BAN_PLAYER_UNBANNED, target.getName());
         });
@@ -197,7 +197,7 @@ public class BanCommand implements TabCompleter, CommandExecutor {
                 return;
             }
 
-            PlayerData target = Hibernate.getPlayerData(args[1]);
+            PlayerData target = PlayerData.getByName(args[1]);
             if (target == null) {
                 MessageAdapter.sendMessage(sender, Message.Error.CMD_PLAYER_NEVER_ONLINE, args[0]);
                 return;
@@ -226,7 +226,7 @@ public class BanCommand implements TabCompleter, CommandExecutor {
             if (banReason.isEmpty()) {
                 banReason = "\"The Ban Hammer has Spoken!\"";
             }
-            BanPunishment ban = Hibernate.get(BanPunishment.class, ph.getActiveBanId());
+            BanPunishment ban = BanPunishment.getByIdO(ph.getActiveBanId());
             if (ban == null) return;
 
             if (banExpiration.getTime() > System.currentTimeMillis() + 915170400000L) {
@@ -239,20 +239,20 @@ public class BanCommand implements TabCompleter, CommandExecutor {
 
             ph.setActiveBanReason(banReason);
             ph.setActiveBanExpiration(banExpiration);
-            Hibernate.save(ph);
+            ph.saveOrUpdate();
 
             PunishmentUpdate update = new PunishmentUpdate();
             update.setPunishmentRef(ban);
             update.setReason(banReason);
             update.setExpiration(banExpiration);
             if (sender instanceof Player) {
-                PlayerData giver = Hibernate.getPlayerData((Player) sender);
+                PlayerData giver = PlayerData.getByPlayer((Player) sender);
                 update.setGivenBy(giver);
             }
-            Hibernate.save(update);
+            update.save();
 
             ban.setHasUpdate(true);
-            Hibernate.save(ban);
+            ban.saveOrUpdate();
 
             MessageAdapter.sendMessage(sender, Message.Info.CMD_BAN_EDITED, target.getName());
         });

@@ -41,13 +41,13 @@ public class DefaultChatColorCommand implements CommandExecutor, TabCompleter {
         }
 
         Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
-            PlayerData pd = Hibernate.getPlayerData(args[0]);
+            PlayerData pd = PlayerData.getByName(args[0]);
             if (pd == null) {
                 MessageAdapter.sendMessage(sender, Message.Error.CMD_PLAYER_NEVER_ONLINE, args[0]);
                 return;
             }
             pd.setDefaultChatColor(args[1]);
-            Hibernate.save(pd);
+            pd.saveOrUpdate();
             MessageAdapter.sendMessage(sender, Message.Info.CMD_DEFAULT_CHAT_COLOR_SET, pd.getName(), args[1], pd.getName());
         });
         return true;

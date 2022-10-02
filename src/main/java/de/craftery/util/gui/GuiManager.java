@@ -178,7 +178,7 @@ public class GuiManager implements Listener {
 
     private static <T extends BaseGui> Inventory getGui (Class<T> gui, Player p, Object... args) {
         try {
-            PlayerData playerData = PlayerData.getById(p.getUniqueId().toString());
+            PlayerData playerData = PlayerData.getByPlayer(p);
             Language playerLang = Language.getLanguageByShortName(playerData.getLanguage());
             BaseGui window = gui.getConstructor().newInstance();
             window.applyArgs(p, args);

@@ -38,7 +38,7 @@ public class DelhomeCommand implements CommandExecutor, TabCompleter {
             return true;
         } else if (args[1].equals("confirm")) {
             Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
-                PlayerData playerData = Hibernate.getPlayerData(player);
+                PlayerData playerData = PlayerData.getByPlayer(player);
                 List<Home> homes = Hibernate.getHomes(player);
 
                 if (homes.stream().anyMatch(home -> home.getName().equals(args[0]))) {
@@ -55,7 +55,7 @@ public class DelhomeCommand implements CommandExecutor, TabCompleter {
                     MessageAdapter.sendMessage(player, Message.Error.CMD_VIEWHOME_HOME_NOT_FOUND, args[0]);
                 }
 
-                Hibernate.save(playerData);
+                playerData.saveOrUpdate();
             });
         }
 

@@ -77,7 +77,7 @@ public class WarpCommand implements CommandExecutor, TabCompleter {
         warp.setName(name);
         warp.setCreationTimestamp(Timestamp.from(Instant.now()));
 
-        Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> Hibernate.save(warp));
+        Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), warp::saveOrUpdate);
 
         MessageAdapter.sendMessage(sender, Message.Info.CMD_WARP_CREATED, name);
     }

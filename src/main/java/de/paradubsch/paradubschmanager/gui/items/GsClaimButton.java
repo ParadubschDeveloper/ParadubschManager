@@ -19,7 +19,7 @@ public class GsClaimButton extends GuiItem {
             return;
         }
 
-        PlayerData pd = Hibernate.getPlayerData(p);
+        PlayerData pd = PlayerData.getByPlayer(p);
 
         SaveRequest saveRequest = new SaveRequest();
         saveRequest.setX((long) p.getLocation().getX());

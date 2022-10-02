@@ -130,7 +130,7 @@ public class BanTest {
         assertTrue(ph.getActiveBanExpiration().getTime() > Timestamp.from(Instant.now()).getTime());
         assertFalse(ph.isPermaBanned());
 
-        BanPunishment ban = Hibernate.get(BanPunishment.class, ph.getActiveBanId());
+        BanPunishment ban = BanPunishment.getByIdO(ph.getActiveBanId());
         assertNotNull(ban);
         assertEquals(ban.getIdentifyingColumn(), ph.getActiveBanId());
         assertEquals(ban.getHolderRef().getUuid(), targetPlayer.getUniqueId().toString());
@@ -161,7 +161,7 @@ public class BanTest {
         assertEquals(sentMsg, nextMsg);
 
         ph = Hibernate.getPunishmentHolder(targetPlayer);
-        BanPunishment ban = Hibernate.get(BanPunishment.class, banId);
+        BanPunishment ban = BanPunishment.getByIdO(banId);
         assertNotNull(ph);
         assertNotNull(ban);
 
@@ -173,7 +173,7 @@ public class BanTest {
 
         assertTrue(ban.isHasUpdate());
 
-        List<PunishmentUpdate> updates = Hibernate.getBanUpdates(ban);
+        List<PunishmentUpdate> updates = ban.getBanUpdates();
 
         assertEquals(1, updates.size());
         PunishmentUpdate update = updates.get(0);
@@ -208,7 +208,7 @@ public class BanTest {
         assertTrue(ph.getActiveBanExpiration().getTime() > Timestamp.from(Instant.now()).getTime());
         assertTrue(ph.isPermaBanned());
 
-        BanPunishment ban = Hibernate.get(BanPunishment.class, ph.getActiveBanId());
+        BanPunishment ban = BanPunishment.getByIdO(ph.getActiveBanId());
         assertNotNull(ban);
         assertEquals(ban.getIdentifyingColumn(), ph.getActiveBanId());
         assertEquals(ban.getHolderRef().getUuid(), targetPlayer.getUniqueId().toString());
@@ -236,7 +236,7 @@ public class BanTest {
         PunishmentHolder ph = Hibernate.getPunishmentHolder(targetPlayer);
         assertNotNull(ph);
 
-        BanPunishment ban = Hibernate.get(BanPunishment.class, ph.getActiveBanId());
+        BanPunishment ban = BanPunishment.getByIdO(ph.getActiveBanId());
         assertNotNull(ban);
 
         assertTrue(ph.isActiveBan());
@@ -246,7 +246,7 @@ public class BanTest {
 
         assertTrue(ban.isHasUpdate());
 
-        List<PunishmentUpdate> updates = Hibernate.getBanUpdates(ban);
+        List<PunishmentUpdate> updates = ban.getBanUpdates();
 
         assertEquals(1, updates.size());
         PunishmentUpdate update = updates.get(0);

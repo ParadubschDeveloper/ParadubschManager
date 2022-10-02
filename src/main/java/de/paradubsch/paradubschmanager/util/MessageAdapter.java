@@ -20,7 +20,7 @@ public class MessageAdapter {
         Language language;
         if (sender instanceof Player) {
             Player player = (Player) sender;
-            PlayerData playerData = Hibernate.getPlayerData(player);
+            PlayerData playerData = PlayerData.getByPlayer(player);
             language = Language.getLanguageByShortName(playerData.getLanguage());
         } else {
             language = Language.getDefaultLanguage();

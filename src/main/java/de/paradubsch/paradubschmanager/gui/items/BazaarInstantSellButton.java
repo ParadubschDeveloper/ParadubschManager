@@ -75,7 +75,7 @@ public class BazaarInstantSellButton extends AbstractGuiItem {
             collectable.setAmount(collectable.getAmount() + data.getAmount());
             collectable.saveOrUpdate();
         }
-        PlayerData pd = PlayerData.getById(p.getUniqueId().toString());
+        PlayerData pd = PlayerData.getByPlayer(p);
         pd.setMoney(pd.getMoney() + sellPrice);
         pd.saveOrUpdate();
         MessageAdapter.sendMessage(p, Message.Info.SOLD_ITEM_TRANSLATED, data.getAmount() + "", data.getMaterial().name(), sellPrice + "");

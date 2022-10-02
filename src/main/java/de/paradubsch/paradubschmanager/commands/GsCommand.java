@@ -270,7 +270,7 @@ public class GsCommand implements CommandExecutor, TabCompleter {
             return;
         }
 
-        PlayerData pd = Hibernate.getPlayerData(args[1]);
+        PlayerData pd = PlayerData.getByName(args[1]);
         if (pd == null) {
             MessageAdapter.sendMessage(p, Message.Error.CMD_PLAYER_NEVER_ONLINE, args[1]);
             return;
@@ -309,7 +309,7 @@ public class GsCommand implements CommandExecutor, TabCompleter {
             return;
         }
 
-        PlayerData pd = Hibernate.getPlayerData(args[1]);
+        PlayerData pd = PlayerData.getByName(args[1]);
         if (pd == null) {
             MessageAdapter.sendMessage(p, Message.Error.CMD_PLAYER_NEVER_ONLINE, args[1]);
             return;
@@ -341,7 +341,7 @@ public class GsCommand implements CommandExecutor, TabCompleter {
             return;
         }
 
-        PlayerData pd = Hibernate.getPlayerData(args[1]);
+        PlayerData pd = PlayerData.getByName(args[1]);
         if (pd == null) {
             MessageAdapter.sendMessage(p, Message.Error.CMD_PLAYER_NEVER_ONLINE, args[1]);
             return;
@@ -386,7 +386,7 @@ public class GsCommand implements CommandExecutor, TabCompleter {
                 StringBuilder owners = new StringBuilder();
                 List<PlayerData> ownerPlayerDataList = new ArrayList<>();
                 for (UUID uuid : region.getOwners().getUniqueIds()) {
-                    PlayerData pd = PlayerData.getById(uuid.toString());
+                    PlayerData pd = PlayerData.getByUuid(uuid);
                     ownerPlayerDataList.add(pd);
                 }
                 for (int i = 0; i < ownerPlayerDataList.size(); i++) {
@@ -398,7 +398,7 @@ public class GsCommand implements CommandExecutor, TabCompleter {
                 StringBuilder members = new StringBuilder();
                 List<PlayerData> memberPlayerDataList = new ArrayList<>();
                 for (UUID uuid : region.getMembers().getUniqueIds()) {
-                    PlayerData pd = PlayerData.getById(uuid.toString());
+                    PlayerData pd = PlayerData.getByUuid(uuid);
                     memberPlayerDataList.add(pd);
                 }
                 for (int i = 0; i < memberPlayerDataList.size(); i++) {

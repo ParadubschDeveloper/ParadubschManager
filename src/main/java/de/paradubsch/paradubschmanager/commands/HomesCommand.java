@@ -31,7 +31,7 @@ public class HomesCommand implements CommandExecutor, TabCompleter {
 
         Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
             List<Home> homes =  Hibernate.getHomes(player);
-            PlayerData playerData = Hibernate.getPlayerData(player);
+            PlayerData playerData = PlayerData.getByPlayer(player);
 
             if (homes.size() == 0) {
                 MessageAdapter.sendMessage(player, Message.Info.CMD_HOMES_NO_HOMES);

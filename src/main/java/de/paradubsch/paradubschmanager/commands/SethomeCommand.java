@@ -38,7 +38,7 @@ public class SethomeCommand implements CommandExecutor, TabCompleter {
 
         if (args.length > 1 && args[1].equalsIgnoreCase("confirm")) {
             Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
-                PlayerData playerData = Hibernate.getPlayerData(player);
+                PlayerData playerData = PlayerData.getByPlayer(player);
                 List<Home> homes = Hibernate.getHomes(player);
 
                 if (homes.stream().anyMatch(home -> home.getName().equals(homeName))) {
@@ -53,7 +53,7 @@ public class SethomeCommand implements CommandExecutor, TabCompleter {
                     playerData.setHomes(homes);
 
                     MessageAdapter.sendMessage(player, Message.Info.CMD_HOME_SET, homeName);
-                    Hibernate.save(playerData);
+                    playerData.saveOrUpdate();
                     return;
                 }
 
@@ -78,20 +78,20 @@ public class SethomeCommand implements CommandExecutor, TabCompleter {
                 playerData.setHomes(homes);
 
                 MessageAdapter.sendMessage(player, Message.Info.CMD_HOME_SET, homeName);
-                Hibernate.save(playerData);
+                playerData.saveOrUpdate();
             });
             return true;
         }
 
         Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
-            PlayerData playerData = Hibernate.getPlayerData(player);
+            PlayerData playerData = PlayerData.getByPlayer(player);
             List<Home> homes = Hibernate.getHomes(player);
 
             if (homes.stream().anyMatch(home -> home.getName().equals(homeName))) {
                 MessageAdapter.sendMessage(sender, Message.Error.CMD_SETHOME_ALREADY_EXISTING, homeName);
                 Bukkit.getScheduler().runTaskLater(ParadubschManager.getInstance(), () ->
                         MessageAdapter.sendMessage(sender, Message.Info.CMD_SETHOME_OVERRIDE_EXISTING_HOME, homeName), 1L);
-                Hibernate.save(playerData);
+                playerData.saveOrUpdate();
                 return;
             }
 
@@ -99,7 +99,7 @@ public class SethomeCommand implements CommandExecutor, TabCompleter {
                 MessageAdapter.sendMessage(sender, Message.Error.CMD_SETHOME_NOT_ENOUGH_HOMES);
                 Bukkit.getScheduler().runTaskLater(ParadubschManager.getInstance(), () ->
                         MessageAdapter.sendMessage(sender, Message.Info.CMD_SETHOME_BUYHOME), 1L);
-                Hibernate.save(playerData);
+                playerData.saveOrUpdate();
                 return;
             }
 
@@ -117,7 +117,7 @@ public class SethomeCommand implements CommandExecutor, TabCompleter {
             playerData.setHomes(homes);
 
             MessageAdapter.sendMessage(player, Message.Info.CMD_HOME_SET, homeName);
-            Hibernate.save(playerData);
+            playerData.saveOrUpdate();
         });
         return true;
     }

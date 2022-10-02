@@ -37,7 +37,7 @@ public class RankCommand implements CommandExecutor, TabCompleter {
                 return;
             }
 
-            PlayerData target = Hibernate.getPlayerData(args[0]);
+            PlayerData target = PlayerData.getByName(args[0]);
 
             if (target == null) {
                 MessageAdapter.sendMessage(sender, Message.Error.CMD_PLAYER_NEVER_ONLINE, args[0]);
@@ -67,7 +67,7 @@ public class RankCommand implements CommandExecutor, TabCompleter {
             target.setChatPrefix(prefix);
             target.setNameColor(nameColor);
             target.setDefaultChatColor(chatColor);
-            Hibernate.save(target);
+            target.saveOrUpdate();
 
             UserManager userManager = api.getUserManager();
             CompletableFuture<User> userFuture = userManager.loadUser(UUID.fromString(target.getUuid()));

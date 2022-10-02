@@ -103,7 +103,7 @@ public class RunCommand implements CommandExecutor, TabCompleter {
         String player = args[2];
         long playtime = Long.parseLong(args[3]);
 
-        PlayerData pd = Hibernate.getPlayerData(player);
+        PlayerData pd = PlayerData.getByName(player);
         if (pd != null) {
             pd.setPlaytime(playtime);
             pd.saveOrUpdate();

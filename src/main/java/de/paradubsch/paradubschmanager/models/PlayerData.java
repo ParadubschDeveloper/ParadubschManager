@@ -1,18 +1,28 @@
 package de.paradubsch.paradubschmanager.models;
 
+import de.paradubsch.paradubschmanager.ParadubschManager;
+import de.paradubsch.paradubschmanager.config.HibernateConfigurator;
+import lombok.Cleanup;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.bukkit.entity.Player;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.annotations.*;
 import org.hibernate.annotations.Cache;
+import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.Index;
 import javax.persistence.Table;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.io.Serializable;
 import java.util.List;
+import java.util.UUID;
 
 import static org.hibernate.annotations.CascadeType.*;
 
@@ -76,6 +86,58 @@ public class PlayerData extends BaseDatabaseEntity<PlayerData, String> {
 
     public static PlayerData getById(Serializable id) {
         return BaseDatabaseEntity.getById(PlayerData.class, id);
+    }
+
+    public static PlayerData getByPlayer(Player player) {
+        return BaseDatabaseEntity.getById(PlayerData.class, player.getUniqueId().toString());
+    }
+
+    public static PlayerData getByUuid(UUID uuid) {
+        return BaseDatabaseEntity.getById(PlayerData.class, uuid.toString());
+    }
+
+    public static PlayerData getByName(String playerName) {
+        try {
+            @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
+
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<PlayerData> cq = cb.createQuery(PlayerData.class);
+            Root<PlayerData> root = cq.from(PlayerData.class);
+            cq.select(root).where(cb.equal(
+                    cb.lower(root.get("name")),
+                    playerName.toLowerCase()
+            ));
+
+            return session.createQuery(cq).uniqueResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static void cachePlayerName(Player p) {
+        Transaction transaction = null;
+        try {
+            @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+
+            PlayerData playerData = session.get(PlayerData.class, p.getUniqueId().toString());
+            if (playerData == null) {
+                session.save(new PlayerData(p));
+                ParadubschManager.getInstance().getCachingManager().cacheEntity(PlayerData.class, new PlayerData(p), p.getUniqueId().toString());
+
+            } else if (!playerData.getName().equals(p.getName())) {
+                playerData.setName(p.getName());
+                session.saveOrUpdate(playerData);
+                ParadubschManager.getInstance().getCachingManager().cacheEntity(PlayerData.class, playerData, p.getUniqueId().toString());
+            }
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
     }
 
     @Override

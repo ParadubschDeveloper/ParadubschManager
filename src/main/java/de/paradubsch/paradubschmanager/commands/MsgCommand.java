@@ -1,10 +1,8 @@
 package de.paradubsch.paradubschmanager.commands;
 
-
 import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.models.PlayerData;
 import de.paradubsch.paradubschmanager.util.Expect;
-import de.paradubsch.paradubschmanager.util.Hibernate;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.lang.Language;
 import de.paradubsch.paradubschmanager.util.lang.Message;
@@ -59,7 +57,7 @@ public class MsgCommand implements CommandExecutor, TabCompleter {
             Language language;
             if (s instanceof Player) {
                 Player player = (Player) s;
-                PlayerData playerData = Hibernate.getPlayerData(player);
+                PlayerData playerData = PlayerData.getByPlayer(player);
                 language = Language.getLanguageByShortName(playerData.getLanguage());
                 ParadubschManager.getInstance().getReplyCandidates().put(receiver.getUniqueId(), player.getUniqueId());
             } else {
@@ -74,7 +72,7 @@ public class MsgCommand implements CommandExecutor, TabCompleter {
                     message
             );
 
-            Language playerLang = Language.getLanguageByShortName(Hibernate.getPlayerData(receiver).getLanguage());
+            Language playerLang = Language.getLanguageByShortName(PlayerData.getByPlayer(receiver).getLanguage());
             String sender;
             if (s instanceof Player) {
                 sender = s.getName();
