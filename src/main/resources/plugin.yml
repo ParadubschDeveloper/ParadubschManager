@@ -267,6 +267,12 @@ commands:
     permission: paradubsch.saverequests
     permission-message: 'Du benötigst die Berechtigung paradubsch.saverequests um alle offenen Save-Anfragen anzusehen!'
     usage: '/saverequests'
+  workbench:
+    description: Öffnet eine Workbench.
+    aliases: [wb, werkbank, ct, craftingtable, crafting]
+    permission: paradubsch.workbench
+    permission-message: 'Du benötigst die Berechtigung paradubsch.workbench um eine Workbench zu öffnen!'
+    usage: '/workbench'
 
 
 permissions:
@@ -431,4 +437,7 @@ permissions:
     default: false
   paradubsch.gs.backup:
     description: "Erlaubt Zugriff auf den /gs backup Befehl."
+    default: false
+  paradubsch.workbench:
+    description: "Erlaubt Zugriff auf den /workbench Befehl."
     default: false
