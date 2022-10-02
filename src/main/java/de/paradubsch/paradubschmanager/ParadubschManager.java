@@ -225,6 +225,7 @@ public final class ParadubschManager extends JavaPlugin {
         register("rtp", new RtpCommand());
         register("saverequests", new SaveRequestsCommand());
         register("workbench", new WorkbenchCommand());
+        register("enderchest", new EnderchestCommand());
     }
 
     List<String> registeredCommands = new ArrayList<>();

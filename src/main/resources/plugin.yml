@@ -273,6 +273,12 @@ commands:
     permission: paradubsch.workbench
     permission-message: 'Du benötigst die Berechtigung paradubsch.workbench um eine Workbench zu öffnen!'
     usage: '/workbench'
+  enderchest:
+    description: Öffnet eine Enderchest.
+    aliases: [ec]
+    permission: paradubsch.enderchest.self
+    permission-message: 'Du benötigst die Berechtigung paradubsch.enderchest um eine Enderchest zu öffnen!'
+    usage: '/enderchest'
 
 
 permissions:
@@ -440,4 +446,10 @@ permissions:
     default: false
   paradubsch.workbench:
     description: "Erlaubt Zugriff auf den /workbench Befehl."
+    default: false
+  paradubsch.enderchest.self:
+    description: "Erlaubt Zugriff auf den /enderchest Befehl."
+    default: false
+  paradubsch.enderchest.others:
+    description: "Erlaubt Zugriff auf den /enderchest <Name> Befehl."
     default: false
