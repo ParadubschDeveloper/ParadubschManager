@@ -1,24 +1,16 @@
 package de.paradubsch.paradubschmanager.lifecycle.jobs;
 
-import com.jeff_media.customblockdata.CustomBlockData;
-import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.models.PlayerData;
 import de.paradubsch.paradubschmanager.models.WorkerPlayer;
 import org.bukkit.ChatColor;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
 
 
 public class MiningJob {
     public static void onBlockBreak(WorkerPlayer worker, BlockBreakEvent event) {
-        if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getEnchants().keySet().stream().anyMatch(ench -> ench.equals(Enchantment.SILK_TOUCH))) {
-            return;
-        }
-
-        PersistentDataContainer customBlockData = new CustomBlockData(event.getBlock(), ParadubschManager.getInstance());
-        if (customBlockData.has(JobManager.NOT_ORIGINAL, PersistentDataType.BYTE)) {
+        if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta() != null &&
+                event.getPlayer().getInventory().getItemInMainHand().getItemMeta().getEnchants().keySet().stream().anyMatch(ench -> ench.equals(Enchantment.SILK_TOUCH))) {
             return;
         }
 
