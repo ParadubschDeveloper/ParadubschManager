@@ -54,6 +54,9 @@ public class HibernateConfigurator {
                 configuration.addAnnotatedClass(WorkerPlayer.class);
                 configuration.addAnnotatedClass(BazaarOrder.class);
                 configuration.addAnnotatedClass(BazaarCollectable.class);
+                configuration.addAnnotatedClass(Backpack.class);
+                configuration.addAnnotatedClass(StorageSlot.class);
+                configuration.addAnnotatedClass(ItemData.class);
 
                 ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                         .applySettings(configuration.getProperties()).build();
