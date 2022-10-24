@@ -9,6 +9,7 @@ import lombok.Setter;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
@@ -160,6 +161,7 @@ public abstract class GuiItem {
         return this.getIdentifier();
     }
 
+    public void onClick(Player p, InventoryClickEvent event) {}
     public abstract void onClick(Player p);
     public abstract void build();
 }

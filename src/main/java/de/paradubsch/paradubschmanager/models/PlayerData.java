@@ -11,7 +11,6 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.annotations.*;
 import org.hibernate.annotations.Cache;
-import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 import javax.persistence.Entity;

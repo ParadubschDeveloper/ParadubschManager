@@ -86,7 +86,7 @@ public final class ParadubschManager extends JavaPlugin {
 
         Bukkit.getConsoleSender().sendMessage("");
         Bukkit.getConsoleSender().sendMessage("==== Paradubsch ====");
-        Bukkit.getConsoleSender().sendMessage("Authors: Crafter_Y, Blintastisch_");
+        Bukkit.getConsoleSender().sendMessage("Authors: Crafter_Y, Blintastisch_, Byte");
         Bukkit.getConsoleSender().sendMessage("Version: 1.1");
         Bukkit.getConsoleSender().sendMessage("==== Paradubsch ====");
         Bukkit.getConsoleSender().sendMessage("");
@@ -228,7 +228,7 @@ public final class ParadubschManager extends JavaPlugin {
         register("enderchest", new EnderchestCommand());
     }
 
-    List<String> registeredCommands = new ArrayList<>();
+    private final List<String> registeredCommands = new ArrayList<>();
     private <T extends CommandExecutor & TabCompleter> void register(String command, T obj) {
         registeredCommands.add(command);
         PluginCommand pc = Bukkit.getPluginCommand(command);

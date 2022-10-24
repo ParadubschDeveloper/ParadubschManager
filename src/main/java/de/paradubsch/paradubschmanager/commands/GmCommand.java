@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GmCommand implements CommandExecutor, TabCompleter {
-    public static NamespacedKey GM_KEY = new NamespacedKey(ParadubschManager.getInstance(), "gamemode");
+    public static final NamespacedKey GM_KEY = new NamespacedKey(ParadubschManager.getInstance(), "gamemode");
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {

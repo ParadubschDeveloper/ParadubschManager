@@ -42,7 +42,7 @@ public class GuiManager implements Listener {
     @Getter
     private static final Map<Player, KVStore> kvStores = new HashMap<>();
 
-    public static Map<Player, Map<Object, String>> prompts = new HashMap<>();
+    public static final Map<Player, Map<Object, String>> prompts = new HashMap<>();
 
     @Getter
     private static JavaPlugin plugin;
@@ -95,6 +95,7 @@ public class GuiManager implements Listener {
                         }
                         Bukkit.getScheduler().runTask(GuiManager.plugin, () -> {
                             guiItem.onClick((Player) event.getWhoClicked());
+                            guiItem.onClick((Player) event.getWhoClicked(), event);
                         });
                     }
                 });

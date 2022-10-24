@@ -6,27 +6,24 @@ import de.paradubsch.paradubschmanager.util.lang.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-public class BazaarBackPagingButton extends GuiItem {
+public class BackpackBackPagingButton extends GuiItem {
 
     @Override
     public void onClick(Player p) {
-        Bukkit.getLogger().info("BazaarBackPagingButton.onClick");
-        Integer page = (Integer) this.getKvStore().get("bazaarPage");
+        Integer page = (Integer) this.getKvStore().get("backpackPage");
         if (page == null) {
             page = 1;
-            this.getKvStore().set("bazaarPage", page);
+            this.getKvStore().set("backpackPage", page);
         } else {
             page--;
-            this.getKvStore().set("bazaarPage", page);
+            this.getKvStore().set("backpackPage", page);
         }
         GuiManager.rebuild(p);
     }
 
     @Override
     public void build() {
-        Bukkit.getLogger().info("build BazaarBackPagingButton");
-        Integer page = (Integer) this.getKvStore().get("bazaarPage");
-        Bukkit.getLogger().info("Page is " + page);
+        Integer page = (Integer) this.getKvStore().get("backpackPage");
         if (page == null) {
             page = 1;
         }
@@ -34,4 +31,5 @@ public class BazaarBackPagingButton extends GuiItem {
         this.setDisplayName(Message.Gui.BACK_PAGE);
         this.addLore(Message.Constant.PAGE, page-1 + "");
     }
+
 }

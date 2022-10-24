@@ -52,7 +52,10 @@ public abstract class BaseGui {
      * A Key-Value Store that is persisted while the player is in the GUI.
      */
     public KVStore getKvStore() {
-        return new KVStore(player);
+        KVStore store = GuiManager.getKvStores().get(this.player);
+        if (store == null)
+            GuiManager.getKvStores().put(this.player, store = new KVStore(player));
+        return store;
     }
 
     public abstract void init(Language lang);

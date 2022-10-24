@@ -59,7 +59,7 @@ public class ConfigurationManager {
         return value;
     }
 
-    public static @NotNull int getInt(String path) {
+    public static int getInt(String path) {
         return ParadubschManager.getInstance().getConfig().getInt(path);
     }
 
