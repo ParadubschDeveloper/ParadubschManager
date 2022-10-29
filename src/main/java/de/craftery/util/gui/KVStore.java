@@ -21,6 +21,10 @@ public class KVStore {
         return this.store.get(key);
     }
 
+    public boolean has(Object key) {
+        return this.store.containsKey(key);
+    }
+
     public void set(Object key, Object value) {
         this.store.put(key, value);
     }

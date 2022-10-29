@@ -252,6 +252,8 @@ public class Message {
     }
 
     public enum Gui implements BaseMessageType {
+
+        BACKPACK_TITLE("guiBackpackTitle", "&6&lBackpack"),
         CLAIM_TITLE("guiClaimTitle", "&a&lGrundstück sichern?"),
         CANCEL("guiCancel", "&cAbbrechen"),
         GS_CLAIM_TITLE("guiGsClaimTitle", "&aSicherung des Grundstücks beantragen"),

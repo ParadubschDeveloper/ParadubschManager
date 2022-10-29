@@ -28,6 +28,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.util.*;
+import java.util.logging.Level;
 
 public final class ParadubschManager extends JavaPlugin {
     private static ParadubschManager instance;
@@ -226,6 +227,7 @@ public final class ParadubschManager extends JavaPlugin {
         register("saverequests", new SaveRequestsCommand());
         register("workbench", new WorkbenchCommand());
         register("enderchest", new EnderchestCommand());
+        register("backpack", new BackpackCommand());
     }
 
     private final List<String> registeredCommands = new ArrayList<>();

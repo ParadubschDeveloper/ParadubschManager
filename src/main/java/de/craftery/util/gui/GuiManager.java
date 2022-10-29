@@ -15,12 +15,15 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 
+import javax.annotation.Nullable;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
@@ -29,6 +32,9 @@ import java.util.logging.Level;
 public class GuiManager implements Listener {
     public static NamespacedKey itemIdentifier;
     public static SignMenuFactory signFactory;
+
+    @Getter
+    private static final Map<Class<? extends BaseGui>, BaseGui> handlerMap = new HashMap<>();
 
     @Getter
     private final Map<Component, List<GuiItem>> guis = new HashMap<>();
@@ -66,40 +72,56 @@ public class GuiManager implements Listener {
     }
 
     @EventHandler
+    public void onClose(InventoryCloseEvent event) {
+        if (guis.containsKey(event.getView().title())) {
+            Class<? extends BaseGui> gui = sessions.get((Player) event.getPlayer()).peek();
+            BaseGui handler = getWindowHandler(gui);
+            if (handler != null) {
+                handler.onClose((Player) event.getPlayer(), event);
+            }
+        }
+    }
+
+    @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
         if (guis.containsKey(event.getView().title())) {
             event.setCancelled(true);
-            Bukkit.getScheduler().runTaskLaterAsynchronously(GuiManager.plugin, () -> {
-                guis.get(event.getView().title()).forEach(guiItem -> {
-                    if (event.getCurrentItem() == null) return;
-                    if (event.getCurrentItem().getType() == Material.AIR) return;
-                    Class<? extends BaseGui> gui = sessions.get((Player) event.getWhoClicked()).peek();
-                    guiItem.instantiate(MessageAdapter.getSenderLang(event.getWhoClicked()), (Player) event.getWhoClicked(), gui);
-                    guiItem.applyWindowArgs(GuiManager.instance.sessionData.get((Player) event.getWhoClicked()).toArray());
-                    guiItem.build();
-                    if (event.getCurrentItem().isSimilar(guiItem.getItemStack())) {
-                        Bukkit.getLogger().info("clicked registerd item");
-                        if (guiItem instanceof AbstractGuiItem) {
-                            ItemMeta meta = event.getCurrentItem().getItemMeta();
-                            if (meta == null) return;
-                            PersistentDataContainer container = meta.getPersistentDataContainer();
-                            if (!container.has(GuiManager.itemIdentifier, new PersistentSerializableType())) {
-                                Bukkit.getLogger().log(Level.WARNING, "Abstract Item has no identifier!");
-                                return;
-                            }
-                            Serializable identifier = container.get(GuiManager.itemIdentifier, new PersistentSerializableType());
-                            if (!guiItem.getIdentifier().equals(identifier)) {
-                                Bukkit.getLogger().log(Level.INFO, "Got: " + guiItem.getIdentifier() + " Expected: " + identifier);
-                                return;
-                            }
+            GuiItem handledItem = null;
+            Class<? extends BaseGui> gui = sessions.get((Player) event.getWhoClicked()).peek();
+            for (GuiItem guiItem : guis.get(event.getView().title())) {
+                if (event.getCurrentItem() == null) continue;
+                if (event.getCurrentItem().getType() == Material.AIR) continue;
+                guiItem.instantiate(MessageAdapter.getSenderLang(event.getWhoClicked()), (Player) event.getWhoClicked(), gui);
+                guiItem.applyWindowArgs(GuiManager.instance.sessionData.get((Player) event.getWhoClicked()).toArray());
+                guiItem.build();
+                if (event.getCurrentItem().isSimilar(guiItem.getItemStack())) {
+                    Bukkit.getLogger().info("clicked registerd item");
+                    if (guiItem instanceof AbstractGuiItem) {
+                        ItemMeta meta = event.getCurrentItem().getItemMeta();
+                        if (meta == null) continue;
+                        PersistentDataContainer container = meta.getPersistentDataContainer();
+                        if (!container.has(GuiManager.itemIdentifier, new PersistentSerializableType())) {
+                            Bukkit.getLogger().log(Level.WARNING, "Abstract Item has no identifier!");
+                            continue;
                         }
-                        Bukkit.getScheduler().runTask(GuiManager.plugin, () -> {
-                            guiItem.onClick((Player) event.getWhoClicked());
-                            guiItem.onClick((Player) event.getWhoClicked(), event);
-                        });
+                        Serializable identifier = container.get(GuiManager.itemIdentifier, new PersistentSerializableType());
+                        if (!guiItem.getIdentifier().equals(identifier)) {
+                            Bukkit.getLogger().log(Level.INFO, "Got: " + guiItem.getIdentifier() + " Expected: " + identifier);
+                            continue;
+                        }
                     }
-                });
-            }, 1);
+                    handledItem = guiItem;
+                    Bukkit.getScheduler().runTask(GuiManager.plugin, () -> {
+                        guiItem.onClick((Player) event.getWhoClicked());
+                        guiItem.onClick((Player) event.getWhoClicked(), event);
+                    });
+                    break;
+                }
+            }
+            BaseGui handler = getWindowHandler(gui);
+            if (handler != null) {
+                handler.onClick((Player) event.getWhoClicked(), event, handledItem);
+            }
         }
     }
 
@@ -136,7 +158,8 @@ public class GuiManager implements Listener {
             }
 
             registerGuiItem(src.title, item);
-        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
+                 NoSuchMethodException e) {
             e.printStackTrace();
         }
     }
@@ -156,9 +179,14 @@ public class GuiManager implements Listener {
             }
 
             registerGuiItem(src.title, item);
-        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
+                 NoSuchMethodException e) {
             e.printStackTrace();
         }
+    }
+
+    private static @Nullable BaseGui getWindowHandler(@NotNull Class<? extends BaseGui> gui) {
+        return handlerMap.get(gui);
     }
 
     private static void registerGui(Component component) {
@@ -177,24 +205,28 @@ public class GuiManager implements Listener {
         GuiManager.instance.guis.put(title, items);
     }
 
-    private static <T extends BaseGui> Inventory getGui (Class<T> gui, Player p, Object... args) {
+    private static <T extends BaseGui> Inventory getGui(Class<T> gui, Player p, Object... args) {
         try {
             PlayerData playerData = PlayerData.getByPlayer(p);
             Language playerLang = Language.getLanguageByShortName(playerData.getLanguage());
             BaseGui window = gui.getConstructor().newInstance();
+            if (!handlerMap.containsKey(gui)) {
+                handlerMap.put(gui, window);
+            }
             window.applyArgs(p, args);
             List<Object> argList = new ArrayList<>(Arrays.asList(args));
             GuiManager.instance.sessionData.put(p, argList);
             window.init(playerLang);
             window.build();
             return window.inv;
-        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
+                 NoSuchMethodException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public static <T extends BaseGui> void entryGui (Class<T> gui, Player p, Object... args) {
+    public static <T extends BaseGui> void entryGui(Class<T> gui, Player p, Object... args) {
         GuiManager.prompts.remove(p);
         GuiManager.kvStores.remove(p);
 
@@ -242,7 +274,7 @@ public class GuiManager implements Listener {
         return prompts.get(identifier);
     }
 
-    public static <T extends BaseGui> void navigate (Class<T> gui, Player p, Object... args) {
+    public static <T extends BaseGui> void navigate(Class<T> gui, Player p, Object... args) {
         Stack<Class<? extends BaseGui>> stack = GuiManager.instance.sessions.get(p);
         if (stack == null) {
             stack = new Stack<>();

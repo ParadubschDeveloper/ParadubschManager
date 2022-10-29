@@ -2,9 +2,15 @@ package de.paradubsch.paradubschmanager.gui.items;
 
 import de.craftery.util.gui.GuiItem;
 import de.craftery.util.gui.GuiManager;
+import de.paradubsch.paradubschmanager.models.Backpack;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BackpackBackPagingButton extends GuiItem {
 
@@ -15,9 +21,22 @@ public class BackpackBackPagingButton extends GuiItem {
             page = 1;
             this.getKvStore().set("backpackPage", page);
         } else {
-            page--;
+            if (page > 0)
+                page--;
             this.getKvStore().set("backpackPage", page);
         }
+        Backpack backpack = (Backpack) this.getKvStore().get("backpack");
+        Inventory inv = p.getOpenInventory().getTopInventory();
+        List<ItemStack> items = new ArrayList<>();
+        for (int i = 0; i < inv.getSize(); i++) {
+            if (i <= 3*9-1) {
+                if (inv.getItem(i) != null) {
+                    items.add(inv.getItem(i));
+                }
+            }
+        }
+        backpack.setItems(items);
+        Backpack.storeByPlayer(p, backpack);
         GuiManager.rebuild(p);
     }
 
@@ -29,7 +48,7 @@ public class BackpackBackPagingButton extends GuiItem {
         }
         this.setItemHead("7789");
         this.setDisplayName(Message.Gui.BACK_PAGE);
-        this.addLore(Message.Constant.PAGE, page-1 + "");
+        this.addLore("§8(" + (page - 1 > 0 ? page - 1 : "§c/") + "§8)");
     }
 
 }

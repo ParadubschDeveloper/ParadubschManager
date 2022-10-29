@@ -32,8 +32,8 @@ public class Backpack extends BaseDatabaseEntity<Backpack, Long> {
     @Column(name = "uuid", columnDefinition = "VARCHAR(36)", nullable = false, unique = true)
     private String playerRef;
 
-    @Column(name = "max_slots", columnDefinition = "BIGINT DEFAULT 27")
-    private long maxSlots = 27;
+    @Column(name = "max_pages", columnDefinition = "BIGINT DEFAULT 1")
+    private long maxPages = 1;
 
     @Transient
     private transient List<ItemStack> items;
@@ -50,6 +50,7 @@ public class Backpack extends BaseDatabaseEntity<Backpack, Long> {
         try {
             @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
 
+            //HQL
             return session.createQuery("FROM Backpack where playerRef = :uuid", Backpack.class)
                     .setParameter("uuid", playerRef)
                     .getSingleResult();
@@ -87,12 +88,15 @@ public class Backpack extends BaseDatabaseEntity<Backpack, Long> {
      * @param player Player to get the backpack for
      * @param backpack Backpack to set for the player
      */
+    // TODO: When list is null, remove all items
     public static void storeByPlayer(Player player, Backpack backpack) {
-        if (backpack.items.size() > backpack.maxSlots) {
-            Bukkit.getLogger().warning("Player " + player.getName() + " tried to store " + backpack.items.size() + " items in a backpack with " + backpack.maxSlots + " slots.");
+        if (backpack.items.size() > backpack.maxPages * 27) {
+            Bukkit.getLogger().warning("Player " + player.getName() + " tried to store " + backpack.items.size() + " items in a backpack with " + backpack.maxPages + " pages.");
         }
         List<StorageSlot> oldSlots = backpack.slots;
         for (ItemStack item : backpack.items) {
+            if (item == null)
+                continue;
             int amount = item.getAmount();
             String hash = ItemData.getItemHash(item);
 

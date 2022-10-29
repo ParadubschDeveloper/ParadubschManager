@@ -40,7 +40,7 @@ public class BackpackModelTest {
         assertEquals(1, backpack1.getId());
         assertEquals(2, backpack2.getId());
 
-        assertEquals(27, backpack1.getMaxSlots());
+        assertEquals(1, backpack1.getMaxPages());
         assertEquals(player1.getUniqueId().toString(), backpack1.getPlayerRef());
         assertEquals(0, backpack1.getSlots().size());
         assertEquals(0, backpack1.getItems().size());
@@ -57,7 +57,7 @@ public class BackpackModelTest {
 
         Backpack backpack1Reloaded = Backpack.getByPlayer(player1);
         assertEquals(1, backpack1Reloaded.getId());
-        assertEquals(27, backpack1Reloaded.getMaxSlots());
+        assertEquals(1, backpack1Reloaded.getMaxPages());
         assertEquals(player1.getUniqueId().toString(), backpack1Reloaded.getPlayerRef());
         assertEquals(3, backpack1Reloaded.getSlots().size());
         assertEquals(3, backpack1Reloaded.getItems().size());

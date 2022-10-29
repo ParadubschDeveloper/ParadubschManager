@@ -279,6 +279,12 @@ commands:
     permission: paradubsch.enderchest.self
     permission-message: 'Du benötigst die Berechtigung paradubsch.enderchest um eine Enderchest zu öffnen!'
     usage: '/enderchest'
+  backpack:
+    description: Inventar zum Backpack
+    aliases: [ bp, rucksack ]
+    permission: paradubsch.backpack
+    permission-message: 'Du benötigst die Berechtigung paradubsch.backpack um den Backpack zu nutzen!'
+    usage: '/backpack'
 
 
 permissions:

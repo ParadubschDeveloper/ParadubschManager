@@ -4,6 +4,8 @@ import de.paradubsch.paradubschmanager.util.lang.BaseMessageType;
 import de.paradubsch.paradubschmanager.util.lang.Language;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 
 import java.io.Serializable;
@@ -51,14 +53,23 @@ public abstract class BaseGui {
     /**
      * A Key-Value Store that is persisted while the player is in the GUI.
      */
-    public KVStore getKvStore() {
-        KVStore store = GuiManager.getKvStores().get(this.player);
+    public KVStore getKvStore(Player player) {
+        KVStore store = GuiManager.getKvStores().get(player);
         if (store == null)
-            GuiManager.getKvStores().put(this.player, store = new KVStore(player));
+            GuiManager.getKvStores().put(player, store = new KVStore(player));
         return store;
+    }
+
+    public KVStore getKvStore() {
+        return getKvStore(this.player);
     }
 
     public abstract void init(Language lang);
 
     public abstract void build();
+
+    public void onClick(Player whoClicked, InventoryClickEvent event, GuiItem handledItem) {}
+
+    public void onClose(Player player, InventoryCloseEvent event) {}
+
 }
