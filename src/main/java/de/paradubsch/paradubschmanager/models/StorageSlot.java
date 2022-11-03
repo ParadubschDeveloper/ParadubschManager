@@ -43,7 +43,8 @@ public class StorageSlot extends BaseDatabaseEntity<StorageSlot, Long>{
     }
 
     private ItemStack getItemStack() {
-        ItemStack itemStack = ItemData.getById(itemHash).getItem();
+        // Copy the itemStack or it will be overridden
+        ItemStack itemStack = new ItemStack(ItemData.getById(itemHash).getItem());
         itemStack.setAmount(amount);
         return itemStack;
     }

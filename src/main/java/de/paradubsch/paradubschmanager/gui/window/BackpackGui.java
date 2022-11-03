@@ -22,8 +22,6 @@ import java.util.List;
 
 public class BackpackGui extends BaseGui {
 
-    private final int maxSlot = 3 * 9 - 1;
-
     @Override
     public void init(Language lang) {
         instantiate(lang, Message.Gui.BACKPACK_TITLE, 4);
@@ -42,19 +40,13 @@ public class BackpackGui extends BaseGui {
         this.getKvStore().set("backpack", backpack);
 
         int columns = 3 * 9;
-        int maxPage = (int) Math.ceil(items.size() / columns);
-        /*
-        int itemIndex = (int) Math.min(items.size(), Math.floor(page * columns));
-        int pageIndex = (int) Math.max(Math.min(Math.ceil(items.size() / columns), page), 1);
-        for (int i = itemIndex; i < Math.min(items.size(), pageIndex * columns); i++) {
-            int row = (int) Math.ceil(itemIndex / 9.0D);
-            int col = (int) ((itemIndex + 1) % 9);
-            this.addAbstractItem(BackpackItemButton.class, row, col, itemIndex, items.get(itemIndex));
-            itemIndex++;
-        }*/
 
-        for (ItemStack itemStack : items) {
-            inv.addItem(itemStack);
+        int itemIndex = columns * (page-1);
+        for (int i = 0; i < columns; i++) {
+            if (itemIndex >= items.size())
+                break;
+            inv.setItem(i, items.get(itemIndex));
+            itemIndex++;
         }
 
 
@@ -66,7 +58,7 @@ public class BackpackGui extends BaseGui {
         this.addItem(CancelButton.class, 4, 9);
 
         this.addItem(BackpackBackPagingButton.class, 4, 4);
-        this.addItem(BackpackNextPagingButton.class, 4, 6, maxPage);
+        this.addItem(BackpackNextPagingButton.class, 4, 6, (int) backpack.getMaxPages());
 
         this.addItem(CancelButton.class, 4, 9);
     }
@@ -113,7 +105,14 @@ public class BackpackGui extends BaseGui {
 
     @Override
     public void onClose(Player player, InventoryCloseEvent event) {
-        Backpack backpack = (Backpack) this.getKvStore().get("backpack");
+        Backpack backpack = (Backpack) this.getKvStore(player).get("backpack");
+        if (backpack == null)
+            return;
+        Integer page = (Integer) this.getKvStore().get("backpackPage");
+        if (page == null) {
+            // Likly impossible
+            return;
+        }
         Inventory inv = player.getOpenInventory().getTopInventory();
         List<ItemStack> items = new ArrayList<>();
         for (int i = 0; i < inv.getSize(); i++) {

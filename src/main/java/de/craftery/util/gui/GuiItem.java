@@ -152,8 +152,15 @@ public abstract class GuiItem {
     /**
      * A Key-Value Store that is persisted while the player is in the GUI.
      */
-    public @NotNull KVStore getKvStore() {
-        return new KVStore(player);
+    public KVStore getKvStore(Player player) {
+        KVStore store = GuiManager.getKvStores().get(player);
+        if (store == null)
+            GuiManager.getKvStores().put(player, store = new KVStore(player));
+        return store;
+    }
+
+    public KVStore getKvStore() {
+        return getKvStore(this.player);
     }
 
     @Override

@@ -16,16 +16,21 @@ public class BackpackBackPagingButton extends GuiItem {
 
     @Override
     public void onClick(Player p) {
-        Integer page = (Integer) this.getKvStore().get("backpackPage");
+        // Disable this feature for now
+        if (true)
+            return;
+        Integer page = (Integer) this.getKvStore(p).get("backpackPage");
         if (page == null) {
             page = 1;
-            this.getKvStore().set("backpackPage", page);
+            this.getKvStore(p).set("backpackPage", page);
         } else {
-            if (page > 0)
+            if (page > 1)
                 page--;
-            this.getKvStore().set("backpackPage", page);
+            this.getKvStore(p).set("backpackPage", page);
         }
-        Backpack backpack = (Backpack) this.getKvStore().get("backpack");
+        Backpack backpack = (Backpack) this.getKvStore(p).get("backpack");
+        if (backpack == null)
+            return;
         Inventory inv = p.getOpenInventory().getTopInventory();
         List<ItemStack> items = new ArrayList<>();
         for (int i = 0; i < inv.getSize(); i++) {
