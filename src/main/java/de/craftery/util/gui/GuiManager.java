@@ -95,7 +95,6 @@ public class GuiManager implements Listener {
                 guiItem.applyWindowArgs(GuiManager.instance.sessionData.get((Player) event.getWhoClicked()).toArray());
                 guiItem.build();
                 if (event.getCurrentItem().isSimilar(guiItem.getItemStack())) {
-                    Bukkit.getLogger().info("clicked registerd item");
                     if (guiItem instanceof AbstractGuiItem) {
                         ItemMeta meta = event.getCurrentItem().getItemMeta();
                         if (meta == null) continue;

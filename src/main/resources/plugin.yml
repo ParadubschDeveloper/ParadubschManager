@@ -459,3 +459,6 @@ permissions:
   paradubsch.enderchest.others:
     description: "Erlaubt Zugriff auf den /enderchest <Name> Befehl."
     default: false
+  paradubsch.backpack:
+    description: "Erlaubt Zugriff auf den /backpack Befehl."
+    default: false
