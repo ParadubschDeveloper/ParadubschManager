@@ -227,6 +227,7 @@ public final class ParadubschManager extends JavaPlugin {
         register("workbench", new WorkbenchCommand());
         register("enderchest", new EnderchestCommand());
         register("backpack", new BackpackCommand());
+        register("feed", new FeedCommand());
     }
 
     private final List<String> registeredCommands = new ArrayList<>();

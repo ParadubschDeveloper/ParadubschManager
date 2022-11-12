@@ -111,6 +111,9 @@ public class GsCommand implements CommandExecutor, TabCompleter {
             /*case "flags": {
                 break;
             }*/
+            default: {
+                MessageAdapter.sendMessage(p, Message.Error.CMD_MONEY_UNKNOWN_SUBCOMMAND, args[0]);
+            }
         }
 
         return true;

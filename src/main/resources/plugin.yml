@@ -1,9 +1,9 @@
 name: "ParadubschManager"
 version: "${project.version}"
 main: "de.paradubsch.paradubschmanager.ParadubschManager"
-api-version: "1.18"
-api: [ "1.18" ]
-authors: [ "Paradubsch Server Team" ]
+api-version: "1.19"
+api: [ "1.19" ]
+authors: [ "Crafter_Y", "Byte", "Blintastisch_" ]
 load: "POSTWORLD"
 prefix: "ParadubschManager"
 website: "https://gitlab.com/paradubsch-developer/paradubschmanager"
@@ -285,6 +285,12 @@ commands:
     permission: paradubsch.backpack
     permission-message: 'Du benötigst die Berechtigung paradubsch.backpack um den Backpack zu nutzen!'
     usage: '/backpack'
+  feed:
+    description: Regenieriert den Hunger eines Spielers.
+    aliases: [essen, eat]
+    permission: paradubsch.feed
+    permission-message: 'Du benötigst die Berechtigung paradubsch.feed um deinen Hunger zu stillen!'
+    usage: '/feed'
 
 
 permissions:
@@ -461,4 +467,7 @@ permissions:
     default: false
   paradubsch.backpack:
     description: "Erlaubt Zugriff auf den /backpack Befehl."
+    default: false
+  paradubsch.feed:
+    description: "Erlaubt Zugriff auf den /feed Befehl."
     default: false

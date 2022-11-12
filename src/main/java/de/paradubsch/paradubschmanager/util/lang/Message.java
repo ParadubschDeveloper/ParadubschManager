@@ -171,7 +171,8 @@ public class Message {
         PLAYTIME_SET("playtimeSet", "&aDie Spielzeit von &6%1 &awurde erfolgreich auf &6%2 &ageändert."),
         SELL_ORDER_PLACED("sellOrderPlaced", "&aDu hast ein Verkaufsangebot mit &a%1&7x &6%2 &afür &a%3&6€ &aerstellt."),
         BOUGHT_ITEM_TRANSLATED("boughtItemTranslated", "Du hast &aerfolgreich &6%1&7x @ClickableComponent<Translatable=%2> &7für &a%3&6€ &7gekauft."),
-        CMD_GS_BACKUP_CREATED("cmdGsBackupCreated", "&aDie Sicherung wurde erfolgreich erstellt. @ClickableComponent<Text=&7[&aHerunterladen&7]|OpenUrl=%1/downloadBackup/%2.schem|HoverText=Link öffnen>");
+        CMD_GS_BACKUP_CREATED("cmdGsBackupCreated", "&aDie Sicherung wurde erfolgreich erstellt. @ClickableComponent<Text=&7[&aHerunterladen&7]|OpenUrl=%1/downloadBackup/%2.schem|HoverText=Link öffnen>"),
+        FEED_SUCCESS("feedSuccess", "&aDu wurdest erfolgreich gefüttert.");
 
         private final String key;
         private final String def;
