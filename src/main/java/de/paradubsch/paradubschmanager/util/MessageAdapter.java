@@ -4,6 +4,7 @@ import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.config.ConfigurationManager;
 import de.paradubsch.paradubschmanager.models.PlayerData;
 import de.paradubsch.paradubschmanager.util.lang.BaseMessageType;
+import de.paradubsch.paradubschmanager.util.lang.ChatComponentFactory;
 import de.paradubsch.paradubschmanager.util.lang.Language;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
@@ -32,7 +33,7 @@ public class MessageAdapter {
         Language playerLang = getSenderLang(cs);
 
         Component infoText = ParadubschManager.getInstance().getLanguageManager().get(template, playerLang, args);
-        return Component.text(ChatColor.translateAlternateColorCodes('&', ConfigurationManager.getString("chatPrefix")))
+        return ChatComponentFactory.assemble(ConfigurationManager.getString("chatPrefix"))
                 .append(infoText);
     }
 
