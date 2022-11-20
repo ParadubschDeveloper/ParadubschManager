@@ -93,29 +93,4 @@ public class Hibernate {
             return null;
         }
     }
-
-    /**
-     * Deprecated. View File Header for more information.
-     */
-    @Deprecated
-    public static SaveRequest getSaveRequest(Player p) {
-        Transaction transaction = null;
-        try {
-            @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
-
-            transaction = session.beginTransaction();
-
-            PlayerData playerData = session.get(PlayerData.class, p.getUniqueId().toString());
-            SaveRequest saveRequest = SaveRequest.getById(playerData.getOpenSaveRequest());
-            transaction.commit();
-            return saveRequest;
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            return null;
-        }
-    }
 }

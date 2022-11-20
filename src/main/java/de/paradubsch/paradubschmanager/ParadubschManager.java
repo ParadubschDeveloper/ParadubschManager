@@ -12,6 +12,7 @@ import de.paradubsch.paradubschmanager.config.WebserverManager;
 import de.paradubsch.paradubschmanager.lifecycle.*;
 import de.paradubsch.paradubschmanager.lifecycle.jobs.JobManager;
 import de.paradubsch.paradubschmanager.lifecycle.playtime.PlaytimeManager;
+import de.paradubsch.paradubschmanager.lifecycle.stairsit.StairSitManager;
 import de.paradubsch.paradubschmanager.util.lang.LanguageManager;
 import lombok.Getter;
 import lombok.Setter;
@@ -179,6 +180,7 @@ public final class ParadubschManager extends JavaPlugin {
         new QuitListener();
         new TabDecorationManager(this);
         new InvseeInventoryGuard();
+        new StairSitManager();
     }
 
     private void registerCommands() {

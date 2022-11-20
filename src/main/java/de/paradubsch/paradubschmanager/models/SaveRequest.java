@@ -1,7 +1,12 @@
 package de.paradubsch.paradubschmanager.models;
 
+import de.paradubsch.paradubschmanager.config.HibernateConfigurator;
+import lombok.Cleanup;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.bukkit.entity.Player;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -44,6 +49,27 @@ public class SaveRequest extends BaseDatabaseEntity<SaveRequest, Integer> implem
 
     public static List<SaveRequest> getAll() {
         return BaseDatabaseEntity.getAll(SaveRequest.class);
+    }
+
+    public static SaveRequest getByPlayer(Player p) {
+        Transaction transaction = null;
+        try {
+            @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
+
+            transaction = session.beginTransaction();
+
+            PlayerData playerData = PlayerData.getByPlayer(p);
+            SaveRequest saveRequest = SaveRequest.getById(playerData.getOpenSaveRequest());
+            transaction.commit();
+            return saveRequest;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            return null;
+        }
     }
 
     @Override
