@@ -78,7 +78,7 @@ public class Hibernate {
      * Deprecated. View File Header for more information.
      */
     @Deprecated
-    public static List<PlayerData> getMoneyTop () {
+    public static List<PlayerData> getMoneyTop() {
         try {
             @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
 
@@ -115,72 +115,6 @@ public class Hibernate {
             if (transaction != null) {
                 transaction.rollback();
             }
-            return null;
-        }
-    }
-
-    /**
-     * Deprecated. View File Header for more information.
-     */
-    @Deprecated
-    public static PunishmentHolder getPunishmentHolder(PlayerData pd) {
-        Transaction transaction = null;
-        PunishmentHolder punishmentHolder;
-        try {
-            @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
-
-            transaction = session.beginTransaction();
-
-            punishmentHolder = session.get(PunishmentHolder.class, pd.getUuid());
-            if (punishmentHolder == null) {
-                punishmentHolder = new PunishmentHolder();
-                punishmentHolder.setPlayerRef(pd);
-                punishmentHolder.setUuid(pd.getUuid());
-            }
-            transaction.commit();
-            return punishmentHolder;
-
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
-            punishmentHolder = new PunishmentHolder();
-            punishmentHolder.setPlayerRef(pd);
-            punishmentHolder.setUuid(pd.getUuid());
-            return null;
-        }
-    }
-
-    /**
-     * Deprecated. View File Header for more information.
-     */
-    @Deprecated
-    public static PunishmentHolder getPunishmentHolder(Player player) {
-        Transaction transaction = null;
-        PunishmentHolder punishmentHolder;
-        try {
-            @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
-
-            transaction = session.beginTransaction();
-
-            punishmentHolder = session.get(PunishmentHolder.class, player.getUniqueId().toString());
-            if (punishmentHolder == null) {
-                punishmentHolder = new PunishmentHolder();
-                punishmentHolder.setPlayerRef(PlayerData.getByPlayer(player));
-                punishmentHolder.setUuid(player.getUniqueId().toString());
-            }
-            transaction.commit();
-            return punishmentHolder;
-
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
-            punishmentHolder = new PunishmentHolder();
-            punishmentHolder.setPlayerRef(PlayerData.getByPlayer(player));
-            punishmentHolder.setUuid(player.getUniqueId().toString());
             return null;
         }
     }

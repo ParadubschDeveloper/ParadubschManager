@@ -4,7 +4,6 @@ import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.commands.GmCommand;
 import de.paradubsch.paradubschmanager.models.PlayerData;
 import de.paradubsch.paradubschmanager.models.PunishmentHolder;
-import de.paradubsch.paradubschmanager.util.Hibernate;
 import de.paradubsch.paradubschmanager.util.TimeCalculations;
 import de.paradubsch.paradubschmanager.util.lang.Language;
 import de.paradubsch.paradubschmanager.util.lang.Message;
@@ -33,9 +32,7 @@ public class PlayerJoinPrecedure implements Listener {
         Player player = event.getPlayer();
         Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
             PlayerData.cachePlayerName(player);
-            PunishmentHolder ph = Hibernate.getPunishmentHolder(player);
-
-            if (ph == null) return;
+            PunishmentHolder ph = PunishmentHolder.getByPlayerOrCreate(player);
 
             if (!ph.isActiveBan()) return;
 

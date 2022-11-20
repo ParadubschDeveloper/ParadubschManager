@@ -3,6 +3,7 @@ package de.paradubsch.paradubschmanager.models;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.bukkit.entity.Player;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Cascade;
@@ -80,6 +81,28 @@ public class PunishmentHolder extends BaseDatabaseEntity<PunishmentHolder, Strin
 
     public static PunishmentHolder getById(Serializable id) {
         return BaseDatabaseEntity.getById(PunishmentHolder.class, id);
+    }
+
+    public static PunishmentHolder getByPlayerOrCreate(Player player) {
+        PunishmentHolder holder = PunishmentHolder.getById(player.getUniqueId().toString());
+        if (holder == null) {
+            holder = new PunishmentHolder();
+            holder.setUuid(player.getUniqueId().toString());
+            holder.setPlayerRef(PlayerData.getById(player.getUniqueId().toString()));
+            holder.save();
+        }
+        return holder;
+    }
+
+    public static PunishmentHolder getByPlayerDataOrCreate(PlayerData playerData) {
+        PunishmentHolder holder = PunishmentHolder.getById(playerData.getUuid());
+        if (holder == null) {
+            holder = new PunishmentHolder();
+            holder.setUuid(playerData.getUuid());
+            holder.setPlayerRef(playerData);
+            holder.save();
+        }
+        return holder;
     }
 
     @Override

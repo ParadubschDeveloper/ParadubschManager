@@ -64,9 +64,9 @@ public class BanCommand implements TabCompleter, CommandExecutor {
                 return;
             }
 
-            PunishmentHolder ph = Hibernate.getPunishmentHolder(target);
+            PunishmentHolder ph = PunishmentHolder.getByPlayerDataOrCreate(target);
 
-            if (ph == null || ph.isActiveBan()) {
+            if (ph.isActiveBan()) {
                MessageAdapter.sendMessage(sender, Message.Error.CMD_BAN_PLAYER_ALREADY_BANNED, args[0]);
                MessageAdapter.sendMessage(sender, Message.Info.CMD_BAN_SUGGEST_UPDATE, target.getName());
                return;
@@ -146,9 +146,9 @@ public class BanCommand implements TabCompleter, CommandExecutor {
                 return;
             }
 
-            PunishmentHolder ph = Hibernate.getPunishmentHolder(target);
+            PunishmentHolder ph = PunishmentHolder.getByPlayerDataOrCreate(target);
 
-            if (ph == null || !ph.isActiveBan()) {
+            if (!ph.isActiveBan()) {
                 MessageAdapter.sendMessage(sender, Message.Error.CMD_BAN_PLAYER_NOT_BANNED, target.getName());
                 return;
             }
@@ -203,9 +203,9 @@ public class BanCommand implements TabCompleter, CommandExecutor {
                 return;
             }
 
-            PunishmentHolder ph = Hibernate.getPunishmentHolder(target);
+            PunishmentHolder ph = PunishmentHolder.getByPlayerDataOrCreate(target);
 
-            if (ph == null || !ph.isActiveBan()) {
+            if (!ph.isActiveBan()) {
                 MessageAdapter.sendMessage(sender, Message.Error.CMD_BAN_PLAYER_NOT_BANNED, target.getName());
                 return;
             }

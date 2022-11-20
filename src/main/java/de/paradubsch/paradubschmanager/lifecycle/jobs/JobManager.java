@@ -99,9 +99,9 @@ public class JobManager implements Listener {
     public static void sendActionBar(Player player, String message) {
         ProtocolManager pm = ParadubschManager.getProtocolManager();
         if (pm != null) {
-            PacketContainer packet = pm.createPacket(PacketType.Play.Server.CHAT);
+            PacketContainer packet = pm.createPacket(PacketType.Play.Server.SET_ACTION_BAR_TEXT);
             packet.getChatComponents().write(0, WrappedChatComponent.fromText(message));
-            packet.getChatTypes().write(0, EnumWrappers.ChatType.GAME_INFO);
+            //packet.getChatTypes().write(0, EnumWrappers.ChatType.GAME_INFO);
             try {
                 pm.sendServerPacket(player, packet);
             } catch (InvocationTargetException e) {

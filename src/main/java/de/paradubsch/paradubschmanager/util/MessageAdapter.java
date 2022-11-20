@@ -8,7 +8,6 @@ import de.paradubsch.paradubschmanager.util.lang.ChatComponentFactory;
 import de.paradubsch.paradubschmanager.util.lang.Language;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 

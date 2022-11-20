@@ -38,9 +38,7 @@ public class WarnCommand implements CommandExecutor, TabCompleter {
         }
 
         PlayerData target = PlayerData.getByPlayer(targetPlayer);
-        PunishmentHolder ph = Hibernate.getPunishmentHolder(target);
-
-        if (ph == null) return false;
+        PunishmentHolder ph = PunishmentHolder.getByPlayerDataOrCreate(target);
 
         StringBuilder warnReasonBuilder = new StringBuilder();
         for (int i = 1; i < args.length; i++) {
