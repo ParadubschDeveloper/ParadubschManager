@@ -103,8 +103,8 @@ public class PlaytimeManager implements Listener {
                 MessageAdapter.sendMessage(player, Message.Info.CMD_RANKED_UP_SUCCESSFUL, "Lapis");
             }
 
-            //time > 72h || rank copper
-            if (time > 72*60*60*1000 && beforeGroupName.equals("group.lapis")) {
+            //time > 73h || rank copper
+            if (time > 73*60*60*1000 && beforeGroupName.equals("group.lapis")) {
                 applyGroup(player, "copper");
                 MessageAdapter.sendMessage(player, Message.Info.CMD_RANKED_UP_SUCCESSFUL, "Copper");
             }

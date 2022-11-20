@@ -3,7 +3,6 @@ package de.paradubsch.paradubschmanager.lifecycle.jobs;
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolManager;
 import com.comphenix.protocol.events.PacketContainer;
-import com.comphenix.protocol.wrappers.EnumWrappers;
 import com.comphenix.protocol.wrappers.WrappedChatComponent;
 import com.jeff_media.customblockdata.CustomBlockData;
 import de.paradubsch.paradubschmanager.ParadubschManager;
@@ -101,7 +100,6 @@ public class JobManager implements Listener {
         if (pm != null) {
             PacketContainer packet = pm.createPacket(PacketType.Play.Server.SET_ACTION_BAR_TEXT);
             packet.getChatComponents().write(0, WrappedChatComponent.fromText(message));
-            //packet.getChatTypes().write(0, EnumWrappers.ChatType.GAME_INFO);
             try {
                 pm.sendServerPacket(player, packet);
             } catch (InvocationTargetException e) {
