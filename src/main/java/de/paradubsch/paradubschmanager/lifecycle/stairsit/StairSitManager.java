@@ -87,9 +87,13 @@ public class StairSitManager implements Listener {
                     !player.isInsideVehicle()) {
                 World world = player.getWorld();
                 if (this.chairLocation.containsKey(player)) {
+                    Entity sit_chair = this.chairList.get(player);
+                    sit_chair.remove();
                     Entity chair = world.spawnEntity(this.chairLocation.get(player), EntityType.ARROW);
-                    chair.teleport(this.chairLocation.get(player).add(0.5D, 0.0D, 0.5D));
+                    Location loc = this.chairLocation.get(player);
+                    chair.teleport(loc);
                     chair.addPassenger(player);
+                    this.chairList.put(player, chair);
                 }
             }
         }
