@@ -3,6 +3,7 @@ image: maven:latest
 variables:
   MYSQL_DATABASE: test
   MYSQL_ROOT_PASSWORD: strongpassword
+  DB_URL: jdbc:mysql://mysql:3306/test?allowPublicKeyRetrieval=true&useSSL=false
 
 cache:
   paths:

@@ -165,7 +165,9 @@ public final class ParadubschManager extends JavaPlugin {
         cachingManager = null;
         jobManager = null;
 
-        webServer.stopWebserver();
+        if (webServer != null) {
+            webServer.stopWebserver();
+        }
         webServer = null;
 
         unregisterCommands();

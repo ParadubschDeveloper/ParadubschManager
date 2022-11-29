@@ -18,9 +18,16 @@ public class HibernateConfigurator {
 
                 Properties settings = new Properties();
                 settings.put(Environment.DRIVER, ConfigurationManager.getString("hibernate.driver"));
-                settings.put(Environment.URL, ConfigurationManager.getString("hibernate.url"));
+                String dbUrl = ConfigurationManager.getEnvironmentVariable("DB_URL") != null ?
+                        ConfigurationManager.getEnvironmentVariable("DB_URL") :
+                        ConfigurationManager.getString("hibernate.url");
+                settings.put(Environment.URL, dbUrl);
                 settings.put(Environment.USER, ConfigurationManager.getString("hibernate.user"));
-                settings.put(Environment.PASS, ConfigurationManager.getString("hibernate.pass"));
+
+                String dbPass = ConfigurationManager.getEnvironmentVariable("MYSQL_ROOT_PASSWORD") != null ?
+                        ConfigurationManager.getEnvironmentVariable("MYSQL_ROOT_PASSWORD") :
+                        ConfigurationManager.getString("hibernate.pass");
+                settings.put(Environment.PASS, dbPass);
                 settings.put(Environment.DIALECT, ConfigurationManager.getString("hibernate.dialect"));
 
                 settings.put(Environment.CONNECTION_PROVIDER, "org.hibernate.c3p0.internal.C3P0ConnectionProvider");
