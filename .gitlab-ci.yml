@@ -3,6 +3,10 @@ image: maven:3.8.1
 stages:
   - test
 
+cache:
+  paths:
+    - .m2/repository
+
 test:
   stage: test
   script:
