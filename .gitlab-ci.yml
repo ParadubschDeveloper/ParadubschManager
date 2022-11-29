@@ -4,8 +4,9 @@ stages:
   - test
 
 cache:
+  key: mavenrepo
   paths:
-    - .m2/repository
+    - ./.m2/repository/
 
 test:
   stage: test
