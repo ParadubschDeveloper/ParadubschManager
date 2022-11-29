@@ -65,15 +65,15 @@ public class StairSitManager implements Listener {
             event.setCancelled(true);
             if (event.getPlayer().isSneaking()) {
                 Player player = event.getPlayer();
-                final Player sit_player = player;
-                final Location stand_location = this.playerLocation.get(player);
-                Entity sit_chair = this.chairList.get(player);
+                final Player sitPlayer = player;
+                final Location standLocation = this.playerLocation.get(player);
+                Entity sitChair = this.chairList.get(player);
                 Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(ParadubschManager.getInstance(), () -> {
-                    sit_player.teleport(stand_location);
-                    sit_player.setSneaking(false);
+                    sitPlayer.teleport(standLocation);
+                    sitPlayer.setSneaking(false);
                 }, 1L);
                 this.playerLocation.remove(player);
-                sit_chair.remove();
+                sitChair.remove();
                 this.chairList.remove(player);
             }
         }
@@ -87,8 +87,8 @@ public class StairSitManager implements Listener {
                     !player.isInsideVehicle()) {
                 World world = player.getWorld();
                 if (this.chairLocation.containsKey(player)) {
-                    Entity sit_chair = this.chairList.get(player);
-                    sit_chair.remove();
+                    Entity sitChair = this.chairList.get(player);
+                    sitChair.remove();
                     Entity chair = world.spawnEntity(this.chairLocation.get(player), EntityType.ARROW);
                     Location loc = this.chairLocation.get(player);
                     chair.teleport(loc);
