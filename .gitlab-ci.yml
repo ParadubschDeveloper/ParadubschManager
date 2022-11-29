@@ -10,4 +10,4 @@ cache:
 test:
   stage: test
   script:
-    - "mvn test -f pom.xml"
+    - "mvn install -f pom.xml"
