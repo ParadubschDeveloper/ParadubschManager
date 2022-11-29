@@ -1,7 +1,6 @@
 package de.paradubsch.paradubschmanager.commands;
 
 import de.paradubsch.paradubschmanager.ParadubschManager;
-import de.paradubsch.paradubschmanager.models.PlayerData;
 import de.paradubsch.paradubschmanager.util.Expect;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.lang.Language;
@@ -54,15 +53,7 @@ public class MsgCommand implements CommandExecutor, TabCompleter {
 
     public static void sendMsg(CommandSender s, Player receiver, String message) {
         Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
-            Language language;
-            if (s instanceof Player) {
-                Player player = (Player) s;
-                PlayerData playerData = PlayerData.getByPlayer(player);
-                language = Language.getLanguageByShortName(playerData.getLanguage());
-                ParadubschManager.getInstance().getReplyCandidates().put(receiver.getUniqueId(), player.getUniqueId());
-            } else {
-                language = Language.getDefaultLanguage();
-            }
+            Language language = MessageAdapter.getSenderLang(s);
 
             MessageAdapter.sendUnprefixedMessage(
                     s,
@@ -72,10 +63,13 @@ public class MsgCommand implements CommandExecutor, TabCompleter {
                     message
             );
 
-            Language playerLang = Language.getLanguageByShortName(PlayerData.getByPlayer(receiver).getLanguage());
+            Language playerLang = MessageAdapter.getSenderLang(receiver);
             String sender;
             if (s instanceof Player) {
-                sender = s.getName();
+                Player player = (Player) s;
+                sender = player.getName();
+                ParadubschManager.getInstance().getReplyCandidates().put(receiver.getUniqueId(), player.getUniqueId());
+                ParadubschManager.getInstance().getReplyCandidates().put(player.getUniqueId(), receiver.getUniqueId());
             } else {
                 sender = ParadubschManager.getInstance().getLanguageManager().getString(Message.Constant.SERVER_CONSOLE, playerLang);
             }
