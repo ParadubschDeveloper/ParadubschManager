@@ -2,13 +2,16 @@ image: maven:latest
 
 variables:
   MYSQL_DATABASE: "test"
-  MYSQL_ROOT_PASSWORD: ""
+  MYSQL_DATABASE_NAME: 'test'
+  MYSQL_ROOT_PASSWORD: "supersecret"
   MYSQL_PORT: 3306
+  MYSQL_USER: 'testuser'
+  MYSQL_PASSWORD: 'testpassword'
   MYSQL_ROOT_HOST: '%'
 
 cache:
   paths:
-    - .m2/repository/
+    - ./.m2/repository/
     - target/
 
 build:
