@@ -3,9 +3,8 @@ image: maven:latest
 variables:
   MYSQL_DATABASE: "test"
   MYSQL_ROOT_PASSWORD: ""
-  MYSQL_USER: "root"
-  MYSQL_PASSWORD: "dbpass"
-  MYSQL_HOST: mysql
+  MYSQL_PORT: 3306
+  MYSQL_ROOT_HOST: '%'
 
 cache:
   paths:
