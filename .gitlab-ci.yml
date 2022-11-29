@@ -1,5 +1,12 @@
 image: maven:latest
 
+variables:
+  MYSQL_DATABASE: "test"
+  MYSQL_ROOT_PASSWORD: ""
+  MYSQL_USER: "root"
+  MYSQL_PASSWORD: "dbpass"
+  MYSQL_HOST: mysql
+
 cache:
   paths:
     - .m2/repository/
@@ -12,5 +19,7 @@ build:
 
 test:
   stage: test
+  services:
+    - mysql:latest
   script:
     - mvn test
