@@ -36,7 +36,7 @@ public class ConfigurationManager {
         config.addDefault("chatprefix.default.chatcolor", "&7");
 
         config.addDefault("hibernate.driver", "com.mysql.cj.jdbc.Driver");
-        config.addDefault("hibernate.url", "jdbc:mysql://mysql:3306/test?useSSL=false");
+        config.addDefault("hibernate.url", "jdbc:mysql://mysql:3306/test?allowPublicKeyRetrieval=true&useSSL=false");
         config.addDefault("hibernate.user", "root");
         config.addDefault("hibernate.pass", "strongpassword");
         config.addDefault("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
