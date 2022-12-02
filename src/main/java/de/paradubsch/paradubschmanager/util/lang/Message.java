@@ -316,7 +316,10 @@ public class Message {
         AUCTION_JUST_TAKEN("guiAuctionJustTaken", "&cDieses Gebot wurde gerade von jemand anderem gekauft."),
         NOT_ENOUGH_INVENTORY_SPACE("guiNotEnoughInventorySpace", "&cDu hast nicht genug Platz im Inventar."),
         BACK_PAGE("guiBackPage", "Seite zurück"),
-        NEXT_PAGE("guiNextPage", "Nächste Seite");
+        NEXT_PAGE("guiNextPage", "Nächste Seite"),
+        YOU_ARE_IN_WORLD("guiYouAreInWorld", "&7Du befindest dich in der Welt"),
+        REQUEST_BY("guiRequestBy", "&7Anfrage von"),
+        PLOT_SIZE("guiPlotSize", "&7Grundstücksgröße");
 
         private final String key;
         private final String def;

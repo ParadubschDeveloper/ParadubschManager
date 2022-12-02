@@ -7,12 +7,13 @@ import de.paradubsch.paradubschmanager.util.lang.Message;
 import lombok.Getter;
 import lombok.Setter;
 import net.kyori.adventure.text.Component;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.jetbrains.annotations.NotNull;
+import org.bukkit.inventory.meta.SkullMeta;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -59,6 +60,14 @@ public abstract class GuiItem {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void setItemPlayerHead(String playerName) {
+        ItemStack skull = new ItemStack(Material.PLAYER_HEAD, 1);
+        SkullMeta meta = (SkullMeta) skull.getItemMeta();
+        meta.setOwningPlayer(Bukkit.getOfflinePlayer(playerName));
+        skull.setItemMeta(meta);
+        this.itemStack = skull;
     }
 
     public void setItemMaterial(Material mat) {
