@@ -38,7 +38,7 @@ public class ReplyCommand implements CommandExecutor, TabCompleter {
             return true;
         }
 
-        if (!Expect.minArgs(2, args)) {
+        if (!Expect.minArgs(1, args)) {
             MessageAdapter.sendMessage(player, Message.Error.CMD_MESSAGE_NOT_PROVIDED);
             return true;
         }
