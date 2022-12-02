@@ -259,7 +259,7 @@ public class Message {
         CANCEL("guiCancel", "&cAbbrechen"),
         GS_CLAIM_TITLE("guiGsClaimTitle", "&aSicherung des Grundstücks beantragen"),
         GS_CLAIM_LORE("guiGsClaimLore", "Unser Team wird über deine Anfrage informiert."),
-        SAVE_CONFIRM_TITLE("guiSaveConfirmTitle", "&a&lGrundstück Daten überprüfen"),
+        SAVE_CONFIRM_TITLE("guiSaveConfirmTitle", "&a&lDaten überprüfen"),
         SAVE_CONFIRM_BUTTON_TITLE("guiSaveConfirmButtonTitle", "&a&lGrundstück sichern"),
         GS_TRANSFER_TITLE("guiGsTransferTitle", "&a&lGrundstück übertragen"),
         GS_TRANSFER_BUTTON_TITLE("guiGsTransferButtonTitle", "&a&lGrundstück übertragen"),
