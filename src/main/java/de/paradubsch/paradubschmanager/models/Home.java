@@ -1,12 +1,19 @@
 package de.paradubsch.paradubschmanager.models;
 
+import de.paradubsch.paradubschmanager.config.HibernateConfigurator;
+import lombok.Cleanup;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.bukkit.entity.Player;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -41,6 +48,28 @@ public class Home extends BaseDatabaseEntity<Home, Long> {
 
     public static Home getById(Serializable id) {
         return BaseDatabaseEntity.getById(Home.class, id);
+    }
+
+    public static List<Home> getByPlayer(Player p) {
+        Transaction transaction = null;
+        try {
+            @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
+
+            transaction = session.beginTransaction();
+
+            PlayerData playerData = session.get(PlayerData.class, p.getUniqueId().toString());
+            List<Home> homes = playerData.getHomes();
+            org.hibernate.Hibernate.initialize(homes);
+            transaction.commit();
+            return homes;
+
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
     }
 
     @Override

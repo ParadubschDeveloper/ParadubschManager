@@ -4,7 +4,6 @@ import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.models.Home;
 import de.paradubsch.paradubschmanager.models.PlayerData;
 import de.paradubsch.paradubschmanager.util.Expect;
-import de.paradubsch.paradubschmanager.util.Hibernate;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 import org.bukkit.Bukkit;
@@ -39,7 +38,7 @@ public class DelhomeCommand implements CommandExecutor, TabCompleter {
         } else if (args[1].equals("confirm")) {
             Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
                 PlayerData playerData = PlayerData.getByPlayer(player);
-                List<Home> homes = Hibernate.getHomes(player);
+                List<Home> homes = Home.getByPlayer(player);
 
                 if (homes.stream().anyMatch(home -> home.getName().equals(args[0]))) {
                     Home home = homes.stream().filter(home1 -> home1.getName().equals(args[0])).findFirst().get();

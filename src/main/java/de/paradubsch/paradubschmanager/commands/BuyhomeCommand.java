@@ -5,7 +5,6 @@ import de.paradubsch.paradubschmanager.config.ConfigurationManager;
 import de.paradubsch.paradubschmanager.models.Home;
 import de.paradubsch.paradubschmanager.models.PlayerData;
 import de.paradubsch.paradubschmanager.util.Expect;
-import de.paradubsch.paradubschmanager.util.Hibernate;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 import org.bukkit.Bukkit;
@@ -43,7 +42,7 @@ public class BuyhomeCommand implements CommandExecutor, TabCompleter {
                 playerData.setMoney(playerData.getMoney() - price);
                 playerData.setMaxHomes(playerData.getMaxHomes() + 1);
 
-                List<Home> homes = Hibernate.getHomes(player);
+                List<Home> homes = Home.getByPlayer(player);
                 MessageAdapter.sendMessage(player, Message.Info.CMD_BUYHOME_SUCCESS, price + "", playerData.getMaxHomes() - homes.size() + "");
 
                 playerData.saveOrUpdate();

@@ -3,7 +3,6 @@ package de.paradubsch.paradubschmanager.commands;
 import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.models.PlayerData;
 import de.paradubsch.paradubschmanager.util.Expect;
-import de.paradubsch.paradubschmanager.util.Hibernate;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 import org.bukkit.Bukkit;
@@ -232,7 +231,7 @@ public class MoneyCommand implements CommandExecutor, TabCompleter {
         }
 
         Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
-            List<PlayerData> playerDataList = Hibernate.getMoneyTop();
+            List<PlayerData> playerDataList = PlayerData.getMoneyTop();
             if (playerDataList == null || playerDataList.isEmpty()) {
                 MessageAdapter.sendMessage(sender, Message.Error.CMD_MONEY_TOP_EMPTY);
                 return;

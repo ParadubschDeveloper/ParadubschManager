@@ -3,7 +3,6 @@ package de.paradubsch.paradubschmanager.commands;
 import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.models.Home;
 import de.paradubsch.paradubschmanager.util.Expect;
-import de.paradubsch.paradubschmanager.util.Hibernate;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 import org.bukkit.Bukkit;
@@ -37,7 +36,7 @@ public class HomeCommand implements CommandExecutor, TabCompleter {
         }
 
         Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
-            List<Home> homes = Hibernate.getHomes(player);
+            List<Home> homes = Home.getByPlayer(player);
             if (homes.stream().anyMatch(home -> home.getName().equals(homeName))) {
                 Home home = homes.stream().filter(home1 -> home1.getName().equals(homeName)).findFirst().get();
 
