@@ -87,7 +87,7 @@ public final class ParadubschManager extends JavaPlugin {
 
         Bukkit.getConsoleSender().sendMessage("");
         Bukkit.getConsoleSender().sendMessage("==== Paradubsch ====");
-        Bukkit.getConsoleSender().sendMessage("Authors: Crafter_Y, Blintastisch_, Byte");
+        Bukkit.getConsoleSender().sendMessage("Authors: Crafter_Y, Blintastisch_, Byte, DieButzenscheibe");
         Bukkit.getConsoleSender().sendMessage("Version: 1.1");
         Bukkit.getConsoleSender().sendMessage("==== Paradubsch ====");
         Bukkit.getConsoleSender().sendMessage("");
