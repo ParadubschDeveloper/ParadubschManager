@@ -477,3 +477,6 @@ permissions:
   paradubsch.feed:
     description: "Erlaubt Zugriff auf den /feed Befehl."
     default: false
+  paradubsch.nightvision:
+    description: "Erlaubt Zugriff auf den /nightvision Befehl."
+    default: false

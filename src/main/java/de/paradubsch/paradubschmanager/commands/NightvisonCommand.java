@@ -14,19 +14,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NightvisonCommand implements CommandExecutor, TabCompleter {
-    private static final PotionEffect nightvisionEffect = new PotionEffect(PotionEffectType.NIGHT_VISION, 999999999, 1);
+    private static final PotionEffect nightvisionEffect = new PotionEffect(PotionEffectType.NIGHT_VISION, 999999999, 1, true, false);
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (Expect.playerSender(sender)) return true;
+        if (!Expect.playerSender(sender)) return true;
         Player p = (Player) sender;
 
         switch (args.length) {
             case 0: {
                 if (p.hasPotionEffect(PotionEffectType.NIGHT_VISION)){
                     p.removePotionEffect(PotionEffectType.NIGHT_VISION);
+                    MessageAdapter.sendMessage(sender, Message.Info.CMD_NIGHTVISION_DEACTIVATED);
                 } else {
                     p.addPotionEffect(NightvisonCommand.nightvisionEffect);
+                    MessageAdapter.sendMessage(sender, Message.Info.CMD_NIGHTVISION_ACTIVATED);
                 }
                 break;
             }
