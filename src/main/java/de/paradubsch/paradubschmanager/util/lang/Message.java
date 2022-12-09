@@ -67,7 +67,10 @@ public class Message {
         CMD_TPA_SELF("cmdTpaSelf", "&cDu kannst dich nicht zur dir selbst teleportieren!"),
         CMD_RTP_NO_DESTINATION_FOUND("cmdRtpNoDestinationFound", "&cEs konnte kein Ziel gefunden werden!"),
         NOT_ENOUGH_MONEY("notEnoughMoney", "&cDafür hast du nicht genug Geld!"),
-        CMD_GS_BACKUP_FAILED("cmdGsBackupFailed", "&cDas Backup konnte nicht erstellt werden!");
+        CMD_GS_BACKUP_FAILED("cmdGsBackupFailed", "&cDas Backup konnte nicht erstellt werden!"),
+        CMD_NIGHTVISION_WRONG_SYNTAX("cmdNightvisionWrongSyntax", "&cBitte verwende /nachtsicht <an/aus>"),
+        CMD_NIGHTVISION_ALREADY_ON("cmdNightvisionAlreadyOn","&cDu hast bereits Nachtsicht."),
+        CMD_NIGHTVISION_ALREADY_OFF("cmdNightvisionAlreadyOff","&cDu hast keine Nachtsicht.");
 
 
         private final String key;

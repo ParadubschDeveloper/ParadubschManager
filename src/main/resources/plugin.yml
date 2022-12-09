@@ -291,6 +291,12 @@ commands:
     permission: paradubsch.feed
     permission-message: 'Du benötigst die Berechtigung paradubsch.feed um deinen Hunger zu stillen!'
     usage: '/feed'
+  nightvision:
+    description: Gibt einem Spieler den Effekt Nachtsicht.
+    aliases: [nv, nachtsicht]
+    permission: paradubsch.nightvision
+    permission-message: 'Du benötigst die Berechtigung paradubsch.nightvision um dir den Effekt Nachtsicht zu geben.'
+    usage: '/nightvision'
 
 
 permissions:

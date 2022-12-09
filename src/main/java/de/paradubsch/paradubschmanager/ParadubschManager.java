@@ -232,6 +232,7 @@ public final class ParadubschManager extends JavaPlugin {
         register("enderchest", new EnderchestCommand());
         register("backpack", new BackpackCommand());
         register("feed", new FeedCommand());
+        register("nightvision", new NightvisonCommand());
     }
 
     private final List<String> registeredCommands = new ArrayList<>();
