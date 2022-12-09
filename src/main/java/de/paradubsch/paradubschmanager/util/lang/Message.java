@@ -175,7 +175,9 @@ public class Message {
         SELL_ORDER_PLACED("sellOrderPlaced", "&aDu hast ein Verkaufsangebot mit &a%1&7x &6%2 &afür &a%3&6€ &aerstellt."),
         BOUGHT_ITEM_TRANSLATED("boughtItemTranslated", "Du hast &aerfolgreich &6%1&7x @ClickableComponent<Translatable=%2> &7für &a%3&6€ &7gekauft."),
         CMD_GS_BACKUP_CREATED("cmdGsBackupCreated", "&aDie Sicherung wurde erfolgreich erstellt. @ClickableComponent<Text=&7[&aHerunterladen&7]|OpenUrl=%1/downloadBackup/%2.schem|HoverText=Link öffnen>"),
-        FEED_SUCCESS("feedSuccess", "&aDu wurdest erfolgreich gefüttert.");
+        FEED_SUCCESS("feedSuccess", "&aDu wurdest erfolgreich gefüttert."),
+        CMD_NIGHTVISION_ACTIVATED("cmdNightvisionActivated", "&aDu hast nun Nachtsicht."),
+        CMD_NIGHTVISION_DEACTIVATED("cmdNightvisionDeactivated", "&aDu hast nun keine Nachtsicht mehr.");
 
         private final String key;
         private final String def;
