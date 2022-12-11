@@ -70,8 +70,11 @@ public class Message {
         CMD_GS_BACKUP_FAILED("cmdGsBackupFailed", "&cDas Backup konnte nicht erstellt werden!"),
         CMD_NIGHTVISION_WRONG_SYNTAX("cmdNightvisionWrongSyntax", "&cBitte verwende /nachtsicht <an/aus>"),
         CMD_NIGHTVISION_ALREADY_ON("cmdNightvisionAlreadyOn","&cDu hast bereits Nachtsicht."),
-        CMD_NIGHTVISION_ALREADY_OFF("cmdNightvisionAlreadyOff","&cDu hast keine Nachtsicht.");
-
+        CMD_NIGHTVISION_ALREADY_OFF("cmdNightvisionAlreadyOff","&cDu hast keine Nachtsicht."),
+        CMD_BAZAAR_PRICE_NOT_PROVIDED("cmdBazaarPriceNotProvided", "&cDu musst einen Preis angeben!"),
+        CMD_BAZAAR_CANNOT_SELL_THIS_ITEM("cmdBazaarConnotSellThisItem", "&cDu kannst dieses Item nicht auf dem Basar verkaufen!"),
+        CMD_BAZAAR_NOT_ENOUGH_ITEMS("cmdBazaarNotEnoughItems", "&cDu brauchst mindestens &a%1&7x@ClickableComponent<Translatable=%2>&cum es auf dem Basar zu verkaufen!"),
+        CMD_BAZAAR_INVALID_PRICE("cmdBazaarInvalidPrice", "&cDer Preis muss größer als &a%1&c sein und nicht größer als &a%2&c!");
 
         private final String key;
         private final String def;
@@ -177,7 +180,8 @@ public class Message {
         CMD_GS_BACKUP_CREATED("cmdGsBackupCreated", "&aDie Sicherung wurde erfolgreich erstellt. @ClickableComponent<Text=&7[&aHerunterladen&7]|OpenUrl=%1/downloadBackup/%2.schem|HoverText=Link öffnen>"),
         FEED_SUCCESS("feedSuccess", "&aDu wurdest erfolgreich gefüttert."),
         CMD_NIGHTVISION_ACTIVATED("cmdNightvisionActivated", "&aDu hast nun Nachtsicht."),
-        CMD_NIGHTVISION_DEACTIVATED("cmdNightvisionDeactivated", "&aDu hast nun keine Nachtsicht mehr.");
+        CMD_NIGHTVISION_DEACTIVATED("cmdNightvisionDeactivated", "&aDu hast nun keine Nachtsicht mehr."),
+        CMD_BAZAAR_PAYED_TAXES("cmdBazaarPayedTaxes", "Dafür hast du &a%1&6€ &7Steuern gezahlt.");
 
         private final String key;
         private final String def;
