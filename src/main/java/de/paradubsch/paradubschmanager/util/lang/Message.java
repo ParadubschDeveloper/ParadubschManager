@@ -181,7 +181,12 @@ public class Message {
         FEED_SUCCESS("feedSuccess", "&aDu wurdest erfolgreich gefüttert."),
         CMD_NIGHTVISION_ACTIVATED("cmdNightvisionActivated", "&aDu hast nun Nachtsicht."),
         CMD_NIGHTVISION_DEACTIVATED("cmdNightvisionDeactivated", "&aDu hast nun keine Nachtsicht mehr."),
-        CMD_BAZAAR_PAYED_TAXES("cmdBazaarPayedTaxes", "Dafür hast du &a%1&6€ &7Steuern gezahlt.");
+        CMD_BAZAAR_PAYED_TAXES("cmdBazaarPayedTaxes", "Dafür hast du &a%1&6€ &7Steuern gezahlt."),
+        CMD_ANVIL_OPENED("cmdAnvilOpened","&a Du hast deinen mobilen Amboss geöffnet."),
+        CMD_LOOM_OPENED("cmdLoomOpened","&a Du hast deinen mobilen Webstuhl geöffnet."),
+        CMD_SMITHING_OPENED("cmdSmithingOpened","&a Du hast deinen mobilen Schmiedetisch geöffnet."),
+        CMD_STONECUTTER_OPENED("cmdStonecutterOpened","&a Du hast deine mobile Steinsäge geöffnet."),
+        CMD_HAT_USE("cmdHatUse","&a Du hast dir einen neuen Hut aufgesetzt");
 
         private final String key;
         private final String def;

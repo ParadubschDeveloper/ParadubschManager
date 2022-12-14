@@ -297,6 +297,36 @@ commands:
     permission: paradubsch.nightvision
     permission-message: 'Du benötigst die Berechtigung paradubsch.nightvision um dir den Effekt Nachtsicht zu geben.'
     usage: '/nightvision'
+  anvil:
+    description: Öffnet den mobilen Amboss.
+    aliases: [amobss]
+    permission: paradubsch.anvil
+    permission-message: 'Du benötigst die Berechtigung paradubsch.anivl um deinen mobilen Amboss zu öffnen.'
+    usage: '/anvil'
+  loom:
+    description: Öffnet den mobilen Webstuhl.
+    aliases: [webstuhl, ws]
+    permission: paradubsch.loom
+    permission-message: 'Du benötigst die Berechtigung paradubsch.loom um deinen mobilen Webstuhl zu öffnen'
+    usage: '/loom'
+  stonecutter:
+    description: Öffnet die mobile Steinsäge.
+    aliases: [ steinsäge, ss ]
+    permission: paradubsch.stonecutter
+    permission-message: 'Du benötigst die Berechtigung paradubsch.stonecutter um deine mobile Steinsäge zu öffnen'
+    usage: '/stonecutter'
+  smithingtable:
+    description: Öffnet den mobilen Schmiedetisch.
+    aliases: [ schmiedetisch, st ]
+    permission: paradubsch.smithingtable
+    permission-message: 'Du benötigst die Berechtigung paradubsch.smithingtable um deinen mobilen Schmiedetisch zu öffnen'
+    usage: '/smithingtable'
+  hat:
+    description: Setzt das ausgewählte Item als Hut auf.
+    aliases: [ hut]
+    permission: paradubsch.hat
+    permission-message: 'Du benötigst die Berechtigung paradubsch.hat um deinen Hut zu ändern.'
+    usage: '/hat'
 
 
 permissions:
@@ -479,4 +509,19 @@ permissions:
     default: false
   paradubsch.nightvision:
     description: "Erlaubt Zugriff auf den /nightvision Befehl."
+    default: false
+  paradubsch.loom:
+    description: "Erlaubt Zugriff auf den /loom Befehl."
+    default: false
+  paradubsch.smithingtable:
+    description: "Erlaubt Zugriff auf den /smithingtable Befehl."
+    default: false
+  paradubsch.stonecutter:
+    description: "Erlaubt Zugriff auf den /stonecutter Befehl."
+    default: false
+  paradubsch.anvil:
+    description: "Erlaubt Zugriff auf den /anvil Befehl."
+    default: false
+  paradubsch.hat:
+    description: "Erlaubt Zugriff auf den /hat Befehl."
     default: false

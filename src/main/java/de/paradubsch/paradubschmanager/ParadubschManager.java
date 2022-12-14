@@ -233,6 +233,11 @@ public final class ParadubschManager extends JavaPlugin {
         register("backpack", new BackpackCommand());
         register("feed", new FeedCommand());
         register("nightvision", new NightvisonCommand());
+        register("anvil", new AnvilCommand());
+        register("loom", new LoomCommand());
+        register("smithingtable", new SmithingCommand());
+        register("stonecutter", new StoneCutterCommand());
+        register("hat",new HatCommand());
     }
 
     private final List<String> registeredCommands = new ArrayList<>();
