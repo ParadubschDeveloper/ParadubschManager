@@ -30,7 +30,7 @@ public class HatCommand implements CommandExecutor, TabCompleter {
         inv.clear(p.getInventory().getHeldItemSlot());
         inv.setItemInMainHand(headSlot);
         MessageAdapter.sendMessage(sender, Message.Info.CMD_HAT_USE);
-        return false;
+        return true;
     }
 
     @Override

@@ -18,12 +18,12 @@ public class SmithingCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if(!Expect.playerSender(sender)) {
-            return false;
+            return true;
         }
         Player p = (Player) sender;
         p.openSmithingTable(p.getLocation(), true);
         MessageAdapter.sendMessage(sender, Message.Info.CMD_SMITHING_OPENED);
-        return false;
+        return true;
     }
 
     @Override
