@@ -138,7 +138,7 @@ public class Message {
         GS_INFO_REGION_NAME("gsInfoRegionName", "&aRegion: &6%1"),
         GS_INFO_REGION_OWNERS("gsInfoRegionOwners", "&aBesitzer: &6%1"),
         GS_INFO_REGION_MEMBERS("gsInfoRegionMembers", "&aMitglieder: &6%1"),
-        TAB_HEADER("tabHeader", "&6Paradubsch\n\n&7Spieler &8> &a%1\n"),
+        TAB_HEADER("tabHeader", "&6Paradubsch\n\n&7Spieler &8> &a%1\n &7Welt &8> %2 \n"),
         TAB_FOOTER("tabFooter", "\n&7Hast du fragen? Wende dich an ein Teammitglied.\nDiscord: &ahttps://discord.gg/GgXaq6ubvp"),
         CMD_RANKED_SUCCESSFUL("cmdRankedSuccessful", "&aDu hast erfolgreich den Rang &6%1 &aan &b%2 &avergeben."),
         CMD_RANKED_UP_SUCCESSFUL("cmdRankedUpSuccessful", "&aHerzlichen Glückwunsch! Du bist in den Rang &6%1 &aaufgestiegen."),
@@ -356,6 +356,35 @@ public class Message {
         @Override
         public String getConfigPrefix() {
             return "gui";
+        }
+    }
+    public enum World implements BaseMessageType{
+        NORMAL("worldSpawn","&bSpawn"),
+        WORLD("worldBauwelt","&6Bauwelt"),
+        WORLD_THE_END("worldEnd","&dEnd"),
+        WORLD_NETHER("worldNether","&cNether"),
+        FARMWELT("worldFarmwelt","&aFarmwelt");
+
+        private final String key;
+        private final String def;
+        World(String key, String def){
+            this.key = key;
+            this.def = def;
+        }
+
+        @Override
+        public String getKey() {
+            return this.key;
+        }
+
+        @Override
+        public String getDefault() {
+            return this.def;
+        }
+
+        @Override
+        public String getConfigPrefix() {
+            return "world";
         }
     }
 }

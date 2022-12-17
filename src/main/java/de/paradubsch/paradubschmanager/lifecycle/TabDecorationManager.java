@@ -19,6 +19,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
@@ -56,6 +57,12 @@ public class TabDecorationManager implements Listener {
             }
         });
     }
+    @EventHandler
+    public void onPlayerTeleport(PlayerTeleportEvent event){
+        Bukkit.getScheduler().runTask(ParadubschManager.getInstance(), () -> {
+            broadcastTabDecorations();
+        });
+    }
 
     public static void broadcastScoreboardTeams() {
         Bukkit.getScheduler().runTask(ParadubschManager.getInstance(), () -> {
@@ -79,7 +86,8 @@ public class TabDecorationManager implements Listener {
             }
         }
 
-        String header = ParadubschManager.getInstance().getLanguageManager().getString(Message.Info.TAB_HEADER, playerLang, onlinePlayers + "");
+        String world = ParadubschManager.getInstance().getLanguageManager().getString(Message.World.valueOf(p.getWorld().getName().toUpperCase()), playerLang);
+        String header = ParadubschManager.getInstance().getLanguageManager().getString(Message.Info.TAB_HEADER, playerLang, onlinePlayers + "", world);
         String footer = ParadubschManager.getInstance().getLanguageManager().getString(Message.Info.TAB_FOOTER, playerLang);
         packet.getChatComponents().write(0, WrappedChatComponent.fromText(ChatColor.translateAlternateColorCodes('&', header)));
         packet.getChatComponents().write(1, WrappedChatComponent.fromText(ChatColor.translateAlternateColorCodes('&', footer)));
