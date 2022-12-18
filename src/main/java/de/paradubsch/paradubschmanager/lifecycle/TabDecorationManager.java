@@ -90,21 +90,27 @@ public class TabDecorationManager implements Listener {
         switch (p.getWorld().getName()){
             case "normal":{
                 world = ParadubschManager.getInstance().getLanguageManager().getString(Message.Constant.NORMAL, playerLang);
+                break;
             }
             case "world_nether":{
                 world = ParadubschManager.getInstance().getLanguageManager().getString(Message.Constant.WORLD_NETHER, playerLang);
+                break;
             }
             case "world":{
                 world = ParadubschManager.getInstance().getLanguageManager().getString(Message.Constant.WORLD, playerLang);
+                break;
             }
             case "farmwelt":{
                 world = ParadubschManager.getInstance().getLanguageManager().getString(Message.Constant.FARMWELT, playerLang);
+                break;
             }
             case "eventwelt":{
                 world = ParadubschManager.getInstance().getLanguageManager().getString(Message.Constant.EVENTWELt, playerLang);
+                break;
             }
             case "world_the_end":{
                 world = ParadubschManager.getInstance().getLanguageManager().getString(Message.Constant.WORLD_THE_END, playerLang);
+                break;
             }
             default:{
                 world = "&a" + p.getWorld().getName();
