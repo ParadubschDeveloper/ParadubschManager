@@ -86,7 +86,31 @@ public class TabDecorationManager implements Listener {
             }
         }
 
-        String world = ParadubschManager.getInstance().getLanguageManager().getString(Message.World.valueOf(p.getWorld().getName().toUpperCase()), playerLang);
+        String world;
+        switch (p.getWorld().getName()){
+            case "normal":{
+                world = ParadubschManager.getInstance().getLanguageManager().getString(Message.Constant.NORMAL, playerLang);
+            }
+            case "world_nether":{
+                world = ParadubschManager.getInstance().getLanguageManager().getString(Message.Constant.WORLD_NETHER, playerLang);
+            }
+            case "world":{
+                world = ParadubschManager.getInstance().getLanguageManager().getString(Message.Constant.WORLD, playerLang);
+            }
+            case "farmwelt":{
+                world = ParadubschManager.getInstance().getLanguageManager().getString(Message.Constant.FARMWELT, playerLang);
+            }
+            case "eventwelt":{
+                world = ParadubschManager.getInstance().getLanguageManager().getString(Message.Constant.EVENTWELt, playerLang);
+            }
+            case "world_the_end":{
+                world = ParadubschManager.getInstance().getLanguageManager().getString(Message.Constant.WORLD_THE_END, playerLang);
+            }
+            default:{
+                world = "&a" + p.getWorld().getName();
+
+            }
+        }
         String header = ParadubschManager.getInstance().getLanguageManager().getString(Message.Info.TAB_HEADER, playerLang, onlinePlayers + "", world);
         String footer = ParadubschManager.getInstance().getLanguageManager().getString(Message.Info.TAB_FOOTER, playerLang);
         packet.getChatComponents().write(0, WrappedChatComponent.fromText(ChatColor.translateAlternateColorCodes('&', header)));

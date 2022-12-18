@@ -239,7 +239,13 @@ public class Message {
         YOU_BUY("constantYouBuy", "Du kaufst:"),
         YOU_SELL("constantYouSell", "Du verkaufst:"),
         BLANK_TRANSLATABLE("constantBlankTranslatable", "@ClickableComponent<Translatable=%1>"),
-        PAGE("constantPage", "Seite %1");
+        PAGE("constantPage", "Seite %1"),
+        NORMAL("constant","&bSpawn"),
+        WORLD("constantBauwelt","&6Bauwelt"),
+        WORLD_THE_END("constantEnd","&dEnd"),
+        WORLD_NETHER("constantdNether","&cNether"),
+        FARMWELT("constantFarmwelt","&aFarmwelt"),
+        EVENTWELt("constantEventwelt","&aEventwelt");
 
 
         private final String key;
@@ -356,35 +362,6 @@ public class Message {
         @Override
         public String getConfigPrefix() {
             return "gui";
-        }
-    }
-    public enum World implements BaseMessageType{
-        NORMAL("worldSpawn","&bSpawn"),
-        WORLD("worldBauwelt","&6Bauwelt"),
-        WORLD_THE_END("worldEnd","&dEnd"),
-        WORLD_NETHER("worldNether","&cNether"),
-        FARMWELT("worldFarmwelt","&aFarmwelt");
-
-        private final String key;
-        private final String def;
-        World(String key, String def){
-            this.key = key;
-            this.def = def;
-        }
-
-        @Override
-        public String getKey() {
-            return this.key;
-        }
-
-        @Override
-        public String getDefault() {
-            return this.def;
-        }
-
-        @Override
-        public String getConfigPrefix() {
-            return "world";
         }
     }
 }
