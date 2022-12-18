@@ -327,6 +327,12 @@ commands:
     permission: paradubsch.hat
     permission-message: 'Du benötigst die Berechtigung paradubsch.hat um deinen Hut zu ändern.'
     usage: '/hat'
+  mute:
+    description: Mutet einen Spieler
+    aliases: []
+    permission: paradubsch.mute
+    permission-message: 'Du benötigst die Berechtigung paradubsch.mute um einen Spieler zu muten.'
+    usage: '/mute'
 
 
 permissions:
@@ -524,4 +530,7 @@ permissions:
     default: false
   paradubsch.hat:
     description: "Erlaubt Zugriff auf den /hat Befehl."
+    default: false
+  paradubsch.mute:
+    description: "Erlaubt Zugriff auf den /mute Befehl."
     default: false

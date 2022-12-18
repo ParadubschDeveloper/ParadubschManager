@@ -43,9 +43,13 @@ public class Message {
         CMD_RANK_NOT_PROVIDED("cmdRankNotProvided", "&cDu musst einen Rang angeben, welchen du vergeben möchtest!"),
         CMD_RANK_NOT_FOUND("cmdRankNotFound", "&cDer Rang &b%1 &ckonnte nicht gefunden werden!"),
         CMD_BAN_PLAYER_ALREADY_BANNED("cmdBanPlayerAlreadyBanned", "&cDer Spieler &a%1 &cist bereits gebannt!"),
+        CMD_MUTE_PLAYER_ALREADY_MUTED("cmdMutePlayerAlreadyMuted", "&cDer Spieler &a%1 &cist bereits gemutet!"),
         CMD_BAN_DURATION_NOT_PROVIDED("cmdBanDurationNotProvided", "&cDu musst eine Dauer angeben!"),
+        CMD_MUTE_DURATION_NOT_PROVIDED("cmdMuteDurationNotProvided", "&cDu musst eine Dauer angeben!"),
         CMD_BAN_DURATION_INVALID("cmdBanDurationInvalid", "&cDie Dauer &a%1 &cist nicht gültig."),
+        CMD_MUTE_DURATION_INVALID("cmdMuteDurationInvalid", "&cDie Dauer &a%1 &cist nicht gültig."),
         CMD_BAN_PLAYER_NOT_BANNED("cmdBanPlayerNotBanned", "&cDer Spieler &a%1 &cist nicht gebannt!"),
+        CMD_MUTE_PLAYER_NOT_MUTED("cmdMutePlayerNotMuted", "&cDer Spieler &a%1 &cist nicht gemutet!"),
         CMD_GM_NO_GAMEMODE_PROVIDED("cmdGmNoGamemodeProvided", "&cDu musst einen Gamemode angeben!"),
         CMD_PLAYER_NOT_ONLINE("cmdPlayerNotOnline", "&cDer Spieler &a%1 &cist nicht online!"),
         CMD_GM_GAMEMODE_INVALID("cmdGmGamemodeInvalid", "&cDer Gamemode &a%1 &cist nicht gültig!"),
@@ -143,10 +147,14 @@ public class Message {
         CMD_RANKED_SUCCESSFUL("cmdRankedSuccessful", "&aDu hast erfolgreich den Rang &6%1 &aan &b%2 &avergeben."),
         CMD_RANKED_UP_SUCCESSFUL("cmdRankedUpSuccessful", "&aHerzlichen Glückwunsch! Du bist in den Rang &6%1 &aaufgestiegen."),
         CMD_BAN_SUGGEST_UPDATE("cmdBanSuggestUpdate", "Möchtest du den Ban statdessen Updaten? @ClickableComponent<Text=&a[Update]|SuggestCommand=/ban update %1 |HoverText=Ban updaten>"),
+        CMD_MUTE_SUGGEST_UPDATE("cmdMuteSuggestUpdate", "Möchtest du den Mute statdessen Updaten? @ClickableComponent<Text=&a[Update]|SuggestCommand=/mute update %1 |HoverText=Mute updaten>"),
         CMD_BAN_PLAYER_UNBANNED("cmdBanPlayerUnbanned", "&aDer Spieler &6%1 &awurde erfolgreich entbannt."),
+        CMD_MUTE_PLAYER_UNMUTED("cmdMutePlayerUnmuted", "&aDer Spieler &6%1 &awurde erfolgreich entmutet."),
         CMD_BAN_KICK_MESSAGE("cmdBanKickMessage", "&6» &4Paradubsch &6«\n\n&7Du wurdest gebannt!\n\n&7Grund: &e%1\n\n&7Dauer: &c%2\n\n&7Ban-Id: &a%3"),
         CMD_BAN_PLAYER_BANNED("cmdBanPlayerBanned", "&aDer Spieler &6%1 &awurde erfolgreich gebannt."),
+        CMD_MUTE_PLAYER_MUTED("cmdMutePlayerMuted", "&aDer Spieler &6%1 &awurde erfolgreich gemutet."),
         CMD_BAN_EDITED("cmdBanEdited", "&aDer Ban wurde erfolgreich bearbeitet."),
+        CMD_MUTE_EDITED("cmdMuteEdited", "&aDer Mute wurde erfolgreich bearbeitet."),
         CMD_WARN_KICK_MESSAGE("cmdWarnKickMessage", "&6» &4Paradubsch &6«\n\n&7Du wurdest vom Server geworfen!\n\n&7Grund: &e%1\n\n&7Warn-Id: &a%2"),
         CMD_BAN_PLAYER_WARNED("cmdBanPlayerWarned", "&aDer Spieler &6%1 &awurde erfolgreich gewarnt."),
         CMD_WARP_CREATED("cmdWarpCreated", "&aDer Warp &6%1 &awurde erfolgreich erstellt."),
@@ -186,7 +194,12 @@ public class Message {
         CMD_LOOM_OPENED("cmdLoomOpened","&a Du hast deinen mobilen Webstuhl geöffnet."),
         CMD_SMITHING_OPENED("cmdSmithingOpened","&a Du hast deinen mobilen Schmiedetisch geöffnet."),
         CMD_STONECUTTER_OPENED("cmdStonecutterOpened","&a Du hast deine mobile Steinsäge geöffnet."),
-        CMD_HAT_USE("cmdHatUse","&a Du hast dir einen neuen Hut aufgesetzt");
+        CMD_HAT_USE("cmdHatUse","&a Du hast dir einen neuen Hut aufgesetzt"),
+        CMD_MUTE_GOT_MUTED_HEADER("cmdMuteGotMutedHeader","&cDu wurdest für &6%1 &cGemutet."),
+        CMD_MUTE_GOT_MUTED_BODY("cmdMuteGotMutedBody","&cGrund: &6%1"),
+        PERMA_MUTED("permaMuted","&cDu bist permanent gemutet. Du kannst nichts mehr in den Chat schreiben."),
+        MUTED_HEADER("mutedHeader","&cDu bist noch für &6%1 &cgemutet."),
+        MUTED_BODY("mutedBody","&cGrund: &6%1");
 
         private final String key;
         private final String def;

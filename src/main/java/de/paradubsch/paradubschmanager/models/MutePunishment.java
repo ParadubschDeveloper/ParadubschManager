@@ -25,4 +25,8 @@ public class MutePunishment extends WarnPunishment {
     public static MutePunishment getById(Serializable id) {
         return BaseDatabaseEntity.getById(MutePunishment.class, id);
     }
+
+    public static MutePunishment getByIdO(Serializable id) {
+        return BaseDatabaseEntity.getById(MutePunishment.class, id);
+    }
 }

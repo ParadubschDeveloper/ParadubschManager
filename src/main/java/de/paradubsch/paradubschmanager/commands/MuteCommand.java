@@ -1,16 +1,12 @@
 package de.paradubsch.paradubschmanager.commands;
 
 import de.paradubsch.paradubschmanager.ParadubschManager;
-import de.paradubsch.paradubschmanager.models.BanPunishment;
-import de.paradubsch.paradubschmanager.models.PlayerData;
-import de.paradubsch.paradubschmanager.models.PunishmentHolder;
-import de.paradubsch.paradubschmanager.models.PunishmentUpdate;
+import de.paradubsch.paradubschmanager.models.*;
 import de.paradubsch.paradubschmanager.util.Expect;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.TimeCalculations;
 import de.paradubsch.paradubschmanager.util.lang.Language;
 import de.paradubsch.paradubschmanager.util.lang.Message;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -27,7 +23,7 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BanCommand implements TabCompleter, CommandExecutor {
+public class MuteCommand implements TabCompleter, CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (!Expect.minArgs(1, args)) {
@@ -41,21 +37,21 @@ public class BanCommand implements TabCompleter, CommandExecutor {
             }
             case "update":
             case "edit": {
-                editBan(sender, args);
+                editMute(sender, args);
                 break;
             }
             case "delete": {
-                deleteBan(sender, args);
+                deleteMute(sender, args);
                 break;
             }
-            default: banPlayer(sender, args);
+            default: mutePlayer(sender, args);
         }
 
         return true;
     }
 
-    private void banPlayer(CommandSender sender, String[] args) {
-        //ban player duration reason
+    private void mutePlayer(CommandSender sender, String[] args) {
+        //mute player duration reason
         Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
             PlayerData target = PlayerData.getByName(args[0]);
             if (target == null) {
@@ -65,74 +61,71 @@ public class BanCommand implements TabCompleter, CommandExecutor {
 
             PunishmentHolder ph = PunishmentHolder.getByPlayerDataOrCreate(target);
 
-            if (ph.isActiveBan()) {
-               MessageAdapter.sendMessage(sender, Message.Error.CMD_BAN_PLAYER_ALREADY_BANNED, args[0]);
-               MessageAdapter.sendMessage(sender, Message.Info.CMD_BAN_SUGGEST_UPDATE, target.getName());
+            if (ph.isActiveMute()) {
+               MessageAdapter.sendMessage(sender, Message.Error.CMD_MUTE_PLAYER_ALREADY_MUTED, args[0]);
+               MessageAdapter.sendMessage(sender, Message.Info.CMD_MUTE_SUGGEST_UPDATE, target.getName());
                return;
             }
 
             if (!Expect.minArgs(2, args)) {
-                MessageAdapter.sendMessage(sender, Message.Error.CMD_BAN_DURATION_NOT_PROVIDED);
+                MessageAdapter.sendMessage(sender, Message.Error.CMD_MUTE_DURATION_NOT_PROVIDED);
                 return;
             }
 
-            Timestamp banExpiration = TimeCalculations.parseExpiration(args[1]);
-            if (banExpiration == null) {
-                MessageAdapter.sendMessage(sender, Message.Error.CMD_BAN_DURATION_INVALID, args[1]);
+            Timestamp muteExpiration = TimeCalculations.parseExpiration(args[1]);
+            if (muteExpiration == null) {
+                MessageAdapter.sendMessage(sender, Message.Error.CMD_MUTE_DURATION_INVALID, args[1]);
                 return;
             }
             Language lang = Language.getLanguageByName(target.getLanguage());
-            String expirationString = TimeCalculations.timeStampToExpiration(banExpiration, lang);
+            String expirationString = TimeCalculations.timeStampToExpiration(muteExpiration, lang);
 
-            StringBuilder banReasonBuilder = new StringBuilder();
+            StringBuilder muteReasonBuilder = new StringBuilder();
             for (int i = 2; i < args.length; i++) {
-                banReasonBuilder.append(args[i]).append(" ");
+                muteReasonBuilder.append(args[i]).append(" ");
             }
-            String banReason = banReasonBuilder.toString().trim();
+            String muteReason = muteReasonBuilder.toString().trim();
 
-            if (banReason.isEmpty()) {
-                banReason = "\"The Ban Hammer has Spoken!\"";
+            if (muteReason.isEmpty()) {
+                muteReason = "You have been Muted!";
             }
-            BanPunishment ban = new BanPunishment();
-            ban.setExpiration(banExpiration);
-            ban.setReason(banReason);
+            MutePunishment mute = new MutePunishment();
+            mute.setExpiration(muteExpiration);
+            mute.setReason(muteReason);
 
-            if (banExpiration.getTime() > System.currentTimeMillis() + 915170400000L) {
-                ban.setPermanent(true);
-                ph.setPermaBanned(true);
+            if (muteExpiration.getTime() > System.currentTimeMillis() + 915170400000L) {
+                mute.setPermanent(true);
+                ph.setPermaMuted(true);
             }
 
             if (sender instanceof Player) {
                 PlayerData giver = PlayerData.getByPlayer((Player) sender);
-                ban.setGivenBy(giver);
+                mute.setGivenBy(giver);
             }
-            ban.setHolderRef(ph);
+            mute.setHolderRef(ph);
 
             ph.saveOrUpdate();
-            long id = (long) ban.save();
-            ph.setActiveBanId(id);
-            ph.setActiveBan(true);
-            ph.setActiveBanExpiration(banExpiration);
-            ph.setActiveBanReason(banReason);
+            long id = (long) mute.save();
+            ph.setActiveMuteId(id);
+            ph.setActiveMute(true);
+            ph.setActiveMuteExpiration(muteExpiration);
+            ph.setActiveMuteReason(muteReason);
             ph.saveOrUpdate();
 
+            //TODO: Send Message to player, that he has been muted
+            //NOTE: expirationString
             Player targetPlayer = Bukkit.getPlayer(target.getName());
             if (targetPlayer != null) {
-                Component msg = ParadubschManager.getInstance().getLanguageManager().get(Message.Info.CMD_BAN_KICK_MESSAGE, lang, banReason, expirationString, "#b-" + id);
-                Bukkit.getScheduler().runTask(ParadubschManager.getInstance(), () -> {
-                    // kicking is currently not supported by the testing environment
-                    try {
-                        targetPlayer.kick(msg);
-                    } catch (Exception ignored) {}
-                });
+                MessageAdapter.sendMessage(targetPlayer, Message.Info.CMD_MUTE_GOT_MUTED_HEADER, expirationString);
+                MessageAdapter.sendMessage(targetPlayer, Message.Info.CMD_MUTE_GOT_MUTED_BODY, muteReason);
             }
 
-            MessageAdapter.sendMessage(sender, Message.Info.CMD_BAN_PLAYER_BANNED, target.getName());
+            MessageAdapter.sendMessage(sender, Message.Info.CMD_MUTE_PLAYER_MUTED, target.getName());
         });
     }
 
-    private void deleteBan(CommandSender sender, String[] args) {
-        //ban delete player reason
+    private void deleteMute(CommandSender sender, String[] args) {
+        //mute delete player reason
         Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
             if (!Expect.minArgs(2, args)) {
                 MessageAdapter.sendMessage(sender, Message.Error.CMD_PLAYER_NOT_PROVIDED);
@@ -147,33 +140,33 @@ public class BanCommand implements TabCompleter, CommandExecutor {
 
             PunishmentHolder ph = PunishmentHolder.getByPlayerDataOrCreate(target);
 
-            if (!ph.isActiveBan()) {
-                MessageAdapter.sendMessage(sender, Message.Error.CMD_BAN_PLAYER_NOT_BANNED, target.getName());
+            if (!ph.isActiveMute()) {
+                MessageAdapter.sendMessage(sender, Message.Error.CMD_MUTE_PLAYER_NOT_MUTED, target.getName());
                 return;
             }
 
-            StringBuilder unbanReasonBuilder = new StringBuilder();
+            StringBuilder unmuteReasonBuilder = new StringBuilder();
             for (int i = 2; i < args.length; i++) {
-                unbanReasonBuilder.append(args[i]).append(" ");
+                unmuteReasonBuilder.append(args[i]).append(" ");
             }
-            String unbanReason = unbanReasonBuilder.toString().trim();
+            String unmuteReason = unmuteReasonBuilder.toString().trim();
 
-            if (unbanReason.isEmpty()) {
-                unbanReason = "No reason given";
+            if (unmuteReason.isEmpty()) {
+                unmuteReason = "No reason given";
             }
 
-            BanPunishment ban = BanPunishment.getByIdO(ph.getActiveBanId());
-            if (ban == null) return;
+            MutePunishment mute = MutePunishment.getByIdO(ph.getActiveMuteId());
+            if (mute == null) return;
 
-            ph.setActiveBanId(0);
-            ph.setActiveBanReason(null);
-            ph.setActiveBanExpiration(Timestamp.valueOf(LocalDateTime.ofInstant(Instant.now(), ZoneId.systemDefault())));
-            ph.setActiveBan(false);
+            ph.setActiveMuteId(0);
+            ph.setActiveMuteReason(null);
+            ph.setActiveMuteExpiration(Timestamp.valueOf(LocalDateTime.ofInstant(Instant.now(), ZoneId.systemDefault())));
+            ph.setActiveMute(false);
             ph.saveOrUpdate();
 
             PunishmentUpdate update = new PunishmentUpdate();
-            update.setPunishmentRef(ban);
-            update.setReason(unbanReason);
+            update.setPunishmentRef(mute);
+            update.setReason(unmuteReason);
             update.setExpiration(Timestamp.valueOf(LocalDateTime.ofInstant(Instant.now(), ZoneId.systemDefault())));
             if (sender instanceof Player) {
                 PlayerData giver = PlayerData.getByPlayer((Player) sender);
@@ -181,15 +174,15 @@ public class BanCommand implements TabCompleter, CommandExecutor {
             }
             update.save();
 
-            ban.setHasUpdate(true);
-            ban.saveOrUpdate();
+            mute.setHasUpdate(true);
+            mute.saveOrUpdate();
 
-            MessageAdapter.sendMessage(sender, Message.Info.CMD_BAN_PLAYER_UNBANNED, target.getName());
+            MessageAdapter.sendMessage(sender, Message.Info.CMD_MUTE_PLAYER_UNMUTED, target.getName());
         });
     }
 
-    private void editBan(CommandSender sender, String[] args) {
-        //ban edit player expiration reason
+    private void editMute(CommandSender sender, String[] args) {
+        //mute edit player expiration reason
         Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
             if (!Expect.minArgs(2, args)) {
                 MessageAdapter.sendMessage(sender, Message.Error.CMD_PLAYER_NOT_PROVIDED);
@@ -204,56 +197,56 @@ public class BanCommand implements TabCompleter, CommandExecutor {
 
             PunishmentHolder ph = PunishmentHolder.getByPlayerDataOrCreate(target);
 
-            if (!ph.isActiveBan()) {
-                MessageAdapter.sendMessage(sender, Message.Error.CMD_BAN_PLAYER_NOT_BANNED, target.getName());
+            if (!ph.isActiveMute()) {
+                MessageAdapter.sendMessage(sender, Message.Error.CMD_MUTE_PLAYER_NOT_MUTED, target.getName());
                 return;
             }
 
-            Timestamp banExpiration = TimeCalculations.parseExpiration(args[2]);
+            Timestamp muteExpiration = TimeCalculations.parseExpiration(args[2]);
 
-            if (banExpiration == null) {
-                MessageAdapter.sendMessage(sender, Message.Error.CMD_BAN_DURATION_INVALID, args[2]);
+            if (muteExpiration == null) {
+                MessageAdapter.sendMessage(sender, Message.Error.CMD_MUTE_DURATION_INVALID, args[2]);
                 return;
             }
 
-            StringBuilder banReasonBuilder = new StringBuilder();
+            StringBuilder muteReasonBuilder = new StringBuilder();
             for (int i = 3; i < args.length; i++) {
-                banReasonBuilder.append(args[i]).append(" ");
+                muteReasonBuilder.append(args[i]).append(" ");
             }
-            String banReason = banReasonBuilder.toString().trim();
+            String muteReason = muteReasonBuilder.toString().trim();
 
-            if (banReason.isEmpty()) {
-                banReason = "\"The Ban Hammer has Spoken!\"";
+            if (muteReason.isEmpty()) {
+                muteReason = "You have been Muted!";
             }
-            BanPunishment ban = BanPunishment.getByIdO(ph.getActiveBanId());
-            if (ban == null) return;
+            MutePunishment mute = MutePunishment.getByIdO(ph.getActiveMuteId());
+            if (mute == null) return;
 
-            if (banExpiration.getTime() > System.currentTimeMillis() + 915170400000L) {
-                ban.setPermanent(true);
-                ph.setPermaBanned(true);
+            if (muteExpiration.getTime() > System.currentTimeMillis() + 915170400000L) {
+                mute.setPermanent(true);
+                ph.setPermaMuted(true);
             } else {
-                ban.setPermanent(false);
-                ph.setPermaBanned(false);
+                mute.setPermanent(false);
+                ph.setPermaMuted(false);
             }
 
-            ph.setActiveBanReason(banReason);
-            ph.setActiveBanExpiration(banExpiration);
+            ph.setActiveMuteReason(muteReason);
+            ph.setActiveMuteExpiration(muteExpiration);
             ph.saveOrUpdate();
 
             PunishmentUpdate update = new PunishmentUpdate();
-            update.setPunishmentRef(ban);
-            update.setReason(banReason);
-            update.setExpiration(banExpiration);
+            update.setPunishmentRef(mute);
+            update.setReason(muteReason);
+            update.setExpiration(muteExpiration);
             if (sender instanceof Player) {
                 PlayerData giver = PlayerData.getByPlayer((Player) sender);
                 update.setGivenBy(giver);
             }
             update.save();
 
-            ban.setHasUpdate(true);
-            ban.saveOrUpdate();
+            mute.setHasUpdate(true);
+            mute.saveOrUpdate();
 
-            MessageAdapter.sendMessage(sender, Message.Info.CMD_BAN_EDITED, target.getName());
+            MessageAdapter.sendMessage(sender, Message.Info.CMD_MUTE_EDITED, target.getName());
         });
     }
     @Override
