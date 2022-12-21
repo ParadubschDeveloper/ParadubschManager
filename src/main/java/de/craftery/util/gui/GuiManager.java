@@ -5,8 +5,6 @@ import de.craftery.util.lang.Language;
 import de.paradubsch.paradubschmanager.models.PlayerData;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
 import lombok.Getter;
-import me.arcaniax.hdb.api.DatabaseLoadEvent;
-import me.arcaniax.hdb.api.HeadDatabaseAPI;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -51,9 +49,6 @@ public class GuiManager implements Listener {
 
     @Getter
     private static GuiManager instance;
-
-    @Getter
-    private static HeadDatabaseAPI headDatabaseAPI;
 
     public GuiManager() {
         GuiManager.itemIdentifier = new NamespacedKey(CraftPlugin.getInstance(), "itemIdentifier");
@@ -121,11 +116,6 @@ public class GuiManager implements Listener {
         this.sessionData.remove(e.getPlayer());
         prompts.remove(e.getPlayer());
         kvStores.remove(e.getPlayer());
-    }
-
-    @EventHandler
-    public void onDatabaseLoad(DatabaseLoadEvent e) {
-        headDatabaseAPI = new HeadDatabaseAPI();
     }
 
     public static Inventory createInventory(Component title, int rows) {

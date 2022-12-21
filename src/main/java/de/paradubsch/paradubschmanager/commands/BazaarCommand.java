@@ -1,5 +1,6 @@
 package de.paradubsch.paradubschmanager.commands;
 
+import de.craftery.util.features.HeadDatabaseFeature;
 import de.craftery.util.gui.GuiManager;
 import de.paradubsch.paradubschmanager.gui.items.BazaarPlaceSellOrderButton;
 import de.paradubsch.paradubschmanager.gui.window.BazaarMainGui;
@@ -29,6 +30,7 @@ public class BazaarCommand implements CommandExecutor, TabCompleter {
         Player player = (Player) sender;
 
         if (args.length == 0) {
+            if (!Expect.featuresEnabled(sender, HeadDatabaseFeature.class)) return true;
             GuiManager.entryGui(BazaarMainGui.class, player);
         } else if(args[0].equalsIgnoreCase("sell")) {
             if (!Expect.minArgs(2, args)) {

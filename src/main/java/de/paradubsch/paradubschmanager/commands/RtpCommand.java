@@ -1,5 +1,6 @@
 package de.paradubsch.paradubschmanager.commands;
 
+import de.craftery.util.features.HeadDatabaseFeature;
 import de.craftery.util.gui.GuiManager;
 import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.gui.window.RtpGui;
@@ -36,6 +37,7 @@ public class RtpCommand implements CommandExecutor, TabCompleter {
             MessageAdapter.sendMessage(player, Message.Info.COMMAND_TIMEOUT, TimeCalculations.timeMsToExpiration(timeout - System.currentTimeMillis(), MessageAdapter.getSenderLang(player)));
             return true;
         }
+        if (!Expect.featuresEnabled(sender, HeadDatabaseFeature.class)) return true;
         GuiManager.entryGui(RtpGui.class, player);
         return true;
     }

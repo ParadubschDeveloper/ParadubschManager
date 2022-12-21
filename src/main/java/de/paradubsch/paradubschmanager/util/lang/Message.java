@@ -80,7 +80,8 @@ public class Message {
         CMD_BAZAAR_PRICE_NOT_PROVIDED("cmdBazaarPriceNotProvided", "&cDu musst einen Preis angeben!"),
         CMD_BAZAAR_CANNOT_SELL_THIS_ITEM("cmdBazaarConnotSellThisItem", "&cDu kannst dieses Item nicht auf dem Basar verkaufen!"),
         CMD_BAZAAR_NOT_ENOUGH_ITEMS("cmdBazaarNotEnoughItems", "&cDu brauchst mindestens &a%1&7x@ClickableComponent<Translatable=%2>&cum es auf dem Basar zu verkaufen!"),
-        CMD_BAZAAR_INVALID_PRICE("cmdBazaarInvalidPrice", "&cDer Preis muss größer als &a%1&c sein und nicht größer als &a%2&c!");
+        CMD_BAZAAR_INVALID_PRICE("cmdBazaarInvalidPrice", "&cDer Preis muss größer als &a%1&c sein und nicht größer als &a%2&c!"),
+        FEATURE_NOT_AVAILABLE("featureNotAvailable", "&cDas Feature &6%1&c ist nicht verfügbar!");
 
         private final String key;
         private final String def;

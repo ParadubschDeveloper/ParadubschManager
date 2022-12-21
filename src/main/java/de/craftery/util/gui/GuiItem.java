@@ -57,7 +57,7 @@ public abstract class GuiItem {
 
     public void setItemHead(String headId) {
         try {
-            this.itemStack = GuiManager.getHeadDatabaseAPI().getItemHead(headId);
+            this.itemStack = CraftPlugin.getInstance().getHeadDatabase().getItemHead(headId);
         } catch (Exception e) {
             e.printStackTrace();
         }

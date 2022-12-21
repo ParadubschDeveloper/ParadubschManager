@@ -1,5 +1,6 @@
 package de.paradubsch.paradubschmanager.commands;
 
+import de.craftery.util.features.HeadDatabaseFeature;
 import de.craftery.util.gui.GuiManager;
 import de.paradubsch.paradubschmanager.gui.window.JobGui;
 import de.paradubsch.paradubschmanager.util.Expect;
@@ -18,6 +19,7 @@ public class JobCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (!Expect.playerSender(sender)) return true;
+        if (!Expect.featuresEnabled(sender, HeadDatabaseFeature.class)) return true;
         GuiManager.entryGui(JobGui.class, (Player) sender);
         return true;
     }

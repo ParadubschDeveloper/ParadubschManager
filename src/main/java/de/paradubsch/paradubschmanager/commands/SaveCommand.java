@@ -9,6 +9,7 @@ import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedCuboidRegion;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
+import de.craftery.util.features.HeadDatabaseFeature;
 import de.craftery.util.gui.GuiManager;
 import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.gui.window.SaveConfirmGui;
@@ -70,6 +71,7 @@ public class SaveCommand implements CommandExecutor, TabCompleter {
     private static final NamespacedKey saveRequestIdKey = new NamespacedKey(ParadubschManager.getInstance(), "saveRequestId");
 
     private static void saveRegion(Player p) {
+        if (!Expect.featuresEnabled(p, HeadDatabaseFeature.class)) return;
         Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
             if (p.getInventory().getItemInMainHand().getItemMeta() == null) {
                 MessageAdapter.sendMessage(p, Message.Error.SAVE_AXE_NOT_VALID);

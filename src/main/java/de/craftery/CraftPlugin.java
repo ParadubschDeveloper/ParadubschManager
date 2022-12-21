@@ -6,11 +6,15 @@ import de.craftery.util.TestDatabaseConnection;
 import de.craftery.util.gui.GuiManager;
 import de.craftery.util.lang.LanguageManager;
 import lombok.Getter;
+import me.arcaniax.hdb.api.DatabaseLoadEvent;
+import me.arcaniax.hdb.api.HeadDatabaseAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.java.JavaPluginLoader;
@@ -19,7 +23,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CraftPlugin extends JavaPlugin {
+public class CraftPlugin extends JavaPlugin implements Listener {
     private static CraftPlugin instance;
     private final List<String> registeredCommands = new ArrayList<>();
 
@@ -29,9 +33,13 @@ public class CraftPlugin extends JavaPlugin {
     @Getter
     private LanguageManager languageManager;
 
+    @Getter
+    private HeadDatabaseAPI headDatabase;
+
     @Override
     public void onEnable() {
         instance = this;
+        getServer().getPluginManager().registerEvents(this, this);
         ConfigurationManager.copyDefaultConfiguration();
         cachingManager = new CachingManager();
         languageManager = new LanguageManager();
@@ -54,6 +62,11 @@ public class CraftPlugin extends JavaPlugin {
 
         System.gc();
         super.onDisable();
+    }
+
+    @EventHandler
+    public void onDatabaseLoad(DatabaseLoadEvent e) {
+        headDatabase = new HeadDatabaseAPI();
     }
 
     protected <T extends CommandExecutor & TabCompleter> void register(String command, T obj) {

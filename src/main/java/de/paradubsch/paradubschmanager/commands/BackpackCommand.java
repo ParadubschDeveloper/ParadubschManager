@@ -1,5 +1,6 @@
 package de.paradubsch.paradubschmanager.commands;
 
+import de.craftery.util.features.HeadDatabaseFeature;
 import de.craftery.util.gui.GuiManager;
 import de.paradubsch.paradubschmanager.gui.window.BackpackGui;
 import de.paradubsch.paradubschmanager.gui.window.BazaarMainGui;
@@ -22,6 +23,7 @@ public class BackpackCommand implements CommandExecutor, TabCompleter {
         Player player = (Player) sender;
 
         if (args.length == 0) {
+            if (!Expect.featuresEnabled(sender, HeadDatabaseFeature.class)) return true;
             GuiManager.entryGui(BackpackGui.class, player);
         }
 

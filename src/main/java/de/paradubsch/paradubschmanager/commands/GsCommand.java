@@ -27,6 +27,7 @@ import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
+import de.craftery.util.features.HeadDatabaseFeature;
 import de.craftery.util.gui.GuiManager;
 import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.craftery.util.ConfigurationManager;
@@ -242,6 +243,7 @@ public class GsCommand implements CommandExecutor, TabCompleter {
     }
 
     private static void claimGs(Player p) {
+        if (!Expect.featuresEnabled(p, HeadDatabaseFeature.class)) return;
         GuiManager.entryGui(ClaimGui.class, p);
     }
 
@@ -362,6 +364,7 @@ public class GsCommand implements CommandExecutor, TabCompleter {
                 return;
             }
 
+            if (!Expect.featuresEnabled(p, HeadDatabaseFeature.class)) return;
             GuiManager.entryGui(GsTransferGui.class, p, pd.getName(), pd, region);
         }
     }
@@ -374,6 +377,7 @@ public class GsCommand implements CommandExecutor, TabCompleter {
             if (!region.getOwners().contains(p.getUniqueId())) {
                 continue;
             }
+            if (!Expect.featuresEnabled(p, HeadDatabaseFeature.class)) return;
             GuiManager.entryGui(GsDeleteGui.class, p, region);
         }
 
