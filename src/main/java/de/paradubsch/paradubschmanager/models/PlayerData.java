@@ -59,6 +59,7 @@ public class PlayerData extends BaseDatabaseEntity<PlayerData, String> {
     @Column(name ="money", columnDefinition = "BIGINT DEFAULT 150")
     private long money = 150L;
 
+    // TODO: Delete this relation, because it is not working in our Hibernate usecase
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "playerRef", fetch = FetchType.LAZY)
@@ -71,6 +72,7 @@ public class PlayerData extends BaseDatabaseEntity<PlayerData, String> {
     @Column(name = "active_save_id")
     private Integer openSaveRequest;
 
+    // TODO: Delete this relation, because it is not working in our Hibernate usecase
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "playerRef")

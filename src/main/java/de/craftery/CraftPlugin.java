@@ -3,6 +3,7 @@ package de.craftery;
 import de.craftery.util.CachingManager;
 import de.craftery.util.ConfigurationManager;
 import de.craftery.util.TestDatabaseConnection;
+import de.craftery.util.gui.GuiManager;
 import de.craftery.util.lang.LanguageManager;
 import lombok.Getter;
 import org.bukkit.Bukkit;
@@ -34,6 +35,9 @@ public class CraftPlugin extends JavaPlugin {
         ConfigurationManager.copyDefaultConfiguration();
         cachingManager = new CachingManager();
         languageManager = new LanguageManager();
+        new GuiManager();
+
+        languageManager.registerMessageEnum(InternalMessages.class);
 
         new TestDatabaseConnection();
         super.onEnable();

@@ -35,6 +35,7 @@ public class PunishmentUpdate extends BaseDatabaseEntity<PunishmentUpdate, Long>
     @Column(name = "reason", columnDefinition = "VARCHAR(196)", nullable = false)
     private String reason;
 
+    // TODO: Delete this relation, because it is not working in our Hibernate usecase
     @ManyToOne(fetch = FetchType.EAGER)
     private PlayerData givenBy;
 

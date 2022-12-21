@@ -41,6 +41,7 @@ public class SaveRequest extends BaseDatabaseEntity<SaveRequest, Integer> implem
     @Column(name = "loc_world", columnDefinition = "VARCHAR(128)")
     private String world;
 
+    // TODO: Delete this relation, because it is not working in our Hibernate usecase
     @OneToOne(fetch = FetchType.EAGER)
     private PlayerData playerRef;
 

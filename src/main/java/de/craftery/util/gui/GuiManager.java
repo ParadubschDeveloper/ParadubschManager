@@ -1,9 +1,9 @@
 package de.craftery.util.gui;
 
+import de.craftery.CraftPlugin;
 import de.craftery.util.lang.Language;
 import de.paradubsch.paradubschmanager.models.PlayerData;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
-import de.craftery.util.lang.LanguageManager;
 import lombok.Getter;
 import me.arcaniax.hdb.api.DatabaseLoadEvent;
 import me.arcaniax.hdb.api.HeadDatabaseAPI;
@@ -20,7 +20,6 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
@@ -51,24 +50,16 @@ public class GuiManager implements Listener {
     public static final Map<Player, Map<Object, String>> prompts = new HashMap<>();
 
     @Getter
-    private static JavaPlugin plugin;
-
-    @Getter
     private static GuiManager instance;
 
     @Getter
     private static HeadDatabaseAPI headDatabaseAPI;
 
-    @Getter
-    private static LanguageManager languageManager;
-
-    public GuiManager(JavaPlugin plugin, LanguageManager languageManager) {
-        GuiManager.plugin = plugin;
-        GuiManager.itemIdentifier = new NamespacedKey(plugin, "itemIdentifier");
+    public GuiManager() {
+        GuiManager.itemIdentifier = new NamespacedKey(CraftPlugin.getInstance(), "itemIdentifier");
         GuiManager.instance = this;
-        GuiManager.languageManager = languageManager;
-        GuiManager.signFactory = new SignMenuFactory(plugin);
-        GuiManager.plugin.getServer().getPluginManager().registerEvents(this, GuiManager.getPlugin());
+        GuiManager.signFactory = new SignMenuFactory(CraftPlugin.getInstance());
+        CraftPlugin.getInstance().getServer().getPluginManager().registerEvents(this, CraftPlugin.getInstance());
     }
 
     @EventHandler
@@ -110,7 +101,7 @@ public class GuiManager implements Listener {
                         }
                     }
                     handledItem = guiItem;
-                    Bukkit.getScheduler().runTask(GuiManager.plugin, () -> {
+                    Bukkit.getScheduler().runTask(CraftPlugin.getInstance(), () -> {
                         guiItem.onClick((Player) event.getWhoClicked());
                         guiItem.onClick((Player) event.getWhoClicked(), event);
                     });
@@ -231,7 +222,7 @@ public class GuiManager implements Listener {
 
         Inventory inv = getGui(gui, p, args);
         if (inv == null) return;
-        Bukkit.getScheduler().runTask(GuiManager.plugin, () -> {
+        Bukkit.getScheduler().runTask(CraftPlugin.getInstance(), () -> {
             Stack<Class<? extends BaseGui>> stack = new Stack<>();
             stack.push(gui);
             GuiManager.instance.sessions.put(p, stack);
@@ -260,11 +251,11 @@ public class GuiManager implements Listener {
                         inv = getGui(origin, p, args.toArray());
                     }
                     if (inv == null) return true;
-                    Bukkit.getScheduler().runTaskLater(GuiManager.plugin, () -> p.openInventory(inv), 1);
+                    Bukkit.getScheduler().runTaskLater(CraftPlugin.getInstance(), () -> p.openInventory(inv), 1);
                     return true;
                 });
-        Bukkit.getScheduler().runTaskLater(plugin, () -> p.closeInventory(), 1);
-        Bukkit.getScheduler().runTaskLater(plugin, () -> menu.open(p), 2);
+        Bukkit.getScheduler().runTaskLater(CraftPlugin.getInstance(), () -> p.closeInventory(), 1);
+        Bukkit.getScheduler().runTaskLater(CraftPlugin.getInstance(), () -> menu.open(p), 2);
     }
 
     public static String getPrompt(Player player, Object identifier) {

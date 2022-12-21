@@ -1,9 +1,10 @@
 package de.craftery.util.gui;
 
+import de.craftery.CraftPlugin;
+import de.craftery.InternalMessages;
 import de.craftery.util.lang.Language;
-import de.paradubsch.paradubschmanager.util.MessageAdapter;
 import de.craftery.util.lang.BaseMessageType;
-import de.paradubsch.paradubschmanager.util.lang.Message;
+import de.paradubsch.paradubschmanager.util.MessageAdapter;
 import lombok.Getter;
 import lombok.Setter;
 import net.kyori.adventure.text.Component;
@@ -87,7 +88,7 @@ public abstract class GuiItem {
     }
 
     public void setDisplayName(BaseMessageType displayNameTemplate, String... args) {
-        Component displayName = GuiManager.getLanguageManager().get(displayNameTemplate, lang, args);
+        Component displayName = CraftPlugin.getInstance().getLanguageManager().get(displayNameTemplate, lang, args);
         this.setDisplayName(displayName);
     }
 
@@ -114,7 +115,7 @@ public abstract class GuiItem {
     }
 
     public void addLore(BaseMessageType loreTemplate, String... args) {
-        Component displayName = GuiManager.getLanguageManager().get(loreTemplate, lang, args);
+        Component displayName = CraftPlugin.getInstance().getLanguageManager().get(loreTemplate, lang, args);
         this.addLore(displayName);
     }
 
@@ -145,7 +146,7 @@ public abstract class GuiItem {
         String prompt = "";
         switch (type) {
             case INTEGER:
-                prompt = GuiManager.getLanguageManager().getString(Message.Constant.INSERT_NUMBER, MessageAdapter.getSenderLang(player));
+                prompt = CraftPlugin.getInstance().getLanguageManager().getString(InternalMessages.INSERT_NUMBER, MessageAdapter.getSenderLang(player));
                 break;
         }
         GuiManager.prompt(parent, player, identifier, "^^^^^^^^^^", prompt, "");

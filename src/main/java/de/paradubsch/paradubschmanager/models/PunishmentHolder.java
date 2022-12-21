@@ -27,6 +27,7 @@ public class PunishmentHolder extends BaseDatabaseEntity<PunishmentHolder, Strin
     @Column(name = "uuid", columnDefinition = "VARCHAR(36)")
     private String uuid;
 
+    // TODO: Delete this relation, because it is not working in our Hibernate usecase
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @OneToOne
@@ -62,18 +63,21 @@ public class PunishmentHolder extends BaseDatabaseEntity<PunishmentHolder, Strin
     @Column(name = "is_perma_muted", columnDefinition = "BOOLEAN DEFAULT FALSE")
     private boolean isPermaMuted = false;
 
+    // TODO: Delete this relation, because it is not working in our Hibernate usecase
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "holderRef", fetch = FetchType.LAZY)
     @Cascade(value = SAVE_UPDATE)
     private List<BanPunishment> bans;
 
+    // TODO: Delete this relation, because it is not working in our Hibernate usecase
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "holderRef", fetch = FetchType.LAZY)
     @Cascade(value = SAVE_UPDATE)
     private List<MutePunishment> mutes;
 
+    // TODO: Delete this relation, because it is not working in our Hibernate usecase
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "holderRef", fetch = FetchType.LAZY)

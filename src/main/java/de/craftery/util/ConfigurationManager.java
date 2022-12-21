@@ -1,7 +1,6 @@
 package de.craftery.util;
 
 import de.craftery.CraftPlugin;
-import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -15,6 +14,8 @@ public class ConfigurationManager {
     public static void copyDefaultConfiguration() {
         JavaPlugin instance = CraftPlugin.getInstance();
         FileConfiguration config = instance.getConfig();
+
+        ConfigurationManager.addDefault("chatPrefix", "&8&l[&6&lServer&8&l] &r");
 
         config.addDefault("hibernate.driver", "com.mysql.cj.jdbc.Driver");
         config.addDefault("hibernate.url", "jdbc:mysql://localhost:3306/test?useSSL=false");
@@ -47,24 +48,24 @@ public class ConfigurationManager {
     }
 
     public static @NotNull String getString(String path) {
-        String value = ParadubschManager.getInstance().getConfig().getString(path);
+        String value = CraftPlugin.getInstance().getConfig().getString(path);
         if (value == null) {
-            ParadubschManager.getInstance().getLogger().warning("The path " + path + " is not set in the config.yml");
+            CraftPlugin.getInstance().getLogger().warning("The path " + path + " is not set in the config.yml");
             return "";
         }
         return value;
     }
 
     public static int getInt(String path) {
-        return ParadubschManager.getInstance().getConfig().getInt(path);
+        return CraftPlugin.getInstance().getConfig().getInt(path);
     }
 
     public static FileConfiguration getConfig() {
-        return ParadubschManager.getInstance().getConfig();
+        return CraftPlugin.getInstance().getConfig();
     }
 
     public static FileConfiguration getCustomConfig(String filename) {
-        ParadubschManager instance = ParadubschManager.getInstance();
+        CraftPlugin instance = CraftPlugin.getInstance();
 
         if (!instance.getDataFolder().exists()) {
             try {
@@ -89,7 +90,7 @@ public class ConfigurationManager {
     }
 
     public static void saveCustomConfig (FileConfiguration config, String filename) {
-        ParadubschManager instance = ParadubschManager.getInstance();
+        CraftPlugin instance = CraftPlugin.getInstance();
 
         if (!instance.getDataFolder().exists()) {
             try {

@@ -36,9 +36,6 @@ public final class ParadubschManager extends CraftPlugin {
     private PlaytimeManager playtimeManager;
 
     @Getter
-    private GuiManager guiManager;
-
-    @Getter
     private WorldGuardPlugin worldGuardPlugin;
 
     @Getter
@@ -102,7 +99,6 @@ public final class ParadubschManager extends CraftPlugin {
         this.getLanguageManager().registerMessageEnum(Message.Gui.class);
 
         playtimeManager = new PlaytimeManager();
-        this.guiManager = new GuiManager(this, this.getLanguageManager());
 
         Bukkit.getConsoleSender().sendMessage("[Paradubsch] !>> Deleting old backups");
         WebserverManager.clearSchematicFiles();
@@ -122,7 +118,6 @@ public final class ParadubschManager extends CraftPlugin {
         protocolManager = null;
         luckPermsApi = null;
 
-        guiManager = null;
         jobManager = null;
 
         if (webServer != null) {

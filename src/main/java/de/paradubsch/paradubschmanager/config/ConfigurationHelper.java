@@ -4,7 +4,6 @@ import de.craftery.util.ConfigurationManager;
 
 public class ConfigurationHelper {
     public static void addSpecificConfurations() {
-        ConfigurationManager.addDefault("chatPrefix", "&8&l[&6&lParadubsch&8&l] &r");
         ConfigurationManager.addDefault("homePrice", 150);
         ConfigurationManager.addDefault("http.server", "http://localhost:8090");
         ConfigurationManager.addDefault("http.port", 8090);

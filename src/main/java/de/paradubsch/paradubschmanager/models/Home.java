@@ -44,6 +44,7 @@ public class Home extends BaseDatabaseEntity<Home, Long> {
     @Column(name = "home_world", columnDefinition = "VARCHAR(128)")
     private String world;
 
+    // TODO: Delete this relation, because it is not working in our Hibernate usecase
     @ManyToOne(fetch = FetchType.EAGER)
     private PlayerData playerRef;
 

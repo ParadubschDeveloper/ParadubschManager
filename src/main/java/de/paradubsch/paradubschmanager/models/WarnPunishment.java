@@ -43,9 +43,11 @@ public class WarnPunishment extends BaseDatabaseEntity<WarnPunishment, Long> {
     @Column(name = "reason", columnDefinition = "VARCHAR(196)", nullable = false)
     private String reason;
 
+    // TODO: Delete this relation, because it is not working in our Hibernate usecase
     @ManyToOne(fetch = FetchType.EAGER)
     private PlayerData givenBy;
 
+    // TODO: Delete this relation, because it is not working in our Hibernate usecase
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "punishmentRef", fetch = FetchType.LAZY)
