@@ -4,6 +4,7 @@ import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import de.craftery.CraftPlugin;
 import de.craftery.util.gui.GuiManager;
 import de.paradubsch.paradubschmanager.commands.*;
 import de.paradubsch.paradubschmanager.config.ConfigurationManager;
@@ -19,18 +20,15 @@ import lombok.Setter;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
 import org.bukkit.Bukkit;
-import org.bukkit.command.*;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.java.JavaPluginLoader;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.util.*;
 
-public final class ParadubschManager extends JavaPlugin {
+public final class ParadubschManager extends CraftPlugin {
     private static ParadubschManager instance;
 
     @Getter
@@ -79,6 +77,7 @@ public final class ParadubschManager extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
+        super.onEnable();
         ConfigurationManager.copyDefaultConfiguration();
 
         cachingManager = new CachingManager();
@@ -114,33 +113,11 @@ public final class ParadubschManager extends JavaPlugin {
         this.webServer = new WebserverManager().startWebserver();
 
         Bukkit.getConsoleSender().sendMessage("[Paradubsch] !> Initialization done");
-
-    }
-
-    public static @Nullable ProtocolManager getProtocolManager() {
-        ProtocolManager pm = ParadubschManager.getInstance().protocolManager;
-        if (pm == null) {
-            ParadubschManager.getInstance().protocolManager = ProtocolLibrary.getProtocolManager();
-        }
-        return ParadubschManager.getInstance().protocolManager;
-    }
-
-    public static LuckPerms getLuckPermsApi() {
-        LuckPerms lp = ParadubschManager.getInstance().luckPermsApi;
-        if (lp == null) {
-            try {
-                ParadubschManager.getInstance().luckPermsApi = LuckPermsProvider.get();
-            } catch (IllegalStateException ex) {
-                return null;
-            }
-        }
-        return ParadubschManager.getInstance().luckPermsApi;
     }
 
     @Override
     public void onDisable() {
-        Bukkit.getOnlinePlayers().forEach(Player::closeInventory);
-        Bukkit.getScheduler().cancelTasks(this);
+        super.onDisable();
         worldGuardPlugin = null;
         worldEditPlugin = null;
         playtimeManager = null;
@@ -156,9 +133,7 @@ public final class ParadubschManager extends JavaPlugin {
         }
         webServer = null;
 
-        unregisterCommands();
         HibernateConfigurator.shutdown();
-        System.gc();
         Bukkit.getConsoleSender().sendMessage("[Paradubsch] !> Disabled");
     }
 
@@ -226,25 +201,6 @@ public final class ParadubschManager extends JavaPlugin {
         register("hat", new HatCommand());
         register("mute", new MuteCommand());
     }
-
-    private final List<String> registeredCommands = new ArrayList<>();
-    private <T extends CommandExecutor & TabCompleter> void register(String command, T obj) {
-        registeredCommands.add(command);
-        PluginCommand pc = Bukkit.getPluginCommand(command);
-        if (pc == null) return;
-        pc.setExecutor(obj);
-        pc.setTabCompleter(obj);
-    }
-
-    private void unregisterCommands() {
-        for (String command : registeredCommands) {
-            PluginCommand pc = Bukkit.getPluginCommand(command);
-            if (pc == null) continue;
-            pc.setExecutor(null);
-            pc.setTabCompleter(null);
-        }
-    }
-
     private WorldGuardPlugin initializeWorldGuardPlugin () {
         Plugin plugin = this.getServer().getPluginManager().getPlugin("WorldGuard");
         if (!(plugin instanceof WorldGuardPlugin)) {
@@ -259,6 +215,26 @@ public final class ParadubschManager extends JavaPlugin {
             return null;
         }
         return (WorldEditPlugin) plugin;
+    }
+
+    public static @Nullable ProtocolManager getProtocolManager() {
+        ProtocolManager pm = ParadubschManager.getInstance().protocolManager;
+        if (pm == null) {
+            ParadubschManager.getInstance().protocolManager = ProtocolLibrary.getProtocolManager();
+        }
+        return ParadubschManager.getInstance().protocolManager;
+    }
+
+    public static LuckPerms getLuckPermsApi() {
+        LuckPerms lp = ParadubschManager.getInstance().luckPermsApi;
+        if (lp == null) {
+            try {
+                ParadubschManager.getInstance().luckPermsApi = LuckPermsProvider.get();
+            } catch (IllegalStateException ex) {
+                return null;
+            }
+        }
+        return ParadubschManager.getInstance().luckPermsApi;
     }
 
     public static ParadubschManager getInstance() {
