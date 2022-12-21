@@ -2,7 +2,7 @@ package de.paradubsch.paradubschmanager.models;
 
 import de.craftery.util.BaseDatabaseEntity;
 import de.craftery.util.ItemStackConverter;
-import de.paradubsch.paradubschmanager.util.TestMocks;
+import de.craftery.util.TestMocks;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.bukkit.inventory.ItemStack;

@@ -1,4 +1,4 @@
-package de.paradubsch.paradubschmanager.util;
+package de.craftery.util;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
