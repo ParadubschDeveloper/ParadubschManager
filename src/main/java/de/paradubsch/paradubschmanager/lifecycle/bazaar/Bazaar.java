@@ -1,6 +1,6 @@
 package de.paradubsch.paradubschmanager.lifecycle.bazaar;
 
-import de.paradubsch.paradubschmanager.config.ConfigurationManager;
+import de.craftery.util.ConfigurationManager;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 

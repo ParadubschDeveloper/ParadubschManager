@@ -7,7 +7,7 @@ import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import de.craftery.CraftPlugin;
 import de.craftery.util.gui.GuiManager;
 import de.paradubsch.paradubschmanager.commands.*;
-import de.paradubsch.paradubschmanager.config.ConfigurationManager;
+import de.paradubsch.paradubschmanager.config.ConfigurationHelper;
 import de.paradubsch.paradubschmanager.config.HibernateConfigurator;
 import de.paradubsch.paradubschmanager.config.WebserverManager;
 import de.paradubsch.paradubschmanager.lifecycle.*;
@@ -78,7 +78,7 @@ public final class ParadubschManager extends CraftPlugin {
     public void onEnable() {
         instance = this;
         super.onEnable();
-        ConfigurationManager.copyDefaultConfiguration();
+        ConfigurationHelper.addSpecificConfurations();
 
         cachingManager = new CachingManager();
 

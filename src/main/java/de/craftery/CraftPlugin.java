@@ -1,5 +1,6 @@
 package de.craftery;
 
+import de.craftery.util.ConfigurationManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.PluginCommand;
@@ -14,10 +15,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CraftPlugin extends JavaPlugin {
+    private static CraftPlugin instance;
     private final List<String> registeredCommands = new ArrayList<>();
 
     @Override
     public void onEnable() {
+        instance = this;
+        ConfigurationManager.copyDefaultConfiguration();
         super.onEnable();
     }
 
@@ -47,6 +51,10 @@ public class CraftPlugin extends JavaPlugin {
             pc.setExecutor(null);
             pc.setTabCompleter(null);
         }
+    }
+
+    public static CraftPlugin getInstance() {
+        return instance;
     }
 
     // Constructors for testing

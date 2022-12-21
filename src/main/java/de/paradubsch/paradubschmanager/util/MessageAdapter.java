@@ -1,7 +1,7 @@
 package de.paradubsch.paradubschmanager.util;
 
 import de.paradubsch.paradubschmanager.ParadubschManager;
-import de.paradubsch.paradubschmanager.config.ConfigurationManager;
+import de.craftery.util.ConfigurationManager;
 import de.paradubsch.paradubschmanager.models.PlayerData;
 import de.paradubsch.paradubschmanager.util.lang.BaseMessageType;
 import de.paradubsch.paradubschmanager.util.lang.ChatComponentFactory;

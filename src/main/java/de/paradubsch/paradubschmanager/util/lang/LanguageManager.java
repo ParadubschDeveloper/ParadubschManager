@@ -1,6 +1,6 @@
 package de.paradubsch.paradubschmanager.util.lang;
 
-import de.paradubsch.paradubschmanager.config.ConfigurationManager;
+import de.craftery.util.ConfigurationManager;
 import net.kyori.adventure.text.Component;
 import org.bukkit.configuration.file.FileConfiguration;
 

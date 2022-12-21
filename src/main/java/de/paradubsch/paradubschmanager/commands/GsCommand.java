@@ -29,7 +29,7 @@ import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
 import de.craftery.util.gui.GuiManager;
 import de.paradubsch.paradubschmanager.ParadubschManager;
-import de.paradubsch.paradubschmanager.config.ConfigurationManager;
+import de.craftery.util.ConfigurationManager;
 import de.paradubsch.paradubschmanager.gui.window.ClaimGui;
 import de.paradubsch.paradubschmanager.gui.window.GsDeleteGui;
 import de.paradubsch.paradubschmanager.gui.window.GsTransferGui;

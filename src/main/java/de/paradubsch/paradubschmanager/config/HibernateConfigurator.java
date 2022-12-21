@@ -1,5 +1,6 @@
 package de.paradubsch.paradubschmanager.config;
 
+import de.craftery.util.ConfigurationManager;
 import de.paradubsch.paradubschmanager.models.*;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;

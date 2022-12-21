@@ -63,7 +63,7 @@
                             <relocations>
                                 <relocation>
                                     <pattern>com.jeff_media.customblockdata</pattern>
-                                    <shadedPattern>de.craftery.lib.customblockdata</shadedPattern>
+                                    <shadedPattern>de.craftery.lib.relocations.customblockdata</shadedPattern>
                                 </relocation>
                             </relocations>
                         </configuration>

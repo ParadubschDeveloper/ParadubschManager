@@ -1,5 +1,6 @@
 package de.paradubsch.paradubschmanager.config;
 
+import de.craftery.util.ConfigurationManager;
 import org.bukkit.Bukkit;
 import org.eclipse.jetty.io.EndPoint;
 import org.eclipse.jetty.server.Connector;
