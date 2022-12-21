@@ -41,7 +41,7 @@ public class RtpCommand implements CommandExecutor, TabCompleter {
     }
 
     public static void rtp(Player player, World world, final int i) {
-        if (i == 15) {
+        if (i == 33) {
             MessageAdapter.sendMessage(player, Message.Error.CMD_RTP_NO_DESTINATION_FOUND);
             return;
         }
@@ -51,7 +51,7 @@ public class RtpCommand implements CommandExecutor, TabCompleter {
             double x = ((ran.nextInt(2000000 - 5000) + 5000) * posNeg) + 0.5D;
             posNeg = posNeg();
             double z = ((ran.nextInt(2000000 - 5000) + 5000) * posNeg) + 0.5D;
-            world.loadChunk((new Location(world, x, 1.0D, z)).getChunk());
+
             int y;
             if (world.getEnvironment() == World.Environment.NETHER) {
                 y = netherY(world, (int) x, (int) z);
@@ -63,14 +63,15 @@ public class RtpCommand implements CommandExecutor, TabCompleter {
             if (!loc.getBlock().getType().isOccluding() ||
                     !loc.clone().add(0.0D, 1.0D, 0.0D).getBlock().getType().isAir() ||
                     !loc.clone().add(0.0D, 2.0D, 0.0D).getBlock().getType().isAir()) {
-                JobManager.sendActionBar(player, "Searching... " + i + "/15");
+                JobManager.sendActionBar(player, "Searching... " + i + "/32");
                 rtp(player, world, i + 1);
             } else {
                 loc.add(0.0D, 1.2D, 0.0D);
                 ParadubschManager.getInstance().getRtpTimeouts().put(player.getUniqueId(), System.currentTimeMillis() + 600000L);
+                loc.getChunk().load();
                 player.teleport(loc);
             }
-        }, 10);
+        }, 1L);
     }
 
     private static int netherY(World world, int x, int z) {
