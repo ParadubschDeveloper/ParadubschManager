@@ -106,26 +106,12 @@ public final class ParadubschManager extends JavaPlugin {
         languageManager = new LanguageManager();
         playtimeManager = new PlaytimeManager();
         this.guiManager = new GuiManager(this, languageManager);
-        Bukkit.getConsoleSender().sendMessage("[Paradubsch] !>> Starting Web Service");
-        this.webServer = new WebserverManager().startWebserver();
 
         Bukkit.getConsoleSender().sendMessage("[Paradubsch] !>> Deleting old backups");
-        File index = new File("." + File.separator + "plugins" + File.separator + "WorldEdit" + File.separator + "uploadSchematics");
-        if (index.exists()) {
-            String[] entries = index.list();
-            if (entries != null) {
-                for (String s : entries) {
-                    File currentFile = new File(index.getPath(), s);
-                    if (!currentFile.delete()) {
-                        Bukkit.getLogger().warning("Could not delete file " + currentFile.getName());
-                    }
+        WebserverManager.clearSchematicFiles();
 
-                }
-            }
-            if (!index.delete()) {
-                Bukkit.getLogger().warning("Could not delete " + index.getName());
-            }
-        }
+        Bukkit.getConsoleSender().sendMessage("[Paradubsch] !>> Starting Web Service");
+        this.webServer = new WebserverManager().startWebserver();
 
         Bukkit.getConsoleSender().sendMessage("[Paradubsch] !> Initialization done");
 

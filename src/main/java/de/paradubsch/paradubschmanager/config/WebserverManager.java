@@ -59,4 +59,23 @@ public class WebserverManager {
         }
         webServer.destroy();
     }
+
+    public static void clearSchematicFiles() {
+        File index = new File("." + File.separator + "plugins" + File.separator + "WorldEdit" + File.separator + "uploadSchematics");
+        if (index.exists()) {
+            String[] entries = index.list();
+            if (entries != null) {
+                for (String s : entries) {
+                    File currentFile = new File(index.getPath(), s);
+                    if (!currentFile.delete()) {
+                        Bukkit.getLogger().warning("Could not delete file " + currentFile.getName());
+                    }
+                }
+            }
+        } else {
+            if (!index.mkdir()) {
+                Bukkit.getLogger().warning("Could not create directory " + index.getName());
+            }
+        }
+    }
 }
