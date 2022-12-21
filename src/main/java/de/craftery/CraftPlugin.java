@@ -1,6 +1,9 @@
 package de.craftery;
 
+import de.craftery.util.CachingManager;
 import de.craftery.util.ConfigurationManager;
+import de.craftery.util.TestDatabaseConnection;
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.PluginCommand;
@@ -18,10 +21,16 @@ public class CraftPlugin extends JavaPlugin {
     private static CraftPlugin instance;
     private final List<String> registeredCommands = new ArrayList<>();
 
+    @Getter
+    private CachingManager cachingManager;
+
     @Override
     public void onEnable() {
         instance = this;
         ConfigurationManager.copyDefaultConfiguration();
+        cachingManager = new CachingManager();
+
+        new TestDatabaseConnection();
         super.onEnable();
     }
 
@@ -30,6 +39,7 @@ public class CraftPlugin extends JavaPlugin {
         Bukkit.getOnlinePlayers().forEach(Player::closeInventory);
         Bukkit.getScheduler().cancelTasks(this);
 
+        cachingManager = null;
         unregisterCommands();
 
         System.gc();

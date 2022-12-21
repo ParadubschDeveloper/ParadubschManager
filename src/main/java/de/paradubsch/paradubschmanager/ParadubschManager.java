@@ -8,12 +8,13 @@ import de.craftery.CraftPlugin;
 import de.craftery.util.gui.GuiManager;
 import de.paradubsch.paradubschmanager.commands.*;
 import de.paradubsch.paradubschmanager.config.ConfigurationHelper;
-import de.paradubsch.paradubschmanager.config.HibernateConfigurator;
+import de.craftery.util.HibernateConfigurator;
 import de.paradubsch.paradubschmanager.config.WebserverManager;
 import de.paradubsch.paradubschmanager.lifecycle.*;
 import de.paradubsch.paradubschmanager.lifecycle.jobs.JobManager;
 import de.paradubsch.paradubschmanager.lifecycle.playtime.PlaytimeManager;
 import de.paradubsch.paradubschmanager.lifecycle.stairsit.StairSitManager;
+import de.paradubsch.paradubschmanager.models.*;
 import de.paradubsch.paradubschmanager.util.lang.LanguageManager;
 import lombok.Getter;
 import lombok.Setter;
@@ -61,9 +62,6 @@ public final class ParadubschManager extends CraftPlugin {
     private final List<TpaRequest> tpaRequests = new ArrayList<>();
 
     @Getter
-    private CachingManager cachingManager;
-
-    @Getter
     private JobManager jobManager;
 
     @Getter
@@ -76,14 +74,6 @@ public final class ParadubschManager extends CraftPlugin {
 
     @Override
     public void onEnable() {
-        instance = this;
-        super.onEnable();
-        ConfigurationHelper.addSpecificConfurations();
-
-        cachingManager = new CachingManager();
-
-        registerEvents();
-
         Bukkit.getConsoleSender().sendMessage("");
         Bukkit.getConsoleSender().sendMessage("==== Paradubsch ====");
         Bukkit.getConsoleSender().sendMessage("Authors: Crafter_Y, Blintastisch_, Byte, DieButzenscheibe");
@@ -91,10 +81,18 @@ public final class ParadubschManager extends CraftPlugin {
         Bukkit.getConsoleSender().sendMessage("==== Paradubsch ====");
         Bukkit.getConsoleSender().sendMessage("");
         Bukkit.getConsoleSender().sendMessage("[Paradubsch] !> Initializing");
+
+        instance = this;
+        Bukkit.getConsoleSender().sendMessage("[Paradubsch] !>> Initializing CraftPlugin");
+        super.onEnable();
+        ConfigurationHelper.addSpecificConfurations();
+        this.addHibernateEntities();
+
+
+        registerEvents();
+
         Bukkit.getConsoleSender().sendMessage("[Paradubsch] !>> Registering commands");
         this.registerCommands();
-        Bukkit.getConsoleSender().sendMessage("[Paradubsch] !>> Testing Database Connection");
-        new TestDatabaseConnection();
 
         jobManager = new JobManager();
 
@@ -125,7 +123,6 @@ public final class ParadubschManager extends CraftPlugin {
         luckPermsApi = null;
         languageManager = null;
         guiManager = null;
-        cachingManager = null;
         jobManager = null;
 
         if (webServer != null) {
@@ -135,6 +132,24 @@ public final class ParadubschManager extends CraftPlugin {
 
         HibernateConfigurator.shutdown();
         Bukkit.getConsoleSender().sendMessage("[Paradubsch] !> Disabled");
+    }
+
+    private void addHibernateEntities() {
+        HibernateConfigurator.addEntity(PlayerData.class);
+        HibernateConfigurator.addEntity(Home.class);
+        HibernateConfigurator.addEntity(SaveRequest.class);
+        HibernateConfigurator.addEntity(PunishmentHolder.class);
+        HibernateConfigurator.addEntity(WarnPunishment.class);
+        HibernateConfigurator.addEntity(BanPunishment.class);
+        HibernateConfigurator.addEntity(MutePunishment.class);
+        HibernateConfigurator.addEntity(PunishmentUpdate.class);
+        HibernateConfigurator.addEntity(Warp.class);
+        HibernateConfigurator.addEntity(WorkerPlayer.class);
+        HibernateConfigurator.addEntity(BazaarOrder.class);
+        HibernateConfigurator.addEntity(BazaarCollectable.class);
+        HibernateConfigurator.addEntity(Backpack.class);
+        HibernateConfigurator.addEntity(StorageSlot.class);
+        HibernateConfigurator.addEntity(ItemData.class);
     }
 
     private void registerEvents() {

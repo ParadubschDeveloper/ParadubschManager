@@ -1,7 +1,8 @@
 package de.paradubsch.paradubschmanager.models;
 
+import de.craftery.util.BaseDatabaseEntity;
 import de.paradubsch.paradubschmanager.ParadubschManager;
-import de.paradubsch.paradubschmanager.config.HibernateConfigurator;
+import de.craftery.util.HibernateConfigurator;
 import lombok.Cleanup;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

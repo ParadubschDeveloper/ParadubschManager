@@ -1,6 +1,7 @@
 package de.paradubsch.paradubschmanager.models;
 
-import de.paradubsch.paradubschmanager.config.HibernateConfigurator;
+import de.craftery.util.BaseDatabaseEntity;
+import de.craftery.util.HibernateConfigurator;
 import lombok.Cleanup;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -21,7 +22,7 @@ import java.util.List;
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Table(name = "storage_slots")
 @SequenceGenerator(name="slotIdSequence",sequenceName="slot_id_sequence", allocationSize = 1)
-public class StorageSlot extends BaseDatabaseEntity<StorageSlot, Long>{
+public class StorageSlot extends BaseDatabaseEntity<StorageSlot, Long> {
 
     @Id
     @GeneratedValue(strategy= GenerationType.SEQUENCE, generator="slotIdSequence")

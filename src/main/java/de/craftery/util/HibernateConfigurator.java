@@ -1,17 +1,23 @@
-package de.paradubsch.paradubschmanager.config;
+package de.craftery.util;
 
-import de.craftery.util.ConfigurationManager;
-import de.paradubsch.paradubschmanager.models.*;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
 import org.hibernate.service.ServiceRegistry;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 public class HibernateConfigurator {
     private static SessionFactory sessionFactory;
+
+    private static final List<Class<?>> entities = new ArrayList<>();
+
+    public static void addEntity(Class<?> entity) {
+        entities.add(entity);
+    }
     public static SessionFactory getSessionFactory() {
         if (sessionFactory == null) {
             try {
@@ -50,21 +56,9 @@ public class HibernateConfigurator {
                 configuration.setProperties(settings);
 
                 // Register Database Models
-                configuration.addAnnotatedClass(PlayerData.class);
-                configuration.addAnnotatedClass(Home.class);
-                configuration.addAnnotatedClass(SaveRequest.class);
-                configuration.addAnnotatedClass(PunishmentHolder.class);
-                configuration.addAnnotatedClass(WarnPunishment.class);
-                configuration.addAnnotatedClass(BanPunishment.class);
-                configuration.addAnnotatedClass(MutePunishment.class);
-                configuration.addAnnotatedClass(PunishmentUpdate.class);
-                configuration.addAnnotatedClass(Warp.class);
-                configuration.addAnnotatedClass(WorkerPlayer.class);
-                configuration.addAnnotatedClass(BazaarOrder.class);
-                configuration.addAnnotatedClass(BazaarCollectable.class);
-                configuration.addAnnotatedClass(Backpack.class);
-                configuration.addAnnotatedClass(StorageSlot.class);
-                configuration.addAnnotatedClass(ItemData.class);
+                for (Class<?> entity : entities) {
+                    configuration.addAnnotatedClass(entity);
+                }
 
                 ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                         .applySettings(configuration.getProperties()).build();
@@ -89,6 +83,5 @@ public class HibernateConfigurator {
         sessionFactory.close();
 
         sessionFactory = null;
-
     }
 }

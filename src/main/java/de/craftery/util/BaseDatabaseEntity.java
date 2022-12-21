@@ -1,7 +1,6 @@
-package de.paradubsch.paradubschmanager.models;
+package de.craftery.util;
 
-import de.paradubsch.paradubschmanager.ParadubschManager;
-import de.paradubsch.paradubschmanager.config.HibernateConfigurator;
+import de.craftery.CraftPlugin;
 import lombok.Cleanup;
 import lombok.var;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -24,7 +23,7 @@ public abstract class BaseDatabaseEntity<P extends BaseDatabaseEntity<?, ?>, ID 
             @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
             transaction = session.beginTransaction();
             Serializable returner = session.save(this);
-            ParadubschManager.getInstance().getCachingManager().cacheEntity(this.getClass(), this, this.getIdentifyingColumn());
+            CraftPlugin.getInstance().getCachingManager().cacheEntity(this.getClass(), this, this.getIdentifyingColumn());
             transaction.commit();
             return returner;
         } catch (Exception e) {
@@ -42,7 +41,7 @@ public abstract class BaseDatabaseEntity<P extends BaseDatabaseEntity<?, ?>, ID 
             @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
             transaction = session.beginTransaction();
             session.saveOrUpdate(this);
-            ParadubschManager.getInstance().getCachingManager().cacheEntity(this.getClass(), this, this.getIdentifyingColumn());
+            CraftPlugin.getInstance().getCachingManager().cacheEntity(this.getClass(), this, this.getIdentifyingColumn());
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
@@ -59,7 +58,7 @@ public abstract class BaseDatabaseEntity<P extends BaseDatabaseEntity<?, ?>, ID 
             transaction = session.beginTransaction();
 
             session.delete(this);
-            ParadubschManager.getInstance().getCachingManager().deleteEntity(this.getClass(), this.getIdentifyingColumn());
+            CraftPlugin.getInstance().getCachingManager().deleteEntity(this.getClass(), this.getIdentifyingColumn());
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
@@ -74,7 +73,7 @@ public abstract class BaseDatabaseEntity<P extends BaseDatabaseEntity<?, ?>, ID 
             return null;
         }
 
-        T cached = ParadubschManager.getInstance().getCachingManager().getEntity(clazz, id);
+        T cached = CraftPlugin.getInstance().getCachingManager().getEntity(clazz, id);
         if (cached != null) {
             return cached;
         }
@@ -86,7 +85,7 @@ public abstract class BaseDatabaseEntity<P extends BaseDatabaseEntity<?, ?>, ID 
             transaction = session.beginTransaction();
 
             T returner = session.get(clazz, id);
-            ParadubschManager.getInstance().getCachingManager().cacheEntity(clazz, returner, id);
+            CraftPlugin.getInstance().getCachingManager().cacheEntity(clazz, returner, id);
             transaction.commit();
             return returner;
         } catch (Exception e) {
@@ -115,7 +114,7 @@ public abstract class BaseDatabaseEntity<P extends BaseDatabaseEntity<?, ?>, ID 
     }
 
     public void cacheChanges() {
-        ParadubschManager.getInstance().getCachingManager().cacheEntity(this.getClass(), this, this.getIdentifyingColumn());
+        CraftPlugin.getInstance().getCachingManager().cacheEntity(this.getClass(), this, this.getIdentifyingColumn());
     }
 
     private long flushTimeout = 0;
@@ -132,12 +131,12 @@ public abstract class BaseDatabaseEntity<P extends BaseDatabaseEntity<?, ?>, ID 
                     flushTimeout--;
                     if (flushTimeout <= 0) {
                         flushingScheduled = false;
-                        var obj = ParadubschManager.getInstance().getCachingManager().getEntity(clazz, getIdentifyingColumn());
+                        var obj = CraftPlugin.getInstance().getCachingManager().getEntity(clazz, getIdentifyingColumn());
                         obj.saveOrUpdate();
                         cancel();
                     }
                 }
-            }.runTaskTimer(ParadubschManager.getInstance(), 0, 1);
+            }.runTaskTimer(CraftPlugin.getInstance(), 0, 1);
         }
     }
 

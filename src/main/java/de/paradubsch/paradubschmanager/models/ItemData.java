@@ -1,6 +1,7 @@
 package de.paradubsch.paradubschmanager.models;
 
-import de.paradubsch.paradubschmanager.models.converter.ItemStackConverter;
+import de.craftery.util.BaseDatabaseEntity;
+import de.craftery.util.ItemStackConverter;
 import de.paradubsch.paradubschmanager.util.TestMocks;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

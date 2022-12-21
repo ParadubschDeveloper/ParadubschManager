@@ -1,4 +1,4 @@
-package de.paradubsch.paradubschmanager.models.converter;
+package de.craftery.util;
 
 import de.paradubsch.paradubschmanager.util.TestMocks;
 import org.bukkit.inventory.ItemStack;

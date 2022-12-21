@@ -1,6 +1,5 @@
-package de.paradubsch.paradubschmanager.lifecycle;
+package de.craftery.util;
 
-import de.paradubsch.paradubschmanager.config.HibernateConfigurator;
 
 public class TestDatabaseConnection {
     public TestDatabaseConnection() {
