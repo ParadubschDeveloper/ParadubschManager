@@ -1,10 +1,11 @@
 package de.paradubsch.paradubschmanager.commands;
 
+import de.craftery.util.lang.Language;
 import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.models.PlayerData;
 import de.paradubsch.paradubschmanager.util.Expect;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
-import de.paradubsch.paradubschmanager.util.lang.Language;
+import de.craftery.util.lang.LanguageManager;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -16,8 +17,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class LangCommand implements CommandExecutor, TabCompleter {
     @Override
@@ -32,14 +33,16 @@ public class LangCommand implements CommandExecutor, TabCompleter {
             return true;
         }
 
-        if (!Language.isLanguage(args[0])) {
+        if (LanguageManager.getLanguages().stream().noneMatch(lang -> lang.getName().equals(args[0]))) {
             MessageAdapter.sendMessage(player, Message.Error.CMD_LANGUAGE_NOT_FOUND, args[0]);
             return true;
         }
 
         Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
             PlayerData pd = PlayerData.getByPlayer(player);
-            pd.setLanguage(Language.getLanguageByName(args[0]).getShortName());
+            LanguageManager.getLanguages().stream()
+                    .filter(lang -> lang.getName().equals(args[0])).findFirst()
+                    .ifPresent(lang -> pd.setLanguage(lang.getShortName()));
             pd.saveOrUpdate();
             MessageAdapter.sendMessage(player, Message.Info.CMD_LANGUAGE_SET, args[0]);
         });
@@ -49,7 +52,7 @@ public class LangCommand implements CommandExecutor, TabCompleter {
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (args.length == 1) {
-            return new ArrayList<>(Arrays.asList(Language.getLanguages()));
+            return LanguageManager.getLanguages().stream().map(Language::getName).collect(Collectors.toList());
         }
         return new ArrayList<>();
     }

@@ -1,11 +1,11 @@
 package de.paradubsch.paradubschmanager.lifecycle;
 
+import de.craftery.util.lang.Language;
 import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.commands.GmCommand;
 import de.paradubsch.paradubschmanager.models.PlayerData;
 import de.paradubsch.paradubschmanager.models.PunishmentHolder;
 import de.paradubsch.paradubschmanager.util.TimeCalculations;
-import de.paradubsch.paradubschmanager.util.lang.Language;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
@@ -39,7 +39,7 @@ public class PlayerJoinPrecedure implements Listener {
             if (ph.getActiveBanExpiration().getTime() > Timestamp.from(Instant.now()).getTime()) {
                 Bukkit.getScheduler().runTask(ParadubschManager.getInstance(), () -> {
                     PlayerData target = PlayerData.getByPlayer(player);
-                    Language lang = Language.getLanguageByName(target.getLanguage());
+                    Language lang = Language.getLanguageByShortName(target.getLanguage());
                     String expirationString = TimeCalculations.timeStampToExpiration(ph.getActiveBanExpiration(), lang);
                     Component msg = ParadubschManager.getInstance().getLanguageManager().get(Message.Info.CMD_BAN_KICK_MESSAGE, lang, ph.getActiveBanReason(), expirationString, "#b-" + ph.getActiveBanId());
                     player.kick(msg);

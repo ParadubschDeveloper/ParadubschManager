@@ -1,22 +1,23 @@
 package de.paradubsch.paradubschmanager.util;
 
+import de.craftery.util.lang.Language;
 import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.craftery.util.ConfigurationManager;
 import de.paradubsch.paradubschmanager.models.PlayerData;
-import de.paradubsch.paradubschmanager.util.lang.BaseMessageType;
-import de.paradubsch.paradubschmanager.util.lang.ChatComponentFactory;
-import de.paradubsch.paradubschmanager.util.lang.Language;
+import de.craftery.util.lang.BaseMessageType;
+import de.craftery.util.lang.ChatComponentFactory;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
 
 public class MessageAdapter {
     public static void sendConsoleError (Exception ex) {
         ParadubschManager.getInstance().getLogger().warning(ex.getMessage());
     }
 
-    public static Language getSenderLang(CommandSender sender) {
+    public static de.craftery.util.lang.Language getSenderLang(CommandSender sender) {
         Language language;
         if (sender instanceof Player) {
             Player player = (Player) sender;

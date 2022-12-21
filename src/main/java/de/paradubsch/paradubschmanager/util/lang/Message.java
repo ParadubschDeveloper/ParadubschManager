@@ -1,5 +1,7 @@
 package de.paradubsch.paradubschmanager.util.lang;
 
+import de.craftery.util.lang.BaseMessageType;
+
 public class Message {
     public enum Error implements BaseMessageType {
         CMD_LANGUAGE_NOT_PROVIDED("cmdLanguageNotProvided", "&cDu musst eine Sprache angeben!"),

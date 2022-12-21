@@ -2,7 +2,7 @@ package de.paradubsch.paradubschmanager.gui.window;
 
 import de.craftery.util.gui.BaseGui;
 import de.paradubsch.paradubschmanager.gui.items.*;
-import de.paradubsch.paradubschmanager.util.lang.Language;
+import de.craftery.util.lang.Language;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 
 public class SaveConfirmGui extends BaseGui {

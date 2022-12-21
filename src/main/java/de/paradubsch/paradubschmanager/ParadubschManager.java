@@ -15,7 +15,7 @@ import de.paradubsch.paradubschmanager.lifecycle.jobs.JobManager;
 import de.paradubsch.paradubschmanager.lifecycle.playtime.PlaytimeManager;
 import de.paradubsch.paradubschmanager.lifecycle.stairsit.StairSitManager;
 import de.paradubsch.paradubschmanager.models.*;
-import de.paradubsch.paradubschmanager.util.lang.LanguageManager;
+import de.paradubsch.paradubschmanager.util.lang.Message;
 import lombok.Getter;
 import lombok.Setter;
 import net.luckperms.api.LuckPerms;
@@ -31,9 +31,6 @@ import java.util.*;
 
 public final class ParadubschManager extends CraftPlugin {
     private static ParadubschManager instance;
-
-    @Getter
-    private LanguageManager languageManager;
 
     @Getter
     private PlaytimeManager playtimeManager;
@@ -88,7 +85,6 @@ public final class ParadubschManager extends CraftPlugin {
         ConfigurationHelper.addSpecificConfurations();
         this.addHibernateEntities();
 
-
         registerEvents();
 
         Bukkit.getConsoleSender().sendMessage("[Paradubsch] !>> Registering commands");
@@ -100,9 +96,13 @@ public final class ParadubschManager extends CraftPlugin {
         worldEditPlugin = initializeWorldEditPlugin();
         protocolManager = ProtocolLibrary.getProtocolManager();
 
-        languageManager = new LanguageManager();
+        this.getLanguageManager().registerMessageEnum(Message.Info.class);
+        this.getLanguageManager().registerMessageEnum(Message.Error.class);
+        this.getLanguageManager().registerMessageEnum(Message.Constant.class);
+        this.getLanguageManager().registerMessageEnum(Message.Gui.class);
+
         playtimeManager = new PlaytimeManager();
-        this.guiManager = new GuiManager(this, languageManager);
+        this.guiManager = new GuiManager(this, this.getLanguageManager());
 
         Bukkit.getConsoleSender().sendMessage("[Paradubsch] !>> Deleting old backups");
         WebserverManager.clearSchematicFiles();
@@ -121,7 +121,7 @@ public final class ParadubschManager extends CraftPlugin {
         playtimeManager = null;
         protocolManager = null;
         luckPermsApi = null;
-        languageManager = null;
+
         guiManager = null;
         jobManager = null;
 

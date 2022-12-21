@@ -1,5 +1,6 @@
 package de.paradubsch.paradubschmanager.commands;
 
+import de.craftery.util.lang.Language;
 import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.models.BanPunishment;
 import de.paradubsch.paradubschmanager.models.PlayerData;
@@ -8,7 +9,6 @@ import de.paradubsch.paradubschmanager.models.PunishmentUpdate;
 import de.paradubsch.paradubschmanager.util.Expect;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.TimeCalculations;
-import de.paradubsch.paradubschmanager.util.lang.Language;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
@@ -81,7 +81,7 @@ public class BanCommand implements TabCompleter, CommandExecutor {
                 MessageAdapter.sendMessage(sender, Message.Error.CMD_BAN_DURATION_INVALID, args[1]);
                 return;
             }
-            Language lang = Language.getLanguageByName(target.getLanguage());
+            Language lang = Language.getLanguageByShortName(target.getLanguage());
             String expirationString = TimeCalculations.timeStampToExpiration(banExpiration, lang);
 
             StringBuilder banReasonBuilder = new StringBuilder();

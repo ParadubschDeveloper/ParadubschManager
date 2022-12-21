@@ -1,4 +1,4 @@
-package de.paradubsch.paradubschmanager.util.lang;
+package de.craftery.util.lang;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
@@ -159,25 +159,25 @@ public class ChatComponentFactory {
      * My thoughts on this:
      * isInitialized := false
      * startComponent := true || if we are in the first component
-     *
+     * <br>
      * isColor := different each iteration, not mutable
-     *
+     * <br>
      * esef &a &l &b eaeff &r ef &b &r -> esef | &a &l &b eaeff | &r ef | &b &r
      *  6    7  3  3   4   7  4  7   3
-     *
+     * <br>
      * &a &l esef &a &l &b ee -> &a &l esef | &a &l &b ee
      *  5  1  2    7  3  3 4
-     *
-     *
+     * <br>
+     * <br>
      * 1. isInitialized, startComponent, isColor : set color of start component to color
      * 2. isInitialized, startComponent, !isColor : set text of start component to text, isInitialized = false, startComponent = false
-     *
+     * <br>
      * 3. isInitialized, !startComponent, isColor : set color of appending component to color
      * 4. isInitialized, !startComponent, !isColor : set text of appending component and append it to component, isInitialized = false
-     *
+     * <br>
      * 5. !isInitialized, startComponent, isColor : initialize start component with color, isInitialized = true
      * 6. !isInitialized, startComponent, !isColor : initialize start component with text, set color to gray, isInitialized = false, startComponent = false
-     *
+     * <br>
      * 7. !isInitialized, !startComponent, isColor : initialize appending component with color, isInitialized = true
      * 8. !isInitialized, !startComponent, !isColor : // unreachable
      *

@@ -1,8 +1,8 @@
 package de.craftery.util.gui;
 
+import de.craftery.util.lang.Language;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
-import de.paradubsch.paradubschmanager.util.lang.BaseMessageType;
-import de.paradubsch.paradubschmanager.util.lang.Language;
+import de.craftery.util.lang.BaseMessageType;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 import lombok.Getter;
 import lombok.Setter;

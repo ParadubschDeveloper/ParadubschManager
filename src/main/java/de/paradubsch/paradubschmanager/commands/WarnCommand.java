@@ -1,12 +1,12 @@
 package de.paradubsch.paradubschmanager.commands;
 
+import de.craftery.util.lang.Language;
 import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.models.PlayerData;
 import de.paradubsch.paradubschmanager.models.PunishmentHolder;
 import de.paradubsch.paradubschmanager.models.WarnPunishment;
 import de.paradubsch.paradubschmanager.util.Expect;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
-import de.paradubsch.paradubschmanager.util.lang.Language;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
@@ -59,7 +59,7 @@ public class WarnCommand implements CommandExecutor, TabCompleter {
         }
         long id = (long) warn.save();
 
-        Language lang = Language.getLanguageByName(target.getLanguage());
+        Language lang = Language.getLanguageByShortName(target.getLanguage());
         Component msg = ParadubschManager.getInstance().getLanguageManager().get(Message.Info.CMD_WARN_KICK_MESSAGE, lang, warnReason, "#w-" + id);
         Bukkit.getScheduler().runTask(ParadubschManager.getInstance(), () -> {
             // kicking is currently not supported by the testing environment

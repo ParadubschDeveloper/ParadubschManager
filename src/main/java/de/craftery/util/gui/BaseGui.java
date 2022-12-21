@@ -1,7 +1,7 @@
 package de.craftery.util.gui;
 
-import de.paradubsch.paradubschmanager.util.lang.BaseMessageType;
-import de.paradubsch.paradubschmanager.util.lang.Language;
+import de.craftery.util.lang.Language;
+import de.craftery.util.lang.BaseMessageType;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;

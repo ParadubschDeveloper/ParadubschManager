@@ -1,11 +1,11 @@
 package de.paradubsch.paradubschmanager.commands;
 
+import de.craftery.util.lang.Language;
 import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.models.*;
 import de.paradubsch.paradubschmanager.util.Expect;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.TimeCalculations;
-import de.paradubsch.paradubschmanager.util.lang.Language;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -77,7 +77,7 @@ public class MuteCommand implements TabCompleter, CommandExecutor {
                 MessageAdapter.sendMessage(sender, Message.Error.CMD_MUTE_DURATION_INVALID, args[1]);
                 return;
             }
-            Language lang = Language.getLanguageByName(target.getLanguage());
+            Language lang = Language.getLanguageByShortName(target.getLanguage());
             String expirationString = TimeCalculations.timeStampToExpiration(muteExpiration, lang);
 
             StringBuilder muteReasonBuilder = new StringBuilder();

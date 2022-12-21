@@ -1,9 +1,9 @@
 package de.craftery.util.gui;
 
+import de.craftery.util.lang.Language;
 import de.paradubsch.paradubschmanager.models.PlayerData;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
-import de.paradubsch.paradubschmanager.util.lang.Language;
-import de.paradubsch.paradubschmanager.util.lang.LanguageManager;
+import de.craftery.util.lang.LanguageManager;
 import lombok.Getter;
 import me.arcaniax.hdb.api.DatabaseLoadEvent;
 import me.arcaniax.hdb.api.HeadDatabaseAPI;

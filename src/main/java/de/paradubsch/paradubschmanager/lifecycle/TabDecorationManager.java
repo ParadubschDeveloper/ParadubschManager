@@ -4,10 +4,10 @@ import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolManager;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.wrappers.WrappedChatComponent;
+import de.craftery.util.lang.Language;
 import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.craftery.util.ConfigurationManager;
 import de.paradubsch.paradubschmanager.models.PlayerData;
-import de.paradubsch.paradubschmanager.util.lang.Language;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -59,9 +59,7 @@ public class TabDecorationManager implements Listener {
     }
     @EventHandler
     public void onPlayerTeleport(PlayerTeleportEvent event){
-        Bukkit.getScheduler().runTask(ParadubschManager.getInstance(), () -> {
-            broadcastTabDecorations();
-        });
+        Bukkit.getScheduler().runTask(ParadubschManager.getInstance(), TabDecorationManager::broadcastTabDecorations);
     }
 
     public static void broadcastScoreboardTeams() {

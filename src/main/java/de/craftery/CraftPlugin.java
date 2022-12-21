@@ -3,6 +3,7 @@ package de.craftery;
 import de.craftery.util.CachingManager;
 import de.craftery.util.ConfigurationManager;
 import de.craftery.util.TestDatabaseConnection;
+import de.craftery.util.lang.LanguageManager;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
@@ -24,11 +25,15 @@ public class CraftPlugin extends JavaPlugin {
     @Getter
     private CachingManager cachingManager;
 
+    @Getter
+    private LanguageManager languageManager;
+
     @Override
     public void onEnable() {
         instance = this;
         ConfigurationManager.copyDefaultConfiguration();
         cachingManager = new CachingManager();
+        languageManager = new LanguageManager();
 
         new TestDatabaseConnection();
         super.onEnable();
@@ -40,6 +45,7 @@ public class CraftPlugin extends JavaPlugin {
         Bukkit.getScheduler().cancelTasks(this);
 
         cachingManager = null;
+        languageManager = null;
         unregisterCommands();
 
         System.gc();

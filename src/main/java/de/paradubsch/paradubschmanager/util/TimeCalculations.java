@@ -1,8 +1,8 @@
 package de.paradubsch.paradubschmanager.util;
 
+import de.craftery.util.lang.Language;
 import de.paradubsch.paradubschmanager.ParadubschManager;
-import de.paradubsch.paradubschmanager.util.lang.Language;
-import de.paradubsch.paradubschmanager.util.lang.LanguageManager;
+import de.craftery.util.lang.LanguageManager;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 
 import java.sql.Timestamp;

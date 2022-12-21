@@ -27,6 +27,9 @@ public class ConfigurationManager {
 
         config.addDefault("hibernate.cachingEnabled", "false");
 
+
+        config.addDefault("languages.de", "Deutsch");
+
         config.options().copyDefaults(true);
         instance.saveConfig();
     }
