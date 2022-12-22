@@ -13,6 +13,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -84,37 +85,7 @@ public class TabDecorationManager implements Listener {
             }
         }
 
-        String world;
-        switch (p.getWorld().getName()){
-            case "normal":{
-                world = ParadubschManager.getInstance().getLanguageManager().getString(Message.Constant.NORMAL, playerLang);
-                break;
-            }
-            case "world_nether":{
-                world = ParadubschManager.getInstance().getLanguageManager().getString(Message.Constant.WORLD_NETHER, playerLang);
-                break;
-            }
-            case "world":{
-                world = ParadubschManager.getInstance().getLanguageManager().getString(Message.Constant.WORLD, playerLang);
-                break;
-            }
-            case "farmwelt":{
-                world = ParadubschManager.getInstance().getLanguageManager().getString(Message.Constant.FARMWELT, playerLang);
-                break;
-            }
-            case "eventwelt":{
-                world = ParadubschManager.getInstance().getLanguageManager().getString(Message.Constant.EVENTWELt, playerLang);
-                break;
-            }
-            case "world_the_end":{
-                world = ParadubschManager.getInstance().getLanguageManager().getString(Message.Constant.WORLD_THE_END, playerLang);
-                break;
-            }
-            default:{
-                world = "&a" + p.getWorld().getName();
-
-            }
-        }
+        String world = getWorldName(p.getWorld(), playerLang);
         String header = ParadubschManager.getInstance().getLanguageManager().getString(Message.Info.TAB_HEADER, playerLang, onlinePlayers + "", world);
         String footer = ParadubschManager.getInstance().getLanguageManager().getString(Message.Info.TAB_FOOTER, playerLang);
         packet.getChatComponents().write(0, WrappedChatComponent.fromText(ChatColor.translateAlternateColorCodes('&', header)));
@@ -124,6 +95,40 @@ public class TabDecorationManager implements Listener {
         } catch (InvocationTargetException e) {
             e.printStackTrace();
         }
+    }
+
+    public static String getWorldName(World world, Language lang) {
+        String worldName;
+        switch (world.getName()){
+            case "normal": {
+                worldName = ParadubschManager.getInstance().getLanguageManager().getString(Message.Constant.NORMAL, lang);
+                break;
+            }
+            case "world_nether": {
+                worldName = ParadubschManager.getInstance().getLanguageManager().getString(Message.Constant.WORLD_NETHER, lang);
+                break;
+            }
+            case "world": {
+                worldName = ParadubschManager.getInstance().getLanguageManager().getString(Message.Constant.WORLD, lang);
+                break;
+            }
+            case "farmwelt": {
+                worldName = ParadubschManager.getInstance().getLanguageManager().getString(Message.Constant.FARMWELT, lang);
+                break;
+            }
+            case "eventwelt": {
+                worldName = ParadubschManager.getInstance().getLanguageManager().getString(Message.Constant.EVENTWELT, lang);
+                break;
+            }
+            case "world_the_end": {
+                worldName = ParadubschManager.getInstance().getLanguageManager().getString(Message.Constant.WORLD_THE_END, lang);
+                break;
+            }
+            default: {
+                worldName = "&a" + world.getName();
+            }
+        }
+        return worldName;
     }
 
     private static void setScoreboardTeam(Player p) {

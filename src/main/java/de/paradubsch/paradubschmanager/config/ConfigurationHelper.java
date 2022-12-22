@@ -5,6 +5,7 @@ import de.craftery.util.ConfigurationManager;
 public class ConfigurationHelper {
     public static void addSpecificConfurations() {
         ConfigurationManager.addDefault("homePrice", 150);
+
         ConfigurationManager.addDefault("http.server", "http://localhost:8090");
         ConfigurationManager.addDefault("http.port", 8090);
         ConfigurationManager.addDefault("http.maxThreads", 5);
@@ -23,5 +24,8 @@ public class ConfigurationHelper {
         ConfigurationManager.addDefault("chatprefix.default.prefix", "&7Spieler");
         ConfigurationManager.addDefault("chatprefix.default.namecolor", "&7");
         ConfigurationManager.addDefault("chatprefix.default.chatcolor", "&7");
+
+
+        ConfigurationManager.addDefault("timevote.createCooldown", 1800000L);
     }
 }

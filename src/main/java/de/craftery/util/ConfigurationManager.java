@@ -59,6 +59,9 @@ public class ConfigurationManager {
     public static int getInt(String path) {
         return CraftPlugin.getInstance().getConfig().getInt(path);
     }
+    public static Long getLong(String path) {
+        return CraftPlugin.getInstance().getConfig().getLong(path);
+    }
 
     public static FileConfiguration getConfig() {
         return CraftPlugin.getInstance().getConfig();

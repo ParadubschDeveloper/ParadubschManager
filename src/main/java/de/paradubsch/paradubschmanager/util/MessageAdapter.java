@@ -53,7 +53,7 @@ public class MessageAdapter {
         });
     }
 
-    public static void broadcastMessage(BaseMessageType template, String... args) {
+    public static void broadcastUnprefixedMessage(BaseMessageType template, String... args) {
         Bukkit.getScheduler().runTask(CraftPlugin.getInstance(), () -> {
             Language lang = Language.getDefaultLanguage();
 

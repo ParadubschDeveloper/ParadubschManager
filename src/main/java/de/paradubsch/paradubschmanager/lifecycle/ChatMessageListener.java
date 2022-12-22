@@ -46,7 +46,7 @@ public class ChatMessageListener implements Listener {
             ph.saveOrUpdate();
         }
 
-        MessageAdapter.broadcastMessage(
+        MessageAdapter.broadcastUnprefixedMessage(
                 Message.Constant.CHAT_MESSAGE_TEMPLATE,
                 pd.getChatPrefix(),
                 pd.getNameColor(),

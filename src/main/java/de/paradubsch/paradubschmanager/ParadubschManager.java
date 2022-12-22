@@ -13,7 +13,7 @@ import de.paradubsch.paradubschmanager.lifecycle.*;
 import de.paradubsch.paradubschmanager.lifecycle.jobs.JobManager;
 import de.paradubsch.paradubschmanager.lifecycle.playtime.PlaytimeManager;
 import de.paradubsch.paradubschmanager.lifecycle.stairsit.StairSitManager;
-import de.paradubsch.paradubschmanager.lifecycle.vote.TimeVote;
+import de.paradubsch.paradubschmanager.commands.TimeVoteCommand;
 import de.paradubsch.paradubschmanager.models.*;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 import lombok.Getter;
@@ -63,6 +63,9 @@ public final class ParadubschManager extends CraftPlugin {
 
     @Getter
     private final Map<UUID, Long> gsBackupTimeouts = new HashMap<>();
+
+    @Getter
+    private final Map<UUID, Long> timevoteTimeouts = new HashMap<>();
 
     private WebserverManager webServer;
 
@@ -210,7 +213,7 @@ public final class ParadubschManager extends CraftPlugin {
         register("stonecutter", new StoneCutterCommand());
         register("hat", new HatCommand());
         register("mute", new MuteCommand());
-        register("votezeit",new TimeVote());
+        register("votezeit",new TimeVoteCommand());
     }
     private WorldGuardPlugin initializeWorldGuardPlugin () {
         Plugin plugin = this.getServer().getPluginManager().getPlugin("WorldGuard");

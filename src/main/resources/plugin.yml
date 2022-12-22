@@ -17,7 +17,7 @@ depend:
 commands:
   msg:
     description: Schreibe einem anderen Spieler eine private Nachricht.
-    aliases: [tell, nachricht, post, pm, brief, mail]
+    aliases: [tell, nachricht, post, pm, brief, mail, w]
     permission: paradubsch.msg
     permission-message: 'Du benötigst die Berechtigung paradubsch.msg um zu chatten!'
     usage: '/msg <Spieler> <Nachricht>'
@@ -333,12 +333,12 @@ commands:
     permission: paradubsch.mute
     permission-message: 'Du benötigst die Berechtigung paradubsch.mute um einen Spieler zu muten.'
     usage: '/mute'
-  votezeit:
+  timevote:
     description: Erstelle / Vote für eine Zeitänderung.
-    aliases: [ ]
-    permission: paradubsch.vote
-    permission-message: 'Du benötigst die Berechtigung paradubsch.vote um abzustimmen.'
-    usage: '/votezeit'
+    aliases: [votezeit, tv, vz]
+    permission: paradubsch.timevote
+    permission-message: 'Du benötigst die Berechtigung paradubsch.timevote um abzustimmen.'
+    usage: '/timevote'
 
 
 permissions:
@@ -540,9 +540,9 @@ permissions:
   paradubsch.mute:
     description: "Erlaubt Zugriff auf den /mute Befehl."
     default: false
-  paradubsch.vote:
-    description: "Erlaubt Zugriff auf den /votezeit  Befehl."
+  paradubsch.timevote:
+    description: "Erlaubt Zugriff auf den /timevote Befehl."
     default: true
-  paradubsch.createvote:
+  paradubsch.timevote.createvote:
     description: "Erlaubt Zugriff auf den /votezeit create Befehl."
     default: false
