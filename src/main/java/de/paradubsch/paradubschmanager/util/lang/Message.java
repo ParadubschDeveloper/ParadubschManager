@@ -80,8 +80,14 @@ public class Message {
         CMD_BAZAAR_PRICE_NOT_PROVIDED("cmdBazaarPriceNotProvided", "&cDu musst einen Preis angeben!"),
         CMD_BAZAAR_CANNOT_SELL_THIS_ITEM("cmdBazaarConnotSellThisItem", "&cDu kannst dieses Item nicht auf dem Basar verkaufen!"),
         CMD_BAZAAR_NOT_ENOUGH_ITEMS("cmdBazaarNotEnoughItems", "&cDu brauchst mindestens &a%1&7x@ClickableComponent<Translatable=%2>&cum es auf dem Basar zu verkaufen!"),
+        FEATURE_NOT_AVAILABLE("featureNotAvailable", "&cDas Feature &6%1&c ist nicht verfügbar!"),
         CMD_BAZAAR_INVALID_PRICE("cmdBazaarInvalidPrice", "&cDer Preis muss größer als &a%1&c sein und nicht größer als &a%2&c!"),
-        FEATURE_NOT_AVAILABLE("featureNotAvailable", "&cDas Feature &6%1&c ist nicht verfügbar!");
+        CMD_VOTE_NOT_RUNNING("cmdVoteNotRunning","&c Es läuft grade keine Abstimmung."),
+        CMD_VOTE_ALREADY_RUNNING("cmdVoteAlreadyRunning","&c Es läuft bereits eine Abstimmung."),
+        CMD_VOTE_CREATE_NO_PERMISSION("cmdVoteCreateNoPermission","&cDu benötigst die Permission paradubsch.createvote um eine Abstimmung zu erstellen."),
+        CMD_VOTE_ALREADY_VOTED("cmdVoteAlreadyVoted","&cDu hast bereits abgestimmt."),
+        CMD_VOTE_WRONG_SYNTAX("cmdVoteWrongSyntax","&cBitte verwende /votezeit vote <ja / nein> oder /votezeit create."),
+        CMD_VOTE_COOLDOWN("cmdVoteCooldown","&cDu kannst erst in %1 Minuten wieder eine Abstimmung starten.");
 
         private final String key;
         private final String def;
@@ -202,7 +208,12 @@ public class Message {
         CMD_MUTE_GOT_MUTED_BODY("cmdMuteGotMutedBody","&cGrund: &6%1"),
         PERMA_MUTED("permaMuted","&cDu bist permanent gemutet. Du kannst nichts mehr in den Chat schreiben."),
         MUTED_HEADER("mutedHeader","&cDu bist noch für &6%1 &cgemutet."),
-        MUTED_BODY("mutedBody","&cGrund: &6%1");
+        MUTED_BODY("mutedBody","&cGrund: &6%1"),
+        VOTE_STARTED("voteStarted","&7Die Spielzeit soll auf &a%1 &7 geändert werden. \n Stimme jetzt mit darüber ab. Die Abstimmung dauert 30 Sekunden \n@ClickableComponent<Text=&7[&aJa&7]|SuggestCommand=/votezeit vote yes |HoverText=&7Für &aja &7stimmen.> @ClickableComponent<Text=&7[&cNein&7]|SuggestCommand=/votezeit vote yes |HoverText=&7Für &cnein &7stimmen.>"),
+        CMD_VOTE_VOTED_YES("cmdVoteVotedYes","&7Du hast für &aJa &7gestimmt."),
+        CMD_VOTE_VOTED_NO("cmdVoteVotedNo","&7Du hast für &cNein &7gestimmt."),
+        VOTE_ENDED("voteEnded","&7Die Abstimmung wurde beendet \n Ergebniss: %1"),
+        VOTE_TIME_CHANGE("voteTimeChange","&7Die Zeit wird auf &a%1 &7geändert.");
 
         private final String key;
         private final String def;

@@ -333,6 +333,12 @@ commands:
     permission: paradubsch.mute
     permission-message: 'Du benötigst die Berechtigung paradubsch.mute um einen Spieler zu muten.'
     usage: '/mute'
+  votezeit:
+    description: Erstelle / Vote für eine Zeitänderung.
+    aliases: [ ]
+    permission: paradubsch.vote
+    permission-message: 'Du benötigst die Berechtigung paradubsch.vote um abzustimmen.'
+    usage: '/votezeit'
 
 
 permissions:
@@ -533,4 +539,10 @@ permissions:
     default: false
   paradubsch.mute:
     description: "Erlaubt Zugriff auf den /mute Befehl."
+    default: false
+  paradubsch.vote:
+    description: "Erlaubt Zugriff auf den /votezeit  Befehl."
+    default: true
+  paradubsch.createvote:
+    description: "Erlaubt Zugriff auf den /votezeit create Befehl."
     default: false
