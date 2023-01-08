@@ -213,7 +213,7 @@ public final class ParadubschManager extends CraftPlugin {
         register("stonecutter", new StoneCutterCommand());
         register("hat", new HatCommand());
         register("mute", new MuteCommand());
-        register("votezeit",new TimeVoteCommand());
+        register("timevote", new TimeVoteCommand());
     }
     private WorldGuardPlugin initializeWorldGuardPlugin () {
         Plugin plugin = this.getServer().getPluginManager().getPlugin("WorldGuard");
