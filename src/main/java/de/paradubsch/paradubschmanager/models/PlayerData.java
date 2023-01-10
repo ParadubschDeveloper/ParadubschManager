@@ -59,13 +59,6 @@ public class PlayerData extends BaseDatabaseEntity<PlayerData, String> {
     @Column(name ="money", columnDefinition = "BIGINT DEFAULT 150")
     private long money = 150L;
 
-    // TODO: Delete this relation, because it is not working in our Hibernate usecase
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    @OneToMany(mappedBy = "playerRef", fetch = FetchType.LAZY)
-    @Cascade(value = SAVE_UPDATE)
-    private List<Home> homes;
-
     @Column(name = "max_homes", columnDefinition = "INT DEFAULT 2")
     private int maxHomes = 2;
 

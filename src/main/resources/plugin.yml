@@ -3,7 +3,7 @@ version: "${project.version}"
 main: "de.paradubsch.paradubschmanager.ParadubschManager"
 api-version: "1.19"
 api: [ "1.19" ]
-authors: [ "Crafter_Y", "Byte", "Blintastisch_" ]
+authors: [ "Crafter_Y", "Byte", "Blintastisch_", "DieButzenscheibe" ]
 load: "POSTWORLD"
 prefix: "ParadubschManager"
 website: "https://gitlab.com/paradubsch-developer/paradubschmanager"

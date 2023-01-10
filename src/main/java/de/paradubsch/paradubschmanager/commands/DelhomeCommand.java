@@ -1,12 +1,9 @@
 package de.paradubsch.paradubschmanager.commands;
 
-import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.models.Home;
-import de.paradubsch.paradubschmanager.models.PlayerData;
 import de.paradubsch.paradubschmanager.util.Expect;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.lang.Message;
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -17,6 +14,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class DelhomeCommand implements CommandExecutor, TabCompleter {
     @Override
@@ -35,29 +33,27 @@ public class DelhomeCommand implements CommandExecutor, TabCompleter {
         if (!Expect.minArgs(2, args)) {
             MessageAdapter.sendMessage(sender, Message.Info.CMD_DELHOME_CONFIRM, args[0]);
             return true;
-        } else if (args[1].equals("confirm")) {
-            Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
-                PlayerData playerData = PlayerData.getByPlayer(player);
-                List<Home> homes = Home.getByPlayer(player);
-
-                if (homes.stream().anyMatch(home -> home.getName().equals(args[0]))) {
-                    Home home = homes.stream().filter(home1 -> home1.getName().equals(args[0])).findFirst().get();
-                    homes.remove(home);
-                    home.delete();
-
-                    playerData.setHomes(homes);
-                    MessageAdapter.sendMessage(player, Message.Info.CMD_DELHOME_DONE, args[0]);
-                } else if (homes.stream().anyMatch(home -> home.getName().equalsIgnoreCase(args[0]))) {
-                    Home home = homes.stream().filter(home1 -> home1.getName().equalsIgnoreCase(args[0])).findFirst().get();
-                    MessageAdapter.sendMessage(player, Message.Info.CMD_DELHOME_MAYBE_WRONG_NAME, args[0], home.getName());
-                } else {
-                    MessageAdapter.sendMessage(player, Message.Error.CMD_VIEWHOME_HOME_NOT_FOUND, args[0]);
-                }
-
-                playerData.saveOrUpdate();
-            });
         }
 
+        if (args[1].equals("confirm")) {
+            List<Home> homes = Home.getByPlayer(player);
+
+            Optional<Home> predicate = homes.stream().filter(home_ -> home_.getName().equals(args[0])).findFirst();
+            Optional<Home> alternative = homes.stream().filter(home_ -> home_.getName().equalsIgnoreCase(args[0])).findFirst();
+            if (predicate.isPresent()) {
+                Home home = predicate.get();
+                home.delete();
+
+                MessageAdapter.sendMessage(player, Message.Info.CMD_DELHOME_DONE, args[0]);
+            } else if (alternative.isPresent()) {
+                Home home = alternative.get();
+                MessageAdapter.sendMessage(player, Message.Info.CMD_DELHOME_MAYBE_WRONG_NAME, args[0], home.getName());
+            } else {
+                MessageAdapter.sendMessage(player, Message.Error.CMD_VIEWHOME_HOME_NOT_FOUND, args[0]);
+            }
+        } else {
+            MessageAdapter.sendMessage(sender, Message.Info.CMD_DELHOME_CONFIRM, args[0]);
+        }
         return true;
     }
 

@@ -2,12 +2,9 @@ package de.paradubsch.paradubschmanager.models;
 
 import de.craftery.util.BaseDatabaseEntity;
 import de.craftery.util.HibernateConfigurator;
-import lombok.Cleanup;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 import org.bukkit.entity.Player;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -44,31 +41,23 @@ public class Home extends BaseDatabaseEntity<Home, Long> {
     @Column(name = "home_world", columnDefinition = "VARCHAR(128)")
     private String world;
 
-    // TODO: Delete this relation, because it is not working in our Hibernate usecase
-    @ManyToOne(fetch = FetchType.EAGER)
-    private PlayerData playerRef;
+    @Column(name = "playerRef_uuid", columnDefinition = "VARCHAR(36)")
+    private String playerRef;
 
     public static Home getById(Serializable id) {
         return BaseDatabaseEntity.getById(Home.class, id);
     }
 
     public static List<Home> getByPlayer(Player p) {
-        Transaction transaction = null;
         try {
             @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
 
-            transaction = session.beginTransaction();
-
-            PlayerData playerData = session.get(PlayerData.class, p.getUniqueId().toString());
-            List<Home> homes = playerData.getHomes();
-            org.hibernate.Hibernate.initialize(homes);
-            transaction.commit();
-            return homes;
-
+            return session.createQuery("FROM Home where playerRef = :uuid", Home.class)
+                    .setParameter("uuid", p.getUniqueId().toString())
+                    .getResultList();
+        } catch (NoResultException e) {
+            return new ArrayList<>();
         } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
             e.printStackTrace();
             return new ArrayList<>();
         }
