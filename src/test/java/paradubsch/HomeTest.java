@@ -7,6 +7,7 @@ import de.craftery.ErrorOr;
 import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.commands.HomeCommand;
 import de.paradubsch.paradubschmanager.commands.SethomeCommand;
+import de.paradubsch.paradubschmanager.commands.DelhomeCommand;
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -69,5 +70,30 @@ public class HomeTest {
         result = HomeCommand.teleportHome(player, "TeSt3");
         assertTrue(result.isError());
         assertEquals(result.getErrorMessage(), HomeCommand.HOME_NOT_FOUND_BUT_ALTERNATIVE_ERROR);
+    }
+
+    @DisplayName("Test the delhome command")
+    @Test
+    public void delhomeCommand() {
+        PlayerMock player = server.addPlayer();
+
+        SethomeCommand.setHome(player, "test", false);
+        SethomeCommand.setHome(player, "test3", false);
+
+        ErrorOr<Void> result = DelhomeCommand.deleteHome(player, "test");
+        assertFalse(result.isError());
+
+        result = DelhomeCommand.deleteHome(player, "testNotExisting");
+        assertTrue(result.isError());
+        assertEquals(result.getErrorMessage(), DelhomeCommand.HOME_NOT_FOUND_ERROR);
+
+        result = DelhomeCommand.deleteHome(player, "TeSt3");
+        assertTrue(result.isError());
+        assertEquals(result.getErrorMessage(), DelhomeCommand.HOME_NOT_FOUND_BUT_ALTERNATIVE_ERROR);
+
+        // this should fail, because the home was deleted.
+        result = DelhomeCommand.deleteHome(player, "test");
+        assertTrue(result.isError());
+        assertEquals(result.getErrorMessage(), DelhomeCommand.HOME_NOT_FOUND_ERROR);
     }
 }
