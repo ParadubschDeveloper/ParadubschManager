@@ -22,10 +22,8 @@ public class BackpackCommand implements CommandExecutor, TabCompleter {
         if (!Expect.playerSender(sender)) return true;
         Player player = (Player) sender;
 
-        if (args.length == 0) {
-            if (!Expect.featuresEnabled(sender, HeadDatabaseFeature.class)) return true;
-            GuiManager.entryGui(BackpackGui.class, player);
-        }
+        if (!Expect.featuresEnabled(sender, HeadDatabaseFeature.class)) return true;
+        GuiManager.entryGui(BackpackGui.class, player);
 
         return true;
     }

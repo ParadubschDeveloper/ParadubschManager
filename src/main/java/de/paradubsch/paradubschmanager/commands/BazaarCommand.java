@@ -43,49 +43,52 @@ public class BazaarCommand implements CommandExecutor, TabCompleter {
                 MessageAdapter.sendMessage(player, Message.Error.CMD_BAZAAR_PRICE_NOT_PROVIDED);
                 return true;
             }
-
-            ItemStack item = player.getInventory().getItemInMainHand();
-            Optional<BazaarItemData> bazaarItemDataOptional = Bazaar.getBazaarConfigItems().stream().filter(x -> x.getMaterial() == item.getType()).findFirst();
-
-            if (!bazaarItemDataOptional.isPresent()) {
-                MessageAdapter.sendMessage(player, Message.Error.CMD_BAZAAR_CANNOT_SELL_THIS_ITEM);
-                return true;
-            }
-            BazaarItemData data = bazaarItemDataOptional.get();
-
-            if (item.getAmount() < data.getAmount()) {
-                MessageAdapter.sendMessage(player, Message.Error.CMD_BAZAAR_NOT_ENOUGH_ITEMS, data.getAmount() + "", item.getType().name());
-                return true;
-            }
-
-            if (price > data.getOffer() || price <= data.getBuy()) {
-                MessageAdapter.sendMessage(player, Message.Error.CMD_BAZAAR_INVALID_PRICE,  data.getBuy() + "", data.getOffer() + "");
-                return true;
-            }
-
-            int taxes = (int) Math.floor(price * 0.1f);
-
-            PlayerData pd = PlayerData.getByPlayer(player);
-            if (pd.getMoney() < taxes) {
-                MessageAdapter.sendMessage(player, Message.Error.NOT_ENOUGH_MONEY);
-                return true;
-            }
-            pd.setMoney(pd.getMoney() - taxes);
-            pd.saveOrUpdate();
-
-            if (item.getAmount() == data.getAmount()) {
-                player.getInventory().setItemInMainHand(null);
-            } else {
-                item.setAmount(item.getAmount() - data.getAmount());
-                player.getInventory().setItemInMainHand(item);
-            }
-
-            BazaarPlaceSellOrderButton.sellItem(player, pd, data, price);
-            MessageAdapter.sendMessage(player, Message.Info.CMD_BAZAAR_PAYED_TAXES, taxes + "");
-
+            sellItem(player, price);
         }
 
         return true;
+    }
+
+    private static void sellItem(Player player, Integer price) {
+        ItemStack item = player.getInventory().getItemInMainHand();
+
+        Optional<BazaarItemData> bazaarItemDataOptional = Bazaar.getBazaarConfigItems().stream().filter(x -> x.getMaterial() == item.getType()).findFirst();
+        if (!bazaarItemDataOptional.isPresent()) {
+            MessageAdapter.sendMessage(player, Message.Error.CMD_BAZAAR_CANNOT_SELL_THIS_ITEM);
+            return;
+        }
+        
+        BazaarItemData data = bazaarItemDataOptional.get();
+
+        if (item.getAmount() < data.getAmount()) {
+            MessageAdapter.sendMessage(player, Message.Error.CMD_BAZAAR_NOT_ENOUGH_ITEMS, data.getAmount() + "", item.getType().name());
+            return;
+        }
+
+        if (price > data.getOffer() || price <= data.getBuy()) {
+            MessageAdapter.sendMessage(player, Message.Error.CMD_BAZAAR_INVALID_PRICE,  data.getBuy() + "", data.getOffer() + "");
+            return;
+        }
+
+        int taxes = (int) Math.floor(price * 0.1f);
+
+        PlayerData pd = PlayerData.getByPlayer(player);
+        if (pd.getMoney() < taxes) {
+            MessageAdapter.sendMessage(player, Message.Error.NOT_ENOUGH_MONEY);
+            return;
+        }
+        pd.setMoney(pd.getMoney() - taxes);
+        pd.saveOrUpdate();
+
+        if (item.getAmount() == data.getAmount()) {
+            player.getInventory().setItemInMainHand(null);
+        } else {
+            item.setAmount(item.getAmount() - data.getAmount());
+            player.getInventory().setItemInMainHand(item);
+        }
+
+        BazaarPlaceSellOrderButton.sellItem(player, pd, data, price);
+        MessageAdapter.sendMessage(player, Message.Info.CMD_BAZAAR_PAYED_TAXES, taxes + "");
     }
 
     @Override

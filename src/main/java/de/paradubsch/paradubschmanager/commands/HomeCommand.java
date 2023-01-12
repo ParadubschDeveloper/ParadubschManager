@@ -26,10 +26,7 @@ public class HomeCommand implements CommandExecutor, TabCompleter {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (!Expect.playerSender(sender)) {
-            MessageAdapter.sendMessage(sender, Message.Error.CMD_ONLY_FOR_PLAYERS);
-            return true;
-        }
+        if (!Expect.playerSender(sender)) return true;
         Player player = (Player) sender;
 
         String homeName;

@@ -17,10 +17,9 @@ import java.util.List;
 public class DayCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (!Expect.playerSender(sender)) {
-            return true;
-        }
+        if (!Expect.playerSender(sender)) return true;
         Player player = (Player) sender;
+        
         player.getWorld().setTime(1400);
         MessageAdapter.sendMessage(player, Message.Info.CMD_DAY_SET);
         return true;

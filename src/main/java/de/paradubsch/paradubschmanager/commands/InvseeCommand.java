@@ -18,6 +18,8 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public class InvseeCommand implements CommandExecutor, TabCompleter {
+    public static final Component INVSEE_SECURED_TITLE = Component.text("Player Inventory").color(NamedTextColor.DARK_GRAY);
+    
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (!Expect.playerSender(sender)) return true;
@@ -49,8 +51,6 @@ public class InvseeCommand implements CommandExecutor, TabCompleter {
 
         return true;
     }
-
-    public static final Component INVSEE_SECURED_TITLE = Component.text("Player Inventory").color(NamedTextColor.DARK_GRAY);
 
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {

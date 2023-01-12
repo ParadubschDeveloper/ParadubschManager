@@ -23,17 +23,14 @@ public class DelhomeCommand implements CommandExecutor, TabCompleter {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (!Expect.playerSender(sender)) {
-            MessageAdapter.sendMessage(sender, Message.Error.CMD_ONLY_FOR_PLAYERS);
-            return true;
-        }
+        if (!Expect.playerSender(sender)) return true;
+
         Player player = (Player) sender;
 
         if (!Expect.minArgs(1, args)) {
             MessageAdapter.sendMessage(sender, Message.Error.CMD_HOMENAME_NOT_PROVIDED);
             return true;
         }
-
         String homeName = args[0];
 
         if (!Expect.minArgs(2, args)) {

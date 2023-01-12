@@ -17,12 +17,11 @@ import java.util.List;
 public class LoomCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if(!Expect.playerSender(sender)) {
-            return true;
-        }
-        Player p = (Player) sender;
-        p.openLoom(p.getLocation(), true);
-        MessageAdapter.sendMessage(sender, Message.Info.CMD_LOOM_OPENED);
+        if(!Expect.playerSender(sender)) return true;
+        Player player = (Player) sender;
+
+        player.openLoom(player.getLocation(), true);
+        MessageAdapter.sendMessage(player, Message.Info.CMD_LOOM_OPENED);
         return true;
     }
 
