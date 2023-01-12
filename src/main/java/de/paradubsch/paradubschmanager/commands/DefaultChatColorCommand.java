@@ -42,7 +42,7 @@ public class DefaultChatColorCommand implements CommandExecutor, TabCompleter {
         PlayerData pd = PlayerData.getByName(args[0]);
         if (pd == null) {
             MessageAdapter.sendMessage(sender, Message.Error.CMD_PLAYER_NEVER_ONLINE, args[0]);
-            return;
+            return true;
         }
         pd.setDefaultChatColor(args[1]);
         pd.saveOrUpdate();
