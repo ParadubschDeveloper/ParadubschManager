@@ -14,7 +14,7 @@ cache:
 stages:
   - build
   - test
-  - deploy
+  - package
 
 build-job:
   stage: build
@@ -32,6 +32,15 @@ unittest-job:
     - mysql:latest
   script:
     - "mvn test $MAVEN_CLI_OPTS"
+
+package-job:
+  stage: package
+  dependencies:
+    - build-job
+  services:
+    - mysql:latest
+  script:
+    - "mvn package $MAVEN_CLI_OPTS -Dmaven.test.skip=true"
   artifacts:
     paths:
       - "target/*.jar"

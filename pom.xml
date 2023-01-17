@@ -71,32 +71,6 @@
                 </executions>
             </plugin>
             <plugin>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <version>3.0.0</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <id>server</id>
-                        <configuration>
-                            <target>
-                                <!-- This deletes all generated classes after the compilation.
-                                 IDK why, but there are bugs if I don't do that-->
-                                <exec dir="${project.basedir}/target/" executable="cmd.exe">
-                                    <arg value="/c" />
-                                    <arg value="@RD" />
-                                    <arg value="/S" />
-                                    <arg value="/Q" />
-                                    <arg value='"./classes"' />
-                                </exec>
-                            </target>
-                        </configuration>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
                 <!-- Plugin for Unit Tests -->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
