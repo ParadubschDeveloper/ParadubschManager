@@ -31,7 +31,7 @@ public class GuiManager implements Listener {
     public static SignMenuFactory signFactory;
 
     @Getter
-    private static final Map<Class<? extends BaseGui>, BaseGui> handlerMap = new HashMap<>();
+    private static final Map<Player, BaseGui> handlerMap = new HashMap<>();
 
     @Getter
     private final Map<Component, List<GuiItem>> guis = new HashMap<>();
@@ -60,8 +60,7 @@ public class GuiManager implements Listener {
     @EventHandler
     public void onClose(InventoryCloseEvent event) {
         if (guis.containsKey(event.getView().title())) {
-            Class<? extends BaseGui> gui = sessions.get((Player) event.getPlayer()).peek();
-            BaseGui handler = getWindowHandler(gui);
+            BaseGui handler = getWindowHandler((Player) event.getPlayer());
             if (handler != null) {
                 handler.onClose((Player) event.getPlayer(), event);
             }
@@ -103,7 +102,7 @@ public class GuiManager implements Listener {
                     break;
                 }
             }
-            BaseGui handler = getWindowHandler(gui);
+            BaseGui handler = getWindowHandler((Player) event.getWhoClicked());
             if (handler != null) {
                 handler.onClick((Player) event.getWhoClicked(), event, handledItem);
             }
@@ -165,8 +164,8 @@ public class GuiManager implements Listener {
         }
     }
 
-    private static @Nullable BaseGui getWindowHandler(@NotNull Class<? extends BaseGui> gui) {
-        return handlerMap.get(gui);
+    private static @Nullable BaseGui getWindowHandler(@NotNull Player player) {
+        return handlerMap.get(player);
     }
 
     private static void registerGui(Component component) {
@@ -190,14 +189,12 @@ public class GuiManager implements Listener {
             PlayerData playerData = PlayerData.getByPlayer(p);
             Language playerLang = Language.getLanguageByShortName(playerData.getLanguage());
             BaseGui window = gui.getConstructor().newInstance();
-            if (!handlerMap.containsKey(gui)) {
-                handlerMap.put(gui, window);
-            }
             window.applyArgs(p, args);
             List<Object> argList = new ArrayList<>(Arrays.asList(args));
             GuiManager.instance.sessionData.put(p, argList);
             window.init(playerLang);
             window.build();
+            handlerMap.put(p, window);
             return window.inv;
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
                  NoSuchMethodException e) {

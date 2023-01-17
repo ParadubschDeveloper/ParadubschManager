@@ -199,6 +199,7 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.31</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
@@ -222,6 +223,7 @@
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-server</artifactId>
             <version>11.0.12</version>
+            <scope>provided</scope>
         </dependency>
 
 
