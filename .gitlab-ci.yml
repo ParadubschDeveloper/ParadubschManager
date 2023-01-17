@@ -28,6 +28,8 @@ unittest-job:
   stage: test
   dependencies:
     - build-job
+  services:
+    - mysql:latest
   script:
     - "mvn package $MAVEN_CLI_OPTS"
   artifacts:
