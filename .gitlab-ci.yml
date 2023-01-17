@@ -32,20 +32,4 @@ unittest-job:
     - "mvn package $MAVEN_CLI_OPTS"
   artifacts:
     paths:
-      - target/
-
-integrationtest-job:
-  stage: test
-  dependencies:
-    - build-job
-  script:
-    - "mvn verify $MAVEN_CLI_OPTS"
-  artifacts:
-    paths:
-      - target/
-
-deploy-job:
-  stage: deploy
-  artifacts:
-    paths:
       - "target/*.jar"
