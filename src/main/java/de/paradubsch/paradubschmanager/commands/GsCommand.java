@@ -689,7 +689,7 @@ public class GsCommand implements CommandExecutor, TabCompleter {
             return null;
         }
 
-        if (args.length == 2 && (args[0].equals("add") || args[0].equals("kick"))) {
+        if (args.length == 2 && (args[0].equals("add") || args[0].equals("kick") || args[0].equals("ban"))) {
             return null;
         }
 
