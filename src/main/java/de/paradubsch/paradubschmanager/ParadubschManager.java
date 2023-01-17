@@ -148,6 +148,8 @@ public final class ParadubschManager extends CraftPlugin {
         HibernateConfigurator.addEntity(Backpack.class);
         HibernateConfigurator.addEntity(StorageSlot.class);
         HibernateConfigurator.addEntity(ItemData.class);
+        HibernateConfigurator.addEntity(GsWhitelistEnabled.class);
+        HibernateConfigurator.addEntity(GsWhitelistMember.class);
     }
 
     private void registerEvents() {
@@ -157,6 +159,7 @@ public final class ParadubschManager extends CraftPlugin {
         new TabDecorationManager(this);
         new InvseeInventoryGuard();
         new StairSitManager();
+        new GsRegionListener();
     }
 
     private void registerCommands() {

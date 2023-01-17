@@ -86,7 +86,11 @@ public class Message {
         CMD_TIMEVOTE_ALREADY_RUNNING("cmdTimevoteAlreadyRunning","&cEs läuft bereits eine Abstimmung."),
         CMD_TIMEVOTE_ALREADY_VOTED("cmdTimevoteAlreadyVoted","&cDu hast bereits an dieser Abstimmung teilgenommen."),
         CMD_TIMEVOTE_WRONG_SYNTAX("cmdTimevoteWrongSyntax","&cBitte verwende /votezeit vote <Ja/Nein>&c oder /votezeit create <Tag/Nacht>&c."),
-        CMD_TIMEVOTE_COOLDOWN("cmdTimevoteCooldown","&cDu kannst erst in &a%1&c wieder eine Abstimmung starten.");
+        CMD_TIMEVOTE_COOLDOWN("cmdTimevoteCooldown","&cDu kannst erst in &a%1&c wieder eine Abstimmung starten."),
+        CMD_GS_WHITELIST_MISSING_ARGUMENT("cmdGsWhitelistMissingArgument","&cBitte verwende /gs whitelist (<on/off>|<add/remove> <Spieler>)"),
+        CMD_GS_WHITELIST_UNKNOWN_SUBCOMMAND("cmdGsWhitelistUnknownSubcommand","&cUnbekannter Subcommand &a%1&c."),
+        CMD_GS_WHITELIST_OVERLAPPING_REGIONS("cmdGsWhitelistOverlappingRegions","&cAn dieser Stelle befinden sich mehrere Grundstücke. Das geht hier nicht."),
+        GS_NOT_WHITELISTED("gsNotWhitelisted","&cDu bist auf diesem Grundstück nicht auf der Whitelist.");
 
         private final String key;
         private final String def;
@@ -212,7 +216,12 @@ public class Message {
         CMD_VOTE_VOTED_YES("cmdVoteVotedYes","&7Du hast &afür&7 eine Änderung der Spielzeit gestimmt."),
         CMD_VOTE_VOTED_NO("cmdVoteVotedNo","&7Du hast &cgegen&7 eine änderung der Spielzeit gestimmt."),
         VOTE_DECLINED("voteDeclined","&7Die Community hat sich gegen eine andere Tageszeit entschieden."),
-        VOTE_TIME_CHANGE("voteTimeChange","&7Die Zeit in &a%1&7 wurde auf &a%2&7 geändert.");
+        VOTE_TIME_CHANGE("voteTimeChange","&7Die Zeit in &a%1&7 wurde auf &a%2&7 geändert."),
+        CMD_GS_WHITELIST_ENABLED("cmdGsWhitelistEnabled","&aDie Whitelist wurde aktiviert."),
+        CMD_GS_WHITELIST_DISABLED("cmdGsWhitelistDisabled","&aDie Whitelist wurde deaktiviert."),
+        CMD_GS_WHITELIST_ADD("cmdGsWhitelistAdd","&aDer Spieler &6%1 &awurde zur Whitelist hinzugefügt."),
+        CMD_GS_WHITELIST_LIST("cmdGsWhitelistList","&aDie Whitelist: &6%1"),
+        CMD_GS_WHITELIST_REMOVE("cmdGsWhitelistRemove","&aDer Spieler &6%1 &awurde von der Whitelist entfernt.");
 
         private final String key;
         private final String def;

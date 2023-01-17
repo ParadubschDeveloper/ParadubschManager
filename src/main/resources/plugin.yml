@@ -12,6 +12,7 @@ depend:
   - LuckPerms
   - WorldEdit
   - WorldGuard
+  - WorldGuardEvents
 
 softdepend:
   - HeadDatabase
