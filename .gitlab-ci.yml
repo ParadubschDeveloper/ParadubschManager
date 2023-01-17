@@ -37,8 +37,6 @@ package-job:
   stage: package
   dependencies:
     - build-job
-  services:
-    - mysql:latest
   script:
     - "mvn package $MAVEN_CLI_OPTS -Dmaven.test.skip=true"
   artifacts:
