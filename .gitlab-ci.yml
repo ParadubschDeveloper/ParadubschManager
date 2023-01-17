@@ -24,10 +24,9 @@ build-job:
     paths:
       - target/
 
-unittest-job:
+test-job:
   stage: test
-  dependencies:
-    - build-job
+  needs: ["build-job"]
   services:
     - mysql:latest
   script:
@@ -35,8 +34,7 @@ unittest-job:
 
 package-job:
   stage: package
-  dependencies:
-    - build-job
+  needs: ["build-job"]
   script:
     - "mvn package $MAVEN_CLI_OPTS -Dmaven.test.skip=true"
   artifacts:
