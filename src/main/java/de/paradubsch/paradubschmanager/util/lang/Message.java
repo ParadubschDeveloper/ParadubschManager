@@ -90,7 +90,8 @@ public class Message {
         CMD_GS_WHITELIST_MISSING_ARGUMENT("cmdGsWhitelistMissingArgument","&cBitte verwende /gs whitelist (<on/off>|<add/remove> <Spieler>)"),
         CMD_GS_WHITELIST_UNKNOWN_SUBCOMMAND("cmdGsWhitelistUnknownSubcommand","&cUnbekannter Subcommand &a%1&c."),
         CMD_GS_WHITELIST_OVERLAPPING_REGIONS("cmdGsWhitelistOverlappingRegions","&cAn dieser Stelle befinden sich mehrere Grundstücke. Das geht hier nicht."),
-        GS_NOT_WHITELISTED("gsNotWhitelisted","&cDu bist auf diesem Grundstück nicht auf der Whitelist.");
+        GS_NOT_WHITELISTED("gsNotWhitelisted","&cDu bist auf diesem Grundstück nicht auf der Whitelist."),
+        GS_BANNED("gsBanned","&cDu bist auf diesem Grundstück gebannt.");
 
         private final String key;
         private final String def;
@@ -221,7 +222,10 @@ public class Message {
         CMD_GS_WHITELIST_DISABLED("cmdGsWhitelistDisabled","&aDie Whitelist wurde deaktiviert."),
         CMD_GS_WHITELIST_ADD("cmdGsWhitelistAdd","&aDer Spieler &6%1 &awurde zur Whitelist hinzugefügt."),
         CMD_GS_WHITELIST_LIST("cmdGsWhitelistList","&aDie Whitelist: &6%1"),
-        CMD_GS_WHITELIST_REMOVE("cmdGsWhitelistRemove","&aDer Spieler &6%1 &awurde von der Whitelist entfernt.");
+        CMD_GS_WHITELIST_REMOVE("cmdGsWhitelistRemove","&aDer Spieler &6%1 &awurde von der Whitelist entfernt."),
+        CMD_GS_BAN_SUCCESS("cmdGsBanSuccess","&aDer Spieler &6%1 &awurde erfolgreich vom Grundstück gebannt."),
+        CMD_GS_BAN_BANNED("cmdGsBanBanned","&cDu wurdest vom Grundstück gebannt."),
+        CMD_GS_PARDON_SUCCESS("cmdGsPardonSuccess","&aDer Spieler &6%1 &awurde erfolgreich vom Grundstück entbannt.");
 
         private final String key;
         private final String def;

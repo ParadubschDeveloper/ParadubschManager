@@ -150,6 +150,7 @@ public final class ParadubschManager extends CraftPlugin {
         HibernateConfigurator.addEntity(ItemData.class);
         HibernateConfigurator.addEntity(GsWhitelistEnabled.class);
         HibernateConfigurator.addEntity(GsWhitelistMember.class);
+        HibernateConfigurator.addEntity(GsBanMember.class);
     }
 
     private void registerEvents() {

@@ -34,6 +34,7 @@ import de.craftery.util.ConfigurationManager;
 import de.paradubsch.paradubschmanager.gui.window.ClaimGui;
 import de.paradubsch.paradubschmanager.gui.window.GsDeleteGui;
 import de.paradubsch.paradubschmanager.gui.window.GsTransferGui;
+import de.paradubsch.paradubschmanager.models.GsBanMember;
 import de.paradubsch.paradubschmanager.models.GsWhitelistEnabled;
 import de.paradubsch.paradubschmanager.models.GsWhitelistMember;
 import de.paradubsch.paradubschmanager.models.PlayerData;
@@ -82,16 +83,18 @@ public class GsCommand implements CommandExecutor, TabCompleter {
                 gsRemove(p, args);
                 break;
             }
-            /*case "ban": {
+            case "ban": {
+                gsBan(p, args);
                 break;
-            }*/
+            }
             case "kick": {
                 gsKick(p, args);
                 break;
-            }/*
-            case "unban": {
+            }
+            case "pardon": {
+                gsPardon(p, args);
                 break;
-            }*/
+            }
             case "whitelist": {
                 gsWhitelist(p, args);
                 break;
@@ -121,6 +124,58 @@ public class GsCommand implements CommandExecutor, TabCompleter {
         }
 
         return true;
+    }
+
+    private void gsBan(Player p, String[] args) {
+        if (args.length == 1) {
+            MessageAdapter.sendMessage(p, Message.Error.CMD_PLAYER_NOT_PROVIDED);
+            return;
+        }
+        List<ProtectedRegion> regions = getRegionsPlayerIsIn(p, true);
+        if (regions == null) return;
+        if (regions.size() != 1) {
+            Bukkit.getLogger().log(Level.WARNING, "No Support for overlapping regions yet");
+            MessageAdapter.sendMessage(p, Message.Error.CMD_GS_WHITELIST_OVERLAPPING_REGIONS);
+            return;
+        }
+        ProtectedRegion protectedRegion = regions.get(0);
+
+        PlayerData target = PlayerData.getByName(args[1]);
+        if (target == null) {
+            MessageAdapter.sendMessage(p, Message.Error.CMD_PLAYER_NEVER_ONLINE, args[1]);
+            return;
+        }
+        GsBanMember.banPlayer(protectedRegion.getId(), target.getUuid());
+        Player player = Bukkit.getPlayer(target.getUuid());
+        if (player != null) {
+            WarpCommand.warp(player, "spawn");
+            MessageAdapter.sendMessage(player, Message.Info.CMD_GS_BAN_BANNED);
+        }
+        MessageAdapter.sendMessage(p, Message.Info.CMD_GS_BAN_SUCCESS, target.getName());
+    }
+
+    private void gsPardon(Player p, String[] args) {
+        if (args.length == 1) {
+            MessageAdapter.sendMessage(p, Message.Error.CMD_PLAYER_NOT_PROVIDED);
+            return;
+        }
+        List<ProtectedRegion> regions = getRegionsPlayerIsIn(p, true);
+        if (regions == null) return;
+        if (regions.size() != 1) {
+            Bukkit.getLogger().log(Level.WARNING, "No Support for overlapping regions yet");
+            MessageAdapter.sendMessage(p, Message.Error.CMD_GS_WHITELIST_OVERLAPPING_REGIONS);
+            return;
+        }
+        ProtectedRegion protectedRegion = regions.get(0);
+
+        PlayerData target = PlayerData.getByName(args[1]);
+        if (target == null) {
+            MessageAdapter.sendMessage(p, Message.Error.CMD_PLAYER_NEVER_ONLINE, args[1]);
+            return;
+        }
+        GsBanMember.pardonPlayer(protectedRegion.getId(), target.getUuid());
+
+        MessageAdapter.sendMessage(p, Message.Info.CMD_GS_PARDON_SUCCESS, target.getName());
     }
 
     private void gsWhitelist(Player p, String[] args) {
@@ -610,9 +665,9 @@ public class GsCommand implements CommandExecutor, TabCompleter {
                 l.add("backup");
             }
             l.add("remove");
-            //l.add("ban");
+            l.add("ban");
             l.add("kick");
-            //l.add("unban");
+            l.add("pardon");
             l.add("whitelist");
             l.add("info");
             l.add("delete");

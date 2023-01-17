@@ -1,6 +1,7 @@
 package de.paradubsch.paradubschmanager.lifecycle;
 
 import de.paradubsch.paradubschmanager.ParadubschManager;
+import de.paradubsch.paradubschmanager.models.GsBanMember;
 import de.paradubsch.paradubschmanager.models.GsWhitelistEnabled;
 import de.paradubsch.paradubschmanager.models.GsWhitelistMember;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
@@ -23,6 +24,13 @@ public class GsRegionListener implements Listener {
         if (canceled) {
             event.setCancelled(true);
             MessageAdapter.sendMessage(event.getPlayer(), Message.Error.GS_NOT_WHITELISTED);
+            return;
+        }
+        canceled = !GsBanMember.canJoin(event.getRegion().getId(), event.getPlayer()) &&
+                !event.getRegion().getOwners().contains(event.getPlayer().getUniqueId());
+        if (canceled) {
+            event.setCancelled(true);
+            MessageAdapter.sendMessage(event.getPlayer(), Message.Error.GS_BANNED);
         }
     }
 }
