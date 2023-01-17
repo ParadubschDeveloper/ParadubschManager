@@ -22,32 +22,29 @@ import java.util.List;
 public class BuyhomeCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
-        if (!Expect.playerSender(sender)) {
-            MessageAdapter.sendMessage(sender, Message.Error.CMD_ONLY_FOR_PLAYERS);
-            return true;
-        }
+        if (!Expect.playerSender(sender)) return true;
+
         Player player = (Player) sender;
+        PlayerData playerData = PlayerData.getByPlayer(player);
 
-        Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
-            PlayerData playerData = PlayerData.getByPlayer(player);
-            if (args.length == 0) {
-                int price = ConfigurationManager.getInt("homePrice") * playerData.getMaxHomes();
-                MessageAdapter.sendMessage(player, Message.Info.CMD_BUYHOME, price + "");
-            } else if (args[0].equals("confirm")) {
-                int price = ConfigurationManager.getInt("homePrice") * playerData.getMaxHomes();
-                if (playerData.getMoney() < price) {
-                    MessageAdapter.sendMessage(player, Message.Error.CMD_BUYHOME_NOT_ENOUGH_MONEY);
-                    return;
-                }
-                playerData.setMoney(playerData.getMoney() - price);
-                playerData.setMaxHomes(playerData.getMaxHomes() + 1);
+        int price = ConfigurationManager.getInt("homePrice") * playerData.getMaxHomes();
 
-                List<Home> homes = Home.getByPlayer(player);
-                MessageAdapter.sendMessage(player, Message.Info.CMD_BUYHOME_SUCCESS, price + "", playerData.getMaxHomes() - homes.size() + "");
-
-                playerData.saveOrUpdate();
+        if (args.length == 0) {
+            MessageAdapter.sendMessage(player, Message.Info.CMD_BUYHOME, price + "");
+        } else if (args[0].equals("confirm")) {
+            if (playerData.getMoney() < price) {
+                MessageAdapter.sendMessage(player, Message.Error.CMD_BUYHOME_NOT_ENOUGH_MONEY);
+                return true;
             }
-        });
+            
+            playerData.setMoney(playerData.getMoney() - price);
+            playerData.setMaxHomes(playerData.getMaxHomes() + 1);
+
+            List<Home> homes = Home.getByPlayer(player);
+            MessageAdapter.sendMessage(player, Message.Info.CMD_BUYHOME_SUCCESS, price + "", playerData.getMaxHomes() - homes.size() + "");
+
+            playerData.saveOrUpdate();
+        }
         return true;
     }
 
@@ -56,7 +53,6 @@ public class BuyhomeCommand implements CommandExecutor, TabCompleter {
         List<String> l = new ArrayList<>();
         if (args.length == 1) {
             l.add("confirm");
-            return l;
         }
         return l;
     }

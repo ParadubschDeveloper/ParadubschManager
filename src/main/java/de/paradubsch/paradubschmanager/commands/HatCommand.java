@@ -20,14 +20,13 @@ import java.util.List;
 public class HatCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if(!Expect.playerSender(sender)) {
-            return true;
-        }
-        Player p = (Player) sender;
-        ItemStack headSlot = p.getInventory().getHelmet();
-        PlayerInventory inv = p.getInventory();
-        inv.setHelmet(p.getInventory().getItemInMainHand());
-        inv.clear(p.getInventory().getHeldItemSlot());
+        if(!Expect.playerSender(sender)) return true;
+        Player player = (Player) sender;
+
+        ItemStack headSlot = player.getInventory().getHelmet();
+        PlayerInventory inv = player.getInventory();
+        inv.setHelmet(player.getInventory().getItemInMainHand());
+        inv.clear(player.getInventory().getHeldItemSlot()); // I don't know if this is needed. I assume clear is not right here.
         inv.setItemInMainHand(headSlot);
         MessageAdapter.sendMessage(sender, Message.Info.CMD_HAT_USE);
         return true;

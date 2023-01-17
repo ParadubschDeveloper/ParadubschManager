@@ -23,9 +23,7 @@ import java.util.stream.Collectors;
 public class LangCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (!Expect.playerSender(sender)) {
-            return true;
-        }
+        if (!Expect.playerSender(sender)) return true;
         Player player = (Player) sender;
 
         if (Expect.argLen(0, args)) {
@@ -38,14 +36,13 @@ public class LangCommand implements CommandExecutor, TabCompleter {
             return true;
         }
 
-        Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
-            PlayerData pd = PlayerData.getByPlayer(player);
-            LanguageManager.getLanguages().stream()
-                    .filter(lang -> lang.getName().equals(args[0])).findFirst()
-                    .ifPresent(lang -> pd.setLanguage(lang.getShortName()));
-            pd.saveOrUpdate();
-            MessageAdapter.sendMessage(player, Message.Info.CMD_LANGUAGE_SET, args[0]);
-        });
+        PlayerData pd = PlayerData.getByPlayer(player);
+        LanguageManager.getLanguages().stream()
+            .filter(lang -> lang.getName().equals(args[0])).findFirst()
+            .ifPresent(lang -> pd.setLanguage(lang.getShortName()));
+
+        pd.saveOrUpdate();
+        MessageAdapter.sendMessage(player, Message.Info.CMD_LANGUAGE_SET, args[0]);
         return true;
     }
 

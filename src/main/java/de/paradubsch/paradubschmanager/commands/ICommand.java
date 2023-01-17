@@ -13,15 +13,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ICommand implements CommandExecutor, TabCompleter {
-
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (!Expect.playerSender(sender)) {
-            return true;
-        }
+        if (!Expect.playerSender(sender)) return true;
         Player player = (Player) sender;
-        GsCommand.gsInfo(player);
 
+        GsCommand.gsInfo(player);
         return true;
     }
 
