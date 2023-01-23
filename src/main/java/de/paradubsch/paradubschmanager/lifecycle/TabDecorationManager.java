@@ -112,11 +112,11 @@ public class TabDecorationManager implements Listener {
                 worldName = ParadubschManager.getInstance().getLanguageManager().getString(Message.Constant.WORLD, lang);
                 break;
             }
-            case "farmwelt": {
+            case "Farmwelt": {
                 worldName = ParadubschManager.getInstance().getLanguageManager().getString(Message.Constant.FARMWELT, lang);
                 break;
             }
-            case "eventwelt": {
+            case "EventWelt": {
                 worldName = ParadubschManager.getInstance().getLanguageManager().getString(Message.Constant.EVENTWELT, lang);
                 break;
             }
