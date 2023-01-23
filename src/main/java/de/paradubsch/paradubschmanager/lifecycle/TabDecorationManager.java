@@ -101,7 +101,7 @@ public class TabDecorationManager implements Listener {
         String worldName;
         switch (world.getName()){
             case "normal": {
-                worldName = ParadubschManager.getInstance().getLanguageManager().getString(Message.Constant.NORMAL, lang);
+                worldName = ParadubschManager.getInstance().getLanguageManager().getString(Message.Constant.SPAWN_WORLD, lang);
                 break;
             }
             case "world_nether": {
@@ -109,15 +109,15 @@ public class TabDecorationManager implements Listener {
                 break;
             }
             case "world": {
-                worldName = ParadubschManager.getInstance().getLanguageManager().getString(Message.Constant.WORLD, lang);
+                worldName = ParadubschManager.getInstance().getLanguageManager().getString(Message.Constant.BUILDING_WORLD, lang);
                 break;
             }
             case "farmwelt": {
-                worldName = ParadubschManager.getInstance().getLanguageManager().getString(Message.Constant.FARMWELT, lang);
+                worldName = ParadubschManager.getInstance().getLanguageManager().getString(Message.Constant.FARMING_WORLD, lang);
                 break;
             }
             case "eventwelt": {
-                worldName = ParadubschManager.getInstance().getLanguageManager().getString(Message.Constant.EVENTWELT, lang);
+                worldName = ParadubschManager.getInstance().getLanguageManager().getString(Message.Constant.EVENT_WORLD, lang);
                 break;
             }
             case "world_the_end": {

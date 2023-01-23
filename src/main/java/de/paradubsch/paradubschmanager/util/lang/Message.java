@@ -116,6 +116,7 @@ public class Message {
             return "error";
         }
     }
+
     public enum Info implements BaseMessageType {
         CMD_LANGUAGE_SET("cmdLanguageSet", "Du hast deine Sprache &aerfolgreich &7zu &d%1 &7geändert."),
         CMD_PREFIX_SET("cmdPrefixSet", "Du hast den Prefix von &e%1 &aerfolgreich &7zu &d%2 &7geändert."),
@@ -279,12 +280,12 @@ public class Message {
         YOU_SELL("constantYouSell", "Du verkaufst:"),
         BLANK_TRANSLATABLE("constantBlankTranslatable", "@ClickableComponent<Translatable=%1>"),
         PAGE("constantPage", "Seite %1"),
-        NORMAL("constant","&bSpawn"),
-        WORLD("constantBauwelt","&6Bauwelt"),
+        SPAWN_WORLD("constantSpawnWorld","&bSpawn"),
+        BUILDING_WORLD("constantBauwelt","&6Bauwelt"),
         WORLD_THE_END("constantEnd","&dEnd"),
-        WORLD_NETHER("constantdNether","&cNether"),
-        FARMWELT("constantFarmwelt","&aFarmwelt"),
-        EVENTWELT("constantEventwelt","&aEventwelt"),
+        WORLD_NETHER("constantNether","&cNether"),
+        FARMING_WORLD("constantFarmwelt","&aFarmwelt"),
+        EVENT_WORLD("constantEventwelt","&aEventwelt"),
         NIGHT("constantNight","Nacht");
 
 
