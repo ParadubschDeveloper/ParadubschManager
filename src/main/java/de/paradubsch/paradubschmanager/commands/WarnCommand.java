@@ -3,7 +3,6 @@ package de.paradubsch.paradubschmanager.commands;
 import de.craftery.util.lang.Language;
 import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.models.PlayerData;
-import de.paradubsch.paradubschmanager.models.PunishmentHolder;
 import de.paradubsch.paradubschmanager.models.WarnPunishment;
 import de.paradubsch.paradubschmanager.util.Expect;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
@@ -37,7 +36,6 @@ public class WarnCommand implements CommandExecutor, TabCompleter {
         }
 
         PlayerData target = PlayerData.getByPlayer(targetPlayer);
-        PunishmentHolder ph = PunishmentHolder.getByPlayerDataOrCreate(target);
 
         StringBuilder warnReasonBuilder = new StringBuilder();
         for (int i = 1; i < args.length; i++) {
@@ -50,12 +48,10 @@ public class WarnCommand implements CommandExecutor, TabCompleter {
         }
 
         WarnPunishment warn = new WarnPunishment();
-        warn.setHolderRef(ph);
+        warn.setHolderRef(target.getUuid());
         warn.setReason(warnReason);
         if (sender instanceof Player) {
-            PlayerData giver = PlayerData.getByPlayer((Player) sender);
-            warn.setGivenBy(giver);
-
+            warn.setGivenBy(((Player) sender).getUniqueId().toString());
         }
         long id = (long) warn.save();
 

@@ -41,9 +41,8 @@ public class SaveRequest extends BaseDatabaseEntity<SaveRequest, Integer> implem
     @Column(name = "loc_world", columnDefinition = "VARCHAR(128)")
     private String world;
 
-    // TODO: Delete this relation, because it is not working in our Hibernate usecase
-    @OneToOne(fetch = FetchType.EAGER)
-    private PlayerData playerRef;
+    @Column(name = "playerRef_uuid", columnDefinition = "VARCHAR(36)")
+    private String playerRef;
 
     public static SaveRequest getById(Serializable id) {
         return BaseDatabaseEntity.getById(SaveRequest.class, id);
@@ -51,6 +50,10 @@ public class SaveRequest extends BaseDatabaseEntity<SaveRequest, Integer> implem
 
     public static List<SaveRequest> getAll() {
         return BaseDatabaseEntity.getAll(SaveRequest.class);
+    }
+
+    public String getRefName() {
+        return PlayerData.getById(playerRef).getName();
     }
 
     public static SaveRequest getByPlayer(Player p) {

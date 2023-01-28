@@ -16,8 +16,8 @@ public class SaverequestPlayerInfoButton extends GuiItem {
     @Override
     public void build() {
         SaveRequest saveRequest = (SaveRequest) this.windowArgs.get(1);
-        this.setItemPlayerHead(saveRequest.getPlayerRef().getName());
+        this.setItemPlayerHead(saveRequest.getRefName());
         this.setDisplayName(Message.Gui.REQUEST_BY);
-        this.addLore(Component.text("§a"+saveRequest.getPlayerRef().getName()));
+        this.addLore(Component.text("§a"+saveRequest.getRefName()));
     }
 }

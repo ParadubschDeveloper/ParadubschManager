@@ -6,7 +6,6 @@ import de.craftery.util.HibernateConfigurator;
 import lombok.Cleanup;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.ToString;
 import org.bukkit.entity.Player;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -23,8 +22,6 @@ import javax.persistence.criteria.Root;
 import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
-
-import static org.hibernate.annotations.CascadeType.*;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -64,13 +61,6 @@ public class PlayerData extends BaseDatabaseEntity<PlayerData, String> {
 
     @Column(name = "active_save_id")
     private Integer openSaveRequest;
-
-    // TODO: Delete this relation, because it is not working in our Hibernate usecase
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "playerRef")
-    @Cascade(value = SAVE_UPDATE)
-    private PunishmentHolder punishmentHolder;
 
     public PlayerData () {}
 

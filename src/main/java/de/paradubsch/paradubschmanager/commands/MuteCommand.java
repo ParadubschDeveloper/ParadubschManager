@@ -93,16 +93,15 @@ public class MuteCommand implements TabCompleter, CommandExecutor {
             mute.setExpiration(muteExpiration);
             mute.setReason(muteReason);
 
-            if (muteExpiration.getTime() > System.currentTimeMillis() + 915170400000L) {
+            if (muteExpiration.getTime() > System.currentTimeMillis() + 852055200000L) {
                 mute.setPermanent(true);
                 ph.setPermaMuted(true);
             }
 
             if (sender instanceof Player) {
-                PlayerData giver = PlayerData.getByPlayer((Player) sender);
-                mute.setGivenBy(giver);
+                mute.setGivenBy(((Player) sender).getUniqueId().toString());
             }
-            mute.setHolderRef(ph);
+            mute.setHolderRef(target.getUuid());
 
             ph.saveOrUpdate();
             long id = (long) mute.save();
@@ -165,12 +164,11 @@ public class MuteCommand implements TabCompleter, CommandExecutor {
             ph.saveOrUpdate();
 
             PunishmentUpdate update = new PunishmentUpdate();
-            update.setPunishmentRef(mute);
+            update.setPunishmentRef(mute.getId());
             update.setReason(unmuteReason);
             update.setExpiration(Timestamp.valueOf(LocalDateTime.ofInstant(Instant.now(), ZoneId.systemDefault())));
             if (sender instanceof Player) {
-                PlayerData giver = PlayerData.getByPlayer((Player) sender);
-                update.setGivenBy(giver);
+                update.setGivenBy(((Player) sender).getUniqueId().toString());
             }
             update.save();
 
@@ -221,7 +219,7 @@ public class MuteCommand implements TabCompleter, CommandExecutor {
             MutePunishment mute = MutePunishment.getByIdO(ph.getActiveMuteId());
             if (mute == null) return;
 
-            if (muteExpiration.getTime() > System.currentTimeMillis() + 915170400000L) {
+            if (muteExpiration.getTime() > System.currentTimeMillis() + 852055200000L) {
                 mute.setPermanent(true);
                 ph.setPermaMuted(true);
             } else {
@@ -234,12 +232,11 @@ public class MuteCommand implements TabCompleter, CommandExecutor {
             ph.saveOrUpdate();
 
             PunishmentUpdate update = new PunishmentUpdate();
-            update.setPunishmentRef(mute);
+            update.setPunishmentRef(mute.getId());
             update.setReason(muteReason);
             update.setExpiration(muteExpiration);
             if (sender instanceof Player) {
-                PlayerData giver = PlayerData.getByPlayer((Player) sender);
-                update.setGivenBy(giver);
+                update.setGivenBy(((Player) sender).getUniqueId().toString());
             }
             update.save();
 

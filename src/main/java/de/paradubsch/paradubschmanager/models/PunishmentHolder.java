@@ -3,18 +3,13 @@ package de.paradubsch.paradubschmanager.models;
 import de.craftery.util.BaseDatabaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.ToString;
 import org.bukkit.entity.Player;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.List;
-
-import static org.hibernate.annotations.CascadeType.SAVE_UPDATE;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -26,12 +21,6 @@ public class PunishmentHolder extends BaseDatabaseEntity<PunishmentHolder, Strin
     @Id
     @Column(name = "uuid", columnDefinition = "VARCHAR(36)")
     private String uuid;
-
-    // TODO: Delete this relation, because it is not working in our Hibernate usecase
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    @OneToOne
-    private PlayerData playerRef;
 
     @Column(name = "active_ban", columnDefinition = "BOOLEAN DEFAULT FALSE")
     private boolean activeBan = false;
@@ -63,27 +52,6 @@ public class PunishmentHolder extends BaseDatabaseEntity<PunishmentHolder, Strin
     @Column(name = "is_perma_muted", columnDefinition = "BOOLEAN DEFAULT FALSE")
     private boolean isPermaMuted = false;
 
-    // TODO: Delete this relation, because it is not working in our Hibernate usecase
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    @OneToMany(mappedBy = "holderRef", fetch = FetchType.LAZY)
-    @Cascade(value = SAVE_UPDATE)
-    private List<BanPunishment> bans;
-
-    // TODO: Delete this relation, because it is not working in our Hibernate usecase
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    @OneToMany(mappedBy = "holderRef", fetch = FetchType.LAZY)
-    @Cascade(value = SAVE_UPDATE)
-    private List<MutePunishment> mutes;
-
-    // TODO: Delete this relation, because it is not working in our Hibernate usecase
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    @OneToMany(mappedBy = "holderRef", fetch = FetchType.LAZY)
-    @Cascade(value = SAVE_UPDATE)
-    private List<WarnPunishment> warns;
-
     public static PunishmentHolder getById(Serializable id) {
         return BaseDatabaseEntity.getById(PunishmentHolder.class, id);
     }
@@ -93,7 +61,6 @@ public class PunishmentHolder extends BaseDatabaseEntity<PunishmentHolder, Strin
         if (holder == null) {
             holder = new PunishmentHolder();
             holder.setUuid(player.getUniqueId().toString());
-            holder.setPlayerRef(PlayerData.getById(player.getUniqueId().toString()));
             holder.save();
         }
         return holder;
@@ -104,7 +71,6 @@ public class PunishmentHolder extends BaseDatabaseEntity<PunishmentHolder, Strin
         if (holder == null) {
             holder = new PunishmentHolder();
             holder.setUuid(playerData.getUuid());
-            holder.setPlayerRef(playerData);
             holder.save();
         }
         return holder;

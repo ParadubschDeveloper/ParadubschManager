@@ -103,10 +103,9 @@ public class BanCommand implements TabCompleter, CommandExecutor {
             }
 
             if (sender instanceof Player) {
-                PlayerData giver = PlayerData.getByPlayer((Player) sender);
-                ban.setGivenBy(giver);
+                ban.setGivenBy(((Player) sender).getUniqueId().toString());
             }
-            ban.setHolderRef(ph);
+            ban.setHolderRef(target.getUuid());
 
             ph.saveOrUpdate();
             long id = (long) ban.save();
@@ -172,12 +171,11 @@ public class BanCommand implements TabCompleter, CommandExecutor {
             ph.saveOrUpdate();
 
             PunishmentUpdate update = new PunishmentUpdate();
-            update.setPunishmentRef(ban);
+            update.setPunishmentRef(ban.getId());
             update.setReason(unbanReason);
             update.setExpiration(Timestamp.valueOf(LocalDateTime.ofInstant(Instant.now(), ZoneId.systemDefault())));
             if (sender instanceof Player) {
-                PlayerData giver = PlayerData.getByPlayer((Player) sender);
-                update.setGivenBy(giver);
+                update.setGivenBy(((Player) sender).getUniqueId().toString());
             }
             update.save();
 
@@ -241,12 +239,11 @@ public class BanCommand implements TabCompleter, CommandExecutor {
             ph.saveOrUpdate();
 
             PunishmentUpdate update = new PunishmentUpdate();
-            update.setPunishmentRef(ban);
+            update.setPunishmentRef(ban.getId());
             update.setReason(banReason);
             update.setExpiration(banExpiration);
             if (sender instanceof Player) {
-                PlayerData giver = PlayerData.getByPlayer((Player) sender);
-                update.setGivenBy(giver);
+                update.setGivenBy(((Player) sender).getUniqueId().toString());
             }
             update.save();
 

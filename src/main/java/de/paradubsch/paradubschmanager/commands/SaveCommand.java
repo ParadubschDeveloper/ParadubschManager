@@ -129,7 +129,7 @@ public class SaveCommand implements CommandExecutor, TabCompleter {
             zDiff++;
 
             String timestamp = DateTimeFormatter.ofPattern("yyyyMMdd-HHmmss").format(LocalDateTime.now());
-            String plotName = "plot_" + saveRequest.getPlayerRef().getName() + "_" + p.getName() + "_" + xDiff + "x" + zDiff + "_" + timestamp;
+            String plotName = "plot_" + saveRequest.getRefName() + "_" + p.getName() + "_" + xDiff + "x" + zDiff + "_" + timestamp;
             ProtectedCuboidRegion region1 = new ProtectedCuboidRegion(plotName, BlockVector3.at(minx, -64, minz), BlockVector3.at(maxx, 319, maxz));
             List<ProtectedRegion> collidingRegions = region1.getIntersectingRegions(manager.getRegions().values());
 
@@ -139,7 +139,7 @@ public class SaveCommand implements CommandExecutor, TabCompleter {
             }
 
             DefaultDomain owners = new DefaultDomain();
-            owners.addPlayer(UUID.fromString(saveRequest.getPlayerRef().getUuid()));
+            owners.addPlayer(UUID.fromString(saveRequest.getPlayerRef()));
             region1.setOwners(owners);
 
             GuiManager.entryGui(SaveConfirmGui.class, p, region1, saveRequest);

@@ -25,9 +25,10 @@ public class GsClaimButton extends GuiItem {
         saveRequest.setY(p.getLocation().getBlockY());
         saveRequest.setZ((long) p.getLocation().getZ());
         saveRequest.setWorld(p.getLocation().getWorld().getName());
-        saveRequest.setPlayerRef(pd);
-        pd.setOpenSaveRequest(saveRequest.getId());
+        saveRequest.setPlayerRef(p.getUniqueId().toString());
         Integer saveId = (Integer) saveRequest.save();
+        pd.setOpenSaveRequest(saveId);
+
         pd.saveOrUpdate();
 
         for (Player player : Bukkit.getOnlinePlayers()) {
