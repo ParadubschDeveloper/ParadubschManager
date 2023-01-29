@@ -35,7 +35,7 @@ public class PlayerJoinPrecedure implements Listener {
 
         if (!ph.isActiveBan()) return;
 
-        if (ph.getActiveBanExpiration().getTime() > Timestamp.from(Instant.now()).getTime()) {
+        if (ph.getActiveBanExpiration() != null && ph.getActiveBanExpiration().getTime() > Timestamp.from(Instant.now()).getTime()) {
             PlayerData target = PlayerData.getByPlayer(player);
             Language lang = Language.getLanguageByShortName(target.getLanguage());
             String expirationString = TimeCalculations.timeStampToExpiration(ph.getActiveBanExpiration(), lang);

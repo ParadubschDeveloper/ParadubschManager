@@ -28,7 +28,8 @@ public class ChatMessageListener implements Listener {
 
         PunishmentHolder ph = PunishmentHolder.getByPlayerDataOrCreate(pd);
 
-        if (ph.getActiveMuteExpiration().getTime() > Timestamp.from(Instant.now()).getTime()) {
+        if (ph.getActiveMuteExpiration() != null &&
+                ph.getActiveMuteExpiration().getTime() > Timestamp.from(Instant.now()).getTime()) {
             if (ph.isActiveMute() && ph.isPermaMuted()) {
                 MessageAdapter.sendMessage(e.getPlayer(), Message.Info.PERMA_MUTED);
                 return;
