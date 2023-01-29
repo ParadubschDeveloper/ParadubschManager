@@ -146,7 +146,7 @@ public class GsCommand implements CommandExecutor, TabCompleter {
             return;
         }
         GsBanMember.banPlayer(protectedRegion.getId(), target.getUuid());
-        Player player = Bukkit.getPlayer(target.getUuid());
+        Player player = Bukkit.getPlayer(target.getName());
         if (player != null) {
             WarpCommand.warp(player, "spawn");
             MessageAdapter.sendMessage(player, Message.Info.CMD_GS_BAN_BANNED);
