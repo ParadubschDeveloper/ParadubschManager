@@ -306,7 +306,7 @@ commands:
     usage: '/nightvision'
   anvil:
     description: Öffnet den mobilen Amboss.
-    aliases: [amobss]
+    aliases: [amboss]
     permission: paradubsch.anvil
     permission-message: 'Du benötigst die Berechtigung paradubsch.anivl um deinen mobilen Amboss zu öffnen.'
     usage: '/anvil'
