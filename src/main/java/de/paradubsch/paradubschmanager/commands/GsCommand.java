@@ -673,6 +673,26 @@ public class GsCommand implements CommandExecutor, TabCompleter {
         }
     }
 
+    private static List<String> whitelistPlayersForPlayer(Player p) {
+        List<String> l = new ArrayList<>();
+        List<ProtectedRegion> regionList = getRegionsPlayerIsIn(p, false);
+        if (regionList == null) return l;
+        for (ProtectedRegion region : regionList) {
+            l.addAll(GsWhitelistMember.getPlayers(region.getId()));
+        }
+        return l;
+    }
+
+    private static List<String> bannedPlayersForPlayer(Player p) {
+        List<String> l = new ArrayList<>();
+        List<ProtectedRegion> regionList = getRegionsPlayerIsIn(p, false);
+        if (regionList == null) return l;
+        for (ProtectedRegion region : regionList) {
+            l.addAll(GsBanMember.getPlayers(region.getId()));
+        }
+        return l;
+    }
+
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         List<String> l = new ArrayList<>();
@@ -694,6 +714,15 @@ public class GsCommand implements CommandExecutor, TabCompleter {
             //l.add("flags");
             return l;
         }
+
+        if (args.length == 3 && args[1].equals("remove") && args[0].equals("whitelist")) {
+            return whitelistPlayersForPlayer((Player) sender);
+        }
+
+        if (args.length == 2 && args[0].equals("pardon")) {
+            return bannedPlayersForPlayer((Player) sender);
+        }
+
         if (args.length == 2 && args[0].equals("whitelist")) {
             l.add("on");
             l.add("off");
