@@ -228,7 +228,8 @@ public class Message {
         CMD_GS_BAN_BANNED("cmdGsBanBanned","&cDu wurdest vom Grundstück gebannt."),
         CMD_GS_PARDON_SUCCESS("cmdGsPardonSuccess","&aDer Spieler &6%1 &awurde erfolgreich vom Grundstück entbannt."),
         GS_INFO_REGION_WHITELIST_ENABLED("gsInfoRegionWhitelistEnabled","&7Die Whitelist ist &aaktiviert&7."),
-        GS_INFO_REGION_WHITELIST_MEMBERS("gsInfoRegionWhitelistMembers","&7Whitelist Mitglieder: &6%1");
+        GS_INFO_REGION_WHITELIST_MEMBERS("gsInfoRegionWhitelistMembers","&7Whitelist Mitglieder: &6%1"),
+        GS_INFO_REGION_BANNED_PLAYERS("gsInfoRegionBannedPlayers","&7Gebannte Spieler: &6%1");
 
         private final String key;
         private final String def;

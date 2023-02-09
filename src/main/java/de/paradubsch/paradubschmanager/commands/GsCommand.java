@@ -624,6 +624,11 @@ public class GsCommand implements CommandExecutor, TabCompleter {
                     String whitelistMembers = StringUtils.join(GsWhitelistMember.getPlayers(region.getId()), ", ");
                     MessageAdapter.sendMessage(p, Message.Info.GS_INFO_REGION_WHITELIST_MEMBERS, whitelistMembers);
                 }
+
+                List<String> bannedPlayers = GsBanMember.getPlayers(region.getId());
+                if (bannedPlayers.size() > 0) {
+                    MessageAdapter.sendMessage(p, Message.Info.GS_INFO_REGION_BANNED_PLAYERS, StringUtils.join(bannedPlayers, ", "));
+                }
             }
         });
     }
