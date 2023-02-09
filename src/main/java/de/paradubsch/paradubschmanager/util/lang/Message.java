@@ -91,7 +91,8 @@ public class Message {
         CMD_GS_WHITELIST_UNKNOWN_SUBCOMMAND("cmdGsWhitelistUnknownSubcommand","&cUnbekannter Subcommand &a%1&c."),
         CMD_GS_WHITELIST_OVERLAPPING_REGIONS("cmdGsWhitelistOverlappingRegions","&cAn dieser Stelle befinden sich mehrere Grundstücke. Das geht hier nicht."),
         GS_NOT_WHITELISTED("gsNotWhitelisted","&cDu bist auf diesem Grundstück nicht auf der Whitelist."),
-        GS_BANNED("gsBanned","&cDu bist auf diesem Grundstück gebannt.");
+        GS_BANNED("gsBanned","&cDu bist auf diesem Grundstück gebannt."),
+        CMD_KICK_PLAYER_CANNOT_BE_KICKED("cmdKickPlayerCannotBeKicked","&cDer Spieler &a%1 &ckann nicht gekickt werden.");
 
         private final String key;
         private final String def;

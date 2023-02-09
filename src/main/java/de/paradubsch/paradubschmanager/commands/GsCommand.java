@@ -148,7 +148,8 @@ public class GsCommand implements CommandExecutor, TabCompleter {
         }
         GsBanMember.banPlayer(protectedRegion.getId(), target.getUuid());
         Player player = Bukkit.getPlayer(target.getName());
-        if (player != null) {
+
+        if (player != null && !player.hasPermission("paradubsch.gs.bypass")) {
             WarpCommand.warp(player, "spawn");
             MessageAdapter.sendMessage(player, Message.Info.CMD_GS_BAN_BANNED);
         }
@@ -641,6 +642,11 @@ public class GsCommand implements CommandExecutor, TabCompleter {
         Player target = Bukkit.getPlayer(args[1]);
         if (target == null) {
             MessageAdapter.sendMessage(player, Message.Error.CMD_PLAYER_NOT_ONLINE, args[1]);
+            return;
+        }
+
+        if (target.hasPermission("paradubsch.gs.bypass")) {
+            MessageAdapter.sendMessage(player, Message.Error.CMD_KICK_PLAYER_CANNOT_BE_KICKED, target.getName());
             return;
         }
 

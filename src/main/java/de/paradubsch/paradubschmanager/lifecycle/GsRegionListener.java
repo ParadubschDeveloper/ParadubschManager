@@ -18,6 +18,8 @@ public class GsRegionListener implements Listener {
     @EventHandler
     public void onRegionEntered(RegionEnteredEvent event) {
         if (event.getPlayer() == null) return;
+        if (event.getPlayer().hasPermission("paradubsch.gs.bypass")) return;
+
         boolean canceled = GsWhitelistEnabled.check(event.getRegion().getId()) &&
                 !GsWhitelistMember.canJoin(event.getRegion().getId(), event.getPlayer()) &&
                 !event.getRegion().getOwners().contains(event.getPlayer().getUniqueId());

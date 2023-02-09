@@ -553,3 +553,6 @@ permissions:
   paradubsch.timevote.createvote:
     description: "Erlaubt Zugriff auf den /votezeit create Befehl."
     default: false
+  paradubsch.gs.bypass:
+    description: "Erlaubt nicht von gs kick/whitelist/ban betroffen zu sein."
+    default: false
