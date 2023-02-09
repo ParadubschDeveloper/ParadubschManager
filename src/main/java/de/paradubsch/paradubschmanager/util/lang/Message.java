@@ -226,7 +226,9 @@ public class Message {
         CMD_GS_WHITELIST_REMOVE("cmdGsWhitelistRemove","&aDer Spieler &6%1 &awurde von der Whitelist entfernt."),
         CMD_GS_BAN_SUCCESS("cmdGsBanSuccess","&aDer Spieler &6%1 &awurde erfolgreich vom Grundstück gebannt."),
         CMD_GS_BAN_BANNED("cmdGsBanBanned","&cDu wurdest vom Grundstück gebannt."),
-        CMD_GS_PARDON_SUCCESS("cmdGsPardonSuccess","&aDer Spieler &6%1 &awurde erfolgreich vom Grundstück entbannt.");
+        CMD_GS_PARDON_SUCCESS("cmdGsPardonSuccess","&aDer Spieler &6%1 &awurde erfolgreich vom Grundstück entbannt."),
+        GS_INFO_REGION_WHITELIST_ENABLED("gsInfoRegionWhitelistEnabled","&7Die Whitelist ist &aaktiviert&7."),
+        GS_INFO_REGION_WHITELIST_MEMBERS("gsInfoRegionWhitelistMembers","&7Whitelist Mitglieder: &6%1");
 
         private final String key;
         private final String def;

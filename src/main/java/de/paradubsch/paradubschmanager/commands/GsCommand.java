@@ -42,6 +42,7 @@ import de.paradubsch.paradubschmanager.util.Expect;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.TimeCalculations;
 import de.paradubsch.paradubschmanager.util.lang.Message;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
@@ -617,6 +618,12 @@ public class GsCommand implements CommandExecutor, TabCompleter {
                 MessageAdapter.sendMessage(p, Message.Info.GS_INFO_REGION_NAME, region.getId());
                 MessageAdapter.sendMessage(p, Message.Info.GS_INFO_REGION_OWNERS, owners.toString());
                 MessageAdapter.sendMessage(p, Message.Info.GS_INFO_REGION_MEMBERS, members.toString());
+
+                if (GsWhitelistEnabled.check(region.getId())) {
+                    MessageAdapter.sendMessage(p, Message.Info.GS_INFO_REGION_WHITELIST_ENABLED);
+                    String whitelistMembers = StringUtils.join(GsWhitelistMember.getPlayers(region.getId()), ", ");
+                    MessageAdapter.sendMessage(p, Message.Info.GS_INFO_REGION_WHITELIST_MEMBERS, whitelistMembers);
+                }
             }
         });
     }
