@@ -2,6 +2,7 @@ package de.paradubsch.paradubschmanager.models;
 
 import de.craftery.util.BaseDatabaseEntity;
 import de.craftery.util.HibernateConfigurator;
+import de.craftery.util.ListCache;
 import lombok.Cleanup;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -37,11 +38,14 @@ public class GsWhitelistMember extends BaseDatabaseEntity<GsWhitelistMember, Str
         return this.id;
     }
 
+    private static final ListCache<String, String> cache = new ListCache<>();
+
     public static boolean canJoin(String gsId, Player player) {
         return BaseDatabaseEntity.getById(GsWhitelistMember.class, gsId + "_" + player.getUniqueId()) != null;
     }
 
     public static void addPlayer(String gsId, String uuid) {
+        cache.invalidate(gsId);
         GsWhitelistMember entity = BaseDatabaseEntity.getById(GsWhitelistMember.class, gsId + "_" + uuid);
         if (entity != null) return;
         entity = new GsWhitelistMember();
@@ -52,19 +56,26 @@ public class GsWhitelistMember extends BaseDatabaseEntity<GsWhitelistMember, Str
     }
 
     public static void removePlayer(String gsId, String uuid) {
+        cache.invalidate(gsId);
         GsWhitelistMember entity = BaseDatabaseEntity.getById(GsWhitelistMember.class, gsId + "_" + uuid);
         if (entity == null) return;
         entity.delete();
     }
 
     public static List<String> getPlayers(String gsId) {
+        if (cache.isValid(gsId)) {
+            return cache.get(gsId);
+        }
+
         try {
             @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
 
             List<GsWhitelistMember> res = session.createQuery("FROM GsWhitelistMember where gsId = :gsId", GsWhitelistMember.class)
                     .setParameter("gsId", gsId)
                     .getResultList();
-            return res.stream().map(member -> PlayerData.getById(member.uuid).getName()).collect(Collectors.toList());
+            List<String> names = res.stream().map(member -> PlayerData.getById(member.uuid).getName()).collect(Collectors.toList());
+            cache.cache(gsId, names);
+            return names;
         } catch (NoResultException e) {
             return new ArrayList<>();
         } catch (Exception e) {
