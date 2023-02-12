@@ -1,17 +1,20 @@
 package de.craftery.util.gui;
 
+import de.craftery.CraftPlugin;
+import de.craftery.InternalMessages;
+import de.craftery.util.lang.Language;
+import de.craftery.util.lang.BaseMessageType;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
-import de.paradubsch.paradubschmanager.util.lang.BaseMessageType;
-import de.paradubsch.paradubschmanager.util.lang.Language;
-import de.paradubsch.paradubschmanager.util.lang.Message;
 import lombok.Getter;
 import lombok.Setter;
 import net.kyori.adventure.text.Component;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.jetbrains.annotations.NotNull;
+import org.bukkit.inventory.meta.SkullMeta;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -54,10 +57,18 @@ public abstract class GuiItem {
 
     public void setItemHead(String headId) {
         try {
-            this.itemStack = GuiManager.getHeadDatabaseAPI().getItemHead(headId);
+            this.itemStack = CraftPlugin.getInstance().getHeadDatabase().getItemHead(headId);
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void setItemPlayerHead(String playerName) {
+        ItemStack skull = new ItemStack(Material.PLAYER_HEAD, 1);
+        SkullMeta meta = (SkullMeta) skull.getItemMeta();
+        meta.setOwningPlayer(Bukkit.getOfflinePlayer(playerName));
+        skull.setItemMeta(meta);
+        this.itemStack = skull;
     }
 
     public void setItemMaterial(Material mat) {
@@ -77,7 +88,7 @@ public abstract class GuiItem {
     }
 
     public void setDisplayName(BaseMessageType displayNameTemplate, String... args) {
-        Component displayName = GuiManager.getLanguageManager().get(displayNameTemplate, lang, args);
+        Component displayName = CraftPlugin.getInstance().getLanguageManager().get(displayNameTemplate, lang, args);
         this.setDisplayName(displayName);
     }
 
@@ -104,7 +115,7 @@ public abstract class GuiItem {
     }
 
     public void addLore(BaseMessageType loreTemplate, String... args) {
-        Component displayName = GuiManager.getLanguageManager().get(loreTemplate, lang, args);
+        Component displayName = CraftPlugin.getInstance().getLanguageManager().get(loreTemplate, lang, args);
         this.addLore(displayName);
     }
 
@@ -135,7 +146,7 @@ public abstract class GuiItem {
         String prompt = "";
         switch (type) {
             case INTEGER:
-                prompt = GuiManager.getLanguageManager().getString(Message.Constant.INSERT_NUMBER, MessageAdapter.getSenderLang(player));
+                prompt = CraftPlugin.getInstance().getLanguageManager().getString(InternalMessages.INSERT_NUMBER, MessageAdapter.getSenderLang(player));
                 break;
         }
         GuiManager.prompt(parent, player, identifier, "^^^^^^^^^^", prompt, "");
@@ -151,8 +162,15 @@ public abstract class GuiItem {
     /**
      * A Key-Value Store that is persisted while the player is in the GUI.
      */
-    public @NotNull KVStore getKvStore() {
-        return new KVStore(player);
+    public KVStore getKvStore(Player player) {
+        KVStore store = GuiManager.getKvStores().get(player);
+        if (store == null)
+            GuiManager.getKvStores().put(player, store = new KVStore(player));
+        return store;
+    }
+
+    public KVStore getKvStore() {
+        return getKvStore(this.player);
     }
 
     @Override
@@ -160,6 +178,7 @@ public abstract class GuiItem {
         return this.getIdentifier();
     }
 
+    public void onClick(Player p, InventoryClickEvent event) {}
     public abstract void onClick(Player p);
     public abstract void build();
 }

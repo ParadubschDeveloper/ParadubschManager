@@ -3,7 +3,6 @@ package de.paradubsch.paradubschmanager.commands;
 import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.models.Home;
 import de.paradubsch.paradubschmanager.util.Expect;
-import de.paradubsch.paradubschmanager.util.Hibernate;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 import org.bukkit.Bukkit;
@@ -17,7 +16,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 public class ViewhomeCommand implements CommandExecutor, TabCompleter {
     @Override
@@ -34,7 +32,7 @@ public class ViewhomeCommand implements CommandExecutor, TabCompleter {
         }
 
         Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
-           List<Home> homes = Hibernate.getHomes(player);
+           List<Home> homes = Home.getByPlayer(player);
             if (homes.stream().anyMatch(home -> home.getName().equals(args[0]))) {
                 Home home = homes.stream().filter(home1 -> home1.getName().equals(args[0])).findFirst().get();
                 MessageAdapter.sendMessage(player, Message.Info.CMD_VIEWHOME, home.getName());

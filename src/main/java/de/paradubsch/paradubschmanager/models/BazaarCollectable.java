@@ -1,12 +1,12 @@
 package de.paradubsch.paradubschmanager.models;
 
-import de.paradubsch.paradubschmanager.config.HibernateConfigurator;
+import de.craftery.util.BaseDatabaseEntity;
+import de.craftery.util.HibernateConfigurator;
 import lombok.Cleanup;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.bukkit.Material;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 

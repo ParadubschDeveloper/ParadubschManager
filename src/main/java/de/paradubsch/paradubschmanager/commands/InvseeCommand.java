@@ -6,7 +6,6 @@ import de.paradubsch.paradubschmanager.util.lang.Message;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -19,6 +18,8 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public class InvseeCommand implements CommandExecutor, TabCompleter {
+    public static final Component INVSEE_SECURED_TITLE = Component.text("Player Inventory").color(NamedTextColor.DARK_GRAY);
+    
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (!Expect.playerSender(sender)) return true;
@@ -50,8 +51,6 @@ public class InvseeCommand implements CommandExecutor, TabCompleter {
 
         return true;
     }
-
-    public static final Component INVSEE_SECURED_TITLE = Component.text("Player Inventory").color(NamedTextColor.DARK_GRAY);
 
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {

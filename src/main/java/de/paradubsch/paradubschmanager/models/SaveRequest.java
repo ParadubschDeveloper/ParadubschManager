@@ -1,7 +1,13 @@
 package de.paradubsch.paradubschmanager.models;
 
+import de.craftery.util.BaseDatabaseEntity;
+import de.craftery.util.HibernateConfigurator;
+import lombok.Cleanup;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.bukkit.entity.Player;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -35,8 +41,8 @@ public class SaveRequest extends BaseDatabaseEntity<SaveRequest, Integer> implem
     @Column(name = "loc_world", columnDefinition = "VARCHAR(128)")
     private String world;
 
-    @OneToOne(fetch = FetchType.EAGER)
-    private PlayerData playerRef;
+    @Column(name = "playerRef_uuid", columnDefinition = "VARCHAR(36)")
+    private String playerRef;
 
     public static SaveRequest getById(Serializable id) {
         return BaseDatabaseEntity.getById(SaveRequest.class, id);
@@ -44,6 +50,31 @@ public class SaveRequest extends BaseDatabaseEntity<SaveRequest, Integer> implem
 
     public static List<SaveRequest> getAll() {
         return BaseDatabaseEntity.getAll(SaveRequest.class);
+    }
+
+    public String getRefName() {
+        return PlayerData.getById(playerRef).getName();
+    }
+
+    public static SaveRequest getByPlayer(Player p) {
+        Transaction transaction = null;
+        try {
+            @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
+
+            transaction = session.beginTransaction();
+
+            PlayerData playerData = PlayerData.getByPlayer(p);
+            SaveRequest saveRequest = SaveRequest.getById(playerData.getOpenSaveRequest());
+            transaction.commit();
+            return saveRequest;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            return null;
+        }
     }
 
     @Override

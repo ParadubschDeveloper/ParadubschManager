@@ -5,7 +5,7 @@ import de.paradubsch.paradubschmanager.gui.items.BackButton;
 import de.paradubsch.paradubschmanager.gui.items.BazaarClaimCollectableButton;
 import de.paradubsch.paradubschmanager.gui.items.CancelButton;
 import de.paradubsch.paradubschmanager.models.BazaarCollectable;
-import de.paradubsch.paradubschmanager.util.lang.Language;
+import de.craftery.util.lang.Language;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 
 import java.util.List;

@@ -4,7 +4,7 @@ import de.craftery.util.gui.BaseGui;
 import de.paradubsch.paradubschmanager.gui.items.CancelButton;
 import de.paradubsch.paradubschmanager.gui.items.PlaceholderButton;
 import de.paradubsch.paradubschmanager.gui.items.RtpButton;
-import de.paradubsch.paradubschmanager.util.lang.Language;
+import de.craftery.util.lang.Language;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 import org.bukkit.Material;
 

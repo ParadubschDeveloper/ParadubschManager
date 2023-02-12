@@ -12,7 +12,6 @@ import de.craftery.util.gui.GuiManager;
 import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.models.PlayerData;
 import de.paradubsch.paradubschmanager.util.Expect;
-import de.paradubsch.paradubschmanager.util.Hibernate;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 import org.bukkit.command.Command;
@@ -103,7 +102,7 @@ public class RunCommand implements CommandExecutor, TabCompleter {
         String player = args[2];
         long playtime = Long.parseLong(args[3]);
 
-        PlayerData pd = Hibernate.getPlayerData(player);
+        PlayerData pd = PlayerData.getByName(player);
         if (pd != null) {
             pd.setPlaytime(playtime);
             pd.saveOrUpdate();

@@ -23,7 +23,7 @@ public class SaveRequestsCommand implements CommandExecutor, TabCompleter {
             return true;
         }
         for (SaveRequest request : requests) {
-            MessageAdapter.sendMessage(sender, Message.Info.CMD_SAVE_REQUESTS_REQUEST, request.getId() + "", request.getPlayerRef().getName(), request.getWorld());
+            MessageAdapter.sendMessage(sender, Message.Info.CMD_SAVE_REQUESTS_REQUEST, request.getId() + "", request.getRefName(), request.getWorld());
         }
 
         return true;

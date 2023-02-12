@@ -2,8 +2,6 @@ package de.paradubsch.paradubschmanager.gui.items;
 
 import de.craftery.util.gui.AbstractGuiItem;
 import de.craftery.util.gui.GuiManager;
-import de.paradubsch.paradubschmanager.ParadubschManager;
-import de.paradubsch.paradubschmanager.lifecycle.bazaar.Bazaar;
 import de.paradubsch.paradubschmanager.lifecycle.bazaar.BazaarItemData;
 import de.paradubsch.paradubschmanager.lifecycle.bazaar.OrderType;
 import de.paradubsch.paradubschmanager.models.BazaarCollectable;
@@ -27,17 +25,16 @@ public class BazaarPlaceSellOrderButton extends AbstractGuiItem {
         String key = data.getMaterial().toString();
 
         Integer price = (Integer) this.getKvStore().get(key + "SellPrice");
-
         if (price == null) price = ((data.getOffer() + data.getBuy()) / 2);
-
         int taxes = (int) Math.floor(price * 0.1f);
 
-        PlayerData pd = PlayerData.getById(p.getUniqueId().toString());
-
+        PlayerData pd = PlayerData.getByPlayer(p);
         if (pd.getMoney() < taxes) {
             MessageAdapter.sendMessage(p, Message.Error.NOT_ENOUGH_MONEY);
             return;
         }
+        pd.setMoney(pd.getMoney() - taxes);
+        pd.saveOrUpdate();
 
         boolean soldItem = false;
         for (int i = 0; i < 36; i++) {
@@ -55,32 +52,35 @@ public class BazaarPlaceSellOrderButton extends AbstractGuiItem {
                 break;
             }
         }
-        String translatedItemName = ParadubschManager.getInstance().getLanguageManager().getString(Bazaar.translationForMaterial(data.getMaterial()), MessageAdapter.getSenderLang(p));
         if (!soldItem) {
-            MessageAdapter.sendMessage(p, Message.Gui.NOT_ENOUGH_ITEMS, translatedItemName);
+            MessageAdapter.sendMessage(p, Message.Gui.NOT_ENOUGH_ITEMS_TRANSLATED, data.getMaterial().name());
             GuiManager.back(p);
             return;
         }
 
-        pd.setMoney(pd.getMoney() - taxes);
-        pd.saveOrUpdate();
-        String blockName = StringValidator.toTitleCase(data.getMaterial().toString().replaceAll("_", " "));
 
-        BazaarOrder order = BazaarOrder.getByHolderOrderTypeItemTypePrice(p.getUniqueId().toString(), OrderType.SELL, data.getMaterial(), price);
-        order.setAmount(order.getAmount() + data.getAmount());
+        BazaarPlaceSellOrderButton.sellItem(p, pd, data, price);
+        GuiManager.rebuild(p);
+    }
+
+    public static void sellItem(Player p, PlayerData pd, BazaarItemData item, int price) {
+        String blockName = StringValidator.toTitleCase(item.getMaterial().toString().replaceAll("_", " "));
+
+        BazaarOrder order = BazaarOrder.getByHolderOrderTypeItemTypePrice(p.getUniqueId().toString(), OrderType.SELL, item.getMaterial(), price);
+        order.setAmount(order.getAmount() + item.getAmount());
         order.saveOrUpdate();
 
-        MessageAdapter.sendMessage(p, Message.Info.SELL_ORDER_PLACED, data.getAmount() + "", blockName, price + "");
+        MessageAdapter.sendMessage(p, Message.Info.SELL_ORDER_PLACED, item.getAmount() + "", blockName, price + "");
 
-        List<BazaarOrder> activeBuyOrders = BazaarOrder.getOrdersByMaterial(OrderType.BUY, data.getMaterial());
+        List<BazaarOrder> activeBuyOrders = BazaarOrder.getOrdersByMaterial(OrderType.BUY, item.getMaterial());
         activeBuyOrders.sort(Comparator.comparingInt(BazaarOrder::getPrice));
         Collections.reverse(activeBuyOrders);
 
-        int leftToSell = data.getAmount();
+        int leftToSell = item.getAmount();
         for (BazaarOrder buyOrder : activeBuyOrders) {
             if (buyOrder.getPrice() >= order.getPrice()) {
-                BazaarCollectable collectable = BazaarCollectable.getByHolderItemType(buyOrder.getHolderUuid(), data.getMaterial());
-                collectable.setAmount(collectable.getAmount() + data.getAmount());
+                BazaarCollectable collectable = BazaarCollectable.getByHolderItemType(buyOrder.getHolderUuid(), item.getMaterial());
+                collectable.setAmount(collectable.getAmount() + item.getAmount());
                 collectable.saveOrUpdate();
 
                 pd.setMoney(pd.getMoney() + buyOrder.getPrice());
@@ -89,7 +89,7 @@ public class BazaarPlaceSellOrderButton extends AbstractGuiItem {
                 order.delete();
 
                 if (buyOrder.getAmount() > leftToSell) {
-                    buyOrder.setAmount(buyOrder.getAmount() - data.getAmount());
+                    buyOrder.setAmount(buyOrder.getAmount() - item.getAmount());
                     buyOrder.saveOrUpdate();
                     break;
                 } else {
@@ -97,8 +97,6 @@ public class BazaarPlaceSellOrderButton extends AbstractGuiItem {
                 }
             }
         }
-
-        GuiManager.rebuild(p);
     }
 
     @Override
@@ -120,7 +118,7 @@ public class BazaarPlaceSellOrderButton extends AbstractGuiItem {
         this.addLore("");
         this.addLore(Message.Gui.SELL_ORDER_TAXES, taxes + "");
 
-        PlayerData pd = PlayerData.getById(this.getPlayer().getUniqueId().toString());
+        PlayerData pd = PlayerData.getByPlayer(this.getPlayer());
 
         if (pd.getMoney() < taxes) {
             this.addLore(Message.Gui.NOT_ENOUGH_MONEY);
@@ -135,8 +133,7 @@ public class BazaarPlaceSellOrderButton extends AbstractGuiItem {
             }
         }
         if (!hasEnoughItems) {
-            String translatedItemName = ParadubschManager.getInstance().getLanguageManager().getString(Bazaar.translationForMaterial(data.getMaterial()), MessageAdapter.getSenderLang(this.getPlayer()));
-            this.addLore(Message.Gui.NOT_ENOUGH_ITEMS, translatedItemName);
+            this.addLore(Message.Gui.NOT_ENOUGH_ITEMS_TRANSLATED, data.getMaterial().name());
         }
     }
 }

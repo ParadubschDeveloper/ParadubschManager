@@ -2,8 +2,6 @@ package de.paradubsch.paradubschmanager.gui.items;
 
 import de.craftery.util.gui.AbstractGuiItem;
 import de.craftery.util.gui.GuiManager;
-import de.paradubsch.paradubschmanager.ParadubschManager;
-import de.paradubsch.paradubschmanager.lifecycle.bazaar.Bazaar;
 import de.paradubsch.paradubschmanager.lifecycle.bazaar.BazaarItemData;
 import de.paradubsch.paradubschmanager.lifecycle.bazaar.OrderType;
 import de.paradubsch.paradubschmanager.models.BazaarCollectable;
@@ -50,9 +48,8 @@ public class BazaarInstantSellButton extends AbstractGuiItem {
                 break;
             }
         }
-        String translatedItemName = ParadubschManager.getInstance().getLanguageManager().getString(Bazaar.translationForMaterial(data.getMaterial()), MessageAdapter.getSenderLang(p));
         if (!soldItem) {
-            MessageAdapter.sendMessage(p, Message.Gui.NOT_ENOUGH_ITEMS, translatedItemName);
+            MessageAdapter.sendMessage(p, Message.Gui.NOT_ENOUGH_ITEMS_TRANSLATED, data.getMaterial().name());
             this.getKvStore().set(data.getMaterial().toString() + "notEnoughItems", 1);
             GuiManager.rebuild(p);
             return;
@@ -78,10 +75,10 @@ public class BazaarInstantSellButton extends AbstractGuiItem {
             collectable.setAmount(collectable.getAmount() + data.getAmount());
             collectable.saveOrUpdate();
         }
-        PlayerData pd = PlayerData.getById(p.getUniqueId().toString());
+        PlayerData pd = PlayerData.getByPlayer(p);
         pd.setMoney(pd.getMoney() + sellPrice);
         pd.saveOrUpdate();
-        MessageAdapter.sendMessage(p, Message.Info.SOLD_ITEM, data.getAmount() + "", translatedItemName, sellPrice + "");
+        MessageAdapter.sendMessage(p, Message.Info.SOLD_ITEM_TRANSLATED, data.getAmount() + "", data.getMaterial().name(), sellPrice + "");
 
         GuiManager.rebuild(p);
     }
@@ -91,10 +88,7 @@ public class BazaarInstantSellButton extends AbstractGuiItem {
         this.setItemMaterial(Material.PAPER);
         this.setDisplayName(Message.Gui.SELL_INSTANT_TITLE);
         BazaarItemData data = (BazaarItemData) this.itemArgs.get(0);
-
-        String translatedItemName = ParadubschManager.getInstance().getLanguageManager().getString(Bazaar.translationForMaterial(data.getMaterial()), MessageAdapter.getSenderLang(this.getPlayer()));
-
-        this.addLore(Message.Gui.PRICE_PER_UNIT_LORE, data.getAmount() + "", translatedItemName);
+        this.addLore(Message.Gui.PRICE_PER_UNIT_LORE_TRANSLATED, data.getAmount() + "", data.getMaterial().name());
 
         Map<Integer, Long> prices = getOrderedPriceMap(data.getMaterial());
 
@@ -117,7 +111,7 @@ public class BazaarInstantSellButton extends AbstractGuiItem {
         }
         Integer notEnoughItems = (Integer) this.getKvStore().get(data.getMaterial().toString() + "notEnoughItems");
         if (Objects.equals(notEnoughItems, 1)) {
-            this.addLore(Message.Gui.NOT_ENOUGH_ITEMS, translatedItemName);
+            this.addLore(Message.Gui.NOT_ENOUGH_ITEMS_TRANSLATED, data.getMaterial().name());
             this.getKvStore().set(data.getMaterial().toString() + "notEnoughItems", 0);
         }
 

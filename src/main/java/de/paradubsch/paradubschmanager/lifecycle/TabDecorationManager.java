@@ -4,22 +4,23 @@ import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolManager;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.wrappers.WrappedChatComponent;
+import de.craftery.util.lang.Language;
 import de.paradubsch.paradubschmanager.ParadubschManager;
-import de.paradubsch.paradubschmanager.config.ConfigurationManager;
+import de.craftery.util.ConfigurationManager;
 import de.paradubsch.paradubschmanager.models.PlayerData;
-import de.paradubsch.paradubschmanager.util.Hibernate;
-import de.paradubsch.paradubschmanager.util.lang.Language;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
@@ -57,6 +58,10 @@ public class TabDecorationManager implements Listener {
             }
         });
     }
+    @EventHandler
+    public void onPlayerTeleport(PlayerTeleportEvent event){
+        Bukkit.getScheduler().runTask(ParadubschManager.getInstance(), TabDecorationManager::broadcastTabDecorations);
+    }
 
     public static void broadcastScoreboardTeams() {
         Bukkit.getScheduler().runTask(ParadubschManager.getInstance(), () -> {
@@ -70,7 +75,7 @@ public class TabDecorationManager implements Listener {
         ProtocolManager pm = ParadubschManager.getProtocolManager();
         if (pm == null) return;
         PacketContainer packet = pm.createPacket(PacketType.Play.Server.PLAYER_LIST_HEADER_FOOTER);
-        PlayerData playerData = Hibernate.getPlayerData(p);
+        PlayerData playerData = PlayerData.getByPlayer(p);
         Language playerLang = Language.getLanguageByShortName(playerData.getLanguage());
         int onlinePlayers = 0;
         List<UUID> vanishedPlayers = ParadubschManager.getInstance().getVanishedPlayers();
@@ -80,7 +85,8 @@ public class TabDecorationManager implements Listener {
             }
         }
 
-        String header = ParadubschManager.getInstance().getLanguageManager().getString(Message.Info.TAB_HEADER, playerLang, onlinePlayers + "");
+        String world = getWorldName(p.getWorld(), playerLang);
+        String header = ParadubschManager.getInstance().getLanguageManager().getString(Message.Info.TAB_HEADER, playerLang, onlinePlayers + "", world);
         String footer = ParadubschManager.getInstance().getLanguageManager().getString(Message.Info.TAB_FOOTER, playerLang);
         packet.getChatComponents().write(0, WrappedChatComponent.fromText(ChatColor.translateAlternateColorCodes('&', header)));
         packet.getChatComponents().write(1, WrappedChatComponent.fromText(ChatColor.translateAlternateColorCodes('&', footer)));
@@ -89,6 +95,40 @@ public class TabDecorationManager implements Listener {
         } catch (InvocationTargetException e) {
             e.printStackTrace();
         }
+    }
+
+    public static String getWorldName(World world, Language lang) {
+        String worldName;
+        switch (world.getName()){
+            case "normal": {
+                worldName = ParadubschManager.getInstance().getLanguageManager().getString(Message.Constant.SPAWN_WORLD, lang);
+                break;
+            }
+            case "world_nether": {
+                worldName = ParadubschManager.getInstance().getLanguageManager().getString(Message.Constant.WORLD_NETHER, lang);
+                break;
+            }
+            case "world": {
+                worldName = ParadubschManager.getInstance().getLanguageManager().getString(Message.Constant.BUILDING_WORLD, lang);
+                break;
+            }
+            case "Farmwelt": {
+                worldName = ParadubschManager.getInstance().getLanguageManager().getString(Message.Constant.FARMING_WORLD, lang);
+                break;
+            }
+            case "EventWelt": {
+                worldName = ParadubschManager.getInstance().getLanguageManager().getString(Message.Constant.EVENT_WORLD, lang);
+                break;
+            }
+            case "world_the_end": {
+                worldName = ParadubschManager.getInstance().getLanguageManager().getString(Message.Constant.WORLD_THE_END, lang);
+                break;
+            }
+            default: {
+                worldName = "&a" + world.getName();
+            }
+        }
+        return worldName;
     }
 
     private static void setScoreboardTeam(Player p) {

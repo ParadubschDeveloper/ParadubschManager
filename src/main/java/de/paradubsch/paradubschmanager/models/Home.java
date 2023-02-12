@@ -1,12 +1,17 @@
 package de.paradubsch.paradubschmanager.models;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import de.craftery.util.BaseDatabaseEntity;
+import de.craftery.util.HibernateConfigurator;
+import lombok.*;
+import org.bukkit.entity.Player;
+import org.hibernate.Session;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -36,11 +41,26 @@ public class Home extends BaseDatabaseEntity<Home, Long> {
     @Column(name = "home_world", columnDefinition = "VARCHAR(128)")
     private String world;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    private PlayerData playerRef;
+    @Column(name = "playerRef_uuid", columnDefinition = "VARCHAR(36)")
+    private String playerRef;
 
     public static Home getById(Serializable id) {
         return BaseDatabaseEntity.getById(Home.class, id);
+    }
+
+    public static List<Home> getByPlayer(Player p) {
+        try {
+            @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
+
+            return session.createQuery("FROM Home where playerRef = :uuid", Home.class)
+                    .setParameter("uuid", p.getUniqueId().toString())
+                    .getResultList();
+        } catch (NoResultException e) {
+            return new ArrayList<>();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
     }
 
     @Override

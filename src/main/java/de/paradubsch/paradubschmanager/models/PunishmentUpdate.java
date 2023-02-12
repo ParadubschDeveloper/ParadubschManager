@@ -1,5 +1,6 @@
 package de.paradubsch.paradubschmanager.models;
 
+import de.craftery.util.BaseDatabaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.Cache;
@@ -24,8 +25,8 @@ public class PunishmentUpdate extends BaseDatabaseEntity<PunishmentUpdate, Long>
     @Column(name = "update_id")
     private long id;
 
-    @ManyToOne
-    private WarnPunishment punishmentRef;
+    @Column(name = "punishmentRef_punishment_id")
+    private long punishmentRef;
 
     @Column(name = "createdAt")
     @CreationTimestamp
@@ -34,8 +35,8 @@ public class PunishmentUpdate extends BaseDatabaseEntity<PunishmentUpdate, Long>
     @Column(name = "reason", columnDefinition = "VARCHAR(196)", nullable = false)
     private String reason;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    private PlayerData givenBy;
+    @Column(name = "givenBy_uuid", columnDefinition = "VARCHAR(36)")
+    private String givenBy;
 
     @Column(name = "permanent", columnDefinition = "BOOLEAN DEFAULT FALSE")
     private boolean permanent = false;

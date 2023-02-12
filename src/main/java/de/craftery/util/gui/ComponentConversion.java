@@ -5,7 +5,6 @@ import net.kyori.adventure.text.TextComponent;
 
 public class ComponentConversion {
     public static String fromComponent(Component component) {
-        System.out.println(component);
         StringBuilder returner = new StringBuilder();
 
         if (!(component instanceof TextComponent)) {

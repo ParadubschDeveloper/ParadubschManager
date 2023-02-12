@@ -3,7 +3,6 @@ package de.paradubsch.paradubschmanager.gui.items;
 import de.craftery.util.gui.GuiItem;
 import de.paradubsch.paradubschmanager.models.PlayerData;
 import de.paradubsch.paradubschmanager.models.SaveRequest;
-import de.paradubsch.paradubschmanager.util.Hibernate;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 import org.bukkit.Bukkit;
@@ -14,21 +13,22 @@ public class GsClaimButton extends GuiItem {
     @Override
     public void onClick(Player p) {
         p.closeInventory();
-        if (Hibernate.getSaveRequest(p) != null) {
+        if (SaveRequest.getByPlayer(p) != null) {
             MessageAdapter.sendMessage(p, Message.Error.ALREADY_OPEN_SAVE_REQUEST);
             return;
         }
 
-        PlayerData pd = Hibernate.getPlayerData(p);
+        PlayerData pd = PlayerData.getByPlayer(p);
 
         SaveRequest saveRequest = new SaveRequest();
         saveRequest.setX((long) p.getLocation().getX());
         saveRequest.setY(p.getLocation().getBlockY());
         saveRequest.setZ((long) p.getLocation().getZ());
         saveRequest.setWorld(p.getLocation().getWorld().getName());
-        saveRequest.setPlayerRef(pd);
-        pd.setOpenSaveRequest(saveRequest.getId());
+        saveRequest.setPlayerRef(p.getUniqueId().toString());
         Integer saveId = (Integer) saveRequest.save();
+        pd.setOpenSaveRequest(saveId);
+
         pd.saveOrUpdate();
 
         for (Player player : Bukkit.getOnlinePlayers()) {

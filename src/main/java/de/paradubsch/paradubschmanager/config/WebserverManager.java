@@ -1,5 +1,6 @@
 package de.paradubsch.paradubschmanager.config;
 
+import de.craftery.util.ConfigurationManager;
 import org.bukkit.Bukkit;
 import org.eclipse.jetty.io.EndPoint;
 import org.eclipse.jetty.server.Connector;
@@ -8,6 +9,8 @@ import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.server.handler.ContextHandler;
 import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.util.thread.QueuedThreadPool;
+
+import java.io.File;
 
 public class WebserverManager {
     private Server webServer;
@@ -21,13 +24,13 @@ public class WebserverManager {
         webServer = new Server(threadPool);
 
         webServerConnector = new ServerConnector(webServer);
-        webServerConnector.setPort(8090);
+        webServerConnector.setPort(ConfigurationManager.getInt("http.port"));
         webServer.setConnectors(new Connector[] {webServerConnector});
 
         ContextHandler ctx = new ContextHandler("/downloadBackup");
         ResourceHandler resourceHandler = new ResourceHandler();
         resourceHandler.setDirAllowed(false);
-        resourceHandler.setResourceBase(".\\plugins\\WorldEdit\\uploadSchematics");
+        resourceHandler.setResourceBase("." + File.separator + "plugins" + File.separator + "WorldEdit" + File.separator + "uploadSchematics");
         ctx.setHandler(resourceHandler);
         webServer.setHandler(ctx);
 
@@ -56,5 +59,24 @@ public class WebserverManager {
             Bukkit.getLogger().warning(e.getMessage());
         }
         webServer.destroy();
+    }
+
+    public static void clearSchematicFiles() {
+        File index = new File("." + File.separator + "plugins" + File.separator + "WorldEdit" + File.separator + "uploadSchematics");
+        if (index.exists()) {
+            String[] entries = index.list();
+            if (entries != null) {
+                for (String s : entries) {
+                    File currentFile = new File(index.getPath(), s);
+                    if (!currentFile.delete()) {
+                        Bukkit.getLogger().warning("Could not delete file " + currentFile.getName());
+                    }
+                }
+            }
+        } else {
+            if (!index.mkdir()) {
+                Bukkit.getLogger().warning("Could not create directory " + index.getName());
+            }
+        }
     }
 }

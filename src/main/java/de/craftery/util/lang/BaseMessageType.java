@@ -1,4 +1,4 @@
-package de.paradubsch.paradubschmanager.util.lang;
+package de.craftery.util.lang;
 
 public interface BaseMessageType {
 

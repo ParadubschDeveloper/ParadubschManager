@@ -1,9 +1,42 @@
-image: maven:3.8.1
+image: maven:latest
+
+variables:
+  MYSQL_DATABASE: test
+  MYSQL_ROOT_PASSWORD: strongpassword
+  DB_URL: jdbc:mysql://mysql:3306/test?allowPublicKeyRetrieval=true&useSSL=false
+  MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository"
+
+cache:
+  paths:
+    - ./.m2/repository/
+  key: "$CI_BUILD_REF_NAME"
 
 stages:
+  - build
   - test
+  - package
 
-test:
-  stage: test
+build-job:
+  stage: build
   script:
-    - "mvn test -f pom.xml"
+    - "mvn clean compile $MAVEN_CLI_OPTS"
+  artifacts:
+    paths:
+      - target/
+
+test-job:
+  stage: test
+  needs: ["build-job"]
+  services:
+    - mysql:latest
+  script:
+    - "mvn test $MAVEN_CLI_OPTS"
+
+package-job:
+  stage: package
+  needs: ["build-job"]
+  script:
+    - "mvn package $MAVEN_CLI_OPTS -Dmaven.test.skip=true"
+  artifacts:
+    paths:
+      - "target/*.jar"

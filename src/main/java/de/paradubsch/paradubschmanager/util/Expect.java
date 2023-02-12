@@ -1,12 +1,14 @@
 package de.paradubsch.paradubschmanager.util;
 
 import de.paradubsch.paradubschmanager.util.lang.Message;
+import de.craftery.util.features.Feature;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.lang.Float;
+import java.lang.reflect.InvocationTargetException;
 
 public class Expect {
     public static Boolean playerString(@Nullable String player) {
@@ -34,6 +36,23 @@ public class Expect {
         }
 
         return sender instanceof Player;
+    }
+
+    @SafeVarargs
+    public static boolean featuresEnabled(@NotNull CommandSender sender, Class<? extends Feature>... features) {
+        for (Class<? extends Feature> feature : features) {
+            try {
+                Feature instance = feature.getDeclaredConstructor().newInstance();
+                if (!instance.isAvailable()) {
+                    MessageAdapter.sendMessage(sender, Message.Error.FEATURE_NOT_AVAILABLE, instance.getFeatureName());
+                    return false;
+                }
+            } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
+                MessageAdapter.sendConsoleError(e);
+            }
+        }
+
+        return true;
     }
 
     public static Boolean colorCode(String code) {

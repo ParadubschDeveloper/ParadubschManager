@@ -2,9 +2,9 @@ package de.paradubsch.paradubschmanager.gui.items;
 
 import de.craftery.util.gui.AbstractGuiItem;
 import de.craftery.util.gui.GuiManager;
-import de.paradubsch.paradubschmanager.lifecycle.bazaar.Bazaar;
 import de.paradubsch.paradubschmanager.models.BazaarCollectable;
 import de.paradubsch.paradubschmanager.util.lang.Message;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -38,7 +38,7 @@ public class BazaarClaimCollectableButton extends AbstractGuiItem {
         BazaarCollectable collectable = (BazaarCollectable) this.getKvStore().get(this.itemArgs.get(0).toString() + "newestCollectable");
         if (collectable != null) {
             this.setItemMaterial(collectable.getMaterial());
-            this.setDisplayName(Bazaar.translationForMaterial(collectable.getMaterial()));
+            this.setDisplayName(Component.translatable(new ItemStack(collectable.getMaterial()).translationKey()));
             this.addLore(Message.Gui.COLLECTABLE_AMOUNT, collectable.getAmount() + "");
             this.addLore(Message.Gui.CLICK_TO_COLLECT);
         } else {

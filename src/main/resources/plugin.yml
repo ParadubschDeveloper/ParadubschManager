@@ -1,23 +1,30 @@
 name: "ParadubschManager"
 version: "${project.version}"
 main: "de.paradubsch.paradubschmanager.ParadubschManager"
-api-version: "1.18"
-api: [ "1.18" ]
-authors: [ "Paradubsch Server Team" ]
+api-version: "1.19"
+api: [ "1.19" ]
+authors: [ "Crafter_Y", "Byte", "Blintastisch_", "DieButzenscheibe" ]
 load: "POSTWORLD"
 prefix: "ParadubschManager"
 website: "https://gitlab.com/paradubsch-developer/paradubschmanager"
 depend:
-  - HeadDatabase
   - ProtocolLib
   - LuckPerms
   - WorldEdit
   - WorldGuard
+  - WorldGuardEvents
+
+softdepend:
+  - HeadDatabase
+
+libraries:
+  - mysql:mysql-connector-java:8.0.31
+  - org.eclipse.jetty:jetty-server:11.0.12
 
 commands:
   msg:
     description: Schreibe einem anderen Spieler eine private Nachricht.
-    aliases: [tell, nachricht, post, pm, brief, mail]
+    aliases: [tell, nachricht, post, pm, brief, mail, w]
     permission: paradubsch.msg
     permission-message: 'Du benötigst die Berechtigung paradubsch.msg um zu chatten!'
     usage: '/msg <Spieler> <Nachricht>'
@@ -267,6 +274,78 @@ commands:
     permission: paradubsch.saverequests
     permission-message: 'Du benötigst die Berechtigung paradubsch.saverequests um alle offenen Save-Anfragen anzusehen!'
     usage: '/saverequests'
+  workbench:
+    description: Öffnet eine Workbench.
+    aliases: [wb, werkbank, ct, craftingtable, crafting]
+    permission: paradubsch.workbench
+    permission-message: 'Du benötigst die Berechtigung paradubsch.workbench um eine Workbench zu öffnen!'
+    usage: '/workbench'
+  enderchest:
+    description: Öffnet eine Enderchest.
+    aliases: [ec]
+    permission: paradubsch.enderchest.self
+    permission-message: 'Du benötigst die Berechtigung paradubsch.enderchest um eine Enderchest zu öffnen!'
+    usage: '/enderchest'
+  backpack:
+    description: Inventar zum Backpack
+    aliases: [ bp, rucksack ]
+    permission: paradubsch.backpack
+    permission-message: 'Du benötigst die Berechtigung paradubsch.backpack um den Backpack zu nutzen!'
+    usage: '/backpack'
+  feed:
+    description: Regenieriert den Hunger eines Spielers.
+    aliases: [essen, eat]
+    permission: paradubsch.feed
+    permission-message: 'Du benötigst die Berechtigung paradubsch.feed um deinen Hunger zu stillen!'
+    usage: '/feed'
+  nightvision:
+    description: Gibt einem Spieler den Effekt Nachtsicht.
+    aliases: [nv, nachtsicht]
+    permission: paradubsch.nightvision
+    permission-message: 'Du benötigst die Berechtigung paradubsch.nightvision um dir den Effekt Nachtsicht zu geben.'
+    usage: '/nightvision'
+  anvil:
+    description: Öffnet den mobilen Amboss.
+    aliases: [amboss]
+    permission: paradubsch.anvil
+    permission-message: 'Du benötigst die Berechtigung paradubsch.anivl um deinen mobilen Amboss zu öffnen.'
+    usage: '/anvil'
+  loom:
+    description: Öffnet den mobilen Webstuhl.
+    aliases: [webstuhl, ws]
+    permission: paradubsch.loom
+    permission-message: 'Du benötigst die Berechtigung paradubsch.loom um deinen mobilen Webstuhl zu öffnen'
+    usage: '/loom'
+  stonecutter:
+    description: Öffnet die mobile Steinsäge.
+    aliases: [ steinsäge, ss ]
+    permission: paradubsch.stonecutter
+    permission-message: 'Du benötigst die Berechtigung paradubsch.stonecutter um deine mobile Steinsäge zu öffnen'
+    usage: '/stonecutter'
+  smithingtable:
+    description: Öffnet den mobilen Schmiedetisch.
+    aliases: [ schmiedetisch, st ]
+    permission: paradubsch.smithingtable
+    permission-message: 'Du benötigst die Berechtigung paradubsch.smithingtable um deinen mobilen Schmiedetisch zu öffnen'
+    usage: '/smithingtable'
+  hat:
+    description: Setzt das ausgewählte Item als Hut auf.
+    aliases: [ hut]
+    permission: paradubsch.hat
+    permission-message: 'Du benötigst die Berechtigung paradubsch.hat um deinen Hut zu ändern.'
+    usage: '/hat'
+  mute:
+    description: Mutet einen Spieler
+    aliases: []
+    permission: paradubsch.mute
+    permission-message: 'Du benötigst die Berechtigung paradubsch.mute um einen Spieler zu muten.'
+    usage: '/mute'
+  timevote:
+    description: Erstelle / Vote für eine Zeitänderung.
+    aliases: [votezeit, tv, vz]
+    permission: paradubsch.timevote
+    permission-message: 'Du benötigst die Berechtigung paradubsch.timevote um abzustimmen.'
+    usage: '/timevote'
 
 
 permissions:
@@ -431,4 +510,49 @@ permissions:
     default: false
   paradubsch.gs.backup:
     description: "Erlaubt Zugriff auf den /gs backup Befehl."
+    default: false
+  paradubsch.workbench:
+    description: "Erlaubt Zugriff auf den /workbench Befehl."
+    default: false
+  paradubsch.enderchest.self:
+    description: "Erlaubt Zugriff auf den /enderchest Befehl."
+    default: false
+  paradubsch.enderchest.others:
+    description: "Erlaubt Zugriff auf den /enderchest <Name> Befehl."
+    default: false
+  paradubsch.backpack:
+    description: "Erlaubt Zugriff auf den /backpack Befehl."
+    default: false
+  paradubsch.feed:
+    description: "Erlaubt Zugriff auf den /feed Befehl."
+    default: false
+  paradubsch.nightvision:
+    description: "Erlaubt Zugriff auf den /nightvision Befehl."
+    default: false
+  paradubsch.loom:
+    description: "Erlaubt Zugriff auf den /loom Befehl."
+    default: false
+  paradubsch.smithingtable:
+    description: "Erlaubt Zugriff auf den /smithingtable Befehl."
+    default: false
+  paradubsch.stonecutter:
+    description: "Erlaubt Zugriff auf den /stonecutter Befehl."
+    default: false
+  paradubsch.anvil:
+    description: "Erlaubt Zugriff auf den /anvil Befehl."
+    default: false
+  paradubsch.hat:
+    description: "Erlaubt Zugriff auf den /hat Befehl."
+    default: false
+  paradubsch.mute:
+    description: "Erlaubt Zugriff auf den /mute Befehl."
+    default: false
+  paradubsch.timevote:
+    description: "Erlaubt Zugriff auf den /timevote Befehl."
+    default: true
+  paradubsch.timevote.createvote:
+    description: "Erlaubt Zugriff auf den /votezeit create Befehl."
+    default: false
+  paradubsch.gs.bypass:
+    description: "Erlaubt nicht von gs kick/whitelist/ban betroffen zu sein."
     default: false

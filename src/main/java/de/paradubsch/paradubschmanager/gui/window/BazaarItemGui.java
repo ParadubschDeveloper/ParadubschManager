@@ -2,20 +2,16 @@ package de.paradubsch.paradubschmanager.gui.window;
 
 import de.craftery.util.gui.BaseGui;
 import de.paradubsch.paradubschmanager.gui.items.*;
-import de.paradubsch.paradubschmanager.lifecycle.bazaar.Bazaar;
 import de.paradubsch.paradubschmanager.lifecycle.bazaar.BazaarItemData;
-import de.paradubsch.paradubschmanager.util.lang.BaseMessageType;
-import de.paradubsch.paradubschmanager.util.lang.Language;
-import de.paradubsch.paradubschmanager.util.lang.Message;
+import de.craftery.util.lang.Language;
+import net.kyori.adventure.text.Component;
+import org.bukkit.inventory.ItemStack;
 
 public class BazaarItemGui extends BaseGui {
     @Override
     public void init(Language lang) {
         BazaarItemData data = (BazaarItemData) this.args.get(0);
-        BaseMessageType title = Message.Constant.BLANK;
-        if (data != null) {
-            title = Bazaar.translationForMaterial(data.getMaterial());
-        }
+        Component title = Component.translatable(new ItemStack(data.getMaterial()).translationKey());
         instantiate(lang, title, 3);
     }
 

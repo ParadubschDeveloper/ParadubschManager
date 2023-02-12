@@ -1,14 +1,13 @@
 package de.paradubsch.paradubschmanager.models;
 
-import de.paradubsch.paradubschmanager.ParadubschManager;
-import de.paradubsch.paradubschmanager.config.HibernateConfigurator;
+import de.craftery.util.BaseDatabaseEntity;
+import de.craftery.util.HibernateConfigurator;
 import de.paradubsch.paradubschmanager.lifecycle.bazaar.OrderType;
 import lombok.Cleanup;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.bukkit.Material;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.jetbrains.annotations.NotNull;
@@ -25,7 +24,7 @@ import java.util.List;
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Table(name = "bazaar_orders")
 @SequenceGenerator(name="bazaarOrderSequence",sequenceName="bazaar_order_sequence", allocationSize = 1)
-public class BazaarOrder extends BaseDatabaseEntity<BazaarOrder, Long>{
+public class BazaarOrder extends BaseDatabaseEntity<BazaarOrder, Long> {
     @Id
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="bazaarOrderSequence")
     @Column(name = "order_id")

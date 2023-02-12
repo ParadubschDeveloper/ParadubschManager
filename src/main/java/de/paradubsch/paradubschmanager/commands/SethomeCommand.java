@@ -1,13 +1,11 @@
 package de.paradubsch.paradubschmanager.commands;
 
-import de.paradubsch.paradubschmanager.ParadubschManager;
+import de.craftery.ErrorOr;
 import de.paradubsch.paradubschmanager.models.Home;
 import de.paradubsch.paradubschmanager.models.PlayerData;
 import de.paradubsch.paradubschmanager.util.Expect;
-import de.paradubsch.paradubschmanager.util.Hibernate;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.lang.Message;
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -18,8 +16,12 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class SethomeCommand implements CommandExecutor, TabCompleter {
+    public static final String HOME_EXISTING_ERROR = "Home already exists";
+    public static final String HOME_LIMIT_REACHED_ERROR = "Home limit reached";
+
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (!Expect.playerSender(sender)) {
@@ -28,7 +30,6 @@ public class SethomeCommand implements CommandExecutor, TabCompleter {
         }
         Player player = (Player) sender;
 
-
         String homeName;
         if (args.length > 0) {
             homeName = args[0];
@@ -36,90 +37,53 @@ public class SethomeCommand implements CommandExecutor, TabCompleter {
             homeName = "default";
         }
 
-        if (args.length > 1 && args[1].equalsIgnoreCase("confirm")) {
-            Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
-                PlayerData playerData = Hibernate.getPlayerData(player);
-                List<Home> homes = Hibernate.getHomes(player);
+        boolean overwrite = args.length > 1 && args[1].equalsIgnoreCase("confirm");
 
-                if (homes.stream().anyMatch(home -> home.getName().equals(homeName))) {
-                    Home home = homes.stream().filter(home1 -> home1.getName().equals(homeName)).findFirst().get();
-                    homes.remove(home);
-                    home.setX((long) player.getLocation().getX());
-                    home.setY(player.getLocation().getBlockY());
-                    home.setZ((long) player.getLocation().getZ());
-                    home.setWorld(player.getLocation().getWorld().getName());
+        setHome(player, homeName, overwrite);
+        return true;
+    }
 
-                    homes.add(home);
-                    playerData.setHomes(homes);
+    public static ErrorOr<Void> setHome(Player player, String homeName, boolean overwrite) {
+        List<Home> homes = Home.getByPlayer(player);
+        Optional<Home> predicate = homes.stream().filter(home_ -> home_.getName().equals(homeName)).findFirst();
 
-                    MessageAdapter.sendMessage(player, Message.Info.CMD_HOME_SET, homeName);
-                    Hibernate.save(playerData);
-                    return;
-                }
+        if (predicate.isPresent() && overwrite) {
+            Home home = predicate.get();
 
-                if (homes.size() >= playerData.getMaxHomes()) {
-                    MessageAdapter.sendMessage(sender, Message.Error.CMD_SETHOME_NOT_ENOUGH_HOMES);
-                    Bukkit.getScheduler().runTaskLater(ParadubschManager.getInstance(), () ->
-                            MessageAdapter.sendMessage(sender, Message.Info.CMD_SETHOME_BUYHOME), 1L);
-                    return;
-                }
+            home.setX((long) player.getLocation().getX());
+            home.setY(player.getLocation().getBlockY());
+            home.setZ((long) player.getLocation().getZ());
+            home.setWorld(player.getLocation().getWorld().getName());
 
-                Home home = new Home();
-                home.setName(homeName);
-                home.setX(player.getLocation().getBlockX());
-                home.setY(player.getLocation().getBlockY());
-                home.setZ(player.getLocation().getBlockZ());
-                home.setWorld(player.getLocation().getWorld().getName());
-                home.setPlayerRef(playerData);
-
-                homes.add(home);
-
-
-                playerData.setHomes(homes);
-
-                MessageAdapter.sendMessage(player, Message.Info.CMD_HOME_SET, homeName);
-                Hibernate.save(playerData);
-            });
-            return true;
+            home.saveOrUpdate();
+            MessageAdapter.sendMessage(player, Message.Info.CMD_HOME_SET, homeName);
+            return ErrorOr.release(null);
         }
 
-        Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
-            PlayerData playerData = Hibernate.getPlayerData(player);
-            List<Home> homes = Hibernate.getHomes(player);
+        if (predicate.isPresent()) {
+            MessageAdapter.sendMessage(player, Message.Error.CMD_SETHOME_ALREADY_EXISTING, homeName);
+            MessageAdapter.sendMessage(player, Message.Info.CMD_SETHOME_OVERRIDE_EXISTING_HOME, homeName);
+            return new ErrorOr<>(HOME_EXISTING_ERROR);
+        }
 
-            if (homes.stream().anyMatch(home -> home.getName().equals(homeName))) {
-                MessageAdapter.sendMessage(sender, Message.Error.CMD_SETHOME_ALREADY_EXISTING, homeName);
-                Bukkit.getScheduler().runTaskLater(ParadubschManager.getInstance(), () ->
-                        MessageAdapter.sendMessage(sender, Message.Info.CMD_SETHOME_OVERRIDE_EXISTING_HOME, homeName), 1L);
-                Hibernate.save(playerData);
-                return;
-            }
+        PlayerData playerData = PlayerData.getByPlayer(player);
+        if (homes.size() >= playerData.getMaxHomes()) {
+            MessageAdapter.sendMessage(player, Message.Error.CMD_SETHOME_NOT_ENOUGH_HOMES);
+            MessageAdapter.sendMessage(player, Message.Info.CMD_SETHOME_BUYHOME);
+            return new ErrorOr<>(HOME_LIMIT_REACHED_ERROR);
+        }
 
-            if (homes.size() >= playerData.getMaxHomes()) {
-                MessageAdapter.sendMessage(sender, Message.Error.CMD_SETHOME_NOT_ENOUGH_HOMES);
-                Bukkit.getScheduler().runTaskLater(ParadubschManager.getInstance(), () ->
-                        MessageAdapter.sendMessage(sender, Message.Info.CMD_SETHOME_BUYHOME), 1L);
-                Hibernate.save(playerData);
-                return;
-            }
+        Home home = new Home();
+        home.setName(homeName);
+        home.setX(player.getLocation().getBlockX());
+        home.setY(player.getLocation().getBlockY());
+        home.setZ(player.getLocation().getBlockZ());
+        home.setWorld(player.getLocation().getWorld().getName());
+        home.setPlayerRef(player.getUniqueId().toString());
 
-            Home home = new Home();
-            home.setName(homeName);
-            home.setX(player.getLocation().getBlockX());
-            home.setY(player.getLocation().getBlockY());
-            home.setZ(player.getLocation().getBlockZ());
-            home.setWorld(player.getLocation().getWorld().getName());
-            home.setPlayerRef(playerData);
-
-            homes.add(home);
-
-
-            playerData.setHomes(homes);
-
-            MessageAdapter.sendMessage(player, Message.Info.CMD_HOME_SET, homeName);
-            Hibernate.save(playerData);
-        });
-        return true;
+        home.save();
+        MessageAdapter.sendMessage(player, Message.Info.CMD_HOME_SET, homeName);
+        return ErrorOr.release(null);
     }
 
     @Override

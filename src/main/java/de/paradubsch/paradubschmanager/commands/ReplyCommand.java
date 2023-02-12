@@ -20,9 +20,8 @@ import java.util.UUID;
 public class ReplyCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (!Expect.playerSender(sender)) {
-            return true;
-        }
+        if (!Expect.playerSender(sender)) return true;
+
         Player player = (Player) sender;
 
         UUID receiver = ParadubschManager.getInstance().getReplyCandidates().get(player.getUniqueId());
@@ -39,7 +38,7 @@ public class ReplyCommand implements CommandExecutor, TabCompleter {
             return true;
         }
 
-        if (!Expect.minArgs(2, args)) {
+        if (!Expect.minArgs(1, args)) {
             MessageAdapter.sendMessage(player, Message.Error.CMD_MESSAGE_NOT_PROVIDED);
             return true;
         }

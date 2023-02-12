@@ -2,8 +2,6 @@ package de.paradubsch.paradubschmanager.gui.items;
 
 import de.craftery.util.gui.AbstractGuiItem;
 import de.craftery.util.gui.GuiManager;
-import de.paradubsch.paradubschmanager.ParadubschManager;
-import de.paradubsch.paradubschmanager.lifecycle.bazaar.Bazaar;
 import de.paradubsch.paradubschmanager.lifecycle.bazaar.BazaarItemData;
 import de.paradubsch.paradubschmanager.lifecycle.bazaar.OrderType;
 import de.paradubsch.paradubschmanager.models.BazaarCollectable;
@@ -43,7 +41,7 @@ public class BazaarInstantBuyButton extends AbstractGuiItem {
         } catch (IndexOutOfBoundsException ignored) {}
 
         int buyPrice = data.getOffer();
-        PlayerData pd = PlayerData.getById(p.getUniqueId().toString());
+        PlayerData pd = PlayerData.getByPlayer(p);
         if (order != null) {
             buyPrice = order.getPrice();
         }
@@ -96,8 +94,7 @@ public class BazaarInstantBuyButton extends AbstractGuiItem {
 
         pd.setMoney(pd.getMoney() - buyPrice);
         pd.saveOrUpdate();
-        String translatedItemName = ParadubschManager.getInstance().getLanguageManager().getString(Bazaar.translationForMaterial(data.getMaterial()), MessageAdapter.getSenderLang(p));
-        MessageAdapter.sendMessage(p, Message.Info.BOUGHT_ITEM, data.getAmount() + "", translatedItemName, buyPrice + "");
+        MessageAdapter.sendMessage(p, Message.Info.BOUGHT_ITEM_TRANSLATED, data.getAmount() + "", data.getMaterial().name(), buyPrice + "");
 
         GuiManager.rebuild(p);
     }
@@ -107,10 +104,7 @@ public class BazaarInstantBuyButton extends AbstractGuiItem {
         this.setItemMaterial(Material.BUCKET);
         this.setDisplayName(Message.Gui.BUY_INSTANT_TITLE);
         BazaarItemData data = (BazaarItemData) this.itemArgs.get(0);
-
-        String translatedItemName = ParadubschManager.getInstance().getLanguageManager().getString(Bazaar.translationForMaterial(data.getMaterial()), MessageAdapter.getSenderLang(this.getPlayer()));
-
-        this.addLore(Message.Gui.INCOME_PER_UNIT_LORE, data.getAmount() + "", translatedItemName);
+        this.addLore(Message.Gui.INCOME_PER_UNIT_LORE_TRANSLATED, data.getAmount() + "", data.getMaterial().name());
 
         Map<Integer, Long> prices = getOrderedPriceMap(data.getMaterial());
 

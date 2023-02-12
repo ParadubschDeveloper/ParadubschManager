@@ -1,7 +1,7 @@
 package de.paradubsch.paradubschmanager.lifecycle.playtime;
 
 import de.paradubsch.paradubschmanager.ParadubschManager;
-import de.paradubsch.paradubschmanager.config.ConfigurationManager;
+import de.craftery.util.ConfigurationManager;
 import de.paradubsch.paradubschmanager.lifecycle.TabDecorationManager;
 import de.paradubsch.paradubschmanager.models.PlayerData;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
@@ -39,7 +39,7 @@ public class PlaytimeManager implements Listener {
     public long getPlaytime(Player player) {
         Long lastCache = lastCached.get(player);
         if (lastCache == null) throw new RuntimeException("Player is not Cached.- This must be an error!");
-        PlayerData pd = PlayerData.getById(player.getUniqueId().toString());
+        PlayerData pd = PlayerData.getByPlayer(player);
         return pd.getPlaytime() + System.currentTimeMillis() - lastCache;
     }
 
@@ -56,7 +56,7 @@ public class PlaytimeManager implements Listener {
         if (lastCache == null) {
             throw new RuntimeException("Player is not Cached.- This must be an error!");
         }
-        PlayerData pd = PlayerData.getById(player.getUniqueId().toString());
+        PlayerData pd = PlayerData.getByPlayer(player);
         pd.setPlaytime(pd.getPlaytime() + System.currentTimeMillis() - lastCache);
         pd.saveOrUpdate();
         lastCached.remove(player);
@@ -69,7 +69,7 @@ public class PlaytimeManager implements Listener {
                 Bukkit.getLogger().log(Level.WARNING, "Player is not Cached.- This must be an error!");
                 return;
             }
-            PlayerData pd = PlayerData.getById(player.getUniqueId().toString());
+            PlayerData pd = PlayerData.getByPlayer(player);
             pd.setPlaytime(pd.getPlaytime() + System.currentTimeMillis() - lastCache);
             pd.saveOrUpdate();
             lastCached.put(player, System.currentTimeMillis());
@@ -103,8 +103,8 @@ public class PlaytimeManager implements Listener {
                 MessageAdapter.sendMessage(player, Message.Info.CMD_RANKED_UP_SUCCESSFUL, "Lapis");
             }
 
-            //time > 72h || rank copper
-            if (time > 72*60*60*1000 && beforeGroupName.equals("group.lapis")) {
+            //time > 73h || rank copper
+            if (time > 73*60*60*1000 && beforeGroupName.equals("group.lapis")) {
                 applyGroup(player, "copper");
                 MessageAdapter.sendMessage(player, Message.Info.CMD_RANKED_UP_SUCCESSFUL, "Copper");
             }
@@ -136,7 +136,7 @@ public class PlaytimeManager implements Listener {
     }
 
     private void applyGroup(Player player, String group) {
-        PlayerData target = PlayerData.getById(player.getUniqueId().toString());
+        PlayerData target = PlayerData.getByPlayer(player);
         LuckPerms api = ParadubschManager.getLuckPermsApi();
         if (api == null) return;
 

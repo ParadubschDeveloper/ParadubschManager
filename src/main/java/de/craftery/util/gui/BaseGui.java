@@ -1,9 +1,12 @@
 package de.craftery.util.gui;
 
-import de.paradubsch.paradubschmanager.util.lang.BaseMessageType;
-import de.paradubsch.paradubschmanager.util.lang.Language;
+import de.craftery.CraftPlugin;
+import de.craftery.util.lang.Language;
+import de.craftery.util.lang.BaseMessageType;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 
 import java.io.Serializable;
@@ -23,7 +26,13 @@ public abstract class BaseGui {
     public final List<Object> args = new ArrayList<>();
 
     public void instantiate(Language lang, BaseMessageType title, int rows) {
-        this.title = GuiManager.getLanguageManager().get(title, lang);
+        this.title = CraftPlugin.getInstance().getLanguageManager().get(title, lang);
+        this.lang = lang;
+        this.inv = GuiManager.createInventory(this.title, rows);
+    }
+
+    public void instantiate(Language lang, Component title, int rows) {
+        this.title = title;
         this.lang = lang;
         this.inv = GuiManager.createInventory(this.title, rows);
     }
@@ -45,11 +54,23 @@ public abstract class BaseGui {
     /**
      * A Key-Value Store that is persisted while the player is in the GUI.
      */
+    public KVStore getKvStore(Player player) {
+        KVStore store = GuiManager.getKvStores().get(player);
+        if (store == null)
+            GuiManager.getKvStores().put(player, store = new KVStore(player));
+        return store;
+    }
+
     public KVStore getKvStore() {
-        return new KVStore(player);
+        return getKvStore(this.player);
     }
 
     public abstract void init(Language lang);
 
     public abstract void build();
+
+    public void onClick(Player whoClicked, InventoryClickEvent event, GuiItem handledItem) {}
+
+    public void onClose(Player player, InventoryCloseEvent event) {}
+
 }

@@ -1,5 +1,6 @@
 package de.paradubsch.paradubschmanager.models;
 
+import de.craftery.util.BaseDatabaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -23,6 +24,10 @@ public class MutePunishment extends WarnPunishment {
     private boolean hasUpdate = false;
 
     public static MutePunishment getById(Serializable id) {
+        return BaseDatabaseEntity.getById(MutePunishment.class, id);
+    }
+
+    public static MutePunishment getByIdO(Serializable id) {
         return BaseDatabaseEntity.getById(MutePunishment.class, id);
     }
 }
