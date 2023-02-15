@@ -1,7 +1,5 @@
 package de.paradubsch.paradubschmanager;
 
-import com.comphenix.protocol.ProtocolLibrary;
-import com.comphenix.protocol.ProtocolManager;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import de.craftery.CraftPlugin;
@@ -26,7 +24,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPluginLoader;
-import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.util.*;
@@ -42,8 +39,6 @@ public final class ParadubschManager extends CraftPlugin {
 
     @Getter
     private WorldEditPlugin worldEditPlugin;
-
-    private ProtocolManager protocolManager;
 
     private LuckPerms luckPermsApi;
 
@@ -96,7 +91,6 @@ public final class ParadubschManager extends CraftPlugin {
 
         worldGuardPlugin = initializeWorldGuardPlugin();
         worldEditPlugin = initializeWorldEditPlugin();
-        protocolManager = ProtocolLibrary.getProtocolManager();
 
         this.getLanguageManager().registerMessageEnum(Message.Info.class);
         this.getLanguageManager().registerMessageEnum(Message.Error.class);
@@ -120,7 +114,6 @@ public final class ParadubschManager extends CraftPlugin {
         worldGuardPlugin = null;
         worldEditPlugin = null;
         playtimeManager = null;
-        protocolManager = null;
         luckPermsApi = null;
 
         jobManager = null;
@@ -237,14 +230,6 @@ public final class ParadubschManager extends CraftPlugin {
             return null;
         }
         return (WorldEditPlugin) plugin;
-    }
-
-    public static @Nullable ProtocolManager getProtocolManager() {
-        ProtocolManager pm = ParadubschManager.getInstance().protocolManager;
-        if (pm == null) {
-            ParadubschManager.getInstance().protocolManager = ProtocolLibrary.getProtocolManager();
-        }
-        return ParadubschManager.getInstance().protocolManager;
     }
 
     public static LuckPerms getLuckPermsApi() {

@@ -1,9 +1,5 @@
 package de.paradubsch.paradubschmanager.lifecycle;
 
-import com.comphenix.protocol.PacketType;
-import com.comphenix.protocol.ProtocolManager;
-import com.comphenix.protocol.events.PacketContainer;
-import com.comphenix.protocol.wrappers.WrappedChatComponent;
 import de.craftery.util.lang.Language;
 import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.craftery.util.ConfigurationManager;
@@ -25,7 +21,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -72,9 +67,6 @@ public class TabDecorationManager implements Listener {
     }
 
     public static void displayTabDecorations(Player p) {
-        ProtocolManager pm = ParadubschManager.getProtocolManager();
-        if (pm == null) return;
-        PacketContainer packet = pm.createPacket(PacketType.Play.Server.PLAYER_LIST_HEADER_FOOTER);
         PlayerData playerData = PlayerData.getByPlayer(p);
         Language playerLang = Language.getLanguageByShortName(playerData.getLanguage());
         int onlinePlayers = 0;
@@ -86,15 +78,10 @@ public class TabDecorationManager implements Listener {
         }
 
         String world = getWorldName(p.getWorld(), playerLang);
-        String header = ParadubschManager.getInstance().getLanguageManager().getString(Message.Info.TAB_HEADER, playerLang, onlinePlayers + "", world);
-        String footer = ParadubschManager.getInstance().getLanguageManager().getString(Message.Info.TAB_FOOTER, playerLang);
-        packet.getChatComponents().write(0, WrappedChatComponent.fromText(ChatColor.translateAlternateColorCodes('&', header)));
-        packet.getChatComponents().write(1, WrappedChatComponent.fromText(ChatColor.translateAlternateColorCodes('&', footer)));
-        try {
-            pm.sendServerPacket(p, packet);
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        }
+        Component header = ParadubschManager.getInstance().getLanguageManager().get(Message.Info.TAB_HEADER, playerLang, onlinePlayers + "", world);
+        Component footer = ParadubschManager.getInstance().getLanguageManager().get(Message.Info.TAB_FOOTER, playerLang);
+
+        p.sendPlayerListHeaderAndFooter(header, footer);
     }
 
     public static String getWorldName(World world, Language lang) {

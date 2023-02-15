@@ -1,13 +1,10 @@
 package de.paradubsch.paradubschmanager.lifecycle.jobs;
 
-import com.comphenix.protocol.PacketType;
-import com.comphenix.protocol.ProtocolManager;
-import com.comphenix.protocol.events.PacketContainer;
-import com.comphenix.protocol.wrappers.WrappedChatComponent;
 import com.jeff_media.customblockdata.CustomBlockData;
 import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.models.WorkerPlayer;
 import lombok.Getter;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
@@ -22,7 +19,6 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -96,16 +92,7 @@ public class JobManager implements Listener {
     }
 
     public static void sendActionBar(Player player, String message) {
-        ProtocolManager pm = ParadubschManager.getProtocolManager();
-        if (pm != null) {
-            PacketContainer packet = pm.createPacket(PacketType.Play.Server.SET_ACTION_BAR_TEXT);
-            packet.getChatComponents().write(0, WrappedChatComponent.fromText(message));
-            try {
-                pm.sendServerPacket(player, packet);
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            }
-        }
+        player.sendActionBar(Component.text(message));
     }
 
     public static String getPercentageBar(int percentage) {
