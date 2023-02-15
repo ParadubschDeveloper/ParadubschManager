@@ -3,6 +3,7 @@ package de.paradubsch.paradubschmanager.lifecycle;
 import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.models.PlayerData;
 import de.paradubsch.paradubschmanager.models.PunishmentHolder;
+import de.paradubsch.paradubschmanager.models.logging.ChatMessageLog;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.TimeCalculations;
 import de.paradubsch.paradubschmanager.util.lang.Message;
@@ -39,13 +40,15 @@ public class ChatMessageListener implements Listener {
                 MessageAdapter.sendMessage(e.getPlayer(), Message.Info.MUTED_BODY, ph.getActiveMuteReason());
                 return;
             }
-        } else {
+        } else if (ph.getActiveMuteReason() != null) {
             ph.setActiveMute(false);
             ph.setActiveMuteExpiration(Timestamp.from(Instant.now()));
             ph.setActiveMuteId(0);
             ph.setActiveMuteReason(null);
             ph.saveOrUpdate();
         }
+
+        ChatMessageLog.logMessage(e.getPlayer(), message);
 
         MessageAdapter.broadcastUnprefixedMessage(
                 Message.Constant.CHAT_MESSAGE_TEMPLATE,

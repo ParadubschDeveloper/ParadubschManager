@@ -15,6 +15,8 @@ import de.paradubsch.paradubschmanager.lifecycle.playtime.PlaytimeManager;
 import de.paradubsch.paradubschmanager.lifecycle.stairsit.StairSitManager;
 import de.paradubsch.paradubschmanager.commands.TimeVoteCommand;
 import de.paradubsch.paradubschmanager.models.*;
+import de.paradubsch.paradubschmanager.models.logging.ChatMessageLog;
+import de.paradubsch.paradubschmanager.models.logging.LogEntry;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 import lombok.Getter;
 import lombok.Setter;
@@ -151,6 +153,8 @@ public final class ParadubschManager extends CraftPlugin {
         HibernateConfigurator.addEntity(GsWhitelistEnabled.class);
         HibernateConfigurator.addEntity(GsWhitelistMember.class);
         HibernateConfigurator.addEntity(GsBanMember.class);
+        HibernateConfigurator.addEntity(LogEntry.class);
+        HibernateConfigurator.addEntity(ChatMessageLog.class);
     }
 
     private void registerEvents() {

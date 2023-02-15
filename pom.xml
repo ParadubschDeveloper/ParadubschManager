@@ -52,11 +52,12 @@
                                         <exclude>META-INF/*.RSA</exclude>
                                         <exclude>META-INF/*.kotlin_module</exclude>
                                         <exclude>META-INF/*.txt</exclude>
+                                        <exclude>META-INF/MANIFEST.MF</exclude>
                                         <exclude>META-INF/proguard/*</exclude>
                                         <exclude>META-INF/services/*</exclude>
                                         <exclude>META-INF/versions/9/*</exclude>
-                                        <exclude>*License*</exclude>
-                                        <exclude>*LICENSE*</exclude>
+                                        <exclude>**/LICENSE</exclude>
+                                        <exclude>**/NOTICE</exclude>
                                     </excludes>
                                 </filter>
                             </filters>
