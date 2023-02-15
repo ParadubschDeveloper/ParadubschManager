@@ -92,7 +92,9 @@ public class Message {
         CMD_GS_WHITELIST_OVERLAPPING_REGIONS("cmdGsWhitelistOverlappingRegions","&cAn dieser Stelle befinden sich mehrere Grundstücke. Das geht hier nicht."),
         GS_NOT_WHITELISTED("gsNotWhitelisted","&cDu bist auf diesem Grundstück nicht auf der Whitelist."),
         GS_BANNED("gsBanned","&cDu bist auf diesem Grundstück gebannt."),
-        CMD_KICK_PLAYER_CANNOT_BE_KICKED("cmdKickPlayerCannotBeKicked","&cDer Spieler &a%1 &ckann nicht gekickt werden.");
+        CMD_KICK_PLAYER_CANNOT_BE_KICKED("cmdKickPlayerCannotBeKicked","&cDer Spieler &a%1 &ckann nicht gekickt werden."),
+        INVALID_KIT_SYNTAX("invalidKitSyntax","&cBitte verwende /kit"),
+        INVALID_KIT_ID("invalidKitId","&cDas Kit &a%1 &cexistiert nicht.");
 
         private final String key;
         private final String def;
@@ -230,7 +232,8 @@ public class Message {
         CMD_GS_PARDON_SUCCESS("cmdGsPardonSuccess","&aDer Spieler &6%1 &awurde erfolgreich vom Grundstück entbannt."),
         GS_INFO_REGION_WHITELIST_ENABLED("gsInfoRegionWhitelistEnabled","&7Die Whitelist ist &aaktiviert&7."),
         GS_INFO_REGION_WHITELIST_MEMBERS("gsInfoRegionWhitelistMembers","&7Whitelist Mitglieder: &6%1"),
-        GS_INFO_REGION_BANNED_PLAYERS("gsInfoRegionBannedPlayers","&7Gebannte Spieler: &6%1");
+        GS_INFO_REGION_BANNED_PLAYERS("gsInfoRegionBannedPlayers","&7Gebannte Spieler: &6%1"),
+        KIT_EDITED("kitEdited","&aDer Kit &6%1 &awurde erfolgreich bearbeitet.");
 
         private final String key;
         private final String def;

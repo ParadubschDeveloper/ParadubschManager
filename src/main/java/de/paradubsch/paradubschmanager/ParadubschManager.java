@@ -148,6 +148,7 @@ public final class ParadubschManager extends CraftPlugin {
         HibernateConfigurator.addEntity(GsBanMember.class);
         HibernateConfigurator.addEntity(LogEntry.class);
         HibernateConfigurator.addEntity(ChatMessageLog.class);
+        HibernateConfigurator.addEntity(SavedKit.class);
     }
 
     private void registerEvents() {
@@ -215,6 +216,7 @@ public final class ParadubschManager extends CraftPlugin {
         register("hat", new HatCommand());
         register("mute", new MuteCommand());
         register("timevote", new TimeVoteCommand());
+        register("kit", new KitCommand());
     }
     private WorldGuardPlugin initializeWorldGuardPlugin () {
         Plugin plugin = this.getServer().getPluginManager().getPlugin("WorldGuard");

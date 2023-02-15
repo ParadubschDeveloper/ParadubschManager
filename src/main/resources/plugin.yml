@@ -103,7 +103,7 @@ commands:
   gs:
     description: Setze dein Grundstück.
     aliases: [grundstück, plot]
-    permission: paradubsch.gs
+    permission: paradubsch.gs.use
     permission-message: 'Du benötigst die Berechtigung paradubsch.gs um dein Grundstück zu setzen!'
     usage: '/gs'
   save:
@@ -343,9 +343,15 @@ commands:
   timevote:
     description: Erstelle / Vote für eine Zeitänderung.
     aliases: [votezeit, tv, vz]
-    permission: paradubsch.timevote
+    permission: paradubsch.timevote.use
     permission-message: 'Du benötigst die Berechtigung paradubsch.timevote um abzustimmen.'
     usage: '/timevote'
+  kit:
+    description: Erhalte einen Kit.
+    aliases: []
+    permission: paradubsch.kit.use
+    permission-message: 'Du benötigst die Berechtigung paradubsch.kit um einen Kit zu erhalten.'
+    usage: '/kit'
 
 
 permissions:
@@ -595,4 +601,29 @@ permissions:
             default: true
           paradubsch.timevote.createvote:
             description: "Erlaubt Zugriff auf den /votezeit create Befehl."
+            default: false
+      paradubsch.kit.*:
+        description: "Erlaubt Zugriff auf alle /kit Befehle."
+        default: false
+        children:
+          paradubsch.kit.use:
+            description: "Erlaubt Zugriff auf den /kit Befehl."
+            default: true
+          paradubsch.kit.edit:
+            description: "Erlaubt Zugriff auf den /kit edit Befehl."
+            default: false
+          paradubsch.kit.1:
+            description: "Erlaubt es Kit 1 zu benutzen."
+            default: false
+          paradubsch.kit.2:
+            description: "Erlaubt es Kit 1 zu benutzen."
+            default: false
+          paradubsch.kit.3:
+            description: "Erlaubt es Kit 1 zu benutzen."
+            default: false
+          paradubsch.kit.4:
+            description: "Erlaubt es Kit 1 zu benutzen."
+            default: false
+          paradubsch.kit.5:
+            description: "Erlaubt es Kit 1 zu benutzen."
             default: false
