@@ -349,210 +349,250 @@ commands:
 
 
 permissions:
-  paradubsch.msg:
-    description: 'Erlaubt Zugriff auf den /msg Befehl.'
-    default: true
-  paradubsch.prefix:
-    description: 'Erlaubt Zugriff auf den /prefix Befehl.'
+  paradubsch.*:
+    description: 'Erlaubt Zugriff auf alles.'
     default: false
-  paradubsch.lang:
-    description: 'Erlaubt Zugriff auf den /lang Befehl.'
-    default: true
-  paradubsch.namecolor:
-    description: 'Erlaubt Zugriff auf den /namecolor Befehl.'
-    default: false
-  paradubsch.defaultchatcolor:
-    description: 'Erlaubt Zugriff auf den /defaultchatcolor Befehl.'
-    default: false
-  paradubsch.playtime.self:
-    description: 'Erlaubt Zugriff auf den /playtime Befehl.'
-    default: true
-  paradubsch.playtime.other:
-    description: 'Erlaubt Zugriff auf den /playtime <Name> Befehl.'
-    default: false
-  paradubsch.money.self:
-    description: 'Erlaubt Zugriff auf den /money Befehl.'
-    default: true
-  paradubsch.money.pay:
-    description: 'Erlaubt Zugriff auf den /money pay Befehl.'
-    default: true
-  paradubsch.money.from:
-    description: 'Erlaubt Zugriff auf den /money from Befehl.'
-    default: false
-  paradubsch.money.set:
-    description: 'Erlaubt Zugriff auf den /money set Befehl.'
-    default: false
-  paradubsch.money.add:
-    description: 'Erlaubt Zugriff auf den /money add Befehl.'
-    default: false
-  paradubsch.money.top:
-    description: 'Erlaubt Zugriff auf den /money top Befehl.'
-    default: true
-  paradubsch.sethome:
-    description: 'Erlaubt Zugriff auf den /sethome Befehl.'
-    default: true
-  paradubsch.home:
-    description: 'Erlaubt Zugriff auf den /home Befehl.'
-    default: true
-  paradubsch.buyhome:
-    description: 'Erlaubt Zugriff auf den /buyhome Befehl.'
-    default: true
-  paradubsch.homes:
-    description: 'Erlaubt Zugriff auf den /homes Befehl.'
-    default: true
-  paradubsch.viewhome:
-    description: 'Erlaubt Zugriff auf den /viewhome Befehl.'
-    default: true
-  paradubsch.delhome:
-    description: 'Erlaubt Zugriff auf den /delhome Befehl.'
-    default: true
-  paradubsch.gs:
-    description: 'Erlaubt Zugriff auf den /gs Befehl.'
-    default: true
-  paradubsch.save:
-    description: "Erlaubt Saveanfragen zu erhalten und auszuführen"
-    default: false
-  paradubsch.rank:
-    description: "Erlaubt Spielern einen Rang zu geben"
-    default: false
-  paradubsch.ban:
-    description: "Erlaubt Spielern einen Ban zu geben"
-    default: false
-  paradubsch.gm.self:
-    description: "Erlaubt Zugriff auf den /gm Befehl."
-    default: false
-  paradubsch.gm.other:
-    description: "Erlaubt Zugriff auf den /gm <Gamemode> <Name> Befehl."
-    default: false
-  paradubsch.warn:
-    description: "Erlaubt Spielern einen Warn zu geben"
-    default: false
-  paradubsch.warp.use:
-    description: "Erlaubt Spielern zu teleportieren"
-    default: true
-  paradubsch.warp.manage:
-    description: "Erlaubt Warps zu bearbeiten"
-    default: false
-  paradubsch.warps:
-    description: "Erlaubt Zugriff auf den /warps Befehl."
-    default: true
-  paradubsch.farmwelt:
-    description: "Erlaubt Zugriff auf den /farmwelt Befehl."
-    default: true
-  paradubsch.bauwelt:
-    description: "Erlaubt Zugriff auf den /bauwelt Befehl."
-    default: true
-  paradubsch.nether:
-    description: "Erlaubt Zugriff auf den /nether Befehl."
-    default: true
-  paradubsch.end:
-    description: "Erlaubt Zugriff auf den /end Befehl."
-    default: true
-  paradubsch.spawn:
-    description: "Erlaubt Zugriff auf den /spawn Befehl."
-    default: true
-  paradubsch.vanish.self:
-    description: "Erlaubt Zugriff auf den /vanish Befehl."
-    default: false
-  paradubsch.vanish.other:
-    description: "Erlaubt Zugriff auf den /vanish <Name> Befehl."
-    default: false
-  paradubsch.vanish.bypass:
-    description: "Erlaubt dir Spieler im Vanish zu sehen"
-    default: false
-  paradubsch.seen:
-    description: "Erlaubt Zugriff auf den /seen Befehl."
-    default: false
-  paradubsch.reply:
-    description: "Erlaubt Zugriff auf den /reply Befehl."
-    default: true
-  paradubsch.speed:
-    description: "Erlaubt Zugriff auf den /speed Befehl."
-    default: false
-  paradubsch.day:
-    description: "Erlaubt Zugriff auf den /day Befehl."
-    default: false
-  paradubsch.night:
-    description: "Erlaubt Zugriff auf den /night Befehl."
-    default: false
-  paradubsch.i:
-    description: "Erlaubt Zugriff auf den /i Befehl."
-    default: true
-  paradubsch.run:
-    description: "Erlaubt Zugriff auf den /run Befehl."
-    default: false
-  paradubsch.tpa:
-    description: "Erlaubt Zugriff auf den /tpa Befehl."
-    default: true
-  paradubsch.tpaccept:
-    description: "Erlaubt Zugriff auf den /tpaccept Befehl."
-    default: true
-  paradubsch.tpacancel:
-    description: "Erlaubt Zugriff auf den /tpacancel Befehl."
-    default: true
-  paradubsch.invsee.view:
-    description: "Erlaubt Zugriff auf den /invsee Befehl."
-    default: false
-  paradubsch.invsee.modify:
-    description: "Erlaubt Zugriff auf den /invsee Befehl."
-    default: false
-  paradubsch.job:
-    description: "Erlaubt Zugriff auf den /job Befehl."
-    default: true
-  paradubsch.bazaar:
-    description: "Erlaubt Zugriff auf den /bazaar Befehl."
-    default: true
-  paradubsch.rtp:
-    description: "Erlaubt Zugriff auf den /rtp Befehl."
-    default: true
-  paradubsch.saverequests:
-    description: "Erlaubt Zugriff auf den /saverequests Befehl."
-    default: false
-  paradubsch.gs.backup:
-    description: "Erlaubt Zugriff auf den /gs backup Befehl."
-    default: false
-  paradubsch.workbench:
-    description: "Erlaubt Zugriff auf den /workbench Befehl."
-    default: false
-  paradubsch.enderchest.self:
-    description: "Erlaubt Zugriff auf den /enderchest Befehl."
-    default: false
-  paradubsch.enderchest.others:
-    description: "Erlaubt Zugriff auf den /enderchest <Name> Befehl."
-    default: false
-  paradubsch.backpack:
-    description: "Erlaubt Zugriff auf den /backpack Befehl."
-    default: false
-  paradubsch.feed:
-    description: "Erlaubt Zugriff auf den /feed Befehl."
-    default: false
-  paradubsch.nightvision:
-    description: "Erlaubt Zugriff auf den /nightvision Befehl."
-    default: false
-  paradubsch.loom:
-    description: "Erlaubt Zugriff auf den /loom Befehl."
-    default: false
-  paradubsch.smithingtable:
-    description: "Erlaubt Zugriff auf den /smithingtable Befehl."
-    default: false
-  paradubsch.stonecutter:
-    description: "Erlaubt Zugriff auf den /stonecutter Befehl."
-    default: false
-  paradubsch.anvil:
-    description: "Erlaubt Zugriff auf den /anvil Befehl."
-    default: false
-  paradubsch.hat:
-    description: "Erlaubt Zugriff auf den /hat Befehl."
-    default: false
-  paradubsch.mute:
-    description: "Erlaubt Zugriff auf den /mute Befehl."
-    default: false
-  paradubsch.timevote:
-    description: "Erlaubt Zugriff auf den /timevote Befehl."
-    default: true
-  paradubsch.timevote.createvote:
-    description: "Erlaubt Zugriff auf den /votezeit create Befehl."
-    default: false
-  paradubsch.gs.bypass:
-    description: "Erlaubt nicht von gs kick/whitelist/ban betroffen zu sein."
-    default: false
+    children:
+      paradubsch.msg:
+        description: 'Erlaubt Zugriff auf den /msg Befehl.'
+        default: true
+      paradubsch.prefix:
+        description: 'Erlaubt Zugriff auf den /prefix Befehl.'
+        default: false
+      paradubsch.lang:
+        description: 'Erlaubt Zugriff auf den /lang Befehl.'
+        default: true
+      paradubsch.namecolor:
+        description: 'Erlaubt Zugriff auf den /namecolor Befehl.'
+        default: false
+      paradubsch.defaultchatcolor:
+        description: 'Erlaubt Zugriff auf den /defaultchatcolor Befehl.'
+        default: false
+      paradubsch.playtime.*:
+        description: 'Erlaubt Zugriff auf alle /playtime Befehle.'
+        default: false
+        children:
+          paradubsch.playtime.self:
+            description: 'Erlaubt Zugriff auf den /playtime Befehl.'
+            default: true
+          paradubsch.playtime.other:
+            description: 'Erlaubt Zugriff auf den /playtime <Name> Befehl.'
+            default: false
+      paradubsch.money.*:
+        description: 'Erlaubt Zugriff auf alle /money Befehle.'
+        default: false
+        children:
+          paradubsch.money.self:
+            description: 'Erlaubt Zugriff auf den /money Befehl.'
+            default: true
+          paradubsch.money.pay:
+            description: 'Erlaubt Zugriff auf den /money pay Befehl.'
+            default: true
+          paradubsch.money.from:
+            description: 'Erlaubt Zugriff auf den /money from Befehl.'
+            default: false
+          paradubsch.money.set:
+            description: 'Erlaubt Zugriff auf den /money set Befehl.'
+            default: false
+          paradubsch.money.add:
+            description: 'Erlaubt Zugriff auf den /money add Befehl.'
+            default: false
+          paradubsch.money.top:
+            description: 'Erlaubt Zugriff auf den /money top Befehl.'
+            default: true
+      paradubsch.sethome:
+        description: 'Erlaubt Zugriff auf den /sethome Befehl.'
+        default: true
+      paradubsch.home:
+        description: 'Erlaubt Zugriff auf den /home Befehl.'
+        default: true
+      paradubsch.buyhome:
+        description: 'Erlaubt Zugriff auf den /buyhome Befehl.'
+        default: true
+      paradubsch.homes:
+        description: 'Erlaubt Zugriff auf den /homes Befehl.'
+        default: true
+      paradubsch.viewhome:
+        description: 'Erlaubt Zugriff auf den /viewhome Befehl.'
+        default: true
+      paradubsch.delhome:
+        description: 'Erlaubt Zugriff auf den /delhome Befehl.'
+        default: true
+      paradubsch.gs.*:
+        description: 'Erlaubt Zugriff auf alle /gs Befehle.'
+        default: false
+        children:
+          paradubsch.gs.use:
+            description: 'Erlaubt Zugriff auf den /gs Befehl.'
+            default: true
+          paradubsch.gs.bypass:
+            description: "Erlaubt nicht von gs kick/whitelist/ban betroffen zu sein."
+            default: false
+      paradubsch.save:
+        description: "Erlaubt Saveanfragen zu erhalten und auszuführen"
+        default: false
+      paradubsch.rank:
+        description: "Erlaubt Spielern einen Rang zu geben"
+        default: false
+      paradubsch.ban:
+        description: "Erlaubt Spielern einen Ban zu geben"
+        default: false
+      paradubsch.gm.*:
+        description: "Erlaubt Zugriff auf alle /gm Befehle."
+        default: false
+        children:
+          paradubsch.gm.self:
+            description: "Erlaubt Zugriff auf den /gm Befehl."
+            default: false
+          paradubsch.gm.other:
+            description: "Erlaubt Zugriff auf den /gm <Gamemode> <Name> Befehl."
+            default: false
+      paradubsch.warn:
+        description: "Erlaubt Spielern einen Warn zu geben"
+        default: false
+      paradubsch.warp.*:
+        description: "Erlaubt Zugriff auf alle /warp Befehle."
+        default: false
+        children:
+          paradubsch.warp.use:
+            description: "Erlaubt Spielern zu teleportieren"
+            default: true
+          paradubsch.warp.manage:
+            description: "Erlaubt Warps zu bearbeiten"
+            default: false
+      paradubsch.warps:
+        description: "Erlaubt Zugriff auf den /warps Befehl."
+        default: true
+      paradubsch.farmwelt:
+        description: "Erlaubt Zugriff auf den /farmwelt Befehl."
+        default: true
+      paradubsch.bauwelt:
+        description: "Erlaubt Zugriff auf den /bauwelt Befehl."
+        default: true
+      paradubsch.nether:
+        description: "Erlaubt Zugriff auf den /nether Befehl."
+        default: true
+      paradubsch.end:
+        description: "Erlaubt Zugriff auf den /end Befehl."
+        default: true
+      paradubsch.spawn:
+        description: "Erlaubt Zugriff auf den /spawn Befehl."
+        default: true
+      paradubsch.vanish.*:
+        description: "Erlaubt Zugriff auf alle /vanish Befehle."
+        default: false
+        children:
+          paradubsch.vanish.self:
+            description: "Erlaubt Zugriff auf den /vanish Befehl."
+            default: false
+          paradubsch.vanish.other:
+            description: "Erlaubt Zugriff auf den /vanish <Name> Befehl."
+            default: false
+          paradubsch.vanish.bypass:
+            description: "Erlaubt dir Spieler im Vanish zu sehen"
+            default: false
+      paradubsch.seen:
+        description: "Erlaubt Zugriff auf den /seen Befehl."
+        default: false
+      paradubsch.reply:
+        description: "Erlaubt Zugriff auf den /reply Befehl."
+        default: true
+      paradubsch.speed:
+        description: "Erlaubt Zugriff auf den /speed Befehl."
+        default: false
+      paradubsch.day:
+        description: "Erlaubt Zugriff auf den /day Befehl."
+        default: false
+      paradubsch.night:
+        description: "Erlaubt Zugriff auf den /night Befehl."
+        default: false
+      paradubsch.i:
+        description: "Erlaubt Zugriff auf den /i Befehl."
+        default: true
+      paradubsch.run:
+        description: "Erlaubt Zugriff auf den /run Befehl."
+        default: false
+      paradubsch.tpa:
+        description: "Erlaubt Zugriff auf den /tpa Befehl."
+        default: true
+      paradubsch.tpaccept:
+        description: "Erlaubt Zugriff auf den /tpaccept Befehl."
+        default: true
+      paradubsch.tpacancel:
+        description: "Erlaubt Zugriff auf den /tpacancel Befehl."
+        default: true
+      paradubsch.invsee.*:
+        description: "Erlaubt Zugriff auf alle /invsee Befehle."
+        default: false
+        children:
+          paradubsch.invsee.view:
+            description: "Erlaubt Zugriff auf den /invsee Befehl."
+            default: false
+          paradubsch.invsee.modify:
+            description: "Erlaubt Zugriff auf den /invsee Befehl."
+            default: false
+      paradubsch.job:
+        description: "Erlaubt Zugriff auf den /job Befehl."
+        default: true
+      paradubsch.bazaar:
+        description: "Erlaubt Zugriff auf den /bazaar Befehl."
+        default: true
+      paradubsch.rtp:
+        description: "Erlaubt Zugriff auf den /rtp Befehl."
+        default: true
+      paradubsch.saverequests:
+        description: "Erlaubt Zugriff auf den /saverequests Befehl."
+        default: false
+      paradubsch.gs.backup:
+        description: "Erlaubt Zugriff auf den /gs backup Befehl."
+        default: false
+      paradubsch.workbench:
+        description: "Erlaubt Zugriff auf den /workbench Befehl."
+        default: false
+      paradubsch.enderchest.*:
+        description: "Erlaubt Zugriff auf alle /enderchest Befehle."
+        default: false
+        children:
+          paradubsch.enderchest.self:
+            description: "Erlaubt Zugriff auf den /enderchest Befehl."
+            default: false
+          paradubsch.enderchest.others:
+            description: "Erlaubt Zugriff auf den /enderchest <Name> Befehl."
+            default: false
+      paradubsch.backpack:
+        description: "Erlaubt Zugriff auf den /backpack Befehl."
+        default: false
+      paradubsch.feed:
+        description: "Erlaubt Zugriff auf den /feed Befehl."
+        default: false
+      paradubsch.nightvision:
+        description: "Erlaubt Zugriff auf den /nightvision Befehl."
+        default: false
+      paradubsch.loom:
+        description: "Erlaubt Zugriff auf den /loom Befehl."
+        default: false
+      paradubsch.smithingtable:
+        description: "Erlaubt Zugriff auf den /smithingtable Befehl."
+        default: false
+      paradubsch.stonecutter:
+        description: "Erlaubt Zugriff auf den /stonecutter Befehl."
+        default: false
+      paradubsch.anvil:
+        description: "Erlaubt Zugriff auf den /anvil Befehl."
+        default: false
+      paradubsch.hat:
+        description: "Erlaubt Zugriff auf den /hat Befehl."
+        default: false
+      paradubsch.mute:
+        description: "Erlaubt Zugriff auf den /mute Befehl."
+        default: false
+      paradubsch.timevote.*:
+        description: "Erlaubt Zugriff auf alle /timevote Befehle."
+        default: false
+        children:
+          paradubsch.timevote.use:
+            description: "Erlaubt Zugriff auf den /timevote Befehl."
+            default: true
+          paradubsch.timevote.createvote:
+            description: "Erlaubt Zugriff auf den /votezeit create Befehl."
+            default: false

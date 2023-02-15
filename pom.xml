@@ -6,7 +6,7 @@
 
     <groupId>de.paradubsch</groupId>
     <artifactId>paradubschmanager</artifactId>
-    <version>0.1</version>
+    <version>1.2</version>
     <packaging>jar</packaging>
 
     <name>ParadubschManager</name>
