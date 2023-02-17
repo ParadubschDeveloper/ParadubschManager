@@ -616,14 +616,14 @@ permissions:
             description: "Erlaubt es Kit 1 zu benutzen."
             default: false
           paradubsch.kit.2:
-            description: "Erlaubt es Kit 1 zu benutzen."
+            description: "Erlaubt es Kit 2 zu benutzen."
             default: false
           paradubsch.kit.3:
-            description: "Erlaubt es Kit 1 zu benutzen."
+            description: "Erlaubt es Kit 3 zu benutzen."
             default: false
           paradubsch.kit.4:
-            description: "Erlaubt es Kit 1 zu benutzen."
+            description: "Erlaubt es Kit 4 zu benutzen."
             default: false
           paradubsch.kit.5:
-            description: "Erlaubt es Kit 1 zu benutzen."
+            description: "Erlaubt es Kit 5 zu benutzen."
             default: false
