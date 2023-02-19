@@ -5,6 +5,7 @@ import de.craftery.util.gui.GuiItem;
 import de.craftery.util.lang.Language;
 import de.paradubsch.paradubschmanager.models.KitCollectable;
 import de.paradubsch.paradubschmanager.models.KitRedeemEntry;
+import de.paradubsch.paradubschmanager.models.logging.KitRedeemLog;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 import org.bukkit.entity.Player;
@@ -55,6 +56,7 @@ public class KitCollectGui extends BaseGui {
         if (diff > minDiff) {
             KitRedeemEntry.redeem(this.player, kitId);
             KitCollectable.renewKit(this.player, kitId);
+            KitRedeemLog.logKitRedeem(this.player, kitId);
         }
         KitCollectable kit = KitCollectable.getContents(this.player, kitId);
         this.getKvStore().set("kit", kit);
