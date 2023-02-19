@@ -226,7 +226,6 @@ public class GuiManager implements Listener {
                     if (prompts == null) {
                         prompts = new HashMap<>();
                     }
-                    System.out.println("Closed: " + strings[0]);
                     prompts.put(identifier, strings[0]);
                     GuiManager.prompts.put(p, prompts);
                     List<Object> args = GuiManager.instance.sessionData.get(p);

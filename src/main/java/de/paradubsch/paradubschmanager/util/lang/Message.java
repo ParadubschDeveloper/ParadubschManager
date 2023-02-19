@@ -94,7 +94,9 @@ public class Message {
         GS_BANNED("gsBanned","&cDu bist auf diesem Grundstück gebannt."),
         CMD_KICK_PLAYER_CANNOT_BE_KICKED("cmdKickPlayerCannotBeKicked","&cDer Spieler &a%1 &ckann nicht gekickt werden."),
         INVALID_KIT_SYNTAX("invalidKitSyntax","&cBitte verwende /kit"),
-        INVALID_KIT_ID("invalidKitId","&cDas Kit &a%1 &cexistiert nicht.");
+        INVALID_KIT_ID("invalidKitId","&cDas Kit &a%1 &cexistiert nicht."),
+        KIT_GUI_NO_PERMISSION("kitGuiNoPermission","&cDu hast keine Berechtigung, dieses Kit zu verwenden."),
+        KIT_COLLECT_GUI_INVENTORY_FULL("kitCollectGuiInventoryFull","&cDein Inventar ist voll.");
 
         private final String key;
         private final String def;
@@ -387,7 +389,25 @@ public class Message {
         NEXT_PAGE("guiNextPage", "Nächste Seite"),
         YOU_ARE_IN_WORLD("guiYouAreInWorld", "&7Du befindest dich in der Welt"),
         REQUEST_BY("guiRequestBy", "&7Anfrage von"),
-        PLOT_SIZE("guiPlotSize", "&7Grundstücksgröße");
+        PLOT_SIZE("guiPlotSize", "&7Grundstücksgröße"),
+        KIT_GUI_TITLE("guiKitGuiTitle", "&a&lKits"),
+        KIT_GUI_KIT_1_NAME("guiKitGuiKit1Name", "&a&lStarter Kit"),
+        KIT_GUI_KIT_2_NAME("guiKitGuiKit2Name", "&a&lFortgeschrittenes Kit"),
+        KIT_GUI_KIT_3_NAME("guiKitGuiKit3Name", "&a&lProfi Kit"),
+        KIT_GUI_KIT_4_NAME("guiKitGuiKit4Name", "&a&lJetpack/Rockets"),
+        KIT_GUI_KIT_5_NAME("guiKitGuiKit5Name", "&a&lAlchemy Set"),
+        KIT_GUI_KIT_1_LORE_1("guiKitGuiKit1Lore1", "&7Starter Stuff für Spieler"),
+        KIT_GUI_KIT_1_LORE_2("guiKitGuiKit1Lore2", "&aAlle 7 Tage einlösbar"),
+        KIT_GUI_KIT_2_LORE_1("guiKitGuiKit2Lore1", "&7Eisenwerkzeuge ab dem Copper Rang"),
+        KIT_GUI_KIT_2_LORE_2("guiKitGuiKit2Lore2", "&aAlle 7 Tage einlösbar"),
+        KIT_GUI_KIT_3_LORE_1("guiKitGuiKit3Lore1", "&7Diamantwerkzeuge ab dem Amethyst Rang"),
+        KIT_GUI_KIT_3_LORE_2("guiKitGuiKit3Lore2", "&aAlle 14 Tage einlösbar"),
+        KIT_GUI_KIT_4_LORE_1("guiKitGuiKit4Lore1", "&7Jetpack und Rockets"),
+        KIT_GUI_KIT_4_LORE_2("guiKitGuiKit4Lore2", "&aAlle 3 Tage einlösbar"),
+        KIT_GUI_KIT_5_LORE_1("guiKitGuiKit5Lore1", "&7Alles was man zum brauen braucht"),
+        KIT_GUI_KIT_5_LORE_2("guiKitGuiKit5Lore2", "&aAlle 7 Tage einlösbar"),
+        KIT_COLLECT_GUI_TITLE("guiKitCollectGuiTitle", "&a&lItems einsammeln");
+
 
         private final String key;
         private final String def;

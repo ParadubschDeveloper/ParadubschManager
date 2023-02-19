@@ -26,9 +26,7 @@ public class BazaarCollectGui extends BaseGui {
 
             int row = (int) Math.ceil(slot / 9f);
             int col = slot % 9;
-            System.out.println("Set collectable");
             this.getKvStore().set(collectable.getMaterial().toString() + "newestCollectable", collectable);
-            System.out.println("Add item");
             this.addAbstractItem(BazaarClaimCollectableButton.class, row, col, collectable.getMaterial(), collectable.getMaterial());
         }
 

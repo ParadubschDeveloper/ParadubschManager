@@ -2,6 +2,7 @@ package de.paradubsch.paradubschmanager.commands;
 
 import de.craftery.util.gui.GuiManager;
 import de.paradubsch.paradubschmanager.gui.window.KitEditGui;
+import de.paradubsch.paradubschmanager.gui.window.KitGui;
 import de.paradubsch.paradubschmanager.util.Expect;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.lang.Message;
@@ -23,7 +24,7 @@ public class KitCommand implements CommandExecutor, TabCompleter {
         Player player = (Player) sender;
 
         if (args.length == 0) {
-            // open kit gui
+            GuiManager.entryGui(KitGui.class, player);
         } else if (args.length == 2 && args[0].equalsIgnoreCase("edit") && sender.hasPermission("paradubsch.kit.edit")) {
             Integer kitId = Expect.parseInt(args[1]);
             if (kitId == null || kitId < 1 || kitId > 5) {

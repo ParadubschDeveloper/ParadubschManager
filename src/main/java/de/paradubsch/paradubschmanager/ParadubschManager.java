@@ -149,6 +149,8 @@ public final class ParadubschManager extends CraftPlugin {
         HibernateConfigurator.addEntity(LogEntry.class);
         HibernateConfigurator.addEntity(ChatMessageLog.class);
         HibernateConfigurator.addEntity(SavedKit.class);
+        HibernateConfigurator.addEntity(KitRedeemEntry.class);
+        HibernateConfigurator.addEntity(KitCollectable.class);
     }
 
     private void registerEvents() {
