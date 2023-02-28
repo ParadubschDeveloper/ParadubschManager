@@ -1,6 +1,7 @@
 package de.craftery.util.gui;
 
 import de.craftery.CraftPlugin;
+import de.craftery.command.CraftPlayer;
 import de.craftery.util.lang.Language;
 import de.paradubsch.paradubschmanager.models.PlayerData;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
@@ -203,6 +204,11 @@ public class GuiManager implements Listener {
         return null;
     }
 
+    public static <T extends BaseGui> void entryGui(Class<T> gui, CraftPlayer p, Object... args) {
+        entryGui(gui, p.getPlayer(), args);
+    }
+
+    @Deprecated
     public static <T extends BaseGui> void entryGui(Class<T> gui, Player p, Object... args) {
         GuiManager.prompts.remove(p);
         GuiManager.kvStores.remove(p);

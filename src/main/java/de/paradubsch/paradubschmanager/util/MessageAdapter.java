@@ -1,10 +1,9 @@
 package de.paradubsch.paradubschmanager.util;
 
 import de.craftery.CraftPlugin;
+import de.craftery.InternalMessages;
 import de.craftery.util.lang.Language;
-import de.craftery.util.ConfigurationManager;
 import de.craftery.util.lang.BaseMessageType;
-import de.craftery.util.lang.ChatComponentFactory;
 import de.paradubsch.paradubschmanager.models.PlayerData;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
@@ -33,8 +32,7 @@ public class MessageAdapter {
         Language playerLang = getSenderLang(cs);
 
         Component infoText = CraftPlugin.getInstance().getLanguageManager().get(template, playerLang, args);
-        return ChatComponentFactory.assemble(ConfigurationManager.getString("chatPrefix"))
-                .append(infoText);
+        return CraftPlugin.getInstance().getLanguageManager().get(InternalMessages.CHAT_PREFIX, playerLang).append(infoText);
     }
 
     public static void sendMessage(CommandSender cs, BaseMessageType template, String... args) {

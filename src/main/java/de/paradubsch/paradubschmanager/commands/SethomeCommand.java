@@ -1,6 +1,7 @@
 package de.paradubsch.paradubschmanager.commands;
 
 import de.craftery.ErrorOr;
+import de.craftery.InternalMessages;
 import de.paradubsch.paradubschmanager.models.Home;
 import de.paradubsch.paradubschmanager.models.PlayerData;
 import de.paradubsch.paradubschmanager.util.Expect;
@@ -25,7 +26,7 @@ public class SethomeCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (!Expect.playerSender(sender)) {
-            MessageAdapter.sendMessage(sender, Message.Error.CMD_ONLY_FOR_PLAYERS);
+            MessageAdapter.sendMessage(sender, InternalMessages.CMD_ONLY_FOR_PLAYERS);
             return true;
         }
         Player player = (Player) sender;

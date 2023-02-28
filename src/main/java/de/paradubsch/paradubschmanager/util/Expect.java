@@ -1,6 +1,6 @@
 package de.paradubsch.paradubschmanager.util;
 
-import de.paradubsch.paradubschmanager.util.lang.Message;
+import de.craftery.InternalMessages;
 import de.craftery.util.features.Feature;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -32,19 +32,20 @@ public class Expect {
 
     public static Boolean playerSender (@NotNull CommandSender sender) {
         if (!(sender instanceof Player)) {
-            MessageAdapter.sendMessage(sender, Message.Error.CMD_ONLY_FOR_PLAYERS);
+            MessageAdapter.sendMessage(sender, InternalMessages.CMD_ONLY_FOR_PLAYERS);
         }
 
         return sender instanceof Player;
     }
 
     @SafeVarargs
+    @Deprecated
     public static boolean featuresEnabled(@NotNull CommandSender sender, Class<? extends Feature>... features) {
         for (Class<? extends Feature> feature : features) {
             try {
                 Feature instance = feature.getDeclaredConstructor().newInstance();
                 if (!instance.isAvailable()) {
-                    MessageAdapter.sendMessage(sender, Message.Error.FEATURE_NOT_AVAILABLE, instance.getFeatureName());
+                    MessageAdapter.sendMessage(sender, InternalMessages.FEATURE_NOT_AVAILABLE, instance.getFeatureName());
                     return false;
                 }
             } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {

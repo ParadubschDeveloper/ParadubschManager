@@ -1,5 +1,6 @@
 package de.paradubsch.paradubschmanager.commands;
 
+import de.craftery.InternalMessages;
 import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.models.PlayerData;
 import de.paradubsch.paradubschmanager.util.Expect;
@@ -23,7 +24,7 @@ public class PlaytimeCommand implements CommandExecutor, TabCompleter {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
         if (!Expect.minArgs(1, args)) {
             if (!Expect.playerSender(sender)) {
-                MessageAdapter.sendMessage(sender, Message.Error.CMD_ONLY_FOR_PLAYERS);
+                MessageAdapter.sendMessage(sender, InternalMessages.CMD_ONLY_FOR_PLAYERS);
                 return true;
             }
 

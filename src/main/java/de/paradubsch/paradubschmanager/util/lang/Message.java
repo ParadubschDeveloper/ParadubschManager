@@ -10,7 +10,6 @@ public class Message {
         CMD_RECEIVER_NOT_PLAYER("cmdReceiverNotPlayer", "Der Empfänger &d%1 &7ist kein Spieler!"),
         CMD_MESSAGE_NOT_PROVIDED("cmdMessageNotProvided", "&cDu musst eine Nachricht angeben!"),
         CMD_RECEIVER_NOT_ONLINE("cmdReceiverNotOnline", "Der Spieler &d%1 &7ist &cnicht &7online!"),
-        CMD_ONLY_FOR_PLAYERS("cmdOnlyForPlayers", "&cDieser Befehl kann nur von Spielern ausgeführt werden!"),
         CMD_PLAYER_NOT_PROVIDED("cmdPlayerNotProvided", "&cDu musst einen Spieler angeben!"),
         CMD_PREFIX_NOT_PROVIDED("cmdPrefixNotProvided", "&cDu musst einen Prefix angeben!"),
         CMD_PLAYER_NEVER_ONLINE("cmdPlayerNeverOnline", "Der Spieler &d%1 &7war noch &cnie &7online!"),
@@ -80,7 +79,6 @@ public class Message {
         CMD_BAZAAR_PRICE_NOT_PROVIDED("cmdBazaarPriceNotProvided", "&cDu musst einen Preis angeben!"),
         CMD_BAZAAR_CANNOT_SELL_THIS_ITEM("cmdBazaarConnotSellThisItem", "&cDu kannst dieses Item nicht auf dem Basar verkaufen!"),
         CMD_BAZAAR_NOT_ENOUGH_ITEMS("cmdBazaarNotEnoughItems", "&cDu brauchst mindestens &a%1&7x@ClickableComponent<Translatable=%2>&cum es auf dem Basar zu verkaufen!"),
-        FEATURE_NOT_AVAILABLE("featureNotAvailable", "&cDas Feature &6%1&c ist nicht verfügbar!"),
         CMD_BAZAAR_INVALID_PRICE("cmdBazaarInvalidPrice", "&cDer Preis muss größer als &a%1&c sein und nicht größer als &a%2&c!"),
         CMD_TIMEVOTE_NOT_RUNNING("cmdVoteNotRunning","&cEs läuft grade keine Abstimmung."),
         CMD_TIMEVOTE_ALREADY_RUNNING("cmdTimevoteAlreadyRunning","&cEs läuft bereits eine Abstimmung."),
@@ -209,10 +207,10 @@ public class Message {
         CMD_NIGHTVISION_ACTIVATED("cmdNightvisionActivated", "&aDu hast nun Nachtsicht."),
         CMD_NIGHTVISION_DEACTIVATED("cmdNightvisionDeactivated", "&aDu hast nun keine Nachtsicht mehr."),
         CMD_BAZAAR_PAYED_TAXES("cmdBazaarPayedTaxes", "Dafür hast du &a%1&6€ &7Steuern gezahlt."),
-        CMD_ANVIL_OPENED("cmdAnvilOpened","&a Du hast deinen mobilen Amboss geöffnet."),
-        CMD_LOOM_OPENED("cmdLoomOpened","&a Du hast deinen mobilen Webstuhl geöffnet."),
-        CMD_SMITHING_OPENED("cmdSmithingOpened","&a Du hast deinen mobilen Schmiedetisch geöffnet."),
-        CMD_STONECUTTER_OPENED("cmdStonecutterOpened","&a Du hast deine mobile Steinsäge geöffnet."),
+        CMD_ANVIL_OPENED("cmdAnvilOpened","&aDu hast deinen mobilen Amboss geöffnet."),
+        CMD_LOOM_OPENED("cmdLoomOpened","&aDu hast deinen mobilen Webstuhl geöffnet."),
+        CMD_SMITHING_OPENED("cmdSmithingOpened","&aDu hast deinen mobilen Schmiedetisch geöffnet."),
+        CMD_STONECUTTER_OPENED("cmdStonecutterOpened","&aDu hast deine mobile Steinsäge geöffnet."),
         CMD_HAT_USE("cmdHatUse","&a Du hast dir einen neuen Hut aufgesetzt"),
         CMD_MUTE_GOT_MUTED_HEADER("cmdMuteGotMutedHeader","&cDu wurdest für &6%1 &cGemutet."),
         CMD_MUTE_GOT_MUTED_BODY("cmdMuteGotMutedBody","&cGrund: &6%1"),
@@ -297,7 +295,6 @@ public class Message {
         EVENT_WORLD("constantEventwelt","&aEventwelt"),
         NIGHT("constantNight","Nacht");
 
-
         private final String key;
         private final String def;
 
@@ -323,7 +320,6 @@ public class Message {
     }
 
     public enum Gui implements BaseMessageType {
-
         BACKPACK_TITLE("guiBackpackTitle", "&6&lBackpack"),
         CLAIM_TITLE("guiClaimTitle", "&a&lGrundstück sichern?"),
         CANCEL("guiCancel", "&cAbbrechen"),
@@ -407,7 +403,6 @@ public class Message {
         KIT_GUI_KIT_5_LORE_1("guiKitGuiKit5Lore1", "&7Alles was man zum brauen braucht"),
         KIT_GUI_KIT_5_LORE_2("guiKitGuiKit5Lore2", "&aAlle 7 Tage einlösbar"),
         KIT_COLLECT_GUI_TITLE("guiKitCollectGuiTitle", "&a&lItems einsammeln");
-
 
         private final String key;
         private final String def;

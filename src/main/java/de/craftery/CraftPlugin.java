@@ -1,5 +1,6 @@
 package de.craftery;
 
+import de.craftery.command.CraftCommand;
 import de.craftery.util.CachingManager;
 import de.craftery.util.ConfigurationManager;
 import de.craftery.util.TestDatabaseConnection;
@@ -69,12 +70,32 @@ public class CraftPlugin extends JavaPlugin implements Listener {
         headDatabase = new HeadDatabaseAPI();
     }
 
-    protected <T extends CommandExecutor & TabCompleter> void register(String command, T obj) {
+    @Deprecated
+    protected <T extends CommandExecutor & TabCompleter> void registerLegacyCommand(String command, T obj) {
         registeredCommands.add(command);
         PluginCommand pc = Bukkit.getPluginCommand(command);
         if (pc == null) return;
         pc.setExecutor(obj);
         pc.setTabCompleter(obj);
+    }
+
+    protected void registerCommand(CraftCommand command) {
+        PluginCommand pc = Bukkit.getPluginCommand(command.getIdentifier());
+        if (pc != null) {
+            registeredCommands.add(command.getIdentifier());
+            pc.setExecutor(command);
+            pc.setTabCompleter(command);
+        }
+
+        command.getOtherIdentifiers().forEach((otherIdentifier) -> {
+            PluginCommand pcAlt = Bukkit.getPluginCommand(otherIdentifier);
+
+            if (pcAlt != null) {
+                registeredCommands.add(otherIdentifier);
+                pcAlt.setExecutor(command);
+                pcAlt.setTabCompleter(command);
+            }
+        });
     }
 
     private void unregisterCommands() {

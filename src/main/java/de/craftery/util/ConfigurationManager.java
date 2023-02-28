@@ -15,8 +15,6 @@ public class ConfigurationManager {
         JavaPlugin instance = CraftPlugin.getInstance();
         FileConfiguration config = instance.getConfig();
 
-        ConfigurationManager.addDefault("chatPrefix", "&8&l[&6&lServer&8&l] &r");
-
         config.addDefault("hibernate.driver", "com.mysql.cj.jdbc.Driver");
         config.addDefault("hibernate.url", "jdbc:mysql://localhost:3306/test?useSSL=false");
         config.addDefault("hibernate.user", "root");
