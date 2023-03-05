@@ -2,6 +2,7 @@ package de.craftery.command;
 
 import de.craftery.InternalMessages;
 import de.craftery.util.features.Feature;
+import de.paradubsch.paradubschmanager.util.Expect;
 import de.paradubsch.paradubschmanager.util.MessageAdapter;
 import lombok.Data;
 import org.bukkit.command.Command;
@@ -11,6 +12,7 @@ import org.bukkit.command.TabCompleter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +40,7 @@ public abstract class CraftCommand implements CommandExecutor, TabCompleter {
 
         if (!isRightPlayerType(player)) return true;
         if (!isFeatureDependent(player)) return true;
+        if (!checkArgs(player, args)) return true;
 
         return execute(player, args);
     }
@@ -48,6 +51,58 @@ public abstract class CraftCommand implements CommandExecutor, TabCompleter {
         this.setActiveAlias(label);
 
         return tabComplete(new CraftPlayer(sender), args);
+    }
+
+    private boolean checkArgs(CraftPlayer player, String[] args) {
+        try {
+            Annotation[] annotations = this.getClass().getMethod("execute", CraftPlayer.class, String[].class).getAnnotations();
+            for (Annotation annotation : annotations) {
+                if (annotation instanceof CheckArg) {
+                    CheckArg argsAnnotation = (CheckArg) annotation;
+
+                    if (args.length < argsAnnotation.index() + 1) {
+                        reportInsufficientArgumentCount(player, argsAnnotation.type(), argsAnnotation.index());
+                        return false;
+                    }
+
+                    if (argsAnnotation.checkType()) {
+                        if (!checkArgType(player, argsAnnotation.type(), args[argsAnnotation.index()])) return false;
+                    }
+                }
+            }
+        } catch (NoSuchMethodException ignored) {
+            return true;
+        }
+        return true;
+    }
+
+    private boolean checkArgType(CraftPlayer player, ArgType type, String arg) {
+        switch (type) {
+            case NOT_PROVIDED: {
+                return true;
+            }
+            case PLAYER_NAME: {
+                if (!Expect.playerString(arg)) {
+                    player.sendMessage(InternalMessages.PLAYER_NOT_PROVIDED);
+                    return false;
+                }
+                break;
+            }
+        }
+        return true;
+    }
+
+    private void reportInsufficientArgumentCount(CraftPlayer player, ArgType type, int index) {
+        switch (type) {
+            case NOT_PROVIDED: {
+                player.sendMessage(InternalMessages.NOT_ENOUGH_ARGUMENTS, (index + 1) + "");
+                break;
+            }
+            case PLAYER_NAME: {
+                player.sendMessage(InternalMessages.PLAYER_NOT_PROVIDED);
+                break;
+            }
+        }
     }
 
     private boolean isFeatureDependent(CraftPlayer player) {

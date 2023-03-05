@@ -1,5 +1,9 @@
 package de.paradubsch.paradubschmanager.commands;
 
+import de.craftery.command.ArgType;
+import de.craftery.command.CheckArg;
+import de.craftery.command.CraftCommand;
+import de.craftery.command.CraftPlayer;
 import de.craftery.util.lang.Language;
 import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.models.BanPunishment;
@@ -7,18 +11,11 @@ import de.paradubsch.paradubschmanager.models.PlayerData;
 import de.paradubsch.paradubschmanager.models.PunishmentHolder;
 import de.paradubsch.paradubschmanager.models.PunishmentUpdate;
 import de.paradubsch.paradubschmanager.util.Expect;
-import de.paradubsch.paradubschmanager.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.TimeCalculations;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.sql.Timestamp;
 import java.time.Instant;
@@ -27,58 +24,60 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BanCommand implements TabCompleter, CommandExecutor {
-    @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (!Expect.minArgs(1, args)) {
-            MessageAdapter.sendMessage(sender, Message.Error.CMD_PLAYER_NOT_PROVIDED);
-            return true;
-        }
+public class BanCommand extends CraftCommand {
+    public BanCommand() {
+        super("Ban Command");
+        this.setIdentifier("cb");
+    }
 
+    @Override
+    @CheckArg(index = 0, type = ArgType.PLAYER_NAME, checkType = false)
+    public boolean execute(CraftPlayer player, String[] args) {
         switch (args[0]) {
+            /* #TODO: Implement list command
             case "list": {
                 break;
-            }
+            }*/
             case "update":
             case "edit": {
-                editBan(sender, args);
+                editBan(player, args);
                 break;
             }
             case "delete": {
-                deleteBan(sender, args);
+                deleteBan(player, args);
                 break;
             }
-            default: banPlayer(sender, args);
+            default: banPlayer(player, args);
         }
 
         return true;
     }
 
-    private void banPlayer(CommandSender sender, String[] args) {
+    private void banPlayer(CraftPlayer sender, String[] args) {
         //ban player duration reason
         Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
             PlayerData target = PlayerData.getByName(args[0]);
             if (target == null) {
-                MessageAdapter.sendMessage(sender, Message.Error.CMD_PLAYER_NEVER_ONLINE, args[0]);
+                sender.sendMessage(Message.Error.CMD_PLAYER_NEVER_ONLINE, args[0]);
                 return;
             }
 
             PunishmentHolder ph = PunishmentHolder.getByPlayerDataOrCreate(target);
 
             if (ph.isActiveBan()) {
-               MessageAdapter.sendMessage(sender, Message.Error.CMD_BAN_PLAYER_ALREADY_BANNED, args[0]);
-               MessageAdapter.sendMessage(sender, Message.Info.CMD_BAN_SUGGEST_UPDATE, target.getName());
+               sender.sendMessage(Message.Error.CMD_BAN_PLAYER_ALREADY_BANNED, args[0]);
+               sender.sendMessage(Message.Info.CMD_BAN_SUGGEST_UPDATE, target.getName());
                return;
             }
 
             if (!Expect.minArgs(2, args)) {
-                MessageAdapter.sendMessage(sender, Message.Error.CMD_BAN_DURATION_NOT_PROVIDED);
+                sender.sendMessage(Message.Error.CMD_BAN_DURATION_NOT_PROVIDED);
                 return;
             }
 
             Timestamp banExpiration = TimeCalculations.parseExpiration(args[1]);
             if (banExpiration == null) {
-                MessageAdapter.sendMessage(sender, Message.Error.CMD_BAN_DURATION_INVALID, args[1]);
+                sender.sendMessage(Message.Error.CMD_BAN_DURATION_INVALID, args[1]);
                 return;
             }
             Language lang = Language.getLanguageByShortName(target.getLanguage());
@@ -102,8 +101,8 @@ public class BanCommand implements TabCompleter, CommandExecutor {
                 ph.setPermaBanned(true);
             }
 
-            if (sender instanceof Player) {
-                ban.setGivenBy(((Player) sender).getUniqueId().toString());
+            if (sender.isPlayer()) {
+                ban.setGivenBy(sender.getPlayer().getUniqueId().toString());
             }
             ban.setHolderRef(target.getUuid());
 
@@ -126,28 +125,28 @@ public class BanCommand implements TabCompleter, CommandExecutor {
                 });
             }
 
-            MessageAdapter.sendMessage(sender, Message.Info.CMD_BAN_PLAYER_BANNED, target.getName());
+            sender.sendMessage(Message.Info.CMD_BAN_PLAYER_BANNED, target.getName());
         });
     }
 
-    private void deleteBan(CommandSender sender, String[] args) {
+    private void deleteBan(CraftPlayer sender, String[] args) {
         //ban delete player reason
         Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
             if (!Expect.minArgs(2, args)) {
-                MessageAdapter.sendMessage(sender, Message.Error.CMD_PLAYER_NOT_PROVIDED);
+                sender.sendMessage(Message.Error.CMD_PLAYER_NOT_PROVIDED);
                 return;
             }
 
             PlayerData target = PlayerData.getByName(args[1]);
             if (target == null) {
-                MessageAdapter.sendMessage(sender, Message.Error.CMD_PLAYER_NEVER_ONLINE, args[0]);
+                sender.sendMessage(Message.Error.CMD_PLAYER_NEVER_ONLINE, args[0]);
                 return;
             }
 
             PunishmentHolder ph = PunishmentHolder.getByPlayerDataOrCreate(target);
 
             if (!ph.isActiveBan()) {
-                MessageAdapter.sendMessage(sender, Message.Error.CMD_BAN_PLAYER_NOT_BANNED, target.getName());
+                sender.sendMessage(Message.Error.CMD_BAN_PLAYER_NOT_BANNED, target.getName());
                 return;
             }
 
@@ -174,43 +173,43 @@ public class BanCommand implements TabCompleter, CommandExecutor {
             update.setPunishmentRef(ban.getId());
             update.setReason(unbanReason);
             update.setExpiration(Timestamp.valueOf(LocalDateTime.ofInstant(Instant.now(), ZoneId.systemDefault())));
-            if (sender instanceof Player) {
-                update.setGivenBy(((Player) sender).getUniqueId().toString());
+            if (sender.isPlayer()) {
+                update.setGivenBy(sender.getPlayer().getUniqueId().toString());
             }
             update.save();
 
             ban.setHasUpdate(true);
             ban.saveOrUpdate();
 
-            MessageAdapter.sendMessage(sender, Message.Info.CMD_BAN_PLAYER_UNBANNED, target.getName());
+            sender.sendMessage(Message.Info.CMD_BAN_PLAYER_UNBANNED, target.getName());
         });
     }
 
-    private void editBan(CommandSender sender, String[] args) {
+    private void editBan(CraftPlayer sender, String[] args) {
         //ban edit player expiration reason
         Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
             if (!Expect.minArgs(2, args)) {
-                MessageAdapter.sendMessage(sender, Message.Error.CMD_PLAYER_NOT_PROVIDED);
+                sender.sendMessage(Message.Error.CMD_PLAYER_NOT_PROVIDED);
                 return;
             }
 
             PlayerData target = PlayerData.getByName(args[1]);
             if (target == null) {
-                MessageAdapter.sendMessage(sender, Message.Error.CMD_PLAYER_NEVER_ONLINE, args[0]);
+                sender.sendMessage(Message.Error.CMD_PLAYER_NEVER_ONLINE, args[0]);
                 return;
             }
 
             PunishmentHolder ph = PunishmentHolder.getByPlayerDataOrCreate(target);
 
             if (!ph.isActiveBan()) {
-                MessageAdapter.sendMessage(sender, Message.Error.CMD_BAN_PLAYER_NOT_BANNED, target.getName());
+                sender.sendMessage(Message.Error.CMD_BAN_PLAYER_NOT_BANNED, target.getName());
                 return;
             }
 
             Timestamp banExpiration = TimeCalculations.parseExpiration(args[2]);
 
             if (banExpiration == null) {
-                MessageAdapter.sendMessage(sender, Message.Error.CMD_BAN_DURATION_INVALID, args[2]);
+                sender.sendMessage(Message.Error.CMD_BAN_DURATION_INVALID, args[2]);
                 return;
             }
 
@@ -242,19 +241,20 @@ public class BanCommand implements TabCompleter, CommandExecutor {
             update.setPunishmentRef(ban.getId());
             update.setReason(banReason);
             update.setExpiration(banExpiration);
-            if (sender instanceof Player) {
-                update.setGivenBy(((Player) sender).getUniqueId().toString());
+            if (sender.isPlayer()) {
+                update.setGivenBy(sender.getPlayer().getUniqueId().toString());
             }
             update.save();
 
             ban.setHasUpdate(true);
             ban.saveOrUpdate();
 
-            MessageAdapter.sendMessage(sender, Message.Info.CMD_BAN_EDITED, target.getName());
+            sender.sendMessage(Message.Info.CMD_BAN_EDITED, target.getName());
         });
     }
+
     @Override
-    public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+    public List<String> tabComplete(CraftPlayer player, String[] args) {
         List<String> l = new ArrayList<>();
         if (args.length == 1) {
             Bukkit.getOnlinePlayers().forEach(x -> l.add(x.getName()));

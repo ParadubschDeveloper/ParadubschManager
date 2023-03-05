@@ -7,7 +7,10 @@ public enum InternalMessages implements BaseMessageType {
     CHAT_PREFIX("internalConstantChatPrefix", "&8&l[&6&lServer&8&l] &r"),
     CMD_ONLY_FOR_PLAYERS("cmdOnlyForPlayers", "&cDieser Befehl kann nur von Spielern ausgeführt werden!"),
     CMD_ONLY_FOR_CONSOLE("cmdOnlyForConsole", "&cDieser Befehl kann nur von der Konsole ausgeführt werden!"),
-    FEATURE_NOT_AVAILABLE("featureNotAvailable", "&cDas Feature &6%1&c ist nicht verfügbar!");
+    FEATURE_NOT_AVAILABLE("featureNotAvailable", "&cDas Feature &6%1&c ist nicht verfügbar!"),
+    NOT_ENOUGH_ARGUMENTS("notEnoughArguments", "&cDu musst mindestens &6%1 &cArgumente angeben!"),
+    PLAYER_NOT_PROVIDED("playerNotProvided", "&cDu musst einen Spieler angeben!");
+
     private final String key;
     private final String def;
 

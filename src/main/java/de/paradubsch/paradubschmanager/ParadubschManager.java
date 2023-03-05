@@ -182,7 +182,7 @@ public final class ParadubschManager extends CraftPlugin {
         registerLegacyCommand("gs", new GsCommand());
         registerLegacyCommand("save", new SaveCommand());
         registerLegacyCommand("rank", new RankCommand());
-        registerLegacyCommand("cb", new BanCommand());
+        registerCommand(new BanCommand());
         registerLegacyCommand("gm", new GmCommand());
         registerLegacyCommand("warn", new WarnCommand());
         registerLegacyCommand("warp", new WarpCommand());
