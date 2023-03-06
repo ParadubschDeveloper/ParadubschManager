@@ -14,6 +14,7 @@ import de.paradubsch.paradubschmanager.lifecycle.stairsit.StairSitManager;
 import de.paradubsch.paradubschmanager.commands.TimeVoteCommand;
 import de.paradubsch.paradubschmanager.models.*;
 import de.paradubsch.paradubschmanager.models.logging.ChatMessageLog;
+import de.paradubsch.paradubschmanager.models.logging.CommandLog;
 import de.paradubsch.paradubschmanager.models.logging.KitRedeemLog;
 import de.paradubsch.paradubschmanager.models.logging.LogEntry;
 import de.paradubsch.paradubschmanager.util.lang.Message;
@@ -153,6 +154,7 @@ public final class ParadubschManager extends CraftPlugin {
         HibernateConfigurator.addEntity(KitRedeemEntry.class);
         HibernateConfigurator.addEntity(KitCollectable.class);
         HibernateConfigurator.addEntity(KitRedeemLog.class);
+        HibernateConfigurator.addEntity(CommandLog.class);
     }
 
     private void registerEvents() {
@@ -163,6 +165,7 @@ public final class ParadubschManager extends CraftPlugin {
         new InvseeInventoryGuard();
         new StairSitManager();
         new GsRegionListener();
+        new CommandListener();
     }
 
     private void registerCommands() {
