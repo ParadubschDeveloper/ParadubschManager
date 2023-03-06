@@ -9,6 +9,8 @@ import de.craftery.util.lang.LanguageManager;
 import lombok.Getter;
 import me.arcaniax.hdb.api.DatabaseLoadEvent;
 import me.arcaniax.hdb.api.HeadDatabaseAPI;
+import me.lucko.commodore.Commodore;
+import me.lucko.commodore.CommodoreProvider;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.PluginCommand;
@@ -85,6 +87,7 @@ public class CraftPlugin extends JavaPlugin implements Listener {
             registeredCommands.add(command.getIdentifier());
             pc.setExecutor(command);
             pc.setTabCompleter(command);
+            registerCommodore(pc, command);
         }
 
         command.getOtherIdentifiers().forEach((otherIdentifier) -> {
@@ -94,8 +97,16 @@ public class CraftPlugin extends JavaPlugin implements Listener {
                 registeredCommands.add(otherIdentifier);
                 pcAlt.setExecutor(command);
                 pcAlt.setTabCompleter(command);
+                registerCommodore(pcAlt, command);
             }
         });
+    }
+
+    private void registerCommodore(PluginCommand pc, CraftCommand command) {
+        if (CommodoreProvider.isSupported() && command.registerCommandHelper() != null) {
+            Commodore commodore = CommodoreProvider.getCommodore(this);
+            commodore.register(pc, command.registerCommandHelper());
+        }
     }
 
     private void unregisterCommands() {

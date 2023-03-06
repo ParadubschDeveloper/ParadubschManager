@@ -1,5 +1,9 @@
 package de.paradubsch.paradubschmanager.commands;
 
+import com.mojang.brigadier.arguments.StringArgumentType;
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import com.mojang.brigadier.builder.RequiredArgumentBuilder;
+import com.mojang.brigadier.tree.LiteralCommandNode;
 import de.craftery.command.ArgType;
 import de.craftery.command.CheckArg;
 import de.craftery.command.CraftCommand;
@@ -16,6 +20,7 @@ import de.paradubsch.paradubschmanager.util.lang.Message;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.Nullable;
 
 import java.sql.Timestamp;
 import java.time.Instant;
@@ -269,5 +274,28 @@ public class BanCommand extends CraftCommand {
             }
         }
         return l;
+    }
+
+    @Override
+    public @Nullable LiteralCommandNode<?> registerCommandHelper() {
+        return LiteralArgumentBuilder.literal("cb")
+                .then(LiteralArgumentBuilder.literal("edit")
+                        .then(RequiredArgumentBuilder.argument("player", StringArgumentType.word())
+                                .then(RequiredArgumentBuilder.argument("duration", StringArgumentType.word())
+                                        .then(RequiredArgumentBuilder.argument("reason", StringArgumentType.greedyString()))
+                                )
+                        )
+                )
+                .then(LiteralArgumentBuilder.literal("delete")
+                        .then(RequiredArgumentBuilder.argument("player", StringArgumentType.word())
+                                .then(RequiredArgumentBuilder.argument("reason", StringArgumentType.greedyString()))
+                        )
+                )
+                .then(RequiredArgumentBuilder.argument("player", StringArgumentType.word())
+                        .then(RequiredArgumentBuilder.argument("duration", StringArgumentType.word())
+                                .then(RequiredArgumentBuilder.argument("reason", StringArgumentType.greedyString()))
+                        )
+                )
+                .build();
     }
 }

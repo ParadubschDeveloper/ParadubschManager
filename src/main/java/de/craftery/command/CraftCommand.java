@@ -1,5 +1,6 @@
 package de.craftery.command;
 
+import com.mojang.brigadier.tree.LiteralCommandNode;
 import de.craftery.InternalMessages;
 import de.craftery.util.features.Feature;
 import de.paradubsch.paradubschmanager.util.Expect;
@@ -157,6 +158,10 @@ public abstract class CraftCommand implements CommandExecutor, TabCompleter {
         } catch (NoSuchMethodException ignored) {
             return false;
         }
+    }
+
+    public @Nullable LiteralCommandNode<?> registerCommandHelper() {
+        return null;
     }
 
     public abstract boolean execute(CraftPlayer player, String[] args);
