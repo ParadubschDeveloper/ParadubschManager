@@ -6,7 +6,7 @@ import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.lifecycle.jobs.JobLevel;
 import de.paradubsch.paradubschmanager.lifecycle.jobs.JobType;
 import de.paradubsch.paradubschmanager.models.WorkerPlayer;
-import de.paradubsch.paradubschmanager.util.MessageAdapter;
+import de.craftery.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

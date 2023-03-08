@@ -4,7 +4,7 @@ import de.craftery.CraftPlugin;
 import de.craftery.command.CraftPlayer;
 import de.craftery.util.lang.Language;
 import de.paradubsch.paradubschmanager.models.PlayerData;
-import de.paradubsch.paradubschmanager.util.MessageAdapter;
+import de.craftery.util.MessageAdapter;
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;

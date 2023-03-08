@@ -4,7 +4,7 @@ import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.models.PlayerData;
 import de.paradubsch.paradubschmanager.models.PunishmentHolder;
 import de.paradubsch.paradubschmanager.models.logging.ChatMessageLog;
-import de.paradubsch.paradubschmanager.util.MessageAdapter;
+import de.craftery.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.TimeCalculations;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 import io.papermc.paper.event.player.AsyncChatEvent;

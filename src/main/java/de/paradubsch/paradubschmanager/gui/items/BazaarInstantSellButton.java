@@ -7,7 +7,7 @@ import de.paradubsch.paradubschmanager.lifecycle.bazaar.OrderType;
 import de.paradubsch.paradubschmanager.models.BazaarCollectable;
 import de.paradubsch.paradubschmanager.models.BazaarOrder;
 import de.paradubsch.paradubschmanager.models.PlayerData;
-import de.paradubsch.paradubschmanager.util.MessageAdapter;
+import de.craftery.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

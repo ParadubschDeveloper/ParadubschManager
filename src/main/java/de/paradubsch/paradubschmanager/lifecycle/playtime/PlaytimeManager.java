@@ -4,7 +4,7 @@ import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.craftery.util.ConfigurationManager;
 import de.paradubsch.paradubschmanager.lifecycle.TabDecorationManager;
 import de.paradubsch.paradubschmanager.models.PlayerData;
-import de.paradubsch.paradubschmanager.util.MessageAdapter;
+import de.craftery.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.model.user.User;

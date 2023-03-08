@@ -1,4 +1,4 @@
-package de.paradubsch.paradubschmanager.util;
+package de.craftery.util;
 
 import de.craftery.CraftPlugin;
 import de.craftery.InternalMessages;
@@ -10,7 +10,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-
 public class MessageAdapter {
     public static void sendConsoleError (Exception ex) {
         CraftPlugin.getInstance().getLogger().warning(ex.getMessage());
@@ -18,8 +17,7 @@ public class MessageAdapter {
 
     public static Language getSenderLang(CommandSender sender) {
         Language language;
-        if (sender instanceof Player) {
-            Player player = (Player) sender;
+        if (sender instanceof Player player) {
             PlayerData playerData = PlayerData.getByPlayer(player);
             language = Language.getLanguageByShortName(playerData.getLanguage());
         } else {

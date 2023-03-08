@@ -1,7 +1,7 @@
 package de.craftery.command;
 
 import de.craftery.util.lang.BaseMessageType;
-import de.paradubsch.paradubschmanager.util.MessageAdapter;
+import de.craftery.util.MessageAdapter;
 import lombok.Data;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;

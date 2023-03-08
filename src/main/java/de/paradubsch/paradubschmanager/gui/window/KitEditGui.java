@@ -4,7 +4,7 @@ import de.craftery.util.gui.BaseGui;
 import de.craftery.util.gui.GuiItem;
 import de.craftery.util.lang.Language;
 import de.paradubsch.paradubschmanager.models.SavedKit;
-import de.paradubsch.paradubschmanager.util.MessageAdapter;
+import de.craftery.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;

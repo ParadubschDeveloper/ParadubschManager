@@ -1,6 +1,6 @@
 package de.paradubsch.paradubschmanager.commands;
 
-import de.paradubsch.paradubschmanager.util.Expect;
+import de.craftery.util.Expect;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

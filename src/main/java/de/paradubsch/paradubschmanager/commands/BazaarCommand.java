@@ -7,8 +7,8 @@ import de.paradubsch.paradubschmanager.gui.window.BazaarMainGui;
 import de.paradubsch.paradubschmanager.lifecycle.bazaar.Bazaar;
 import de.paradubsch.paradubschmanager.lifecycle.bazaar.BazaarItemData;
 import de.paradubsch.paradubschmanager.models.PlayerData;
-import de.paradubsch.paradubschmanager.util.Expect;
-import de.paradubsch.paradubschmanager.util.MessageAdapter;
+import de.craftery.util.Expect;
+import de.craftery.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -53,7 +53,7 @@ public class BazaarCommand implements CommandExecutor, TabCompleter {
         ItemStack item = player.getInventory().getItemInMainHand();
 
         Optional<BazaarItemData> bazaarItemDataOptional = Bazaar.getBazaarConfigItems().stream().filter(x -> x.getMaterial() == item.getType()).findFirst();
-        if (!bazaarItemDataOptional.isPresent()) {
+        if (bazaarItemDataOptional.isEmpty()) {
             MessageAdapter.sendMessage(player, Message.Error.CMD_BAZAAR_CANNOT_SELL_THIS_ITEM);
             return;
         }

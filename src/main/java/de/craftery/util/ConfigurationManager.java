@@ -1,7 +1,6 @@
 package de.craftery.util;
 
 import de.craftery.CraftPlugin;
-import de.paradubsch.paradubschmanager.util.MessageAdapter;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;

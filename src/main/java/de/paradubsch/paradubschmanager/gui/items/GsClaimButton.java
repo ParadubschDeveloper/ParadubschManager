@@ -3,7 +3,7 @@ package de.paradubsch.paradubschmanager.gui.items;
 import de.craftery.util.gui.GuiItem;
 import de.paradubsch.paradubschmanager.models.PlayerData;
 import de.paradubsch.paradubschmanager.models.SaveRequest;
-import de.paradubsch.paradubschmanager.util.MessageAdapter;
+import de.craftery.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;

@@ -14,7 +14,7 @@ import de.paradubsch.paradubschmanager.models.BanPunishment;
 import de.paradubsch.paradubschmanager.models.PlayerData;
 import de.paradubsch.paradubschmanager.models.PunishmentHolder;
 import de.paradubsch.paradubschmanager.models.PunishmentUpdate;
-import de.paradubsch.paradubschmanager.util.Expect;
+import de.craftery.util.Expect;
 import de.paradubsch.paradubschmanager.util.TimeCalculations;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 import net.kyori.adventure.text.Component;

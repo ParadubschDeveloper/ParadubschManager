@@ -6,7 +6,7 @@ import de.craftery.util.lang.Language;
 import de.paradubsch.paradubschmanager.models.KitCollectable;
 import de.paradubsch.paradubschmanager.models.KitRedeemEntry;
 import de.paradubsch.paradubschmanager.models.logging.KitRedeemLog;
-import de.paradubsch.paradubschmanager.util.MessageAdapter;
+import de.craftery.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;

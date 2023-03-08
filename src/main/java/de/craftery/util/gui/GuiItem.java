@@ -4,7 +4,7 @@ import de.craftery.CraftPlugin;
 import de.craftery.InternalMessages;
 import de.craftery.util.lang.Language;
 import de.craftery.util.lang.BaseMessageType;
-import de.paradubsch.paradubschmanager.util.MessageAdapter;
+import de.craftery.util.MessageAdapter;
 import lombok.Getter;
 import lombok.Setter;
 import net.kyori.adventure.text.Component;

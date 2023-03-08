@@ -1,7 +1,7 @@
 package de.paradubsch.paradubschmanager.commands;
 
-import de.paradubsch.paradubschmanager.util.Expect;
-import de.paradubsch.paradubschmanager.util.MessageAdapter;
+import de.craftery.util.Expect;
+import de.craftery.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

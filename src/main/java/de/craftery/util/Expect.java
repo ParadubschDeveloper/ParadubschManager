@@ -1,4 +1,4 @@
-package de.paradubsch.paradubschmanager.util;
+package de.craftery.util;
 
 import de.craftery.InternalMessages;
 import de.craftery.util.features.Feature;

@@ -2,9 +2,8 @@ package paradubsch;
 
 import be.seeseemelk.mockbukkit.MockBukkit;
 import be.seeseemelk.mockbukkit.ServerMock;
-import be.seeseemelk.mockbukkit.command.ConsoleCommandSenderMock;
 import be.seeseemelk.mockbukkit.entity.PlayerMock;
-import de.paradubsch.paradubschmanager.util.Expect;
+import de.craftery.util.Expect;
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;

@@ -3,7 +3,7 @@ package de.paradubsch.paradubschmanager.commands;
 import de.craftery.util.features.HeadDatabaseFeature;
 import de.craftery.util.gui.GuiManager;
 import de.paradubsch.paradubschmanager.gui.window.JobGui;
-import de.paradubsch.paradubschmanager.util.Expect;
+import de.craftery.util.Expect;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

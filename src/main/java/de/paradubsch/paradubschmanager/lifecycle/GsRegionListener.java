@@ -4,7 +4,7 @@ import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.models.GsBanMember;
 import de.paradubsch.paradubschmanager.models.GsWhitelistEnabled;
 import de.paradubsch.paradubschmanager.models.GsWhitelistMember;
-import de.paradubsch.paradubschmanager.util.MessageAdapter;
+import de.craftery.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 import net.raidstone.wgevents.events.RegionEnteredEvent;
 import org.bukkit.event.EventHandler;
