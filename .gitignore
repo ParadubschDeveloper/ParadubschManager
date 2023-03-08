@@ -120,4 +120,8 @@ run/
 .apt_generated/
 .apt_generated_tests/
 .VSCodeCounter/
+.vscode/
+build/
+.gradle/
 
+!gradle/wrapper/gradle-wrapper.jar

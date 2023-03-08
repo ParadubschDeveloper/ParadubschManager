@@ -2,7 +2,6 @@ package de.craftery.util;
 
 import de.craftery.CraftPlugin;
 import lombok.Cleanup;
-import lombok.var;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.hibernate.Session;
 import org.hibernate.Transaction;

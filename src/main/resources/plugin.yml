@@ -1,5 +1,5 @@
 name: "ParadubschManager"
-version: "${project.version}"
+version: "${version}"
 main: "de.paradubsch.paradubschmanager.ParadubschManager"
 api-version: "1.19"
 api: [ "1.19" ]
