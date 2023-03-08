@@ -20,6 +20,8 @@ stages:
 build:
   stage: build
   script: ./gradlew build
+  services:
+    - mysql:latest
   artifacts:
     paths:
       - "build/libs/"
