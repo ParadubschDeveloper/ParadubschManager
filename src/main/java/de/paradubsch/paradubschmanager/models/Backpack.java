@@ -63,20 +63,27 @@ public class Backpack extends BaseDatabaseEntity<Backpack, Long> {
         }
     }
 
+    public static Backpack getByPlayer(PlayerData player) {
+        return getByPlayer(player.getUuid(), player.getName());
+    }
+    public static Backpack getByPlayer(Player player) {
+        return getByPlayer(player.getUniqueId().toString(), player.getName());
+    }
+
     /**
      *
-     * @param player Player to get the backpack for
+     * @param uuid String to get the backpack for
      * @return The backpack of the player
      */
-    public static Backpack getByPlayer(Player player) {
-        Backpack bp = getByUuid(player.getUniqueId().toString());
+    private static Backpack getByPlayer(String uuid, String name) {
+        Backpack bp = getByUuid(uuid);
         if (bp == null) {
             bp = new Backpack();
-            bp.setPlayerRef(player.getUniqueId().toString());
+            bp.setPlayerRef(uuid);
             bp.save();
-            bp = getByUuid(player.getUniqueId().toString());
+            bp = getByUuid(uuid);
             if (bp == null) {
-                throw new RuntimeException("Could not create backpack for player " + player.getName());
+                throw new RuntimeException("Could not create backpack for player " + name);
             }
         }
         bp.slots = StorageSlot.getSlotsByStorageId(bp.getId());
@@ -84,15 +91,22 @@ public class Backpack extends BaseDatabaseEntity<Backpack, Long> {
         return bp;
     }
 
+    public static void storeByPlayer(Player player, Backpack backpack) {
+        store(player.getName(), backpack);
+    }
+
+    public static void storeByPlayer(PlayerData player, Backpack backpack) {
+        store(player.getName(), backpack);
+    }
+
     /**
      *
-     * @param player Player to get the backpack for
+     * @param playerName String name of the player. So in case of a failiue it can be logged
      * @param backpack Backpack to set for the player
      */
-    // TODO: When list is null, remove all items
-    public static void storeByPlayer(Player player, Backpack backpack) {
+    private static void store(String playerName, Backpack backpack) {
         if (backpack.items.size() > backpack.maxPages * 27) {
-            Bukkit.getLogger().warning("Player " + player.getName() + " tried to store " + backpack.items.size() + " items in a backpack with " + backpack.maxPages + " pages.");
+            Bukkit.getLogger().warning("Player " + playerName + " tried to store " + backpack.items.size() + " items in a backpack with " + backpack.maxPages + " pages.");
         }
         List<StorageSlot> oldSlots = backpack.slots;
         for (ItemStack item : backpack.items) {

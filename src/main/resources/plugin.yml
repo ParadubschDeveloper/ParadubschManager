@@ -289,7 +289,7 @@ commands:
   backpack:
     description: Inventar zum Backpack
     aliases: [ bp, rucksack ]
-    permission: paradubsch.backpack
+    permission: paradubsch.backpack.use
     permission-message: 'Du benötigst die Berechtigung paradubsch.backpack um den Backpack zu nutzen!'
     usage: '/backpack'
   feed:
@@ -565,9 +565,16 @@ permissions:
           paradubsch.enderchest.others:
             description: "Erlaubt Zugriff auf den /enderchest <Name> Befehl."
             default: false
-      paradubsch.backpack:
-        description: "Erlaubt Zugriff auf den /backpack Befehl."
+      paradubsch.backpack.*:
+        description: "Erlaubt Zugriff auf alle /backpack Befehle."
         default: false
+        children:
+          paradubsch.backpack.use:
+            description: "Erlaubt Zugriff auf den /backpack Befehl."
+            default: false
+          paradubsch.backpack.others:
+            description: "Erlaubt Zugriff auf den /backpack <Name> Befehl."
+            default: false
       paradubsch.feed:
         description: "Erlaubt Zugriff auf den /feed Befehl."
         default: false

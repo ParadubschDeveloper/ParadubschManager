@@ -45,6 +45,13 @@ public class CraftPlayer {
         return this.getPlayer().teleport(new Location(newWorld, newX, y, newZ));
     }
 
+    public boolean hasPermission(@NotNull String name) {
+        if (this.commandSender instanceof Player) {
+            return this.getPlayer().hasPermission(name);
+        }
+        return true;
+    }
+
     public Player getPlayer() {
         return (Player) commandSender;
     }

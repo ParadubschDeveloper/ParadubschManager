@@ -2,9 +2,11 @@ package de.paradubsch.paradubschmanager.gui.window;
 
 import de.craftery.util.gui.BaseGui;
 import de.craftery.util.gui.GuiItem;
+import de.paradubsch.paradubschmanager.commands.BackpackCommand;
 import de.paradubsch.paradubschmanager.gui.items.*;
 import de.paradubsch.paradubschmanager.models.Backpack;
 import de.craftery.util.lang.Language;
+import de.paradubsch.paradubschmanager.models.PlayerData;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -25,13 +27,15 @@ public class BackpackGui extends BaseGui {
 
     @Override
     public void build() {
+        PlayerData target = (PlayerData) this.args.get(0);
+
         Integer page = (Integer) this.getKvStore().get("backpackPage");
         if (page == null) {
             page = 1;
             this.getKvStore().set("backpackPage", page);
         }
 
-        Backpack backpack = Backpack.getByPlayer(this.player);
+        Backpack backpack = Backpack.getByPlayer(target);
         List<ItemStack> items = backpack.getItems();
         this.getKvStore().set("backpack", backpack);
 
@@ -71,42 +75,18 @@ public class BackpackGui extends BaseGui {
     public void onClick(Player player, InventoryClickEvent event, GuiItem handledItem) {
         if (handledItem == null) {
             event.setCancelled(false);
-            /*
-            if (event.getClickedInventory() != null &&
-                    event.getClickedInventory().equals(event.getView().getTopInventory()) &&
-                    event.getSlot() > maxSlot) {
-                event.setCancelled(true);
-            } else if (event.getClickedInventory() != null && (event.getCurrentItem() != null || event.getCursor() != null)) {
-                Inventory inv = event.getView().getTopInventory();
-                if ((event.getClickedInventory().equals(event.getView().getBottomInventory()) &&
-                        event.isShiftClick()) || event.getClickedInventory().equals(event.getView().getTopInventory()))
-                    Bukkit.getScheduler().runTaskLater(ParadubschManager.getInstance(), () -> {
-                        Backpack backpack = (Backpack) this.getKvStore(player).get("backpack");
-                        List<ItemStack> items = new ArrayList<>();
-                        for (int i = 0; i < inv.getSize(); i++) {
-                            if (i <= maxSlot) {
-                                if (inv.getItem(i) != null) {
-                                    items.add(inv.getItem(i));
-                                }
-                            }
-                        }
-                        backpack.setItems(items);
-                        Backpack.storeByPlayer(player, backpack);
-                        GuiManager.rebuild(player);
-                    }, 1L);
-            }
-            */
         }
     }
 
     @Override
     public void onClose(Player player, InventoryCloseEvent event) {
-        Backpack backpack = (Backpack) this.getKvStore(player).get("backpack");
+        PlayerData target = (PlayerData) this.args.get(0);
+        Backpack backpack = (Backpack) this.getKvStore().get("backpack");
         if (backpack == null)
             return;
         Integer page = (Integer) this.getKvStore().get("backpackPage");
         if (page == null) {
-            // Likly impossible
+            // Likely impossible
             return;
         }
         Inventory inv = player.getOpenInventory().getTopInventory();
@@ -119,6 +99,8 @@ public class BackpackGui extends BaseGui {
             }
         }
         backpack.setItems(items);
-        Backpack.storeByPlayer(player, backpack);
+
+        Backpack.storeByPlayer(target, backpack);
+        BackpackCommand.supervisedPlayers.remove(target.getUuid());
     }
 }

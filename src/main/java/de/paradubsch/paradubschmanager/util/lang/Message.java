@@ -94,7 +94,8 @@ public class Message {
         INVALID_KIT_SYNTAX("invalidKitSyntax","&cBitte verwende /kit"),
         INVALID_KIT_ID("invalidKitId","&cDas Kit &a%1 &cexistiert nicht."),
         KIT_GUI_NO_PERMISSION("kitGuiNoPermission","&cDu hast keine Berechtigung, dieses Kit zu verwenden."),
-        KIT_COLLECT_GUI_INVENTORY_FULL("kitCollectGuiInventoryFull","&cDein Inventar ist voll.");
+        KIT_COLLECT_GUI_INVENTORY_FULL("kitCollectGuiInventoryFull","&cDein Inventar ist voll."),
+        CMD_BACKPACK_CANT_GET_OPENED("cmdBackpackCantGetOpened","&cDer Rucksack kann gerade nicht geöffnet werden.");
 
         private final String key;
         private final String def;

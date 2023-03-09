@@ -12,13 +12,12 @@ import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class BackpackModelTest {
-    private static ServerMock server;
     private static PlayerMock player1;
     private static PlayerMock player2;
 
     @BeforeAll
     public static void setUp() {
-        server = MockBukkit.mock();
+        ServerMock server = MockBukkit.mock();
         player1 = server.addPlayer();
         player2 = server.addPlayer();
         MockBukkit.load(ParadubschManager.class);

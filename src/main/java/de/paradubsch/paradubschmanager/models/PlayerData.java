@@ -1,5 +1,6 @@
 package de.paradubsch.paradubschmanager.models;
 
+import de.craftery.command.CraftPlayer;
 import de.craftery.util.BaseDatabaseEntity;
 import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.craftery.util.HibernateConfigurator;
@@ -71,6 +72,10 @@ public class PlayerData extends BaseDatabaseEntity<PlayerData, String> {
 
     public static PlayerData getById(Serializable id) {
         return BaseDatabaseEntity.getById(PlayerData.class, id);
+    }
+
+    public static PlayerData getByPlayer(CraftPlayer player) {
+        return getByPlayer(player.getPlayer());
     }
 
     public static PlayerData getByPlayer(Player player) {
