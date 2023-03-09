@@ -1,9 +1,11 @@
 package de.craftery.command;
 
+import de.craftery.CraftPlugin;
 import de.craftery.util.lang.BaseMessageType;
 import de.craftery.util.MessageAdapter;
 import lombok.Data;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.InventoryView;
@@ -34,6 +36,13 @@ public class CraftPlayer {
     @NotNull
     public Location getLocation() {
         return this.getPlayer().getLocation();
+    }
+
+    public boolean teleportNormalized(String world, double x, double y, double z) {
+        double newX = x >= 0 ? x + 0.5 : x - 0.5;
+        double newZ = z >= 0 ? z + 0.5 : z - 0.5;
+        World newWorld = CraftPlugin.getInstance().getServer().getWorld(world);
+        return this.getPlayer().teleport(new Location(newWorld, newX, y, newZ));
     }
 
     public Player getPlayer() {

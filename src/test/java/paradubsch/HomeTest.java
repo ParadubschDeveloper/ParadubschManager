@@ -4,6 +4,7 @@ import be.seeseemelk.mockbukkit.MockBukkit;
 import be.seeseemelk.mockbukkit.ServerMock;
 import be.seeseemelk.mockbukkit.entity.PlayerMock;
 import de.craftery.ErrorOr;
+import de.craftery.command.CraftPlayer;
 import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.commands.HomeCommand;
 import de.paradubsch.paradubschmanager.commands.SethomeCommand;
@@ -55,10 +56,10 @@ public class HomeTest {
     @DisplayName("Test the home command")
     @Test
     public void homeCommand() {
-        PlayerMock player = server.addPlayer();
+        CraftPlayer player = new CraftPlayer(server.addPlayer());
 
-        SethomeCommand.setHome(player, "test", false);
-        SethomeCommand.setHome(player, "test3", false);
+        SethomeCommand.setHome(player.getPlayer(), "test", false);
+        SethomeCommand.setHome(player.getPlayer(), "test3", false);
 
         ErrorOr<Void> result = HomeCommand.teleportHome(player, "test");
         assertFalse(result.isError());

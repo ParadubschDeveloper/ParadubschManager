@@ -177,7 +177,7 @@ public final class ParadubschManager extends CraftPlugin {
         registerLegacyCommand("playtime", new PlaytimeCommand());
         registerLegacyCommand("money", new MoneyCommand());
         registerLegacyCommand("sethome", new SethomeCommand());
-        registerLegacyCommand("home", new HomeCommand());
+        registerCommand(new HomeCommand());
         registerLegacyCommand("buyhome", new BuyhomeCommand());
         registerLegacyCommand("homes", new HomesCommand());
         registerLegacyCommand("viewhome", new ViewhomeCommand());
