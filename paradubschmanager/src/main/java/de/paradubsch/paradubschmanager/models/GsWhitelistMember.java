@@ -1,5 +1,6 @@
 package de.paradubsch.paradubschmanager.models;
 
+import de.craftery.PlayerData;
 import de.craftery.util.BaseDatabaseEntity;
 import de.craftery.util.HibernateConfigurator;
 import de.craftery.util.ListCache;

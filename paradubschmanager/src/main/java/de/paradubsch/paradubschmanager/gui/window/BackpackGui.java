@@ -6,7 +6,7 @@ import de.paradubsch.paradubschmanager.commands.BackpackCommand;
 import de.paradubsch.paradubschmanager.gui.items.*;
 import de.paradubsch.paradubschmanager.models.Backpack;
 import de.craftery.util.lang.Language;
-import de.paradubsch.paradubschmanager.models.PlayerData;
+import de.craftery.PlayerData;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

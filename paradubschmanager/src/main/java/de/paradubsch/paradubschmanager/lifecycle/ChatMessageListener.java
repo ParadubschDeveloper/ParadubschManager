@@ -1,7 +1,7 @@
 package de.paradubsch.paradubschmanager.lifecycle;
 
 import de.paradubsch.paradubschmanager.ParadubschManager;
-import de.paradubsch.paradubschmanager.models.PlayerData;
+import de.craftery.PlayerData;
 import de.paradubsch.paradubschmanager.models.PunishmentHolder;
 import de.paradubsch.paradubschmanager.models.logging.ChatMessageLog;
 import de.craftery.util.MessageAdapter;

@@ -7,7 +7,7 @@ import de.craftery.command.PlayerOnly;
 import de.craftery.util.features.HeadDatabaseFeature;
 import de.craftery.util.gui.GuiManager;
 import de.paradubsch.paradubschmanager.gui.window.BackpackGui;
-import de.paradubsch.paradubschmanager.models.PlayerData;
+import de.craftery.PlayerData;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

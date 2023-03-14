@@ -3,7 +3,7 @@ package de.paradubsch.paradubschmanager.lifecycle;
 import de.craftery.util.lang.Language;
 import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.craftery.util.ConfigurationManager;
-import de.paradubsch.paradubschmanager.models.PlayerData;
+import de.craftery.PlayerData;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;

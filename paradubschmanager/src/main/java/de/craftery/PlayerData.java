@@ -1,15 +1,13 @@
-package de.paradubsch.paradubschmanager.models;
+package de.craftery;
 
 import de.craftery.command.CraftPlayer;
 import de.craftery.util.BaseDatabaseEntity;
-import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.craftery.util.HibernateConfigurator;
 import lombok.Cleanup;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.bukkit.entity.Player;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.hibernate.annotations.*;
 import org.hibernate.annotations.Cache;
 
@@ -106,27 +104,12 @@ public class PlayerData extends BaseDatabaseEntity<PlayerData, String> {
     }
 
     public static void cachePlayerName(Player p) {
-        Transaction transaction = null;
-        try {
-            @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
-            transaction = session.beginTransaction();
-
-            PlayerData playerData = session.get(PlayerData.class, p.getUniqueId().toString());
-            if (playerData == null) {
-                session.save(new PlayerData(p));
-                ParadubschManager.getInstance().getCachingManager().cacheEntity(PlayerData.class, new PlayerData(p), p.getUniqueId().toString());
-
-            } else if (!playerData.getName().equals(p.getName())) {
-                playerData.setName(p.getName());
-                session.saveOrUpdate(playerData);
-                ParadubschManager.getInstance().getCachingManager().cacheEntity(PlayerData.class, playerData, p.getUniqueId().toString());
-            }
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
+        PlayerData playerData = PlayerData.getById(p.getUniqueId().toString());
+        if (playerData == null) {
+            new PlayerData(p).save();
+        } else if (!playerData.getName().equals(p.getName())) {
+            playerData.setName(p.getName());
+            playerData.saveOrUpdate();
         }
     }
 

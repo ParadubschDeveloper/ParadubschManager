@@ -6,7 +6,7 @@ import de.paradubsch.paradubschmanager.lifecycle.bazaar.BazaarItemData;
 import de.paradubsch.paradubschmanager.lifecycle.bazaar.OrderType;
 import de.paradubsch.paradubschmanager.models.BazaarCollectable;
 import de.paradubsch.paradubschmanager.models.BazaarOrder;
-import de.paradubsch.paradubschmanager.models.PlayerData;
+import de.craftery.PlayerData;
 import de.craftery.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.StringValidator;
 import de.paradubsch.paradubschmanager.util.lang.Message;

@@ -6,7 +6,7 @@ import de.paradubsch.paradubschmanager.gui.items.BazaarPlaceSellOrderButton;
 import de.paradubsch.paradubschmanager.gui.window.BazaarMainGui;
 import de.paradubsch.paradubschmanager.lifecycle.bazaar.Bazaar;
 import de.paradubsch.paradubschmanager.lifecycle.bazaar.BazaarItemData;
-import de.paradubsch.paradubschmanager.models.PlayerData;
+import de.craftery.PlayerData;
 import de.craftery.util.Expect;
 import de.craftery.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.lang.Message;

@@ -11,7 +11,7 @@ import de.craftery.command.CraftPlayer;
 import de.craftery.util.lang.Language;
 import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.models.BanPunishment;
-import de.paradubsch.paradubschmanager.models.PlayerData;
+import de.craftery.PlayerData;
 import de.paradubsch.paradubschmanager.models.PunishmentHolder;
 import de.paradubsch.paradubschmanager.models.PunishmentUpdate;
 import de.craftery.util.Expect;

@@ -3,7 +3,7 @@ package de.paradubsch.paradubschmanager.commands;
 import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.craftery.util.ConfigurationManager;
 import de.paradubsch.paradubschmanager.lifecycle.TabDecorationManager;
-import de.paradubsch.paradubschmanager.models.PlayerData;
+import de.craftery.PlayerData;
 import de.craftery.util.Expect;
 import de.craftery.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.lang.Message;

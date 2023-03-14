@@ -1,7 +1,7 @@
 package de.paradubsch.paradubschmanager.gui.items;
 
 import de.craftery.util.gui.GuiItem;
-import de.paradubsch.paradubschmanager.models.PlayerData;
+import de.craftery.PlayerData;
 import de.paradubsch.paradubschmanager.models.SaveRequest;
 import de.craftery.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.lang.Message;

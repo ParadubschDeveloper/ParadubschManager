@@ -10,7 +10,7 @@ import com.sk89q.worldguard.protection.regions.RegionType;
 import de.craftery.util.gui.ComponentConversion;
 import de.craftery.util.gui.GuiManager;
 import de.paradubsch.paradubschmanager.ParadubschManager;
-import de.paradubsch.paradubschmanager.models.PlayerData;
+import de.craftery.PlayerData;
 import de.craftery.util.Expect;
 import de.craftery.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.lang.Message;

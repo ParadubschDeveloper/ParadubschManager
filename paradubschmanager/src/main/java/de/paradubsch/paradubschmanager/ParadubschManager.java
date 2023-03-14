@@ -3,6 +3,7 @@ package de.paradubsch.paradubschmanager;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import de.craftery.CraftPlugin;
+import de.craftery.PlayerData;
 import de.paradubsch.paradubschmanager.commands.*;
 import de.paradubsch.paradubschmanager.config.ConfigurationHelper;
 import de.craftery.util.HibernateConfigurator;

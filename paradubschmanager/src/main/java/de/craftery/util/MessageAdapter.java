@@ -4,7 +4,7 @@ import de.craftery.CraftPlugin;
 import de.craftery.InternalMessages;
 import de.craftery.util.lang.Language;
 import de.craftery.util.lang.BaseMessageType;
-import de.paradubsch.paradubschmanager.models.PlayerData;
+import de.craftery.PlayerData;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;

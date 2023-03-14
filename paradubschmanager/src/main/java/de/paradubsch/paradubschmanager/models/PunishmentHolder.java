@@ -1,5 +1,6 @@
 package de.paradubsch.paradubschmanager.models;
 
+import de.craftery.PlayerData;
 import de.craftery.util.BaseDatabaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

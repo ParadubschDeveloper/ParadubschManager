@@ -37,7 +37,7 @@ import de.paradubsch.paradubschmanager.gui.window.GsTransferGui;
 import de.paradubsch.paradubschmanager.models.GsBanMember;
 import de.paradubsch.paradubschmanager.models.GsWhitelistEnabled;
 import de.paradubsch.paradubschmanager.models.GsWhitelistMember;
-import de.paradubsch.paradubschmanager.models.PlayerData;
+import de.craftery.PlayerData;
 import de.craftery.util.Expect;
 import de.craftery.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.TimeCalculations;

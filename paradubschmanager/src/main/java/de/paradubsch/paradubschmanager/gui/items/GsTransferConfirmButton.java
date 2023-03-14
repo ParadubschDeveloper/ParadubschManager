@@ -3,7 +3,7 @@ package de.paradubsch.paradubschmanager.gui.items;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import de.craftery.util.gui.GuiItem;
 import de.paradubsch.paradubschmanager.ParadubschManager;
-import de.paradubsch.paradubschmanager.models.PlayerData;
+import de.craftery.PlayerData;
 import de.craftery.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 import org.bukkit.Bukkit;
