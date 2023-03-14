@@ -46,7 +46,7 @@ public class BazaarCollectable extends BaseDatabaseEntity<BazaarCollectable, Lon
     public static BazaarCollectable getByHolderItemType(String holderUuid, Material material) {
         try {
             @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
-            return session.createQuery("from BazaarCollectable where holder = :holder and material = :material", BazaarCollectable.class)
+            return session.createQuery("from BazaarCollectable where holderUuid = :holder and material = :material", BazaarCollectable.class)
                     .setParameter("holder", holderUuid)
                     .setParameter("material", material)
                     .getSingleResult();
@@ -62,7 +62,7 @@ public class BazaarCollectable extends BaseDatabaseEntity<BazaarCollectable, Lon
     public static List<BazaarCollectable> getByHolder(String holderUuid) {
         try {
             @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
-            return session.createQuery("from BazaarCollectable where holder = :holder", BazaarCollectable.class)
+            return session.createQuery("from BazaarCollectable where holderUuid = :holder", BazaarCollectable.class)
                     .setParameter("holder", holderUuid)
                     .getResultList();
         } catch (NoResultException e) {

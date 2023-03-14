@@ -1,1 +1,3 @@
-rootProject.name = 'ParadubschManager'
+rootProject.name = 'Paradubsch'
+
+include ":paradubschmanager"

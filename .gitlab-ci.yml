@@ -24,4 +24,4 @@ build:
     - mysql:latest
   artifacts:
     paths:
-      - "build/libs/"
+      - "paradubschmanager/build/libs/"

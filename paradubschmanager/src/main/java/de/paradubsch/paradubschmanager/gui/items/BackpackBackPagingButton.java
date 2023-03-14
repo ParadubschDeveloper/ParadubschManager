@@ -4,7 +4,6 @@ import de.craftery.util.gui.GuiItem;
 import de.craftery.util.gui.GuiManager;
 import de.paradubsch.paradubschmanager.models.Backpack;
 import de.paradubsch.paradubschmanager.util.lang.Message;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
