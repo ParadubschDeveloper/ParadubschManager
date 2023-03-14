@@ -1,6 +1,6 @@
 package de.craftery.util;
 
-import de.craftery.CraftPlugin;
+import de.craftery.CraftingLib;
 import lombok.Cleanup;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.hibernate.Session;
@@ -22,7 +22,7 @@ public abstract class BaseDatabaseEntity<P extends BaseDatabaseEntity<?, ?>, ID 
             @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
             transaction = session.beginTransaction();
             Serializable returner = session.save(this);
-            CraftPlugin.getInstance().getCachingManager().cacheEntity(this.getClass(), this, this.getIdentifyingColumn());
+            CraftingLib.getInstance().getCachingManager().cacheEntity(this.getClass(), this, this.getIdentifyingColumn());
             transaction.commit();
             return returner;
         } catch (Exception e) {
@@ -40,7 +40,7 @@ public abstract class BaseDatabaseEntity<P extends BaseDatabaseEntity<?, ?>, ID 
             @Cleanup Session session = HibernateConfigurator.getSessionFactory().openSession();
             transaction = session.beginTransaction();
             session.saveOrUpdate(this);
-            CraftPlugin.getInstance().getCachingManager().cacheEntity(this.getClass(), this, this.getIdentifyingColumn());
+            CraftingLib.getInstance().getCachingManager().cacheEntity(this.getClass(), this, this.getIdentifyingColumn());
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
@@ -57,7 +57,7 @@ public abstract class BaseDatabaseEntity<P extends BaseDatabaseEntity<?, ?>, ID 
             transaction = session.beginTransaction();
 
             session.delete(this);
-            CraftPlugin.getInstance().getCachingManager().deleteEntity(this.getClass(), this.getIdentifyingColumn());
+            CraftingLib.getInstance().getCachingManager().deleteEntity(this.getClass(), this.getIdentifyingColumn());
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
@@ -72,7 +72,7 @@ public abstract class BaseDatabaseEntity<P extends BaseDatabaseEntity<?, ?>, ID 
             return null;
         }
 
-        T cached = CraftPlugin.getInstance().getCachingManager().getEntity(clazz, id);
+        T cached = CraftingLib.getInstance().getCachingManager().getEntity(clazz, id);
         if (cached != null) {
             return cached;
         }
@@ -84,7 +84,7 @@ public abstract class BaseDatabaseEntity<P extends BaseDatabaseEntity<?, ?>, ID 
             transaction = session.beginTransaction();
 
             T returner = session.get(clazz, id);
-            CraftPlugin.getInstance().getCachingManager().cacheEntity(clazz, returner, id);
+            CraftingLib.getInstance().getCachingManager().cacheEntity(clazz, returner, id);
             transaction.commit();
             return returner;
         } catch (Exception e) {
@@ -113,7 +113,7 @@ public abstract class BaseDatabaseEntity<P extends BaseDatabaseEntity<?, ?>, ID 
     }
 
     public void cacheChanges() {
-        CraftPlugin.getInstance().getCachingManager().cacheEntity(this.getClass(), this, this.getIdentifyingColumn());
+        CraftingLib.getInstance().getCachingManager().cacheEntity(this.getClass(), this, this.getIdentifyingColumn());
     }
 
     private long flushTimeout = 0;
@@ -130,12 +130,12 @@ public abstract class BaseDatabaseEntity<P extends BaseDatabaseEntity<?, ?>, ID 
                     flushTimeout--;
                     if (flushTimeout <= 0) {
                         flushingScheduled = false;
-                        var obj = CraftPlugin.getInstance().getCachingManager().getEntity(clazz, getIdentifyingColumn());
+                        var obj = CraftingLib.getInstance().getCachingManager().getEntity(clazz, getIdentifyingColumn());
                         obj.saveOrUpdate();
                         cancel();
                     }
                 }
-            }.runTaskTimer(CraftPlugin.getInstance(), 0, 1);
+            }.runTaskTimer(CraftingLib.getInstance(), 0, 1);
         }
     }
 

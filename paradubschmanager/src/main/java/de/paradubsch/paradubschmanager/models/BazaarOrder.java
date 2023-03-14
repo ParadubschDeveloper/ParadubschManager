@@ -8,8 +8,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.bukkit.Material;
 import org.hibernate.Session;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
@@ -21,8 +19,6 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = false)
 @Entity
 @Cacheable
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-@Table(name = "bazaar_orders")
 @SequenceGenerator(name="bazaarOrderSequence",sequenceName="bazaar_order_sequence", allocationSize = 1)
 public class BazaarOrder extends BaseDatabaseEntity<BazaarOrder, Long> {
     @Id

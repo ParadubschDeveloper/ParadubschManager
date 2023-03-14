@@ -8,17 +8,13 @@ load: "POSTWORLD"
 prefix: "ParadubschManager"
 website: "https://gitlab.com/paradubsch-developer/paradubschmanager"
 depend:
-  - ProtocolLib
   - LuckPerms
   - WorldEdit
   - WorldGuard
   - WorldGuardEvents
-
-softdepend:
-  - HeadDatabase
+  - CraftingLib
 
 libraries:
-  - mysql:mysql-connector-java:8.0.31
   - org.eclipse.jetty:jetty-server:11.0.12
 
 commands:

@@ -3,6 +3,7 @@ package paradubsch;
 import be.seeseemelk.mockbukkit.MockBukkit;
 import be.seeseemelk.mockbukkit.ServerMock;
 import be.seeseemelk.mockbukkit.entity.PlayerMock;
+import de.craftery.CraftingLib;
 import de.craftery.ErrorOr;
 import de.craftery.command.CraftPlayer;
 import de.paradubsch.paradubschmanager.ParadubschManager;
@@ -19,11 +20,13 @@ public class HomeTest {
     @BeforeAll
     public static void setUp() {
         server = MockBukkit.mock();
+        MockBukkit.load(CraftingLib.class);
         MockBukkit.load(ParadubschManager.class);
     }
 
     @AfterAll
     public static void tearDown() {
+        server.getScheduler().cancelTasks(ParadubschManager.getInstance());
         MockBukkit.unmock();
     }
 

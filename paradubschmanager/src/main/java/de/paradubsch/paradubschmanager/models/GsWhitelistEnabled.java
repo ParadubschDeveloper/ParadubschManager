@@ -4,16 +4,12 @@ import de.craftery.util.BaseDatabaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Entity
-@Cacheable
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Table(name = "gs_whitelist_enabled")
 @AllArgsConstructor
 public class GsWhitelistEnabled extends BaseDatabaseEntity<GsWhitelistEnabled, String> {

@@ -1,3 +1,4 @@
 rootProject.name = 'Paradubsch'
 
 include ":paradubschmanager"
+include ":craftinglib"

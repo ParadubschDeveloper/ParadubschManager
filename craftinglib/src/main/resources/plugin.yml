@@ -1,0 +1,16 @@
+name: "CraftingLib"
+version: "${version}"
+main: "de.craftery.CraftingLib"
+api-version: "1.19"
+api: [ "1.19" ]
+authors: [ "Crafter_Y"]
+load: "POSTWORLD"
+prefix: "CraftingLib"
+depend:
+  - ProtocolLib
+
+softdepend:
+  - HeadDatabase
+
+libraries:
+  - mysql:mysql-connector-java:8.0.31

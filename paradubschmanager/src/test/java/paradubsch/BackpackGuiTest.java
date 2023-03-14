@@ -4,6 +4,7 @@ import be.seeseemelk.mockbukkit.MockBukkit;
 import be.seeseemelk.mockbukkit.ServerMock;
 import be.seeseemelk.mockbukkit.entity.PlayerMock;
 import com.google.common.collect.Lists;
+import de.craftery.CraftingLib;
 import de.craftery.util.gui.GuiManager;
 import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.gui.window.BackpackGui;
@@ -21,21 +22,21 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Disabled("This is not working. Maybe in the future.")
 public class BackpackGuiTest {
-
-    private static ParadubschManager plugin;
     private static ServerMock server;
     private static PlayerMock player;
 
     @BeforeAll
     public static void setUp() {
         server = MockBukkit.mock();
-        plugin = MockBukkit.load(ParadubschManager.class);
+        MockBukkit.load(CraftingLib.class);
+        MockBukkit.load(ParadubschManager.class);
         player = server.addPlayer();
         fillPlayerBackpack();
     }
 
     @AfterAll
     public static void tearDown() {
+        server.getScheduler().cancelTasks(ParadubschManager.getInstance());
         MockBukkit.unmock();
     }
 

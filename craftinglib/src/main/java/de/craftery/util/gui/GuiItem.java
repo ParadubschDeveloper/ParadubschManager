@@ -1,6 +1,6 @@
 package de.craftery.util.gui;
 
-import de.craftery.CraftPlugin;
+import de.craftery.CraftingLib;
 import de.craftery.InternalMessages;
 import de.craftery.util.lang.Language;
 import de.craftery.util.lang.BaseMessageType;
@@ -57,7 +57,7 @@ public abstract class GuiItem {
 
     public void setItemHead(String headId) {
         try {
-            this.itemStack = CraftPlugin.getInstance().getHeadDatabase().getItemHead(headId);
+            this.itemStack = CraftingLib.getInstance().getHeadDatabase().getItemHead(headId);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -88,7 +88,7 @@ public abstract class GuiItem {
     }
 
     public void setDisplayName(BaseMessageType displayNameTemplate, String... args) {
-        Component displayName = CraftPlugin.getInstance().getLanguageManager().get(displayNameTemplate, lang, args);
+        Component displayName = CraftingLib.getInstance().getLanguageManager().get(displayNameTemplate, lang, args);
         this.setDisplayName(displayName);
     }
 
@@ -115,7 +115,7 @@ public abstract class GuiItem {
     }
 
     public void addLore(BaseMessageType loreTemplate, String... args) {
-        Component displayName = CraftPlugin.getInstance().getLanguageManager().get(loreTemplate, lang, args);
+        Component displayName = CraftingLib.getInstance().getLanguageManager().get(loreTemplate, lang, args);
         this.addLore(displayName);
     }
 
@@ -146,7 +146,7 @@ public abstract class GuiItem {
         String prompt = "";
         switch (type) {
             case INTEGER:
-                prompt = CraftPlugin.getInstance().getLanguageManager().getString(InternalMessages.INSERT_NUMBER, MessageAdapter.getSenderLang(player));
+                prompt = CraftingLib.getInstance().getLanguageManager().getString(InternalMessages.INSERT_NUMBER, MessageAdapter.getSenderLang(player));
                 break;
         }
         GuiManager.prompt(parent, player, identifier, "^^^^^^^^^^", prompt, "");

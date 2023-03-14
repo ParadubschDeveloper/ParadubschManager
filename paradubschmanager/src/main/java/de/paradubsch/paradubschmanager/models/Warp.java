@@ -3,8 +3,6 @@ package de.paradubsch.paradubschmanager.models;
 import de.craftery.util.BaseDatabaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -15,8 +13,6 @@ import java.util.List;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Entity
-@Cacheable
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Table(name = "warps")
 public class Warp extends BaseDatabaseEntity<Warp, String> {
     @Id

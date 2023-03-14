@@ -3,6 +3,7 @@ package paradubsch;
 import be.seeseemelk.mockbukkit.MockBukkit;
 import be.seeseemelk.mockbukkit.ServerMock;
 import be.seeseemelk.mockbukkit.entity.PlayerMock;
+import de.craftery.CraftingLib;
 import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.models.Backpack;
 import org.bukkit.Material;
@@ -20,11 +21,14 @@ public class BackpackModelTest {
         ServerMock server = MockBukkit.mock();
         player1 = server.addPlayer();
         player2 = server.addPlayer();
+        MockBukkit.load(CraftingLib.class);
         MockBukkit.load(ParadubschManager.class);
     }
 
     @AfterAll
     public static void tearDown() {
+        assert MockBukkit.getMock() != null;
+        MockBukkit.getMock().getScheduler().cancelTasks(ParadubschManager.getInstance());
         MockBukkit.unmock();
     }
 

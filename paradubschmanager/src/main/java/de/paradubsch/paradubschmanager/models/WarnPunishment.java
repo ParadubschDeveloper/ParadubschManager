@@ -4,8 +4,6 @@ package de.paradubsch.paradubschmanager.models;
 import de.craftery.util.BaseDatabaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -15,8 +13,6 @@ import java.sql.Timestamp;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Entity
-@Cacheable
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Table(name = "punishments")
 @SequenceGenerator(name="punishmentSequence",sequenceName="punishment_sequence", allocationSize = 1)
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)

@@ -1,6 +1,7 @@
 package paradubsch;
 
 import be.seeseemelk.mockbukkit.MockBukkit;
+import de.craftery.CraftingLib;
 import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.models.ItemData;
 import org.bukkit.Material;
@@ -16,11 +17,14 @@ public class ItemDataModelTest {
     @BeforeAll
     public static void setUp() {
         MockBukkit.mock().addPlayer();
+        MockBukkit.load(CraftingLib.class);
         MockBukkit.load(ParadubschManager.class);
     }
 
     @AfterAll
     public static void tearDown() {
+        assert MockBukkit.getMock() != null;
+        MockBukkit.getMock().getScheduler().cancelTasks(ParadubschManager.getInstance());
         MockBukkit.unmock();
     }
 

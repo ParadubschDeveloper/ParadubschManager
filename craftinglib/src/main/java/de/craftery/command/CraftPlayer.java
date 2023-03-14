@@ -1,6 +1,6 @@
 package de.craftery.command;
 
-import de.craftery.CraftPlugin;
+import de.craftery.CraftingLib;
 import de.craftery.util.lang.BaseMessageType;
 import de.craftery.util.MessageAdapter;
 import lombok.Data;
@@ -41,7 +41,7 @@ public class CraftPlayer {
     public boolean teleportNormalized(String world, double x, double y, double z) {
         double newX = x >= 0 ? x + 0.5 : x - 0.5;
         double newZ = z >= 0 ? z + 0.5 : z - 0.5;
-        World newWorld = CraftPlugin.getInstance().getServer().getWorld(world);
+        World newWorld = CraftingLib.getInstance().getServer().getWorld(world);
         return this.getPlayer().teleport(new Location(newWorld, newX, y, newZ));
     }
 

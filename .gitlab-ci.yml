@@ -25,3 +25,4 @@ build:
   artifacts:
     paths:
       - "paradubschmanager/build/libs/"
+      - "craftinglib/build/libs/"

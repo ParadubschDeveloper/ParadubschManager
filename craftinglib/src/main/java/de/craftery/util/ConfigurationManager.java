@@ -1,6 +1,6 @@
 package de.craftery.util;
 
-import de.craftery.CraftPlugin;
+import de.craftery.CraftingLib;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class ConfigurationManager {
     public static void copyDefaultConfiguration() {
-        JavaPlugin instance = CraftPlugin.getInstance();
+        JavaPlugin instance = CraftingLib.getInstance();
         FileConfiguration config = instance.getConfig();
 
         config.addDefault("hibernate.driver", "com.mysql.cj.jdbc.Driver");
@@ -33,7 +33,7 @@ public class ConfigurationManager {
     }
 
     public static void addDefault(@NotNull String key, @NotNull Object value) {
-        JavaPlugin instance = CraftPlugin.getInstance();
+        JavaPlugin instance = CraftingLib.getInstance();
         FileConfiguration config = instance.getConfig();
         config.addDefault(key, value);
         config.options().copyDefaults(true);
@@ -45,27 +45,27 @@ public class ConfigurationManager {
     }
 
     public static @NotNull String getString(String path) {
-        String value = CraftPlugin.getInstance().getConfig().getString(path);
+        String value = CraftingLib.getInstance().getConfig().getString(path);
         if (value == null) {
-            CraftPlugin.getInstance().getLogger().warning("The path " + path + " is not set in the config.yml");
+            CraftingLib.getInstance().getLogger().warning("The path " + path + " is not set in the config.yml");
             return "";
         }
         return value;
     }
 
     public static int getInt(String path) {
-        return CraftPlugin.getInstance().getConfig().getInt(path);
+        return CraftingLib.getInstance().getConfig().getInt(path);
     }
     public static Long getLong(String path) {
-        return CraftPlugin.getInstance().getConfig().getLong(path);
+        return CraftingLib.getInstance().getConfig().getLong(path);
     }
 
     public static FileConfiguration getConfig() {
-        return CraftPlugin.getInstance().getConfig();
+        return CraftingLib.getInstance().getConfig();
     }
 
     public static FileConfiguration getCustomConfig(String filename) {
-        CraftPlugin instance = CraftPlugin.getInstance();
+        CraftingLib instance = CraftingLib.getInstance();
 
         if (!instance.getDataFolder().exists()) {
             try {
@@ -90,7 +90,7 @@ public class ConfigurationManager {
     }
 
     public static void saveCustomConfig (FileConfiguration config, String filename) {
-        CraftPlugin instance = CraftPlugin.getInstance();
+        CraftingLib instance = CraftingLib.getInstance();
 
         if (!instance.getDataFolder().exists()) {
             try {

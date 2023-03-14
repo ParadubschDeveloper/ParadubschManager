@@ -1,6 +1,6 @@
 package de.craftery.util;
 
-import de.craftery.CraftPlugin;
+import de.craftery.CraftingLib;
 import de.craftery.InternalMessages;
 import de.craftery.util.lang.Language;
 import de.craftery.util.lang.BaseMessageType;
@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 
 public class MessageAdapter {
     public static void sendConsoleError (Exception ex) {
-        CraftPlugin.getInstance().getLogger().warning(ex.getMessage());
+        CraftingLib.getInstance().getLogger().warning(ex.getMessage());
     }
 
     public static Language getSenderLang(CommandSender sender) {
@@ -29,31 +29,31 @@ public class MessageAdapter {
     public static Component getSendableMessage(CommandSender cs, BaseMessageType template, String... args) {
         Language playerLang = getSenderLang(cs);
 
-        Component infoText = CraftPlugin.getInstance().getLanguageManager().get(template, playerLang, args);
-        return CraftPlugin.getInstance().getLanguageManager().get(InternalMessages.CHAT_PREFIX, playerLang).append(infoText);
+        Component infoText = CraftingLib.getInstance().getLanguageManager().get(template, playerLang, args);
+        return CraftingLib.getInstance().getLanguageManager().get(InternalMessages.CHAT_PREFIX, playerLang).append(infoText);
     }
 
     public static void sendMessage(CommandSender cs, BaseMessageType template, String... args) {
-        Bukkit.getScheduler().runTask(CraftPlugin.getInstance(), () -> {
+        Bukkit.getScheduler().runTask(CraftingLib.getInstance(), () -> {
             Component message = getSendableMessage(cs, template, args);
             cs.sendMessage(message);
         });
     }
 
     public static void sendUnprefixedMessage(CommandSender cs, BaseMessageType constant, String... args) {
-        Bukkit.getScheduler().runTask(CraftPlugin.getInstance(), () -> {
+        Bukkit.getScheduler().runTask(CraftingLib.getInstance(), () -> {
             Language playerLang = getSenderLang(cs);
 
-            Component constantText = CraftPlugin.getInstance().getLanguageManager().get(constant, playerLang, args);
+            Component constantText = CraftingLib.getInstance().getLanguageManager().get(constant, playerLang, args);
             cs.sendMessage(constantText);
         });
     }
 
     public static void broadcastUnprefixedMessage(BaseMessageType template, String... args) {
-        Bukkit.getScheduler().runTask(CraftPlugin.getInstance(), () -> {
+        Bukkit.getScheduler().runTask(CraftingLib.getInstance(), () -> {
             Language lang = Language.getDefaultLanguage();
 
-            Component constantText = CraftPlugin.getInstance().getLanguageManager().get(template, lang, args);
+            Component constantText = CraftingLib.getInstance().getLanguageManager().get(template, lang, args);
             Bukkit.getServer().sendMessage(constantText);
         });
     }

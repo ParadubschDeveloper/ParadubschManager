@@ -5,8 +5,6 @@ import de.paradubsch.paradubschmanager.lifecycle.jobs.JobLevel;
 import de.paradubsch.paradubschmanager.lifecycle.jobs.JobType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -14,8 +12,6 @@ import java.io.Serializable;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Entity
-@Cacheable
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Table(name = "job_holder")
 public class WorkerPlayer extends BaseDatabaseEntity<WorkerPlayer, String> {
     @Id

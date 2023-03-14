@@ -1,6 +1,6 @@
 package de.craftery.util.gui;
 
-import de.craftery.CraftPlugin;
+import de.craftery.CraftingLib;
 import de.craftery.command.CraftPlayer;
 import de.craftery.util.lang.Language;
 import de.craftery.PlayerData;
@@ -52,10 +52,10 @@ public class GuiManager implements Listener {
     private static GuiManager instance;
 
     public GuiManager() {
-        GuiManager.itemIdentifier = new NamespacedKey(CraftPlugin.getInstance(), "itemIdentifier");
+        GuiManager.itemIdentifier = new NamespacedKey(CraftingLib.getInstance(), "itemIdentifier");
         GuiManager.instance = this;
-        GuiManager.signFactory = new SignMenuFactory(CraftPlugin.getInstance());
-        CraftPlugin.getInstance().getServer().getPluginManager().registerEvents(this, CraftPlugin.getInstance());
+        GuiManager.signFactory = new SignMenuFactory(CraftingLib.getInstance());
+        CraftingLib.getInstance().getServer().getPluginManager().registerEvents(this, CraftingLib.getInstance());
     }
 
     @EventHandler
@@ -96,7 +96,7 @@ public class GuiManager implements Listener {
                         }
                     }
                     handledItem = guiItem;
-                    Bukkit.getScheduler().runTask(CraftPlugin.getInstance(), () -> {
+                    Bukkit.getScheduler().runTask(CraftingLib.getInstance(), () -> {
                         guiItem.onClick((Player) event.getWhoClicked());
                         guiItem.onClick((Player) event.getWhoClicked(), event);
                     });
@@ -215,7 +215,7 @@ public class GuiManager implements Listener {
 
         Inventory inv = getGui(gui, p, args);
         if (inv == null) return;
-        Bukkit.getScheduler().runTask(CraftPlugin.getInstance(), () -> {
+        Bukkit.getScheduler().runTask(CraftingLib.getInstance(), () -> {
             Stack<Class<? extends BaseGui>> stack = new Stack<>();
             stack.push(gui);
             GuiManager.instance.sessions.put(p, stack);
@@ -243,11 +243,11 @@ public class GuiManager implements Listener {
                         inv = getGui(origin, p, args.toArray());
                     }
                     if (inv == null) return true;
-                    Bukkit.getScheduler().runTaskLater(CraftPlugin.getInstance(), () -> p.openInventory(inv), 1);
+                    Bukkit.getScheduler().runTaskLater(CraftingLib.getInstance(), () -> p.openInventory(inv), 1);
                     return true;
                 });
-        Bukkit.getScheduler().runTaskLater(CraftPlugin.getInstance(), () -> p.closeInventory(), 1);
-        Bukkit.getScheduler().runTaskLater(CraftPlugin.getInstance(), () -> menu.open(p), 2);
+        Bukkit.getScheduler().runTaskLater(CraftingLib.getInstance(), () -> p.closeInventory(), 1);
+        Bukkit.getScheduler().runTaskLater(CraftingLib.getInstance(), () -> menu.open(p), 2);
     }
 
     public static String getPrompt(Player player, Object identifier) {

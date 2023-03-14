@@ -8,8 +8,6 @@ import lombok.EqualsAndHashCode;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.hibernate.Session;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
@@ -19,8 +17,6 @@ import java.util.List;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Entity
-@Cacheable
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Table(name = "kit_collectables")
 public class KitCollectable extends BaseDatabaseEntity<KitCollectable, Long> {
     @Id

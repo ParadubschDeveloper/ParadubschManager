@@ -45,14 +45,6 @@ public class HibernateConfigurator {
 
                 settings.put(Environment.HBM2DDL_AUTO, ConfigurationManager.getString("hibernate.hmb2ddlAuto"));
 
-                if (ConfigurationManager.getString("hibernate.cachingEnabled").equals("true")) {
-                    settings.put(Environment.USE_SECOND_LEVEL_CACHE, true);
-                    settings.put(Environment.CACHE_REGION_FACTORY, "org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory");
-                    settings.put("hibernate.cache.ehcache.missing_cache_strategy", "create");
-
-                    settings.put("hibernate.javax.cache.uri", "/ehcache.xml");
-                }
-
                 configuration.setProperties(settings);
 
                 // Register Database Models

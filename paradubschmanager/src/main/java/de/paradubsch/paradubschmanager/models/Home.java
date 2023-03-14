@@ -6,8 +6,6 @@ import de.craftery.util.HibernateConfigurator;
 import lombok.*;
 import org.bukkit.entity.Player;
 import org.hibernate.Session;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -17,8 +15,6 @@ import java.util.List;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Entity
-@Cacheable
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Table(name = "homes")
 @SequenceGenerator(name="homesSequence",sequenceName="homes_sequence", allocationSize = 1)
 public class Home extends BaseDatabaseEntity<Home, Long> {

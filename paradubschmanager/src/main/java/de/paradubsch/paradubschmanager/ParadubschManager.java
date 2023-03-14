@@ -12,7 +12,6 @@ import de.paradubsch.paradubschmanager.lifecycle.*;
 import de.paradubsch.paradubschmanager.lifecycle.jobs.JobManager;
 import de.paradubsch.paradubschmanager.lifecycle.playtime.PlaytimeManager;
 import de.paradubsch.paradubschmanager.lifecycle.stairsit.StairSitManager;
-import de.paradubsch.paradubschmanager.commands.TimeVoteCommand;
 import de.paradubsch.paradubschmanager.models.*;
 import de.paradubsch.paradubschmanager.models.logging.ChatMessageLog;
 import de.paradubsch.paradubschmanager.models.logging.CommandLog;
@@ -125,8 +124,6 @@ public final class ParadubschManager extends CraftPlugin {
             webServer.stopWebserver();
         }
         webServer = null;
-
-        HibernateConfigurator.shutdown();
         Bukkit.getConsoleSender().sendMessage("[Paradubsch] !> Disabled");
     }
 

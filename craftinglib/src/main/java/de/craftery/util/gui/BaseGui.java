@@ -1,6 +1,6 @@
 package de.craftery.util.gui;
 
-import de.craftery.CraftPlugin;
+import de.craftery.CraftingLib;
 import de.craftery.util.lang.Language;
 import de.craftery.util.lang.BaseMessageType;
 import net.kyori.adventure.text.Component;
@@ -26,7 +26,7 @@ public abstract class BaseGui {
     public final List<Object> args = new ArrayList<>();
 
     public void instantiate(Language lang, BaseMessageType title, int rows) {
-        this.title = CraftPlugin.getInstance().getLanguageManager().get(title, lang);
+        this.title = CraftingLib.getInstance().getLanguageManager().get(title, lang);
         this.lang = lang;
         this.inv = GuiManager.createInventory(this.title, rows);
     }
