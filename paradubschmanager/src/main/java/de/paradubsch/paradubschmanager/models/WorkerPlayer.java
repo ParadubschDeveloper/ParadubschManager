@@ -45,7 +45,7 @@ public class WorkerPlayer extends BaseDatabaseEntity<WorkerPlayer, String> {
     }
 
     @Override
-    public Serializable getIdentifyingColumn() {
+    public String getIdentifyingColumn() {
         return this.uuid;
     }
 }

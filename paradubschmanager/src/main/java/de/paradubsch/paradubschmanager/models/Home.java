@@ -66,7 +66,7 @@ public class Home extends BaseDatabaseEntity<Home, Long> {
     }
 
     @Override
-    public Serializable getIdentifyingColumn() {
+    public Long getIdentifyingColumn() {
         return this.id;
     }
 }

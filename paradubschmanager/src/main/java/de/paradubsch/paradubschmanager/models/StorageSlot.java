@@ -9,7 +9,6 @@ import org.bukkit.inventory.ItemStack;
 import org.hibernate.Session;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +34,7 @@ public class StorageSlot extends BaseDatabaseEntity<StorageSlot, Long> {
     private String itemHash;
 
     @Override
-    public Serializable getIdentifyingColumn() {
+    public Long getIdentifyingColumn() {
         return this.id;
     }
 

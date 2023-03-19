@@ -9,7 +9,6 @@ import org.bukkit.Material;
 import org.hibernate.Session;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +34,7 @@ public class BazaarCollectable extends BaseDatabaseEntity<BazaarCollectable, Lon
     private Long amount = 0L;
 
     @Override
-    public Serializable getIdentifyingColumn() {
+    public Long getIdentifyingColumn() {
         return this.getId();
     }
 

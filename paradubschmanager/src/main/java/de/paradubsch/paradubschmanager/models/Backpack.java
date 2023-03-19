@@ -40,8 +40,8 @@ public class Backpack extends BaseDatabaseEntity<Backpack, Long> {
     private transient List<StorageSlot> slots;
 
     @Override
-    public String getIdentifyingColumn() {
-        return this.playerRef;
+    public Long getIdentifyingColumn() {
+        return this.id;
     }
 
     private static Backpack getByUuid(String playerRef) {

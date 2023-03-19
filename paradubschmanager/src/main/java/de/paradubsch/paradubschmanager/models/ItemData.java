@@ -9,7 +9,6 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -29,7 +28,7 @@ public class ItemData extends BaseDatabaseEntity<ItemData, String> {
     private ItemStack item;
 
     @Override
-    public Serializable getIdentifyingColumn() {
+    public String getIdentifyingColumn() {
         return this.itemHash;
     }
 

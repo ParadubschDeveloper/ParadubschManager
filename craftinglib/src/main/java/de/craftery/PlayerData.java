@@ -123,7 +123,7 @@ public class PlayerData extends BaseDatabaseEntity<PlayerData, String> {
     }
 
     @Override
-    public Serializable getIdentifyingColumn() {
+    public String getIdentifyingColumn() {
         return this.uuid;
     }
 }

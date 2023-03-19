@@ -45,7 +45,7 @@ public class PunishmentUpdate extends BaseDatabaseEntity<PunishmentUpdate, Long>
     }
 
     @Override
-    public Serializable getIdentifyingColumn() {
+    public Long getIdentifyingColumn() {
         return this.id;
     }
 }

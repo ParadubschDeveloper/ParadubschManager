@@ -15,7 +15,7 @@ import java.sql.Timestamp;
 @EqualsAndHashCode(callSuper = false)
 @Entity
 @Table(name = "kit_redeems")
-public class KitRedeemEntry extends BaseDatabaseEntity<KitRedeemEntry, Long> {
+public class KitRedeemEntry extends BaseDatabaseEntity<KitRedeemEntry, String> {
     @Id
     @Column(name = "hash", columnDefinition = "VARCHAR(40)")
     private String hash;

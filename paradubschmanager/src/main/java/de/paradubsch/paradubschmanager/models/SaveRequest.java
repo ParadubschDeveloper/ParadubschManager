@@ -75,7 +75,7 @@ public class SaveRequest extends BaseDatabaseEntity<SaveRequest, Integer> implem
     }
 
     @Override
-    public Serializable getIdentifyingColumn() {
+    public Integer getIdentifyingColumn() {
         return this.id;
     }
 }

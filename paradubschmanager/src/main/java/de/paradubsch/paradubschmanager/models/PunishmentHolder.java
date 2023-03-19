@@ -74,7 +74,7 @@ public class PunishmentHolder extends BaseDatabaseEntity<PunishmentHolder, Strin
     }
 
     @Override
-    public Serializable getIdentifyingColumn() {
+    public String getIdentifyingColumn() {
         return this.uuid;
     }
 }

@@ -11,7 +11,6 @@ import org.hibernate.Session;
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,7 +43,7 @@ public class BazaarOrder extends BaseDatabaseEntity<BazaarOrder, Long> {
     private Long amount = 0L;
 
     @Override
-    public Serializable getIdentifyingColumn() {
+    public Long getIdentifyingColumn() {
         return this.id;
     }
 

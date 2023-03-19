@@ -6,7 +6,6 @@ import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -50,7 +49,7 @@ public class Warp extends BaseDatabaseEntity<Warp, String> {
     }
 
     @Override
-    public Serializable getIdentifyingColumn() {
+    public String getIdentifyingColumn() {
         return this.name;
     }
 }

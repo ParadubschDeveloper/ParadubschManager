@@ -61,7 +61,6 @@ tasks {
         archiveClassifier.set(null)
         exclude("META-INF/**")
 
-        relocate 'com.jeff_media.customblockdata', 'de.craftery.lib.relocations.customblockdata'
         relocate 'me.lucko.commodore', 'de.craftery.lib.relocations.commodore'
     }
 

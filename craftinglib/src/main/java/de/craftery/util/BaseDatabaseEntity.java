@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class BaseDatabaseEntity<P extends BaseDatabaseEntity<?, ?>, ID extends Serializable> implements Cloneable {
-    public abstract Serializable getIdentifyingColumn();
+    public abstract ID getIdentifyingColumn();
     public Serializable save() {
         Transaction transaction = null;
         try {
