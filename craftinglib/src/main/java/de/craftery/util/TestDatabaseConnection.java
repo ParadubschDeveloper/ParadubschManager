@@ -1,9 +1,11 @@
 package de.craftery.util;
 
+import org.hibernate.Session;
 
 public class TestDatabaseConnection {
     public TestDatabaseConnection() {
-        HibernateConfigurator.getSessionFactory().openSession();
+        Session session = HibernateConfigurator.getSessionFactory().openSession();
+        session.close();
         HibernateConfigurator.shutdown();
     }
 }

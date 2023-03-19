@@ -1,7 +1,7 @@
 package de.craftery.util.gui;
 
 import de.craftery.CraftingLib;
-import de.craftery.command.CraftPlayer;
+import de.craftery.command.CraftingPlayer;
 import de.craftery.util.lang.Language;
 import de.craftery.PlayerData;
 import de.craftery.util.MessageAdapter;
@@ -204,7 +204,7 @@ public class GuiManager implements Listener {
         return null;
     }
 
-    public static <T extends BaseGui> void entryGui(Class<T> gui, CraftPlayer p, Object... args) {
+    public static <T extends BaseGui> void entryGui(Class<T> gui, CraftingPlayer p, Object... args) {
         entryGui(gui, p.getPlayer(), args);
     }
 

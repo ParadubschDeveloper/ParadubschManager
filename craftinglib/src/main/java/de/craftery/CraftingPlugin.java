@@ -1,6 +1,6 @@
 package de.craftery;
 
-import de.craftery.command.CraftCommand;
+import de.craftery.command.CraftingCommand;
 import de.craftery.util.CachingManager;
 import de.craftery.util.lang.LanguageManager;
 import me.lucko.commodore.Commodore;
@@ -17,15 +17,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CraftPlugin extends JavaPlugin {
-    private static CraftPlugin instance;
+public class CraftingPlugin extends JavaPlugin {
     private final List<String> registeredCommands = new ArrayList<>();
-
-    @Override
-    public void onEnable() {
-        instance = this;
-        super.onEnable();
-    }
 
     @Override
     public void onDisable() {
@@ -51,7 +44,7 @@ public class CraftPlugin extends JavaPlugin {
         pc.setTabCompleter(obj);
     }
 
-    protected void registerCommand(CraftCommand command) {
+    protected void registerCommand(CraftingCommand command) {
         PluginCommand pc = Bukkit.getPluginCommand(command.getIdentifier());
         if (pc != null) {
             registeredCommands.add(command.getIdentifier());
@@ -72,7 +65,7 @@ public class CraftPlugin extends JavaPlugin {
         });
     }
 
-    private void registerCommodore(PluginCommand pc, CraftCommand command) {
+    private void registerCommodore(PluginCommand pc, CraftingCommand command) {
         if (CommodoreProvider.isSupported() && command.registerCommandHelper() != null) {
             Commodore commodore = CommodoreProvider.getCommodore(this);
             commodore.register(pc, command.registerCommandHelper());
@@ -89,10 +82,10 @@ public class CraftPlugin extends JavaPlugin {
     }
 
     // Constructors for testing
-    public CraftPlugin() {
+    public CraftingPlugin() {
         super();
     }
-    protected CraftPlugin(JavaPluginLoader loader, PluginDescriptionFile descriptionFile, File dataFolder, File file) {
+    protected CraftingPlugin(JavaPluginLoader loader, PluginDescriptionFile descriptionFile, File dataFolder, File file) {
         super(loader, descriptionFile, dataFolder, file);
     }
 }

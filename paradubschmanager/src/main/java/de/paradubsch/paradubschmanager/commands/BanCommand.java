@@ -6,8 +6,8 @@ import com.mojang.brigadier.builder.RequiredArgumentBuilder;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import de.craftery.command.ArgType;
 import de.craftery.command.CheckArg;
-import de.craftery.command.CraftCommand;
-import de.craftery.command.CraftPlayer;
+import de.craftery.command.CraftingCommand;
+import de.craftery.command.CraftingPlayer;
 import de.craftery.util.lang.Language;
 import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.models.BanPunishment;
@@ -29,7 +29,7 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BanCommand extends CraftCommand {
+public class BanCommand extends CraftingCommand {
     public BanCommand() {
         super("Ban Command");
         this.setIdentifier("cb");
@@ -37,7 +37,7 @@ public class BanCommand extends CraftCommand {
 
     @Override
     @CheckArg(index = 0, type = ArgType.PLAYER_NAME, checkType = false)
-    public boolean execute(CraftPlayer player, String[] args) {
+    public boolean execute(CraftingPlayer player, String[] args) {
         switch (args[0]) {
             /* #TODO: Implement list command
             case "list": {
@@ -58,7 +58,7 @@ public class BanCommand extends CraftCommand {
         return true;
     }
 
-    private void banPlayer(CraftPlayer sender, String[] args) {
+    private void banPlayer(CraftingPlayer sender, String[] args) {
         //ban player duration reason
         Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
             PlayerData target = PlayerData.getByName(args[0]);
@@ -134,7 +134,7 @@ public class BanCommand extends CraftCommand {
         });
     }
 
-    private void deleteBan(CraftPlayer sender, String[] args) {
+    private void deleteBan(CraftingPlayer sender, String[] args) {
         //ban delete player reason
         Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
             if (!Expect.minArgs(2, args)) {
@@ -190,7 +190,7 @@ public class BanCommand extends CraftCommand {
         });
     }
 
-    private void editBan(CraftPlayer sender, String[] args) {
+    private void editBan(CraftingPlayer sender, String[] args) {
         //ban edit player expiration reason
         Bukkit.getScheduler().runTaskAsynchronously(ParadubschManager.getInstance(), () -> {
             if (!Expect.minArgs(2, args)) {
@@ -259,7 +259,7 @@ public class BanCommand extends CraftCommand {
     }
 
     @Override
-    public List<String> tabComplete(CraftPlayer player, String[] args) {
+    public List<String> tabComplete(CraftingPlayer player, String[] args) {
         List<String> l = new ArrayList<>();
         if (args.length == 1) {
             Bukkit.getOnlinePlayers().forEach(x -> l.add(x.getName()));

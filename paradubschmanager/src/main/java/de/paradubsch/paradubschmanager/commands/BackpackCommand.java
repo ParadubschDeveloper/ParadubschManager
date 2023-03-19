@@ -1,7 +1,7 @@
 package de.paradubsch.paradubschmanager.commands;
 
-import de.craftery.command.CraftCommand;
-import de.craftery.command.CraftPlayer;
+import de.craftery.command.CraftingCommand;
+import de.craftery.command.CraftingPlayer;
 import de.craftery.command.FeatureDependent;
 import de.craftery.command.PlayerOnly;
 import de.craftery.util.features.HeadDatabaseFeature;
@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class BackpackCommand extends CraftCommand {
+public class BackpackCommand extends CraftingCommand {
     public static final List<String> supervisedPlayers = new ArrayList<>();
     public BackpackCommand() {
         super("Backpack Command");
@@ -26,7 +26,7 @@ public class BackpackCommand extends CraftCommand {
     @Override
     @PlayerOnly
     @FeatureDependent(features = {HeadDatabaseFeature.class})
-    public boolean execute(CraftPlayer player, String[] args) {
+    public boolean execute(CraftingPlayer player, String[] args) {
         PlayerData target;
         if (args.length > 0 && player.hasPermission("paradubsch.backpack.others")) {
             target = PlayerData.getByName(args[0]);
@@ -56,7 +56,7 @@ public class BackpackCommand extends CraftCommand {
     }
 
     @Override
-    public List<String> tabComplete(CraftPlayer player, String[] args) {
+    public List<String> tabComplete(CraftingPlayer player, String[] args) {
         if (args.length == 1 && player.hasPermission("paradubsch.backpack.others")) {
             return null;
         }

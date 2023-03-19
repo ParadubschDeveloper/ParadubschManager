@@ -1,6 +1,6 @@
 package de.paradubsch.paradubschmanager.models;
 
-import de.craftery.command.CraftPlayer;
+import de.craftery.command.CraftingPlayer;
 import de.craftery.util.BaseDatabaseEntity;
 import de.craftery.util.HibernateConfigurator;
 import lombok.*;
@@ -45,7 +45,7 @@ public class Home extends BaseDatabaseEntity<Home, Long> {
         return BaseDatabaseEntity.getById(Home.class, id);
     }
 
-    public static List<Home> getByPlayer(CraftPlayer p) {
+    public static List<Home> getByPlayer(CraftingPlayer p) {
         return getByPlayer(p.getPlayer());
     }
 

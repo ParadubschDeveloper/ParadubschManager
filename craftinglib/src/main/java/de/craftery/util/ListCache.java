@@ -4,6 +4,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * A simple cache for lists, to be used in combination with databases.
+ * @param <K> Type of key for a cache
+ * @param <T> The array type of the cached element
+ */
 public class ListCache<K, T> {
     private final Map<K, List<T>> cache = new HashMap<>();
     public void invalidate(K key) {

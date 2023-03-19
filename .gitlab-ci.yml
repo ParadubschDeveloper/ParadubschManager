@@ -26,3 +26,4 @@ build:
     paths:
       - "paradubschmanager/build/libs/"
       - "craftinglib/build/libs/"
+      - "easterevent/build/libs/"

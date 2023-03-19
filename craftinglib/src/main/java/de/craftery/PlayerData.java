@@ -1,6 +1,6 @@
 package de.craftery;
 
-import de.craftery.command.CraftPlayer;
+import de.craftery.command.CraftingPlayer;
 import de.craftery.util.BaseDatabaseEntity;
 import de.craftery.util.HibernateConfigurator;
 import lombok.Cleanup;
@@ -65,7 +65,7 @@ public class PlayerData extends BaseDatabaseEntity<PlayerData, String> {
         return BaseDatabaseEntity.getById(PlayerData.class, id);
     }
 
-    public static PlayerData getByPlayer(CraftPlayer player) {
+    public static PlayerData getByPlayer(CraftingPlayer player) {
         return getByPlayer(player.getPlayer());
     }
 

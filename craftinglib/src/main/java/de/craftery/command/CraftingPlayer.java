@@ -13,10 +13,10 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 @Data
-public class CraftPlayer {
+public class CraftingPlayer {
     private final CommandSender commandSender;
 
-    public CraftPlayer(CommandSender commandSender) {
+    public CraftingPlayer(CommandSender commandSender) {
         this.commandSender = commandSender;
     }
 

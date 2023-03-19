@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public abstract class CraftCommand implements CommandExecutor, TabCompleter {
+public abstract class CraftingCommand implements CommandExecutor, TabCompleter {
     private final String name;
     private final List<String> otherIdentifiers = new ArrayList<>();
     private String description = "";
@@ -28,13 +28,13 @@ public abstract class CraftCommand implements CommandExecutor, TabCompleter {
     private String activeIdentifier = "";
     private String activeAlias = "";
 
-    protected CraftCommand(String name) {
+    protected CraftingCommand(String name) {
         this.name = name;
     }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-       CraftPlayer player = new CraftPlayer(sender);
+       CraftingPlayer player = new CraftingPlayer(sender);
 
         this.setActiveIdentifier(command.getLabel());
         this.setActiveAlias(label);
@@ -51,12 +51,12 @@ public abstract class CraftCommand implements CommandExecutor, TabCompleter {
         this.setActiveIdentifier(command.getLabel());
         this.setActiveAlias(label);
 
-        return tabComplete(new CraftPlayer(sender), args);
+        return tabComplete(new CraftingPlayer(sender), args);
     }
 
-    private boolean checkArgs(CraftPlayer player, String[] args) {
+    private boolean checkArgs(CraftingPlayer player, String[] args) {
         try {
-            Annotation[] annotations = this.getClass().getMethod("execute", CraftPlayer.class, String[].class).getAnnotations();
+            Annotation[] annotations = this.getClass().getMethod("execute", CraftingPlayer.class, String[].class).getAnnotations();
             for (Annotation annotation : annotations) {
                 if (annotation instanceof CheckArg) {
                     CheckArg argsAnnotation = (CheckArg) annotation;
@@ -77,7 +77,7 @@ public abstract class CraftCommand implements CommandExecutor, TabCompleter {
         return true;
     }
 
-    private boolean checkArgType(CraftPlayer player, ArgType type, String arg) {
+    private boolean checkArgType(CraftingPlayer player, ArgType type, String arg) {
         switch (type) {
             case NOT_PROVIDED: {
                 return true;
@@ -93,7 +93,7 @@ public abstract class CraftCommand implements CommandExecutor, TabCompleter {
         return true;
     }
 
-    private void reportInsufficientArgumentCount(CraftPlayer player, ArgType type, int index) {
+    private void reportInsufficientArgumentCount(CraftingPlayer player, ArgType type, int index) {
         switch (type) {
             case NOT_PROVIDED: {
                 player.sendMessage(InternalMessages.NOT_ENOUGH_ARGUMENTS, (index + 1) + "");
@@ -106,7 +106,7 @@ public abstract class CraftCommand implements CommandExecutor, TabCompleter {
         }
     }
 
-    private boolean isFeatureDependent(CraftPlayer player) {
+    private boolean isFeatureDependent(CraftingPlayer player) {
         FeatureDependent featureDependent = hasFeatureAnnotation();
         if (featureDependent == null) return true;
 
@@ -127,13 +127,13 @@ public abstract class CraftCommand implements CommandExecutor, TabCompleter {
 
     private @Nullable FeatureDependent hasFeatureAnnotation() {
         try {
-            return this.getClass().getMethod("execute", CraftPlayer.class, String[].class).getAnnotation(FeatureDependent.class);
+            return this.getClass().getMethod("execute", CraftingPlayer.class, String[].class).getAnnotation(FeatureDependent.class);
         } catch (NoSuchMethodException ignored) {
             return null;
         }
     }
 
-    private boolean isRightPlayerType(CraftPlayer player) {
+    private boolean isRightPlayerType(CraftingPlayer player) {
         if (isPlayerOnlyPresent() && !player.isPlayer()) {
             player.sendMessage(InternalMessages.CMD_ONLY_FOR_PLAYERS);
             return false;
@@ -146,7 +146,7 @@ public abstract class CraftCommand implements CommandExecutor, TabCompleter {
 
     private boolean isPlayerOnlyPresent() {
         try {
-            return this.getClass().getMethod("execute", CraftPlayer.class, String[].class).isAnnotationPresent(PlayerOnly.class);
+            return this.getClass().getMethod("execute", CraftingPlayer.class, String[].class).isAnnotationPresent(PlayerOnly.class);
         } catch (NoSuchMethodException ignored) {
             return false;
         }
@@ -154,7 +154,7 @@ public abstract class CraftCommand implements CommandExecutor, TabCompleter {
 
     private boolean isConsoleOnlyPresent() {
         try {
-            return this.getClass().getMethod("execute", CraftPlayer.class, String[].class).isAnnotationPresent(ConsoleOnly.class);
+            return this.getClass().getMethod("execute", CraftingPlayer.class, String[].class).isAnnotationPresent(ConsoleOnly.class);
         } catch (NoSuchMethodException ignored) {
             return false;
         }
@@ -164,6 +164,6 @@ public abstract class CraftCommand implements CommandExecutor, TabCompleter {
         return null;
     }
 
-    public abstract boolean execute(CraftPlayer player, String[] args);
-    public abstract List<String> tabComplete(CraftPlayer player, String[] args);
+    public abstract boolean execute(CraftingPlayer player, String[] args);
+    public abstract List<String> tabComplete(CraftingPlayer player, String[] args);
 }

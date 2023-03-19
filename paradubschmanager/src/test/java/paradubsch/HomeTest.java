@@ -5,7 +5,7 @@ import be.seeseemelk.mockbukkit.ServerMock;
 import be.seeseemelk.mockbukkit.entity.PlayerMock;
 import de.craftery.CraftingLib;
 import de.craftery.ErrorOr;
-import de.craftery.command.CraftPlayer;
+import de.craftery.command.CraftingPlayer;
 import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.commands.HomeCommand;
 import de.paradubsch.paradubschmanager.commands.SethomeCommand;
@@ -59,7 +59,7 @@ public class HomeTest {
     @DisplayName("Test the home command")
     @Test
     public void homeCommand() {
-        CraftPlayer player = new CraftPlayer(server.addPlayer());
+        CraftingPlayer player = new CraftingPlayer(server.addPlayer());
 
         SethomeCommand.setHome(player.getPlayer(), "test", false);
         SethomeCommand.setHome(player.getPlayer(), "test3", false);

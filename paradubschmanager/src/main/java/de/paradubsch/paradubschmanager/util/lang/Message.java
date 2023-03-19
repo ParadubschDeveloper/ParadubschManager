@@ -95,7 +95,8 @@ public class Message {
         INVALID_KIT_ID("invalidKitId","&cDas Kit &a%1 &cexistiert nicht."),
         KIT_GUI_NO_PERMISSION("kitGuiNoPermission","&cDu hast keine Berechtigung, dieses Kit zu verwenden."),
         KIT_COLLECT_GUI_INVENTORY_FULL("kitCollectGuiInventoryFull","&cDein Inventar ist voll."),
-        CMD_BACKPACK_CANT_GET_OPENED("cmdBackpackCantGetOpened","&cDer Rucksack kann gerade nicht geöffnet werden.");
+        CMD_BACKPACK_CANT_GET_OPENED("cmdBackpackCantGetOpened","&cDer Rucksack kann gerade nicht geöffnet werden."),
+        COLLECTABLE_TYPE_NOT_FOUND("collectableTypeNotFound","&cDer Typ &a%1 &cexistiert nicht.");
 
         private final String key;
         private final String def;
@@ -234,7 +235,10 @@ public class Message {
         GS_INFO_REGION_WHITELIST_ENABLED("gsInfoRegionWhitelistEnabled","&7Die Whitelist ist &aaktiviert&7."),
         GS_INFO_REGION_WHITELIST_MEMBERS("gsInfoRegionWhitelistMembers","&7Whitelist Mitglieder: &6%1"),
         GS_INFO_REGION_BANNED_PLAYERS("gsInfoRegionBannedPlayers","&7Gebannte Spieler: &6%1"),
-        KIT_EDITED("kitEdited","&aDer Kit &6%1 &awurde erfolgreich bearbeitet.");
+        KIT_EDITED("kitEdited","&aDer Kit &6%1 &awurde erfolgreich bearbeitet."),
+        REGISTERED_COLLECTABLES("registeredCollectables","&7Es gibt folgende Sammelkategorien: &a%1"),
+        COLLECTABLE_LIST_HEADER("collectableListHeader","&7Sammelstücke in Kategore: &a%1 &7:"),
+        COLLECTABLE_LIST_ENTITY("collectableListEntity","&7ID: &a%1 @ClickableComponent<Text=&7[&aTP&7]|SuggestCommand=/collectables tp %1 |HoverText=&aTeleportieren> @ClickableComponent<Text=&7[&cLöschen&7]|SuggestCommand=/collectables remove %1 |HoverText=&cLöschen>");
 
         private final String key;
         private final String def;

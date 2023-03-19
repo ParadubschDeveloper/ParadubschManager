@@ -1,8 +1,8 @@
 package de.paradubsch.paradubschmanager.commands;
 
 import de.craftery.ErrorOr;
-import de.craftery.command.CraftCommand;
-import de.craftery.command.CraftPlayer;
+import de.craftery.command.CraftingCommand;
+import de.craftery.command.CraftingPlayer;
 import de.craftery.command.PlayerOnly;
 import de.paradubsch.paradubschmanager.models.Home;
 import de.paradubsch.paradubschmanager.util.lang.Message;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class HomeCommand extends CraftCommand {
+public class HomeCommand extends CraftingCommand {
     public static final String HOME_NOT_FOUND_ERROR = "Home not found";
     public static final String HOME_NOT_FOUND_BUT_ALTERNATIVE_ERROR = "Home not found, but alternative is existing";
 
@@ -22,7 +22,7 @@ public class HomeCommand extends CraftCommand {
 
     @Override
     @PlayerOnly
-    public boolean execute(CraftPlayer player, String[] args) {
+    public boolean execute(CraftingPlayer player, String[] args) {
         String homeName;
         if (args.length == 0) {
             homeName = "default";
@@ -34,7 +34,7 @@ public class HomeCommand extends CraftCommand {
         return true;
     }
 
-    public static ErrorOr<Void> teleportHome(CraftPlayer player, String homeName) {
+    public static ErrorOr<Void> teleportHome(CraftingPlayer player, String homeName) {
         List<Home> homes = Home.getByPlayer(player);
 
         Optional<Home> predicate = homes.stream().filter(home_ -> home_.getName().equals(homeName)).findFirst();
@@ -57,7 +57,7 @@ public class HomeCommand extends CraftCommand {
     }
 
     @Override
-    public List<String> tabComplete(CraftPlayer player, String[] args) {
+    public List<String> tabComplete(CraftingPlayer player, String[] args) {
         return new ArrayList<>();
     }
 }

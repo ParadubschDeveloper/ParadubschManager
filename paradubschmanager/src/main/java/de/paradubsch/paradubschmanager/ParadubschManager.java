@@ -2,8 +2,7 @@ package de.paradubsch.paradubschmanager;
 
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
-import de.craftery.CraftPlugin;
-import de.craftery.PlayerData;
+import de.craftery.CraftingPlugin;
 import de.paradubsch.paradubschmanager.commands.*;
 import de.paradubsch.paradubschmanager.config.ConfigurationHelper;
 import de.craftery.util.HibernateConfigurator;
@@ -30,7 +29,7 @@ import org.bukkit.plugin.java.JavaPluginLoader;
 import java.io.File;
 import java.util.*;
 
-public final class ParadubschManager extends CraftPlugin {
+public final class ParadubschManager extends CraftingPlugin {
     private static ParadubschManager instance;
 
     @Getter
@@ -128,7 +127,6 @@ public final class ParadubschManager extends CraftPlugin {
     }
 
     private void addHibernateEntities() {
-        HibernateConfigurator.addEntity(PlayerData.class);
         HibernateConfigurator.addEntity(Home.class);
         HibernateConfigurator.addEntity(SaveRequest.class);
         HibernateConfigurator.addEntity(PunishmentHolder.class);
@@ -222,6 +220,7 @@ public final class ParadubschManager extends CraftPlugin {
         registerLegacyCommand("mute", new MuteCommand());
         registerLegacyCommand("timevote", new TimeVoteCommand());
         registerLegacyCommand("kit", new KitCommand());
+        registerCommand(new CollectablesCommand());
     }
     private WorldGuardPlugin initializeWorldGuardPlugin () {
         Plugin plugin = this.getServer().getPluginManager().getPlugin("WorldGuard");

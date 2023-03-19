@@ -4,6 +4,8 @@ import de.craftery.util.CachingManager;
 import de.craftery.util.ConfigurationManager;
 import de.craftery.util.HibernateConfigurator;
 import de.craftery.util.TestDatabaseConnection;
+import de.craftery.util.collectables.Collectable;
+import de.craftery.util.collectables.CollectedCollectable;
 import de.craftery.util.gui.GuiManager;
 import de.craftery.util.lang.LanguageManager;
 import lombok.Getter;
@@ -18,6 +20,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.java.JavaPluginLoader;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CraftingLib extends JavaPlugin implements Listener {
     @Getter
@@ -32,6 +36,9 @@ public class CraftingLib extends JavaPlugin implements Listener {
     @Getter
     private LanguageManager languageManager;
 
+    @Getter
+    private static final List<String> registeredCollectableTypes = new ArrayList<>();
+
     @Override
     public void onEnable() {
         instance = this;
@@ -44,6 +51,9 @@ public class CraftingLib extends JavaPlugin implements Listener {
         languageManager.registerMessageEnum(InternalMessages.class);
 
         new TestDatabaseConnection();
+        HibernateConfigurator.addEntity(PlayerData.class);
+        HibernateConfigurator.addEntity(Collectable.class);
+        HibernateConfigurator.addEntity(CollectedCollectable.class);
         super.onEnable();
     }
 
@@ -59,6 +69,10 @@ public class CraftingLib extends JavaPlugin implements Listener {
 
         System.gc();
         super.onDisable();
+    }
+
+    public static void registerCollectableType(String type) {
+        registeredCollectableTypes.add(type);
     }
 
     @EventHandler

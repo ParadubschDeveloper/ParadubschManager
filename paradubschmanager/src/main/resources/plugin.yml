@@ -348,6 +348,9 @@ commands:
     permission: paradubsch.kit.use
     permission-message: 'Du benötigst die Berechtigung paradubsch.kit um einen Kit zu erhalten.'
     usage: '/kit'
+  collectables:
+    description: Admin Commands zu Collectables
+    permission: paradubsch.collectables
 
 
 permissions:
@@ -630,3 +633,6 @@ permissions:
           paradubsch.kit.5:
             description: "Erlaubt es Kit 5 zu benutzen."
             default: false
+      paradubsch.collectables:
+        description: "Erlaubt Zugriff auf den /collectables Befehl."
+        default: false
