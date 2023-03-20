@@ -162,6 +162,7 @@ public final class ParadubschManager extends CraftingPlugin {
         new StairSitManager();
         new GsRegionListener();
         new CommandListener();
+        new CollectableCommandListener();
     }
 
     private void registerCommands() {

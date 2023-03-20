@@ -96,7 +96,9 @@ public class Message {
         KIT_GUI_NO_PERMISSION("kitGuiNoPermission","&cDu hast keine Berechtigung, dieses Kit zu verwenden."),
         KIT_COLLECT_GUI_INVENTORY_FULL("kitCollectGuiInventoryFull","&cDein Inventar ist voll."),
         CMD_BACKPACK_CANT_GET_OPENED("cmdBackpackCantGetOpened","&cDer Rucksack kann gerade nicht geöffnet werden."),
-        COLLECTABLE_TYPE_NOT_FOUND("collectableTypeNotFound","&cDer Typ &a%1 &cexistiert nicht.");
+        COLLECTABLE_TYPE_NOT_FOUND("collectableTypeNotFound","&cDer Typ &a%1 &cexistiert nicht."),
+        ID_NOT_PROVIDED("idNotProvided","&cDu musst eine gültige ID angeben."),
+        BLOCK_IS_ALREADY_COLLECTABLE("blockIsAlreadyCollectable","&cDieser Block ist bereits ein Sammelpunkt.");
 
         private final String key;
         private final String def;
@@ -238,7 +240,12 @@ public class Message {
         KIT_EDITED("kitEdited","&aDer Kit &6%1 &awurde erfolgreich bearbeitet."),
         REGISTERED_COLLECTABLES("registeredCollectables","&7Es gibt folgende Sammelkategorien: &a%1"),
         COLLECTABLE_LIST_HEADER("collectableListHeader","&7Sammelstücke in Kategore: &a%1 &7:"),
-        COLLECTABLE_LIST_ENTITY("collectableListEntity","&7ID: &a%1 @ClickableComponent<Text=&7[&aTP&7]|SuggestCommand=/collectables tp %1 |HoverText=&aTeleportieren> @ClickableComponent<Text=&7[&cLöschen&7]|SuggestCommand=/collectables remove %1 |HoverText=&cLöschen>");
+        COLLECTABLE_LIST_ENTITY("collectableListEntity","&7ID: &a%1 @ClickableComponent<Text=&7[&aTP&7]|SuggestCommand=/collectables tp %1 |HoverText=&aTeleportieren> @ClickableComponent<Text=&7[&cLöschen&7]|SuggestCommand=/collectables remove %1 |HoverText=&cLöschen>"),
+        TELEPORTED_TO_COLLECTABLE("teleportedToCollectable","&aDu wurdest zu dem Sammelstück &6%1&a teleportiert."),
+        COLLECTABLE_REMOVED("collectableRemoved","&aDas Sammelstück &6%1 &awurde erfolgreich gelöscht."),
+        ADD_MODE_DISABLED("addModeDisabled","&aDer Add-Modus wurde deaktiviert."),
+        ADD_MODE_ENABLED("addModeEnabled","&aDer Add-Modus für die Gruppe &6%1 &awurde aktiviert. Clicke einfach einen Block an, um ihn als Sammelobjekt hinzuzufügen."),
+        COLLECTABLE_ADDED("collectableAdded","&aDas Sammelstück wurde erfolgreich zur Kollektion &6%1 &ahinzugefügt.");
 
         private final String key;
         private final String def;

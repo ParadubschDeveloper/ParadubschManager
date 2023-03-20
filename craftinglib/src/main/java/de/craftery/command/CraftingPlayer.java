@@ -12,6 +12,8 @@ import org.bukkit.inventory.InventoryView;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.UUID;
+
 @Data
 public class CraftingPlayer {
     private final CommandSender commandSender;
@@ -38,11 +40,15 @@ public class CraftingPlayer {
         return this.getPlayer().getLocation();
     }
 
+    public boolean teleportNormalized(Location location) {
+        double newX = location.getX() >= 0 ? location.getX() + 0.5 : location.getX() - 0.5;
+        double newZ = location.getZ() >= 0 ? location.getZ() + 0.5 : location.getZ() - 0.5;
+        return this.getPlayer().teleport(new Location(location.getWorld(), newX, location.getY(), newZ));
+    }
+
     public boolean teleportNormalized(String world, double x, double y, double z) {
-        double newX = x >= 0 ? x + 0.5 : x - 0.5;
-        double newZ = z >= 0 ? z + 0.5 : z - 0.5;
         World newWorld = CraftingLib.getInstance().getServer().getWorld(world);
-        return this.getPlayer().teleport(new Location(newWorld, newX, y, newZ));
+        return this.teleportNormalized(new Location(newWorld, x, y, z));
     }
 
     public boolean hasPermission(@NotNull String name) {
@@ -50,6 +56,10 @@ public class CraftingPlayer {
             return this.getPlayer().hasPermission(name);
         }
         return true;
+    }
+
+    public UUID getUniqueId() {
+        return this.getPlayer().getUniqueId();
     }
 
     public Player getPlayer() {

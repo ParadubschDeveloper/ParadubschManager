@@ -1,4 +1,4 @@
-package de.paradubsch.eastrevent;
+package de.paradubsch.easterevent;
 
 import de.craftery.CraftingLib;
 import de.craftery.CraftingPlugin;
@@ -9,6 +9,7 @@ public class EasterEvent extends CraftingPlugin {
     @Override
     public void onEnable() {
         super.onEnable();
+        System.out.println("Enabling EasterEvent plugin...");
         CraftingLib.registerCollectableType(EASTER_EVENT_NAME);
     }
 }

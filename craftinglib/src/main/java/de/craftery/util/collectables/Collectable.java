@@ -4,7 +4,10 @@ import de.craftery.util.BaseDatabaseEntity;
 import de.craftery.util.ListCache;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 
+import javax.annotation.Nullable;
 import javax.persistence.*;
 import java.util.List;
 
@@ -46,6 +49,37 @@ public class Collectable extends BaseDatabaseEntity<Collectable, Long> {
     public static List<Collectable> getByType(String type) {
         prepareCache();
         return cache.get("all").stream().filter(collectable -> collectable.getType().equals(type)).toList();
+    }
+
+    public static @Nullable Collectable getById(long id) {
+        prepareCache();
+        return cache.get("all").stream().filter(collectable -> collectable.getId() == id).findFirst().orElse(null);
+    }
+
+    public static void removeCollectable(Collectable collectable) {
+        cache.get("all").remove(collectable);
+        collectable.delete();
+    }
+
+    public static boolean exists(Location loc) {
+        prepareCache();
+        return cache.get("all").stream().anyMatch(collectable -> collectable.getLocation().equals(loc));
+    }
+
+    public static void addCollectable(Location loc, String type) {
+        Collectable collectable = new Collectable();
+        collectable.setType(type);
+        collectable.setX(loc.getBlockX());
+        collectable.setY(loc.getBlockY());
+        collectable.setZ(loc.getBlockZ());
+        collectable.setWorld(loc.getWorld().getName());
+        Long id = (Long) collectable.save();
+        collectable.setId(id);
+        cache.get("all").add(collectable);
+    }
+
+    public Location getLocation() {
+        return new Location(Bukkit.getWorld(this.world), this.x, this.y, this.z);
     }
 
     @Override
