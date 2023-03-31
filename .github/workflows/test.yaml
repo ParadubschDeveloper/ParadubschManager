@@ -17,19 +17,6 @@ env:
 
 jobs:
   build:
-    services:
-      mysql:
-        image: mysql:5.7
-        env:
-          MYSQL_DATABASE: test
-          MYSQL_USER: user
-          MYSQL_PASSWORD: strongpassword
-          MYSQL_ROOT_PASSWORD: strongpassword
-        ports:
-          - 33306:3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
-
-
     runs-on: ubuntu-latest
 
     steps:
@@ -39,6 +26,10 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
+      - uses: mirromutth/mysql-action@v1.1
+        with:
+          mysql database: 'test'
+          mysql root password: 'strongpassword'
       - name: Build with Gradle
         uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
         with:
