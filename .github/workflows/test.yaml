@@ -49,3 +49,10 @@ jobs:
         uses: gradle/gradle-build-action@v2
         with:
           arguments: build --stacktrace --scan --info
+      - uses: actions/upload-artifact@v3
+        with:
+          name: build
+          path: |
+            paradubschmanager/build/libs/
+            craftinglib/build/libs/
+            easterevent/build/libs/
