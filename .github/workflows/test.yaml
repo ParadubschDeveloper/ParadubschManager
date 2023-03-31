@@ -14,6 +14,7 @@ permissions:
 
 env:
   DB_URL: jdbc:mysql://localhost:3306/test?allowPublicKeyRetrieval=true&useSSL=false
+  MYSQL_ROOT_PASSWORD: strongpassword
 
 jobs:
   build:
