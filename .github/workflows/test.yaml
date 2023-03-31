@@ -24,10 +24,17 @@ jobs:
       - name: Cache Gradle packages
         id: cache-gradle
         uses: actions/cache@v3
+        env:
+          cache-name: cache-gradle-modules
         with:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
+          key: ${{ runner.os }}-build-${{ env.cache-name }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
