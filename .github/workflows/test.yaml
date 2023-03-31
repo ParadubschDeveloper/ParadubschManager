@@ -13,7 +13,7 @@ permissions:
   contents: read
 
 env:
-  DB_URL: jdbc:mysql://mysql:3306/test?allowPublicKeyRetrieval=true&useSSL=false
+  DB_URL: jdbc:mysql://localhost:3306/test?allowPublicKeyRetrieval=true&useSSL=false
 
 jobs:
   build:
@@ -45,6 +45,6 @@ jobs:
           mysql database: 'test'
           mysql root password: 'strongpassword'
       - name: Build with Gradle
-        uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
+        uses: gradle/gradle-build-action@v2
         with:
           arguments: build --stacktrace --scan --info
