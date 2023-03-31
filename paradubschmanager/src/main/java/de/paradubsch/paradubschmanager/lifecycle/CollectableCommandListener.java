@@ -18,8 +18,8 @@ public class CollectableCommandListener implements Listener {
 
     @EventHandler
     public void onInteract(PlayerInteractEvent e) {
-        String possibleEventType = CollectablesCommand.playersInAddMode.get(e.getPlayer().getUniqueId());
-        if (possibleEventType == null) return;
+        String possibleIngameEventType = CollectablesCommand.playersInAddMode.get(e.getPlayer().getUniqueId());
+        if (possibleIngameEventType == null) return;
         if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
             Block clickedBlock = e.getClickedBlock();
             if (clickedBlock == null) return;
@@ -28,8 +28,8 @@ public class CollectableCommandListener implements Listener {
                 MessageAdapter.sendMessage(e.getPlayer(), Message.Error.BLOCK_IS_ALREADY_COLLECTABLE);
                 return;
             }
-            Collectable.addCollectable(clickedBlock.getLocation(), possibleEventType);
-            MessageAdapter.sendMessage(e.getPlayer(), Message.Info.COLLECTABLE_ADDED, possibleEventType);
+            Collectable.addCollectable(clickedBlock.getLocation(), possibleIngameEventType);
+            MessageAdapter.sendMessage(e.getPlayer(), Message.Info.COLLECTABLE_ADDED, possibleIngameEventType);
             CollectablesCommand.playersInAddMode.remove(e.getPlayer().getUniqueId());
         }
     }

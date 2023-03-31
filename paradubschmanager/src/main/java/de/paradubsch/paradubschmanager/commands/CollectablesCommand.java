@@ -135,13 +135,13 @@ public class CollectablesCommand extends CraftingCommand {
         List<String> l = new ArrayList<>();
         if (args.length == 1) {
             l.addAll(CraftingLib.getRegisteredCollectableTypes());
+            l.add("remove");
+            l.add("tp");
             return l;
         }
         if (args.length == 2) {
             l.add("list");
             l.add("add");
-            l.add("remove");
-            l.add("tp");
         }
         return l;
     }
