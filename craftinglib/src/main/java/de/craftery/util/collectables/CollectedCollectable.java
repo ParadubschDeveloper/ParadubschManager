@@ -1,8 +1,10 @@
 package de.craftery.util.collectables;
 
 import de.craftery.util.BaseDatabaseEntity;
+import de.craftery.util.MessageAdapter;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.bukkit.entity.Player;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,5 +29,24 @@ public class CollectedCollectable extends BaseDatabaseEntity<CollectedCollectabl
     @Override
     public String getIdentifyingColumn() {
         return this.pair;
+    }
+
+    public static boolean hasCollected(Player player, Collectable collectable) {
+        long id = collectable.getId();
+        return BaseDatabaseEntity.getById(CollectedCollectable.class, player.getUniqueId() + "_" + id) != null;
+    }
+
+    public static void collect(Player player, Collectable collectable) {
+        if (hasCollected(player, collectable)) {
+            MessageAdapter.sendConsoleError(new Exception("CollectedCollectable.collect() called for already collected collectable!"));
+            return;
+        }
+
+        long id = collectable.getId();
+        CollectedCollectable collectedCollectable = new CollectedCollectable();
+        collectedCollectable.setPair(player.getUniqueId() + "_" + id);
+        collectedCollectable.setId(id);
+        collectedCollectable.setUuid(player.getUniqueId().toString());
+        collectedCollectable.save();
     }
 }

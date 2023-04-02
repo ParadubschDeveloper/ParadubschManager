@@ -98,7 +98,9 @@ public class Message {
         CMD_BACKPACK_CANT_GET_OPENED("cmdBackpackCantGetOpened","&cDer Rucksack kann gerade nicht geöffnet werden."),
         COLLECTABLE_TYPE_NOT_FOUND("collectableTypeNotFound","&cDer Typ &a%1 &cexistiert nicht."),
         ID_NOT_PROVIDED("idNotProvided","&cDu musst eine gültige ID angeben."),
-        BLOCK_IS_ALREADY_COLLECTABLE("blockIsAlreadyCollectable","&cDieser Block ist bereits ein Sammelpunkt.");
+        BLOCK_IS_ALREADY_COLLECTABLE("blockIsAlreadyCollectable","&cDieser Block ist bereits ein Sammelpunkt."),
+        COLLECTABLE_ALREADY_COLLECTED("collectableAlreadyCollected","&cDu hast das bereits gesammelt."),
+        COLLECTABLE_NOT_COLLECTED("collectableNotCollected","&cDies konnte nicht gesammelt werden. Bitte versuche es später nochmal.");
 
         private final String key;
         private final String def;

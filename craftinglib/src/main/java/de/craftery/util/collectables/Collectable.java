@@ -66,6 +66,11 @@ public class Collectable extends BaseDatabaseEntity<Collectable, Long> {
         return cache.get("all").stream().anyMatch(collectable -> collectable.getLocation().equals(loc));
     }
 
+    public static @Nullable Collectable getByLocation(Location loc) {
+        prepareCache();
+        return cache.get("all").stream().filter(collectable -> collectable.getLocation().equals(loc)).findFirst().orElse(null);
+    }
+
     public static void addCollectable(Location loc, String type) {
         Collectable collectable = new Collectable();
         collectable.setType(type);

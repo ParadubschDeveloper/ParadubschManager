@@ -139,7 +139,7 @@ public class CollectablesCommand extends CraftingCommand {
             l.add("tp");
             return l;
         }
-        if (args.length == 2) {
+        if (args.length == 2 && !args[0].equalsIgnoreCase("remove") && !args[0].equalsIgnoreCase("tp")) {
             l.add("list");
             l.add("add");
         }
