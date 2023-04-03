@@ -20,6 +20,7 @@ public class EasterEvent extends CraftingPlugin implements Listener {
     public void onEnable() {
         super.onEnable();
         System.out.println("Enabling EasterEvent plugin...");
+        this.getLanguageManager().registerMessageEnum(EasterEventMessage.class);
         CraftingLib.registerCollectableType(EASTER_EVENT_NAME);
         getServer().getPluginManager().registerEvents(this, this);
     }
