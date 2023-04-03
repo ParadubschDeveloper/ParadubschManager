@@ -20,7 +20,7 @@ libraries:
 commands:
   msg:
     description: Schreibe einem anderen Spieler eine private Nachricht.
-    aliases: [tell, nachricht, post, pm, brief, mail, w]
+    aliases: [tell, pn]
     permission: paradubsch.msg
     permission-message: 'Du benötigst die Berechtigung paradubsch.msg um zu chatten!'
     usage: '/msg <Spieler> <Nachricht>'
@@ -32,19 +32,19 @@ commands:
     usage: '/prefix <Player> <Prefix>'
   lang:
     description: Stelle deine Sprache ein.
-    aliases: [ language, sprache, landsmann, sprachwahl ]
+    aliases: [ sprache ]
     permission: paradubsch.lang
     permission-message: 'Du benötigst die Berechtigung paradubsch.lang um deine Sprache zu setzen!'
     usage: '/lang <Sprache>'
   namecolor:
     description: Setze deine Namensfarbe.
-    aliases: [setnamecolor, namesfarbe]
+    aliases: [namesfarbe]
     permission: paradubsch.namecolor
     permission-message: 'Du benötigst die Berechtigung paradubsch.namecolor um deine Namensfarbe zu setzen!'
     usage: '/namecolor <Spieler> <Farbe>'
   defaultchatcolor:
     description: Setze deine Standard Chatfarbe.
-    aliases: [setdefaultchatcolor, chatcolor, chatfarbe]
+    aliases: [chatcolor, chatfarbe]
     permission: paradubsch.defaultchatcolor
     permission-message: 'Du benötigst die Berechtigung paradubsch.defaultchatcolor um deine Standard Chatfarbe zu setzen!'
     usage: '/defaultchatcolor <Name> <Farbe>'
@@ -56,7 +56,7 @@ commands:
     usage: '/playtime <Name>'
   money:
     description: Schaue deine Geldmenge an.
-    aliases: [ geld, gelth, bal, balance, gelt, moneten, para, kohle, heu, bares, kröten, kleingeld, zaster, knete, cash ]
+    aliases: [geld, bal, balance]
     permission: paradubsch.money.self
     permission-message: 'Du benötigst die Berechtigung paradubsch.money.self um deine Geldmenge zu sehen!'
     usage: '/money'
@@ -74,25 +74,25 @@ commands:
     usage: '/home <Home-Name>'
   buyhome:
     description: Kaufe ein Home.
-    aliases: [ kaufehome, kaufhome, kaufheime ]
+    aliases: [kaufheim]
     permission: paradubsch.buyhome
     permission-message: 'Du benötigst die Berechtigung paradubsch.buyhome um ein Home zu kaufen!'
     usage: '/buyhome'
   homes:
     description: Zeige deine Homes.
-    aliases: [ heimliste, homelist ]
+    aliases: [heimliste]
     permission: paradubsch.homes
     permission-message: 'Du benötigst die Berechtigung paradubsch.homes um deine Homes zu sehen!'
     usage: '/homes'
   viewhome:
     description: Gibt dir Informationen über ein Home.
-    aliases: [ zeigehome, zeigeheim, homeinfo, heiminfo ]
+    aliases: [heiminfo]
     permission: paradubsch.viewhome
     permission-message: 'Du benötigst die Berechtigung paradubsch.viewhome um ein Home zu sehen!'
     usage: '/viewhome <Home-Name>'
   delhome:
     description: Lösche ein Home.
-    aliases: [ loeschehome, loescheheim, löschehome, löscheheim ]
+    aliases: [löscheheim]
     permission: paradubsch.delhome
     permission-message: 'Du benötigst die Berechtigung paradubsch.delhome um ein Home zu löschen!'
     usage: '/delhome <Home-Name>'
@@ -248,7 +248,7 @@ commands:
     usage: '/invsee <User>'
   job:
     description: Menu zur Job Vergabe
-    aliases: [jobs, beruf, berufe]
+    aliases: [beruf]
     permission: paradubsch.job
     permission-message: 'Du benötigst die Berechtigung paradubsch.job um das Menu zu nutzen!'
     usage: '/job'
@@ -272,7 +272,7 @@ commands:
     usage: '/saverequests'
   workbench:
     description: Öffnet eine Workbench.
-    aliases: [wb, werkbank, ct, craftingtable, crafting]
+    aliases: [wb, werkbank]
     permission: paradubsch.workbench
     permission-message: 'Du benötigst die Berechtigung paradubsch.workbench um eine Workbench zu öffnen!'
     usage: '/workbench'
@@ -314,7 +314,7 @@ commands:
     usage: '/loom'
   stonecutter:
     description: Öffnet die mobile Steinsäge.
-    aliases: [ steinsäge, ss ]
+    aliases: [steinsäge]
     permission: paradubsch.stonecutter
     permission-message: 'Du benötigst die Berechtigung paradubsch.stonecutter um deine mobile Steinsäge zu öffnen'
     usage: '/stonecutter'
