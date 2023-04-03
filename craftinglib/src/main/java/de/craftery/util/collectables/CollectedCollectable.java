@@ -10,6 +10,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -21,7 +23,7 @@ public class CollectedCollectable extends BaseDatabaseEntity<CollectedCollectabl
     private String pair;
 
     @Column(name = "collectable_id", nullable = false)
-    private long id;
+    private long collectableId;
 
     @Column(name = "collector_uuid", columnDefinition = "VARCHAR(36)", nullable = false)
     private String uuid;
@@ -31,21 +33,32 @@ public class CollectedCollectable extends BaseDatabaseEntity<CollectedCollectabl
         return this.pair;
     }
 
+    private static final List<String> notCollected = new ArrayList<>();
+
     public static boolean hasCollected(Player player, Collectable collectable) {
-        long id = collectable.getId();
-        return BaseDatabaseEntity.getById(CollectedCollectable.class, player.getUniqueId() + "_" + id) != null;
+        String key = player.getUniqueId() + "_" + collectable.getId();
+        if (notCollected.contains(key)) return false;
+
+        boolean collected = BaseDatabaseEntity.getById(CollectedCollectable.class, key) != null;
+
+        if (!collected) notCollected.add(key);
+        return collected;
     }
 
     public static void collect(Player player, Collectable collectable) {
+        long id = collectable.getId();
+        String key = player.getUniqueId() + "_" + id;
+
         if (hasCollected(player, collectable)) {
             MessageAdapter.sendConsoleError(new Exception("CollectedCollectable.collect() called for already collected collectable!"));
             return;
         }
 
-        long id = collectable.getId();
+        notCollected.remove(key);
+
         CollectedCollectable collectedCollectable = new CollectedCollectable();
-        collectedCollectable.setPair(player.getUniqueId() + "_" + id);
-        collectedCollectable.setId(id);
+        collectedCollectable.setPair(key);
+        collectedCollectable.setCollectableId(id);
         collectedCollectable.setUuid(player.getUniqueId().toString());
         collectedCollectable.save();
     }

@@ -2,12 +2,19 @@ package de.paradubsch.easterevent;
 
 import de.craftery.CraftingLib;
 import de.craftery.CraftingPlugin;
+import de.craftery.PlayerData;
+import de.craftery.util.MessageAdapter;
+import de.craftery.util.collectables.Collectable;
 import de.craftery.util.collectables.CollectableCollectedEvent;
+import de.craftery.util.collectables.CollectedCollectable;
+import org.bukkit.Sound;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
+import java.util.List;
+
 public class EasterEvent extends CraftingPlugin implements Listener {
-    private static final String EASTER_EVENT_NAME = "easter_event_2023";
+    public static final String EASTER_EVENT_NAME = "easter_event_2023";
 
     @Override
     public void onEnable() {
@@ -20,13 +27,33 @@ public class EasterEvent extends CraftingPlugin implements Listener {
     @EventHandler
     public void onCollectableCollected(CollectableCollectedEvent e) {
         if (e.getCollectable().getType().equals(EASTER_EVENT_NAME)) {
-            e.getPlayer().sendMessage("You collected an Easter Egg!");
-            // TODO:
-            // check amount of eggs already collected
-            // check if the playes gets the 25€ for a single agg
-            // check if the player got the last egg and gets the 100€
-            // show action bar message
-            // handle event
+            List<Collectable> allEggs = Collectable.getByType(EASTER_EVENT_NAME);
+            int totalAmount = allEggs.size();
+            int alreadyCollectedAmount = allEggs.stream()
+                    .filter(collectable -> CollectedCollectable.hasCollected(e.getPlayer(), collectable))
+                    .toList().size();
+
+            MessageAdapter.sendMessage(e.getPlayer(), EasterEventMessage.COLLECTED_EASTER_EGG,
+                    String.valueOf(alreadyCollectedAmount + 1),
+                    String.valueOf(totalAmount)
+            );
+
+            PlayerData pd = PlayerData.getByPlayer(e.getPlayer());
+            pd.setMoney(pd.getMoney() + 25);
+
+            MessageAdapter.sendMessage(e.getPlayer(), EasterEventMessage.REGULAR_GOT_MONEY);
+
+            if (alreadyCollectedAmount + 1 == totalAmount) {
+                pd.setMoney(pd.getMoney() + 100);
+                MessageAdapter.sendMessage(e.getPlayer(), EasterEventMessage.LAST_EASTER_EGG);
+                e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.ENTITY_ENDER_DRAGON_DEATH, 1.5f, 1f);
+            } else {
+                e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.BLOCK_AMETHYST_BLOCK_BREAK, 10f, 1f);
+            }
+
+            pd.saveOrUpdate();
+
+            e.handle();
         }
     }
 }
