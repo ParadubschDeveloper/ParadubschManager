@@ -1,9 +1,9 @@
 package de.paradubsch.paradubschmanager.gui.window;
 
-import de.craftery.util.gui.BaseGui;
+import de.craftery.craftinglib.util.gui.BaseGui;
 import de.paradubsch.paradubschmanager.gui.items.CancelButton;
 import de.paradubsch.paradubschmanager.gui.items.GsClaimButton;
-import de.craftery.util.lang.Language;
+import de.craftery.craftinglib.messaging.lang.Language;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 
 public class ClaimGui extends BaseGui {

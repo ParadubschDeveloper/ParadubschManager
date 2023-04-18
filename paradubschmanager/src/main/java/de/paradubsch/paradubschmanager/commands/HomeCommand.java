@@ -1,9 +1,9 @@
 package de.paradubsch.paradubschmanager.commands;
 
-import de.craftery.ErrorOr;
-import de.craftery.command.CraftingCommand;
-import de.craftery.command.CraftingPlayer;
-import de.craftery.command.PlayerOnly;
+import de.craftery.craftinglib.ErrorOr;
+import de.craftery.craftinglib.command.CraftingCommand;
+import de.craftery.craftinglib.command.CraftingPlayer;
+import de.craftery.craftinglib.command.PlayerOnly;
 import de.paradubsch.paradubschmanager.models.Home;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 

@@ -1,7 +1,7 @@
 package de.paradubsch.paradubschmanager.gui.items;
 
-import de.craftery.util.gui.AbstractGuiItem;
-import de.craftery.util.gui.GuiManager;
+import de.craftery.craftinglib.util.gui.AbstractGuiItem;
+import de.craftery.craftinglib.util.gui.GuiManager;
 import de.paradubsch.paradubschmanager.models.BazaarCollectable;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 import net.kyori.adventure.text.Component;

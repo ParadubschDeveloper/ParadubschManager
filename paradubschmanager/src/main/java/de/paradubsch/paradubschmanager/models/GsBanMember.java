@@ -1,9 +1,9 @@
 package de.paradubsch.paradubschmanager.models;
 
-import de.craftery.PlayerData;
-import de.craftery.util.BaseDatabaseEntity;
-import de.craftery.util.HibernateConfigurator;
-import de.craftery.util.ListCache;
+import de.craftery.craftinglib.PlayerData;
+import de.craftery.craftinglib.util.BaseDatabaseEntity;
+import de.craftery.craftinglib.util.HibernateConfigurator;
+import de.craftery.craftinglib.util.ListCache;
 import lombok.Cleanup;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

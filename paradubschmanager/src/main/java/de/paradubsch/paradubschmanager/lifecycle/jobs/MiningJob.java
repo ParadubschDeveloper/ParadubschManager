@@ -1,6 +1,6 @@
 package de.paradubsch.paradubschmanager.lifecycle.jobs;
 
-import de.craftery.PlayerData;
+import de.craftery.craftinglib.PlayerData;
 import de.paradubsch.paradubschmanager.models.WorkerPlayer;
 import org.bukkit.ChatColor;
 import org.bukkit.enchantments.Enchantment;

@@ -1,10 +1,10 @@
 package de.paradubsch.paradubschmanager.commands;
 
-import de.craftery.util.gui.GuiManager;
+import de.craftery.craftinglib.util.gui.GuiManager;
 import de.paradubsch.paradubschmanager.gui.window.KitEditGui;
 import de.paradubsch.paradubschmanager.gui.window.KitGui;
-import de.craftery.util.Expect;
-import de.craftery.util.MessageAdapter;
+import de.craftery.craftinglib.util.Expect;
+import de.craftery.craftinglib.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

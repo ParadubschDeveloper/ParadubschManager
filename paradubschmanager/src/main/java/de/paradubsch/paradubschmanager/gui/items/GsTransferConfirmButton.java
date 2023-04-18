@@ -1,10 +1,10 @@
 package de.paradubsch.paradubschmanager.gui.items;
 
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
-import de.craftery.util.gui.GuiItem;
+import de.craftery.craftinglib.util.gui.GuiItem;
 import de.paradubsch.paradubschmanager.ParadubschManager;
-import de.craftery.PlayerData;
-import de.craftery.util.MessageAdapter;
+import de.craftery.craftinglib.PlayerData;
+import de.craftery.craftinglib.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;

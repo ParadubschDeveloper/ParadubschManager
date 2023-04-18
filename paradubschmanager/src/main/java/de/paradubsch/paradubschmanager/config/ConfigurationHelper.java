@@ -1,6 +1,6 @@
 package de.paradubsch.paradubschmanager.config;
 
-import de.craftery.util.ConfigurationManager;
+import de.craftery.craftinglib.util.ConfigurationManager;
 
 public class ConfigurationHelper {
     public static void addSpecificConfurations() {

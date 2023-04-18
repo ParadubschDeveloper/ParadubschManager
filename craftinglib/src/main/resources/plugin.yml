@@ -1,6 +1,6 @@
 name: "CraftingLib"
 version: "${version}"
-main: "de.craftery.CraftingLib"
+main: "de.craftery.craftinglib.CraftingLib"
 api-version: "1.19"
 api: [ "1.19" ]
 authors: [ "Crafter_Y"]

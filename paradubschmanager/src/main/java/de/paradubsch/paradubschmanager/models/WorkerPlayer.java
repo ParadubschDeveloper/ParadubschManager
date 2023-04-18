@@ -1,6 +1,6 @@
 package de.paradubsch.paradubschmanager.models;
 
-import de.craftery.util.BaseDatabaseEntity;
+import de.craftery.craftinglib.util.BaseDatabaseEntity;
 import de.paradubsch.paradubschmanager.lifecycle.jobs.JobLevel;
 import de.paradubsch.paradubschmanager.lifecycle.jobs.JobType;
 import lombok.Data;

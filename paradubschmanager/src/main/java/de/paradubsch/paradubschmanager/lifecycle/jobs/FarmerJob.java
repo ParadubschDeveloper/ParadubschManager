@@ -1,7 +1,7 @@
 package de.paradubsch.paradubschmanager.lifecycle.jobs;
 
 import de.paradubsch.paradubschmanager.ParadubschManager;
-import de.craftery.PlayerData;
+import de.craftery.craftinglib.PlayerData;
 import de.paradubsch.paradubschmanager.models.WorkerPlayer;
 import org.bukkit.block.data.Ageable;
 import org.bukkit.block.data.BlockData;

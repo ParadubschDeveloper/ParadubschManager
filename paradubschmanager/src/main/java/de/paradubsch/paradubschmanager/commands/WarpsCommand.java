@@ -2,8 +2,8 @@ package de.paradubsch.paradubschmanager.commands;
 
 import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.models.Warp;
-import de.craftery.util.MessageAdapter;
-import de.craftery.util.lang.Language;
+import de.craftery.craftinglib.util.MessageAdapter;
+import de.craftery.craftinglib.messaging.lang.Language;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;

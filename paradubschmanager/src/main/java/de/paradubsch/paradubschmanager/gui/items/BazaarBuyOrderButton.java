@@ -1,7 +1,7 @@
 package de.paradubsch.paradubschmanager.gui.items;
 
-import de.craftery.util.gui.GuiItem;
-import de.craftery.util.gui.GuiManager;
+import de.craftery.craftinglib.util.gui.GuiItem;
+import de.craftery.craftinglib.util.gui.GuiManager;
 import de.paradubsch.paradubschmanager.gui.window.BazaarBuyOrderGui;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 import org.bukkit.Material;

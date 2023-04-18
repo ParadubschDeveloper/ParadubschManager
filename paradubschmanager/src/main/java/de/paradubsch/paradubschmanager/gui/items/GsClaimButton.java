@@ -1,9 +1,9 @@
 package de.paradubsch.paradubschmanager.gui.items;
 
-import de.craftery.util.gui.GuiItem;
-import de.craftery.PlayerData;
+import de.craftery.craftinglib.util.gui.GuiItem;
+import de.craftery.craftinglib.PlayerData;
 import de.paradubsch.paradubschmanager.models.SaveRequest;
-import de.craftery.util.MessageAdapter;
+import de.craftery.craftinglib.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;

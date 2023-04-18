@@ -1,9 +1,9 @@
 package de.paradubsch.paradubschmanager.lifecycle;
 
-import de.craftery.util.CachingManager;
+import de.craftery.craftinglib.util.CachingManager;
 import de.paradubsch.paradubschmanager.ParadubschManager;
-import de.craftery.util.HibernateConfigurator;
-import de.craftery.PlayerData;
+import de.craftery.craftinglib.util.HibernateConfigurator;
+import de.craftery.craftinglib.PlayerData;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;

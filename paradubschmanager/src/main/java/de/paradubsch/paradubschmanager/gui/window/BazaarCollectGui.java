@@ -1,11 +1,11 @@
 package de.paradubsch.paradubschmanager.gui.window;
 
-import de.craftery.util.gui.BaseGui;
+import de.craftery.craftinglib.util.gui.BaseGui;
 import de.paradubsch.paradubschmanager.gui.items.BackButton;
 import de.paradubsch.paradubschmanager.gui.items.BazaarClaimCollectableButton;
 import de.paradubsch.paradubschmanager.gui.items.CancelButton;
 import de.paradubsch.paradubschmanager.models.BazaarCollectable;
-import de.craftery.util.lang.Language;
+import de.craftery.craftinglib.messaging.lang.Language;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 
 import java.util.List;

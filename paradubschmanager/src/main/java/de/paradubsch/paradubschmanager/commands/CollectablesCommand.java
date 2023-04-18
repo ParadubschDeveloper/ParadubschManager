@@ -1,11 +1,11 @@
 package de.paradubsch.paradubschmanager.commands;
 
-import de.craftery.CraftingLib;
-import de.craftery.InternalMessages;
-import de.craftery.command.CraftingCommand;
-import de.craftery.command.CraftingPlayer;
-import de.craftery.util.Expect;
-import de.craftery.util.collectables.Collectable;
+import de.craftery.craftinglib.CraftingLib;
+import de.craftery.craftinglib.InternalMessages;
+import de.craftery.craftinglib.command.CraftingCommand;
+import de.craftery.craftinglib.command.CraftingPlayer;
+import de.craftery.craftinglib.util.Expect;
+import de.craftery.craftinglib.util.collectables.Collectable;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 import org.apache.commons.lang3.StringUtils;
 

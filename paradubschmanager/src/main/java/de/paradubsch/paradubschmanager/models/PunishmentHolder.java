@@ -1,7 +1,7 @@
 package de.paradubsch.paradubschmanager.models;
 
-import de.craftery.PlayerData;
-import de.craftery.util.BaseDatabaseEntity;
+import de.craftery.craftinglib.PlayerData;
+import de.craftery.craftinglib.util.BaseDatabaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.bukkit.entity.Player;

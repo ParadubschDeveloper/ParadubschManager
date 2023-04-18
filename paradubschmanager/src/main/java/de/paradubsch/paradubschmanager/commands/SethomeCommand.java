@@ -1,11 +1,11 @@
 package de.paradubsch.paradubschmanager.commands;
 
-import de.craftery.ErrorOr;
-import de.craftery.InternalMessages;
+import de.craftery.craftinglib.ErrorOr;
+import de.craftery.craftinglib.InternalMessages;
 import de.paradubsch.paradubschmanager.models.Home;
-import de.craftery.PlayerData;
-import de.craftery.util.Expect;
-import de.craftery.util.MessageAdapter;
+import de.craftery.craftinglib.PlayerData;
+import de.craftery.craftinglib.util.Expect;
+import de.craftery.craftinglib.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

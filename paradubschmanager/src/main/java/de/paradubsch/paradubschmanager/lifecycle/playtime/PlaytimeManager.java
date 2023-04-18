@@ -1,10 +1,10 @@
 package de.paradubsch.paradubschmanager.lifecycle.playtime;
 
 import de.paradubsch.paradubschmanager.ParadubschManager;
-import de.craftery.util.ConfigurationManager;
+import de.craftery.craftinglib.util.ConfigurationManager;
 import de.paradubsch.paradubschmanager.lifecycle.TabDecorationManager;
-import de.craftery.PlayerData;
-import de.craftery.util.MessageAdapter;
+import de.craftery.craftinglib.PlayerData;
+import de.craftery.craftinglib.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.model.user.User;

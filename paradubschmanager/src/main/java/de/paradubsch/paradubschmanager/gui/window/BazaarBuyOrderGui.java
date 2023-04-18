@@ -1,9 +1,9 @@
 package de.paradubsch.paradubschmanager.gui.window;
 
-import de.craftery.util.gui.BaseGui;
+import de.craftery.craftinglib.util.gui.BaseGui;
 import de.paradubsch.paradubschmanager.gui.items.*;
 import de.paradubsch.paradubschmanager.lifecycle.bazaar.BazaarItemData;
-import de.craftery.util.lang.Language;
+import de.craftery.craftinglib.messaging.lang.Language;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 
 public class BazaarBuyOrderGui extends BaseGui {

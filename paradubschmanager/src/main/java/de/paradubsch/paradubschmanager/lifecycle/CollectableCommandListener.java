@@ -1,10 +1,10 @@
 package de.paradubsch.paradubschmanager.lifecycle;
 
-import de.craftery.CraftingLib;
-import de.craftery.util.MessageAdapter;
-import de.craftery.util.collectables.Collectable;
-import de.craftery.util.collectables.CollectableCollectedEvent;
-import de.craftery.util.collectables.CollectedCollectable;
+import de.craftery.craftinglib.CraftingLib;
+import de.craftery.craftinglib.util.MessageAdapter;
+import de.craftery.craftinglib.util.collectables.Collectable;
+import de.craftery.craftinglib.util.collectables.CollectableCollectedEvent;
+import de.craftery.craftinglib.util.collectables.CollectedCollectable;
 import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.commands.CollectablesCommand;
 import de.paradubsch.paradubschmanager.util.lang.Message;

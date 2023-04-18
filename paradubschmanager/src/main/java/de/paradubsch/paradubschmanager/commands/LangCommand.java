@@ -1,10 +1,10 @@
 package de.paradubsch.paradubschmanager.commands;
 
-import de.craftery.util.lang.Language;
-import de.craftery.PlayerData;
-import de.craftery.util.Expect;
-import de.craftery.util.MessageAdapter;
-import de.craftery.util.lang.LanguageManager;
+import de.craftery.craftinglib.messaging.lang.Language;
+import de.craftery.craftinglib.PlayerData;
+import de.craftery.craftinglib.util.Expect;
+import de.craftery.craftinglib.util.MessageAdapter;
+import de.craftery.craftinglib.messaging.lang.LanguageManager;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

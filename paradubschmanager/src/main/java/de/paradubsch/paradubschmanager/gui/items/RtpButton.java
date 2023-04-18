@@ -1,6 +1,6 @@
 package de.paradubsch.paradubschmanager.gui.items;
 
-import de.craftery.util.gui.AbstractGuiItem;
+import de.craftery.craftinglib.util.gui.AbstractGuiItem;
 import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.commands.RtpCommand;
 import org.bukkit.Bukkit;

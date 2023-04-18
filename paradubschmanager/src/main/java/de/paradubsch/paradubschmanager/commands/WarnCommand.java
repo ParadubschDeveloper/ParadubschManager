@@ -1,11 +1,11 @@
 package de.paradubsch.paradubschmanager.commands;
 
-import de.craftery.util.lang.Language;
+import de.craftery.craftinglib.messaging.lang.Language;
 import de.paradubsch.paradubschmanager.ParadubschManager;
-import de.craftery.PlayerData;
+import de.craftery.craftinglib.PlayerData;
 import de.paradubsch.paradubschmanager.models.WarnPunishment;
-import de.craftery.util.Expect;
-import de.craftery.util.MessageAdapter;
+import de.craftery.craftinglib.util.Expect;
+import de.craftery.craftinglib.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;

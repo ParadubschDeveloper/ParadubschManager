@@ -1,9 +1,9 @@
 package de.paradubsch.paradubschmanager.commands;
 
-import de.craftery.util.features.HeadDatabaseFeature;
-import de.craftery.util.gui.GuiManager;
+import de.craftery.craftinglib.util.features.HeadDatabaseFeature;
+import de.craftery.craftinglib.util.gui.GuiManager;
 import de.paradubsch.paradubschmanager.gui.window.JobGui;
-import de.craftery.util.Expect;
+import de.craftery.craftinglib.util.Expect;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

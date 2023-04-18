@@ -2,7 +2,7 @@ package de.paradubsch.paradubschmanager.lifecycle.jobs;
 
 import com.jeff_media.customblockdata.CustomBlockData;
 import de.paradubsch.paradubschmanager.ParadubschManager;
-import de.craftery.PlayerData;
+import de.craftery.craftinglib.PlayerData;
 import de.paradubsch.paradubschmanager.models.WorkerPlayer;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.persistence.PersistentDataContainer;

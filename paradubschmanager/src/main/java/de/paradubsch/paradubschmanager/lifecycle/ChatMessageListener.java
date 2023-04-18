@@ -1,10 +1,10 @@
 package de.paradubsch.paradubschmanager.lifecycle;
 
 import de.paradubsch.paradubschmanager.ParadubschManager;
-import de.craftery.PlayerData;
+import de.craftery.craftinglib.PlayerData;
 import de.paradubsch.paradubschmanager.models.PunishmentHolder;
 import de.paradubsch.paradubschmanager.models.logging.ChatMessageLog;
-import de.craftery.util.MessageAdapter;
+import de.craftery.craftinglib.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.TimeCalculations;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 import io.papermc.paper.event.player.AsyncChatEvent;

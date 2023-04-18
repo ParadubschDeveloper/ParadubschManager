@@ -1,7 +1,7 @@
 package de.paradubsch.paradubschmanager.gui.items;
 
-import de.craftery.util.gui.AbstractGuiItem;
-import de.craftery.util.gui.PromptType;
+import de.craftery.craftinglib.util.gui.AbstractGuiItem;
+import de.craftery.craftinglib.util.gui.PromptType;
 import de.paradubsch.paradubschmanager.lifecycle.bazaar.BazaarItemData;
 import de.paradubsch.paradubschmanager.util.StringValidator;
 import de.paradubsch.paradubschmanager.util.lang.Message;

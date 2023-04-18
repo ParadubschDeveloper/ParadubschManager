@@ -1,8 +1,8 @@
 package de.paradubsch.paradubschmanager.models;
 
-import de.craftery.command.CraftingPlayer;
-import de.craftery.util.BaseDatabaseEntity;
-import de.craftery.util.HibernateConfigurator;
+import de.craftery.craftinglib.command.CraftingPlayer;
+import de.craftery.craftinglib.util.BaseDatabaseEntity;
+import de.craftery.craftinglib.util.HibernateConfigurator;
 import lombok.*;
 import org.bukkit.entity.Player;
 import org.hibernate.Session;

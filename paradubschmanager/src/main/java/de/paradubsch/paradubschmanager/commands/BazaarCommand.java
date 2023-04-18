@@ -1,14 +1,14 @@
 package de.paradubsch.paradubschmanager.commands;
 
-import de.craftery.util.features.HeadDatabaseFeature;
-import de.craftery.util.gui.GuiManager;
+import de.craftery.craftinglib.util.features.HeadDatabaseFeature;
+import de.craftery.craftinglib.util.gui.GuiManager;
 import de.paradubsch.paradubschmanager.gui.items.BazaarPlaceSellOrderButton;
 import de.paradubsch.paradubschmanager.gui.window.BazaarMainGui;
 import de.paradubsch.paradubschmanager.lifecycle.bazaar.Bazaar;
 import de.paradubsch.paradubschmanager.lifecycle.bazaar.BazaarItemData;
-import de.craftery.PlayerData;
-import de.craftery.util.Expect;
-import de.craftery.util.MessageAdapter;
+import de.craftery.craftinglib.PlayerData;
+import de.craftery.craftinglib.util.Expect;
+import de.craftery.craftinglib.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

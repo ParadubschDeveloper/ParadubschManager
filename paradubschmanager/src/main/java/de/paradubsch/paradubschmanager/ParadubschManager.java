@@ -2,10 +2,10 @@ package de.paradubsch.paradubschmanager;
 
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
-import de.craftery.CraftingPlugin;
+import de.craftery.craftinglib.CraftingPlugin;
 import de.paradubsch.paradubschmanager.commands.*;
 import de.paradubsch.paradubschmanager.config.ConfigurationHelper;
-import de.craftery.util.HibernateConfigurator;
+import de.craftery.craftinglib.util.HibernateConfigurator;
 import de.paradubsch.paradubschmanager.config.WebserverManager;
 import de.paradubsch.paradubschmanager.lifecycle.*;
 import de.paradubsch.paradubschmanager.lifecycle.jobs.JobManager;

@@ -1,6 +1,6 @@
 package de.paradubsch.paradubschmanager.gui.items;
 
-import de.craftery.util.gui.GuiItem;
+import de.craftery.craftinglib.util.gui.GuiItem;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;

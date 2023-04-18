@@ -1,12 +1,12 @@
 package de.paradubsch.paradubschmanager.gui.window;
 
-import de.craftery.util.gui.BaseGui;
-import de.craftery.util.gui.GuiItem;
-import de.craftery.util.lang.Language;
+import de.craftery.craftinglib.util.gui.BaseGui;
+import de.craftery.craftinglib.util.gui.GuiItem;
+import de.craftery.craftinglib.messaging.lang.Language;
 import de.paradubsch.paradubschmanager.models.KitCollectable;
 import de.paradubsch.paradubschmanager.models.KitRedeemEntry;
 import de.paradubsch.paradubschmanager.models.logging.KitRedeemLog;
-import de.craftery.util.MessageAdapter;
+import de.craftery.craftinglib.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;

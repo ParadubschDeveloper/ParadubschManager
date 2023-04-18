@@ -1,12 +1,12 @@
 package de.paradubsch.paradubschmanager.commands;
 
-import de.craftery.util.features.HeadDatabaseFeature;
-import de.craftery.util.gui.GuiManager;
+import de.craftery.craftinglib.util.features.HeadDatabaseFeature;
+import de.craftery.craftinglib.util.gui.GuiManager;
 import de.paradubsch.paradubschmanager.ParadubschManager;
 import de.paradubsch.paradubschmanager.gui.window.RtpGui;
 import de.paradubsch.paradubschmanager.lifecycle.jobs.JobManager;
-import de.craftery.util.Expect;
-import de.craftery.util.MessageAdapter;
+import de.craftery.craftinglib.util.Expect;
+import de.craftery.craftinglib.util.MessageAdapter;
 import de.paradubsch.paradubschmanager.util.TimeCalculations;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 import org.bukkit.Bukkit;

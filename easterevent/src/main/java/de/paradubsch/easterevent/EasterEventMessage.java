@@ -1,6 +1,6 @@
 package de.paradubsch.easterevent;
 
-import de.craftery.util.lang.BaseMessageType;
+import de.craftery.craftinglib.messaging.lang.BaseMessageType;
 
 public enum EasterEventMessage implements BaseMessageType {
     COLLECTED_EASTER_EGG("collected_easter_egg", "&aDu hast %1/%2 Ostereier gefunden!"),

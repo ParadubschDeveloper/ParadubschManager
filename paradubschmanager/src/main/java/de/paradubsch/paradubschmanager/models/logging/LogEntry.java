@@ -1,6 +1,6 @@
 package de.paradubsch.paradubschmanager.models.logging;
 
-import de.craftery.util.BaseDatabaseEntity;
+import de.craftery.craftinglib.util.BaseDatabaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.CreationTimestamp;

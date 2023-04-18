@@ -1,12 +1,12 @@
 package de.paradubsch.easterevent;
 
-import de.craftery.CraftingLib;
-import de.craftery.CraftingPlugin;
-import de.craftery.PlayerData;
-import de.craftery.util.MessageAdapter;
-import de.craftery.util.collectables.Collectable;
-import de.craftery.util.collectables.CollectableCollectedEvent;
-import de.craftery.util.collectables.CollectedCollectable;
+import de.craftery.craftinglib.CraftingLib;
+import de.craftery.craftinglib.CraftingPlugin;
+import de.craftery.craftinglib.PlayerData;
+import de.craftery.craftinglib.util.MessageAdapter;
+import de.craftery.craftinglib.util.collectables.Collectable;
+import de.craftery.craftinglib.util.collectables.CollectableCollectedEvent;
+import de.craftery.craftinglib.util.collectables.CollectedCollectable;
 import org.bukkit.Sound;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

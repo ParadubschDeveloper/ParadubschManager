@@ -1,13 +1,13 @@
 package de.paradubsch.paradubschmanager.commands;
 
-import de.craftery.command.CraftingCommand;
-import de.craftery.command.CraftingPlayer;
-import de.craftery.command.FeatureDependent;
-import de.craftery.command.PlayerOnly;
-import de.craftery.util.features.HeadDatabaseFeature;
-import de.craftery.util.gui.GuiManager;
+import de.craftery.craftinglib.command.CraftingCommand;
+import de.craftery.craftinglib.command.CraftingPlayer;
+import de.craftery.craftinglib.command.FeatureDependent;
+import de.craftery.craftinglib.command.PlayerOnly;
+import de.craftery.craftinglib.util.features.HeadDatabaseFeature;
+import de.craftery.craftinglib.util.gui.GuiManager;
 import de.paradubsch.paradubschmanager.gui.window.BackpackGui;
-import de.craftery.PlayerData;
+import de.craftery.craftinglib.PlayerData;
 import de.paradubsch.paradubschmanager.util.lang.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
