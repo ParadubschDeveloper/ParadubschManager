@@ -154,6 +154,7 @@ public class ChatComponentFactory {
     }
 
     public static Component fromLegacy(String string) {
+        string = string.replace("<newline>", "\n");
         List<String> parts = Arrays.stream(string.split("(?<=&[0-9a-fk-or])|(?=&[0-9a-fk-or])")).toList();
         // match before and after '&' escape code, e.g.: '&a'
         List<String> colorCorrectedParts = new ArrayList<>();
@@ -311,8 +312,6 @@ public class ChatComponentFactory {
 
     public static Component assemble(String string) {
         List<Token> tokens = lexMessage(string);
-
-        System.out.println(tokens);
 
         Component component = null;
 
