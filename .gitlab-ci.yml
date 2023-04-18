@@ -27,3 +27,4 @@ build:
       - "paradubschmanager/build/libs/"
       - "craftinglib/build/libs/"
       - "easterevent/build/libs/"
+      - "quizevent/build/libs/"

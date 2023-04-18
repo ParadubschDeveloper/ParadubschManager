@@ -1,0 +1,11 @@
+name: "QuizEvent"
+version: "${version}"
+main: "de.paradubsch.quizevent.QuizEvent"
+api-version: "1.19"
+api: [ "1.19" ]
+authors: [ "Crafter_Y"]
+load: "POSTWORLD"
+prefix: "QuizEvent"
+website: "https://github.com/ParadubschDeveloper/"
+depend:
+  - CraftingLib

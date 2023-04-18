@@ -2,7 +2,7 @@ plugins {
     id 'paradubsch.minecraft'
 }
 
-group = 'de.paradubsch.easterevent'
+group = 'de.paradubsch.quizevent'
 version = '0.1'
 
 dependencies {
