@@ -1,0 +1,10 @@
+pluginManagement {
+    includeBuild('build-logic')
+}
+rootProject.name = 'Paradubsch'
+
+
+include ":paradubschmanager"
+include ":craftinglib"
+include ":easterevent"
+include ":quizevent"

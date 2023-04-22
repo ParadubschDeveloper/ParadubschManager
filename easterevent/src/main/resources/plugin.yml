@@ -1,0 +1,11 @@
+name: "EasterEvent"
+version: "${version}"
+main: "de.paradubsch.easterevent.EasterEvent"
+api-version: "1.19"
+api: [ "1.19" ]
+authors: [ "Crafter_Y"]
+load: "POSTWORLD"
+prefix: "EasterEvent"
+website: "https://gitlab.com/paradubsch-developer/paradubschmanager"
+depend:
+  - CraftingLib

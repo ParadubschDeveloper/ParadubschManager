@@ -1,42 +1,30 @@
-image: maven:latest
+image: gradle:alpine
 
 variables:
   MYSQL_DATABASE: test
   MYSQL_ROOT_PASSWORD: strongpassword
   DB_URL: jdbc:mysql://mysql:3306/test?allowPublicKeyRetrieval=true&useSSL=false
-  MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository"
+
+before_script:
+  - export GRADLE_USER_HOME=`pwd`/.gradle
 
 cache:
   paths:
-    - ./.m2/repository/
+    - .gradle/wrapper
+    - .gradle/caches
   key: "$CI_BUILD_REF_NAME"
 
 stages:
   - build
-  - test
-  - package
 
-build-job:
+build:
   stage: build
-  script:
-    - "mvn clean compile $MAVEN_CLI_OPTS"
-  artifacts:
-    paths:
-      - target/
-
-test-job:
-  stage: test
-  needs: ["build-job"]
+  script: ./gradlew build
   services:
     - mysql:latest
-  script:
-    - "mvn test $MAVEN_CLI_OPTS"
-
-package-job:
-  stage: package
-  needs: ["build-job"]
-  script:
-    - "mvn package $MAVEN_CLI_OPTS -Dmaven.test.skip=true"
   artifacts:
     paths:
-      - "target/*.jar"
+      - "paradubschmanager/build/libs/"
+      - "craftinglib/build/libs/"
+      - "easterevent/build/libs/"
+      - "quizevent/build/libs/"

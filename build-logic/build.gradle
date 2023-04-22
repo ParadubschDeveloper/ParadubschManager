@@ -1,0 +1,12 @@
+plugins {
+    id 'groovy-gradle-plugin'
+}
+
+repositories {
+    gradlePluginPortal()
+}
+
+dependencies {
+    //implementation 'com.github.johnrengelman:shadow:7.1.2'
+    implementation "gradle.plugin.com.github.johnrengelman:shadow:7.1.2"
+}

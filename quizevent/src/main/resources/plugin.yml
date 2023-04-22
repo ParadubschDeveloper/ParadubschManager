@@ -1,0 +1,51 @@
+name: "QuizEvent"
+version: "${version}"
+main: "de.paradubsch.quizevent.QuizEvent"
+api-version: "1.19"
+api: [ "1.19" ]
+authors: [ "Crafter_Y"]
+load: "POSTWORLD"
+prefix: "QuizEvent"
+website: "https://github.com/ParadubschDeveloper/"
+depend:
+  - CraftingLib
+
+commands:
+  team:
+    description: Team commands
+    usage: /team
+    aliases: [t]
+    permission-message: You don't have the permission to use this command
+  pult:
+    description: Team commands
+    usage: /team
+    permission-message: You don't have the permission to use this command
+  buzzer:
+    description: Team commands
+    usage: /buzzer
+    permission: paradubschquiz.buzzer
+    permission-message: You don't have the permission to use this command
+  punkte:
+    description: Team commands
+    usage: /punkte
+    permission: paradubschquiz.punkte
+    permission-message: You don't have the permission to use this command
+  punktestand:
+    description: Team commands
+    usage: /punktestand
+    permission: paradubschquiz.punktestand
+    permission-message: You don't have the permission to use this command
+
+permissions:
+  paradubschquiz.pult.set:
+    description: Permission to set the pult
+    default: false
+  paradubschquiz.buzzer:
+    description: Permission to use the buzzer
+    default: false
+  paradubschquiz.punkte:
+    description: Permission to use the punkte command
+    default: false
+  paradubschquiz.punktestand:
+    description: Permission to use the punktestand command
+    default: false
