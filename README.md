@@ -1,5 +1,7 @@
 Paradubsch
 =========
+Continued at: [Crafter-Y/CraftingLib](https://github.com/Crafter-Y/CraftingLib)
+
 Dies ist der Source Code eines Minecraft Serverprojektes.
 
 This is the source code of a previous Minecraft server project.
